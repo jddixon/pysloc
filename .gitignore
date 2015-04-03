@@ -1,0 +1,17 @@
+build
+.committed
+CVS
+*.egg-info
+junk*
+MANIFEST
+.merkle
+.posted
+*.pyc
+.svn*
+*.swp
+THIS.IS.A.GIT*
+tmp
+.wrapped
+*ZZZ
+.sharedev
+__pycache__
