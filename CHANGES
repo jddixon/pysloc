@@ -1,0 +1,21 @@
+# ~/dev/py/pysloc/CHANGES
+
+0.4.0
+    2015-04-03
+        * incorporate snobol4-related code                          SLOC  270
+0.3.0
+    2015-02-16
+        * include triple-dquoted strings in the count               SLOC  240
+0.2.0
+    2014-12-16
+        * converted to python3                                      SLOC  209
+0.1.2
+    2013-01-29
+        * -X/--exclude now works                                    SLOC  207
+0.1.1
+    2013-01-28
+        * -v now produces a sorted listing of files                 SLOC  203
+0.1.0
+    2012-10-24
+        * first working version (count agrees exactly with 
+            sloccount)                                              SLOC  202

@@ -1,0 +1,32 @@
+# ~/dev/py/pysloc/TODO
+
+2015-04-03 
+    * uncomment
+        TQUOTE = '"""'
+        in pyTripleTester and get testPyTripleQuote.py working
+    * standard output should be in the form
+        LANG MMM/NNN/%nn.nT
+        where LANG is the language code (abbrev), MMM the number of 
+        lines of code, NNN source lines of code, and %nn.n the 
+        percentage of SLOC which are test code (TSLOC)
+
+2015-02-16
+    * triple-quoted strings (such as """...""") should be included in   * DONE
+        the count                                                       * DONE
+    * need more elaborate testing, especially of triple quoting
+    * handle pathelogical cases 
+        - SQUOTEd TQUOTE: '"""' or 'like """ this'
+        - DQUOTED TQUOTE: "this is """an example"""
+
+2013-01-28
+    * -X switch exists and exRE is calculated -- but it's never used! 
+
+2012-10-24
+    * need to drop getargs(), switch to current package
+    * should accept wildcards as 'other' names 
+    * should accept directories as 'other' names as well
+        - so just drop the -i option and default to otherNames=['.']
+    * need to filter out duplicates: pySloc setup.py currently counts
+        setup.py twice
+        - so we hash each file and only process if it has not 
+            already been counted

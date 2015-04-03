@@ -1,0 +1,10 @@
+# see http://docs.python.org/distutils/sourcedist.html
+
+include netDistrib.conf
+include CHANGES README TODO MANIFEST.in
+include snoCommentTester pySloc
+recursive-include pysloc *.py
+global-exclude junk* .*swp 
+prune   .svn
+
+

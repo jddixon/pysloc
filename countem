@@ -1,0 +1,3 @@
+cd /home/jdd/dev/py/pysloc
+rm -rf build
+pySloc commentTester countem MANIFEST.in pySloc
