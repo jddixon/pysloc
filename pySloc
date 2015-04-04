@@ -7,69 +7,9 @@ from stat       import *
 
 from argparse   import ArgumentParser
 from merkletree import MerkleDoc
-from pysloc     import __version__, __version_date__
-from pysloc     import countLinesInDir, countLinesInPyFile, countLinesInSnoFile
+from pysloc     import *
 
 def doCount(options):
-
-    ## get and check options; XXX should throw exceptions if problems 
-    ## are encountered
-   
-    #exclusions      = options['exclusions']
-    #inDir           = options['inDir']
-    #justShow        = options['justShow']
-    #showTimestamp   = options['showTimestamp']
-    #showTree        = options['showTree']
-    #showVersion     = options['showVersion']
-    #timestamp       = options['timestamp']
-    #verbose         = options['verbose']
-
-    #otherFiles      = options['namedFiles']
-
-    #if not justShow and not inDir:
-    #    raise RuntimeError("no inDir specified")
-    #elif inDir and inDir.find('/') != -1:
-    #    (path, foo, dirName) = inDir.rpartition('/')
-    #else:
-    #    path    = None
-    #    dirName = inDir
-
-    #if justShow or verbose:
-    #    if exclusions and len(exclusions) > 0:
-    #        print ("exclusions:")
-    #        for exclusion in exclusions:
-    #            print ("    %s" % exclusion)
-
-    #    print("inDir:           %s" % inDir)
-    #    if path:
-    #        print("  path:          %s" % path)
-    #        print("  dirName:       %s" % dirName)
-    #    print("showTimestamp:   %s" % showTimestamp)
-    #    print("showTree:        %s" % showTree)
-    #    print("timestamp:       %s" % timestamp)
-    #    print("verbose:         %s" % verbose)
-    #    print("version:         %s %s" % (__version__, __version_date__))
-    #if justShow:
-    #    sys.exit(0)
-
-    #if path:
-    #    pathToDir = os.path.join(path, dirName)
-    #else:
-    #    pathToDir = inDir
-
-    #print("PATH TO DIR: %s" % pathToDir)
-
-    #lines = 0
-    #sloc  = 0
-
-    #lines, sloc = countLinesInDir(pathToDir, options)
-    #for name in otherFiles:
-    #    if os.path.exists(name):
-    #        (l,s) = countLinesInPyFile(name, verbose)
-    #        lines += l
-    #        sloc  += s
-
-    #print("total of %5d lines of Python, of which %5d source" % (lines, sloc))
 
     # get and check options; XXX should throw exceptions if problems 
     # are encountered
@@ -88,6 +28,7 @@ def doCount(options):
     sloc    = 0
     options.already = set() # an unordered collection, not a dictionary
 
+    # if a file is named on the command line, we always count it.
     for name in namedFiles:
         h = None
         if (exRE is not None) and (exRE.search(name) is not None):
@@ -95,8 +36,14 @@ def doCount(options):
                 print("skipping %s" % name)
             continue
         if os.path.exists(name):
+            l,s = 0,0
             if os.path.isfile(name):
-                (l,s) = countLinesInFile(name, options)
+                if name.endswith('.py'):
+                    (l,s) = countLinesInPyFile(name, options)
+                elif name.endswith('.sno'):
+                    (l,s) = countLinesInSnoFile(name, options)
+                else:
+                    (l,s) = countLinesInGenericFile(name, options)
             elif os.path.isdir(name):
                 l,s = countLinesInDir(name, options)
             else:
@@ -224,24 +171,21 @@ if __name__ == '__main__':
     #
     #doCount(options)
     
-    # DEFAULTS ######################################################
-    namedFiles        = []
-
     # INTERPRET COMMAND LINE ########################################
     parser = ArgumentParser('count lines of source code')
 
     parser.add_argument('-j', '--justShow',     action='store_true',
         help = 'list options and exit')
     parser.add_argument('-M', '--matches',      type=str,
-        help = 'include ONLY namedFiles with matching names')
+        help = 'count ONLY files with matching names')
     parser.add_argument('-t', '--showTimestamp',action='store_true',
         help = 'output UTC timestamp to command line')
     parser.add_argument('-v', '--verbose',      action='store_true',
         help = 'whether the program is chatty')
-    parser.add_argument('-V', '--showVersion',      action='store_true',
+    parser.add_argument('-V', '--showVersion',  action='store_true',
         help = 'show version information')
     parser.add_argument('-X', '--exclusions',   type=str,
-        help = 'do not count namedFiles with matching names')
+        help = 'do not count files/directories with matching names')
 
     parser.add_argument('namedFiles', nargs='*',
         help = 'any number of namedFiles and/or directories to scan')
@@ -250,6 +194,8 @@ if __name__ == '__main__':
     args.timestamp = "%04d%02d%02d-%02d%02d%02d" % time.gmtime()[:6]
 
     # fixups --------------------------------------------------------
+    if not '.' in args.namedFiles:
+        args.namedFiles += '.'
     if args.exclusions:
         # XXX for now, just handle a single exclusion
         args.exRE = re.compile(args.exclusions)
@@ -257,8 +203,6 @@ if __name__ == '__main__':
         args.exRE = None
 
     # sanity checks -------------------------------------------------
-    if not args.namedFiles:
-        args.namedFiles = '.'
     if not args.justShow:
         if len(args.namedFiles) == 0:
             print("you need to provide some file names")

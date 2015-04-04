@@ -1,8 +1,11 @@
 # ~/dev/py/pysloc/CHANGES
 
+0.4.1
+    2015-04-04
+        * introduced extension-to-counter func map                  SLOC  425
 0.4.0
     2015-04-03
-        * incorporate snobol4-related code                          SLOC  270
+        * incorporate snobol4-related code                          SLOC  322
 0.3.0
     2015-02-16
         * include triple-dquoted strings in the count               SLOC  240

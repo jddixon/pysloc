@@ -9,24 +9,48 @@
         where LANG is the language code (abbrev), MMM the number of 
         lines of code, NNN source lines of code, and %nn.n the 
         percentage of SLOC which are test code (TSLOC)
+    * should add . to names list by default (that has been the          * DONE
+        behavior until now)                                             * DONE
+    * add -L/--mainLang option
+
+2015-04-01 [from snosloc/TODO]
+    * -v should produce a sorted list                                   * DONE
+    * add langMap, map of known languages (abbrev -> langName)
+    * add ext2lang, map guessing language from file extension
+        - one language is 'notCode'
+        - support at least python and snobol
+    * add notCodeFiles set, list of file names which don't contain code
+        (COPYING, README and such)
+    * add command line option -L/--languges for csv list of languages
+        (abbrev) to be counted; default = count all
+    * integrate [snoSloc into] existing pySloc
+    * output is langCount, a map, abbrev->(LOC, SLOC, TSLOC), where
+        TSLOC is SLOC for tests
+    * assume can use the same counter for Java and Go
+    * the perils of Perl: www.perlmonks.org/?node_id=100344 
+    * need generic counter
+        - don't count blank lines or those beginning with spaces*
+            followed by hash ('#')
+        - applied by default to anything on the command line
+            * if file lang unknown, use 'gen' for generic
 
 2015-02-16
     * triple-quoted strings (such as """...""") should be included in   * DONE
         the count                                                       * DONE
-    * need more elaborate testing, especially of triple quoting
+    * need more elaborate testing, especially of triple quoting         * DONE
     * handle pathelogical cases 
         - SQUOTEd TQUOTE: '"""' or 'like """ this'
-        - DQUOTED TQUOTE: "this is """an example"""
+        - DQUOTED TQUOTE: "this is """an example"""" (??)
 
 2013-01-28
-    * -X switch exists and exRE is calculated -- but it's never used! 
+    * -X switch exists and exRE is calculated -- but it's never used!   * FIXED
 
 2012-10-24
-    * need to drop getargs(), switch to current package
-    * should accept wildcards as 'other' names 
-    * should accept directories as 'other' names as well
-        - so just drop the -i option and default to otherNames=['.']
-    * need to filter out duplicates: pySloc setup.py currently counts
-        setup.py twice
-        - so we hash each file and only process if it has not 
-            already been counted
+    * need to drop getargs(), switch to current package [argparse]      * DONE
+    * should accept wildcards as 'other' names                          * SKIP 
+    * should accept directories as 'other' names as well                * DONE
+        - so just drop the -i option and default to otherNames=['.']    * DONE
+    * need to filter out duplicates: pySloc setup.py currently counts   * DONE
+        setup.py twice                                                  * DONE
+        - so we hash each file and only process if it has not           * DONE
+            already been counted                                        * DONE

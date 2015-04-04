@@ -1,3 +1,7 @@
 cd /home/jdd/dev/py/pysloc
 rm -rf build
-pySloc commentTester countem MANIFEST.in pySloc
+pySloc -v \
+    countem MANIFEST.in \
+    pyTripleTester \
+    snoCommentTester \
+    pySloc
