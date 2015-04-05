@@ -1,5 +1,10 @@
 # ~/dev/py/pysloc/TODO
 
+2015-04-04
+    * countLinesGeneric, countLinesPython should honor the line
+        continuation character (backslash at end of line) - but
+        how exactly?
+
 2015-04-03 
     * uncomment
         TQUOTE = '"""'
@@ -15,10 +20,10 @@
 
 2015-04-01 [from snosloc/TODO]
     * -v should produce a sorted list                                   * DONE
-    * add langMap, map of known languages (abbrev -> langName)
+    * add langMap, map of known languages (abbrev -> langName)          * DONE
     * add ext2lang, map guessing language from file extension
         - one language is 'notCode'
-        - support at least python and snobol
+        - support at least python and snobol                            * DONE
     * add notCodeFiles set, list of file names which don't contain code
         (COPYING, README and such)
     * add command line option -L/--languges for csv list of languages

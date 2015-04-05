@@ -5,15 +5,15 @@ import binascii, hashlib, os, re
 from stat import *
 
 __all__ = [ '__version__',      '__version_date__',
-            'countLinesInDir',  'countLinesInGenericFile',
-            'countLinesInPyFile', 'countLinesInSnoFile',
+            'countLinesInDir',  'countLinesGeneric',
+            'countLinesPython', 'countLinesSnobol',
             # classes
             'Q',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.1'
-__version_date__ = '2015-04-04'
+__version__      = '0.4.2'
+__version_date__ = '2015-04-05'
 
 
 # private constants -------------------------------------------------
@@ -22,48 +22,87 @@ TQUOTE = '"""'
 # class(es) ---------------------------------------------------------
 class Q(object):
 
-    __all__ = ['ext2lang','langMap','notCodeFile', '_notCodeFiles',
+    __all__ = ['ext2lang', 
+            'getCounter', 'getLongName', 
+            'langMap',
+            'nonCodeExt','notCodeFile',
             ]
     def __init__(self):
 
-        self._ext2Counter = {
-            'py'        : countLinesInPyFile,
-            'sno'       : countLinesInSnoFile,
+        # Note Ocaml comments are (* ... *) but allow nesting.  File 
+        # extensions are .ml (source code) and .mli (header; and then
+        # .cmo/.cmx, .cmi, .cma/.cmxa are compiled forms.
+
+        # Maps short name to counter function.
+        self._lang2Counter = {
+            'asm'       : countLinesGeneric,        # s, S, asm
+            'csh'       : countLinesGeneric,        # csh, tcsh
+            'gen'       : countLinesGeneric,        # treat # as comment
+            'py'        : countLinesPython,         # yes, Python
+            'rb'        : countLinesGeneric,        # ruby
+            'sed'       : countLinesGeneric,        # stream editor
+            'sh'        : countLinesGeneric,        # bash, sh
+            'sno'       : countLinesSnobol,         # snobol4
+            'tcl'       : countLinesGeneric,        # tcl, tk, itk
         }
-        # guesses language short name from file extension
+        # Guesses language short name (abbrev) from file extension.
+        # See sloccount's break_filelist for hints.
+        # Note {pl,pm,perl,pl} => perl
         self._ext2Lang  = {
-            'go'        : 'go',
-            'html'      : 'html',
-            'java'      : 'java',
-            'md'        : 'md',
+            'asm'       : 'asm',
+            'bash'      : 'sh',
+            'csh'       : 'csh',
+            'go'        : 'go',                     # same counter as C, Java ?
+            'html'      : 'html',                   # no counter
+            'itk'       : 'tcl',
+            'java'      : 'java',                   
+            'md'        : 'md',                     # no counter
             'py'        : 'py',
+            'rb'        : 'rb',
+            'S'         : 'asm',
+            's'         : 'asm',
+            'sed'       : 'sed',
             'sh'        : 'sh',
             'sno'       : 'sno',
+            'tcsh'      : 'csh',
+            'tcl'       : 'tcl',
+            'tk'        : 'tcl',
         }
-        # maps abbreviation to language name
+        # Maps lang short name (abbrev) to fuller language name.
+        # By convention, short names are limited to 4 chars.
         self._langMap = {
+            'asm'       : 'assembler',
+            'csh'       : 'csh',
             'gen'       : 'generic',
             'go'        : 'golang',
             'html'      : 'html',
             'java'      : 'java',
             'md'        : 'markdown',
             'py'        : 'python',
+            'rb'        : 'ruby',
+            'sed'       : 'sed',
+            'sh'        : 'shell',
             'sno'       : 'snobol4',
+            'tcl'       : 'tcl',
         }
 
-        # a set of extensions known not to be source code 
-        self._notCodeExt = {
-            # 'dat',    # arguable
+        # A set of extensions known NOT to be source code.
+        self._nonCodeExts = {
+            'a',                                    # library, linked object
+            'cma', 'cmi', 'cmo', 'cmx', 'cmxa',     # ocaml compiled
+            # 'dat',                                # arguable
             'jar',
+            'o',                                    # object
             'pyc',
+            'so',
         }
-        # a set of file and directory names known not to contain source code
+        # A set of file and directory names known NOT to contain source code
         self._notCodeFiles = {
             '__pycache__',
             'AUTHORS',
             'CONTRIBUTORS',
             'COPYING', 'COPYING.AUTOCONF.EXCEPTION', 
-            'COPYING.GNUBL', 'COPYING.LIB',
+                'COPYING.GNUBL', 'COPYING.LIB',
             'LICENSE',
             'NEWS',
             'PATENTS',
@@ -71,28 +110,44 @@ class Q(object):
             'TODO',
         }
 
-    def ext2Counter(self, s):
-        if s in self._ext2Counter:
-            return self._ext2Counter[s]
+    # public interface ==============================================
+
+    def ext2Lang(self, s):
+        if s in self._ext2Lang:
+            return self._ext2Lang[s]
         else:
             return None
 
-    def ext2lang(self, s):
-        """ Given a file name extension, return the longer language name """
-        if s in _ext2lang:
-            return self._ext2lang[s]
+    def getCounter(self, lang, isCLIArg):
+        """ 
+        Enter with the language (abbrev) of a file and whether the name is on 
+        the command line.  If there is a counter matching that name, return a 
+        reference to it.  Otherwise, if this is a CLI argument, return the 
+        generic counter.  Otherwise, return None.
+
+        XXX If the name on the command line is a directory name, should
+        be handled differently.
+        """
+        if lang and (len(lang) > 0) and (lang in self._lang2Counter):
+            return self._lang2Counter[lang]
+        elif isCLIArg:
+            return countLinesGeneric
         else:
             return None
 
-    def langMap(self, s):
+    def getLongName(self, s):
         """ Given a short file name, return the longer language name """
-        if s in _langMap:
+        if s in self._langMap:
             return self._langMap[s]
         else:
             return None
 
+    def nonCodeExt(self, s):
+        return s in self._nonCodeExts
+
     def notCodeFile(self, s):
         return s in self._notCodeFiles
+
 
 # functions =========================================================
 
@@ -127,10 +182,14 @@ def countLinesInDir(pathToDir, options):
                 if q.notCodeFile(name):
                     pass
                 else:
+                    # XXX Note command line argument may be relative or
+                    # absolute path to file, terminated by base file name
+                    # and extension.
                     counted = False
                     a, b, ext = name.rpartition('.')
                     if b == '.':
-                        counter = q.ext2Counter(ext)
+                        lang    = q.ext2Lang(ext)
+                        counter = q.lang2Counter(lang)
                         if counter:
                             moreLines, moreSloc = counter(pathToFile, options)
                             lines += moreLines
@@ -180,7 +239,7 @@ def checkWhetherAlreadyCounted(pathToFile, options):
                     lines = lines[:-1]
     return lines, h
 
-def countLinesInGenericFile(pathToFile, options):
+def countLinesGeneric(pathToFile, options):
     """ 
     Count lines in a file where the sharp sign ('#') is the comment
     marker.  That is, we ignore blank lines, lines consisting solely of 
@@ -206,7 +265,7 @@ def countLinesInGenericFile(pathToFile, options):
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return linesSoFar, slocSoFar
 
-def countLinesInPyFile(pathToFile, options):
+def countLinesPython(pathToFile, options):
 
     inTripleQuote         = False
     linesSoFar, slocSoFar = (0,0)
@@ -239,7 +298,7 @@ def countLinesInPyFile(pathToFile, options):
     return (linesSoFar, slocSoFar)
 
 
-def countLinesInSnoFile(pathToFile, options):
+def countLinesSnobol(pathToFile, options):
     """ 
     already is a set containing hashes of files already counted 
     """
