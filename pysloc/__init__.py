@@ -12,8 +12,8 @@ __all__ = [ '__version__',      '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.2'
-__version_date__ = '2015-04-05'
+__version__      = '0.4.4'
+__version_date__ = '2015-04-06'
 
 
 # private constants -------------------------------------------------
@@ -91,19 +91,32 @@ class Q(object):
             'a',                                    # library, linked object
             'cma', 'cmi', 'cmo', 'cmx', 'cmxa',     # ocaml compiled
             # 'dat',                                # arguable
+            'gz',
             'jar',
+            'md',                                   # markdown
             'o',                                    # object
             'pyc',
             'so',
+            'svn-base',
+            'swp',                                  # vi/vim temporary file
+            'zip',
         }
         # A set of file and directory names known NOT to contain source code
+        self._notCodeDirs = {
+            '.git',     
+            '.svn',
+        }
         self._notCodeFiles = {
+            '.gitignore',
+            '.wrapped',
             '__pycache__',
             'AUTHORS',
+            'CHANGES',
             'CONTRIBUTORS',
             'COPYING', 'COPYING.AUTOCONF.EXCEPTION', 
                 'COPYING.GNUBL', 'COPYING.LIB',
             'LICENSE',
+            'MANIFEST',
             'NEWS',
             'PATENTS',
             'README',
@@ -118,7 +131,7 @@ class Q(object):
         else:
             return None
 
-    def getCounter(self, lang, isCLIArg):
+    def getCounter(self, lang, isCLIArg=False):
         """ 
         Enter with the language (abbrev) of a file and whether the name is on 
         the command line.  If there is a counter matching that name, return a 
@@ -145,9 +158,41 @@ class Q(object):
     def nonCodeExt(self, s):
         return s in self._nonCodeExts
 
+    def notCodeDir(self, s):
+        return s in self._notCodeDirs
+
     def notCodeFile(self, s):
         return s in self._notCodeFiles
 
+    def guessLang(self, fileName, isCLIArg = False):
+        """ return the short name of the language """
+        lang = None     # default
+        ext  = None
+        if self.notCodeFile(fileName):
+            # DEBUG
+            print("    %s is a not-code file" % fileName)
+            # END
+        else:
+            # get any extension
+            a, b, c = fileName.rpartition('.')
+            if b == '.':
+                # we have an extension
+                ext = c
+                if not self.nonCodeExt(ext):
+                    # we have an extension and it's not prohibited
+                    lang    = self.ext2Lang(ext)
+                    if lang == None:
+                        lang = 'gen'
+            elif isCLIArg:
+                lang = 'gen'
+        # DEBUG
+        if ext != None:
+            print("  %s: find ext '%s', GUESS lang %s" % (fileName, ext, lang))
+        else:
+            print("  %s: NO ext, GUESS lang %s" % (fileName, lang))
+
+        # END
+        return lang
 
 # functions =========================================================
 
@@ -163,10 +208,12 @@ def countLinesInDir(pathToDir, options):
     #        rs = pair[1]
     #        print("%s => %s" % (ls, rs))
     ## END
+    q       = options.q
+    verbose = options.verbose
     lines, sloc = (0,0)
     files = os.listdir(pathToDir)
     if files:
-        q = Q()
+        q = options.q
         for name in sorted(files):
             # consider exclusions ...
             if options.exRE is not None and options.exRE.search(file) is not None:
@@ -180,16 +227,16 @@ def countLinesInDir(pathToDir, options):
                 sloc  += moreSloc
             elif S_ISREG(mode):
                 if q.notCodeFile(name):
-                    pass
+                    if verbose:
+                        print("Not a code file: %s" % name)
                 else:
                     # XXX Note command line argument may be relative or
                     # absolute path to file, terminated by base file name
                     # and extension.
                     counted = False
-                    a, b, ext = name.rpartition('.')
-                    if b == '.':
-                        lang    = q.ext2Lang(ext)
-                        counter = q.lang2Counter(lang)
+                    lang = q.guessLang(name)    # isCLIArg == False
+                    if lang != None:
+                        counter = q.getCounter(lang, True)
                         if counter:
                             moreLines, moreSloc = counter(pathToFile, options)
                             lines += moreLines
@@ -197,7 +244,7 @@ def countLinesInDir(pathToDir, options):
                             counted = True
                     
                     if not counted and options.verbose:
-                        print("Don't know how to count lines in %s" % name)
+                        print("    skipping %s" % name)
 
     return lines, sloc
 

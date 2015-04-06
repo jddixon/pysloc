@@ -6,7 +6,7 @@ import os, sys, unittest
 from argparse   import Namespace
 
 from pysloc     import __version__, __version_date__
-from pysloc     import countLinesInDir, countLinesPython
+from pysloc     import countLinesInDir, countLinesPython, Q
 
 class TestPyTripleQuote (unittest.TestCase):
 
@@ -24,6 +24,7 @@ class TestPyTripleQuote (unittest.TestCase):
         options = Namespace()
         options.already = set()
         options.exRE    = None
+        options.q       = Q()
         options.verbose = False
 
         lines, sloc = countLinesPython(testFile, options)

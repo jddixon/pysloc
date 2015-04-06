@@ -17,8 +17,10 @@ def doCount(options):
     exclusions      = options.exclusions
     exRE            = options.exRE
     justShow        = options.justShow
+    mainLang        = options.mainLang
     matches         = options.matches
     namedFiles      = options.namedFiles
+    q               = options.q
     showTimestamp   = options.showTimestamp
     showVersion     = options.showVersion
     timestamp       = options.timestamp
@@ -30,21 +32,30 @@ def doCount(options):
 
     # if a file is named on the command line, we always count it.
     for name in namedFiles:
-        h = None
+        lang = None
         if (exRE is not None) and (exRE.search(name) is not None):
             if verbose:
-                print("skipping %s" % name)
+                print("skipping %s: excluded" % name)
             continue
+        # a file name may be prefixed with the short name of a language
+        a, b, c = name.partition(':')
+        if b == ':':
+            lang, name = a, c
+
         if os.path.exists(name):
             l,s = 0,0
             if os.path.isfile(name):
-                if name.endswith('.py'):
-                    (l,s) = countLinesInPyFile(name, options)
-                elif name.endswith('.sno'):
-                    (l,s) = countLinesInSnoFile(name, options)
-                else:
-                    (l,s) = countLinesInGenericFile(name, options)
+                counter = None
+                if lang == None:
+                    lang = q.guessLang(name, True)  # isCLIArg
+                if lang != None:
+                    counter = q.getCounter(name, options)
+                if counter == None:
+                    counter = countLinesGeneric
+                l,s = counter(name, options)
+            
             elif os.path.isdir(name):
+                # XXX EXCLUDE SOME DIRS
                 l,s = countLinesInDir(name, options)
             else:
                 print("? don't know how to count %s" % name)
@@ -57,125 +68,14 @@ def doCount(options):
 
 # MAIN ##############################################################
 if __name__ == '__main__':
-    #import getopt
-
-    #timestamp   = "%04d%02d%02d-%02d%02d%02d" % time.gmtime()[:6]
-
-    ## DEFAULTS ######################################################
-    #exclusions   = []
-    #inDir        = '.'
-    #justShow     = False
-    #matches      = None
-    #options      = {}
-    #outPath      = None         # full path to file, or None
-    #showTree     = False
-    #showTimestamp= False        # UTC time in YYYYMMDD-HHMMSS format
-    #showVersion  = False
-    #verbose      = False
-
-    ## DEFAULTS USED TO BUILD OPTIONS 
-    #outDir       = None
-    #outFileName  = timestamp
-
-    ## INTERPRET COMMAND LINE ########################################
-    #def usage(msg, arg = 1):
-    #    text = ''.join(['usage:\n', 
-    #        'pySloc [options]\n',
-    #        'where the options are\n',
-    #        '  -h, --help           to see this very useful message\n',
-    #        '  -i, --inDir DIR      where DIR names directory being scanned\n',
-    #        '  -j, --justShow       list options and exit\n',
-    #        '  -m  --showTree       output the pysloc hash/filename ',
-    #                                                                'pairs\n',
-    #        '  -P, --match PAT      include ONLY files with matching names\n',
-    #        '  -t, --showTimestamp  output UTC timestamp to command line\n',
-    #        '  -v, --verbose        verbose: whether the program is chatty\n',
-    #        '  -V, --version        show version information\n',
-    #        '  -X, --exclude PAT    don\'t include files with matching names\n',
-    #        ])
-    #    if msg != None and len(msg) > 0:
-    #        print(msg)
-    #    print(text)
-    #    sys.exit(arg)
-
-    #argVec = sys.argv[1:]
-    #try:
-    #    opts, names = getopt.getopt(argVec, 'hd:i:jmo:P:tvVxX:', 
-    #                        ['help', 
-    #                         'inDir',
-    #                         'justShow',
-    #                         'showTree',
-    #                         'outFileName',
-    #                         'match',
-    #                         'showTimestamp',
-    #                         'verbose',
-    #                         'version',
-    #                         'exclude',
-    #                         ])
-    #except getopt.GetoptError as e:
-    #    msg = 'illegal or invalid option %s' % str(e)
-    #    usage(msg)
-
-    #for o, a in opts:
-    #    if   o in ('-h', '--help'):
-    #        usage('', 0)
-    #        sourceNodeID = a
-    #    
-    #    elif o in ('-i', '--inDir'):
-    #        inDir  = a
-    #    elif o in ('-j', '--justShow'):
-    #        justShow = True
-    #    elif o in ('-m', '--showTree'):
-    #        showTree = True
-    #    elif o in ('-o', '--outFileName'):
-    #        outFileName  = a
-    #    elif o in ('-P', '--match'):
-    #        print("DEBUG: matching on '%s'" % a)
-    #        if matches == None:
-    #            matches = []
-    #        matches.append(a)               # should be regex
-    #    elif o in ('-t', '--showTimestamp'):
-    #        showTimestamp = True
-    #    elif o in ('-v', '--verbose'):
-    #        verbose = True
-    #    elif o in ('-V', '--version'):
-    #        showVersion = True
-    #        print("pySloc %s %s" % (__version__, __version_date__))
-    #    elif o in ('-X', '--exclude'):
-    #        exclusions.append(a)            # should be regex
-    #    else:
-    #        msg = 'INTERNAL ERROR: illegal or invalid option %s' % str(o)
-    #        usage(msg)              # FOO
-
-    ## FIXUPS ########################################################
-
-    ## SANITY CHECKS #################################################
-    #if not justShow:
-    #    if inDir == None or len(inDir) == 0:
-    #        usage("null or empty directory name")
-
-    ## SET UP COMMAND ################################################
-    #options['exclusions']   = exclusions    # unordered list
-    #options['exRE']         = MerkleDoc.makeExRE(exclusions)
-    #options['inDir']        = inDir  
-    #options['justShow']     = justShow  
-    #options['matches']      = matches       # unordered list
-    #options['outPath']      = outPath  
-    #options['showTimestamp']= showTimestamp  
-    #options['showTree']     = showTree  
-    #options['showVersion']  = showVersion  
-    #options['timestamp']    = timestamp  
-    #options['verbose']      = verbose  
-    #
-    #options['namedFiles']   = names
-    #
-    #doCount(options)
-    
-    # INTERPRET COMMAND LINE ########################################
+   
+    # INTERPRET COMMAND LINE ----------------------------------------
     parser = ArgumentParser('count lines of source code')
 
     parser.add_argument('-j', '--justShow',     action='store_true',
         help = 'list options and exit')
+    parser.add_argument('-L', '--mainLang',     type=str,
+        help = 'main language expected (short name, optional)')
     parser.add_argument('-M', '--matches',      type=str,
         help = 'count ONLY files with matching names')
     parser.add_argument('-t', '--showTimestamp',action='store_true',
@@ -191,28 +91,41 @@ if __name__ == '__main__':
         help = 'any number of namedFiles and/or directories to scan')
     args = parser.parse_args()
 
-    args.timestamp = "%04d%02d%02d-%02d%02d%02d" % time.gmtime()[:6]
+    args.q          = Q()
+    args.timestamp  = "%04d%02d%02d-%02d%02d%02d" % time.gmtime()[:6]
 
     # fixups --------------------------------------------------------
-    if not '.' in args.namedFiles:
-        args.namedFiles += '.'
     if args.exclusions:
         # XXX for now, just handle a single exclusion
         args.exRE = re.compile(args.exclusions)
     else:
         args.exRE = None
-
-    # sanity checks -------------------------------------------------
+    
+    if not '.' in args.namedFiles:
+        args.namedFiles += '.'
     if not args.justShow:
         if len(args.namedFiles) == 0:
             print("you need to provide some file names")
             parser.print_help()
             sys.exit(0)
 
+    if not args.mainLang:
+        args.mainLang = ''
+    elif args.mainLang != '':
+        h = args.q.getCounter(args.mainLang)
+        if h == None:
+            print("'%s' is not the short name of a supported language" % 
+                args.mainLang)
+            parser.print_help();
+            sys.exit(1)
+
+    # sanity checks -------------------------------------------------
+
     # chatter -------------------------------------------------------
     if args.justShow or args.verbose:
         
         print("exclusions:      %s" % args.exclusions)
+        print("mainLang:        %s" % args.mainLang)
         print("matches:         %s" % args.matches)
         print("showTimestamp:   %s" % args.showTimestamp)
         print("timestamp:       %s" % args.timestamp)

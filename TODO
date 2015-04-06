@@ -1,5 +1,10 @@
 # ~/dev/py/pysloc/TODO
 
+2015-04-05
+    * suspect deduping not working
+
+    * differentiate count totals by language -- introduce map from
+        short lang name to (LOC, SLOC, TSLOC) totals tuple
 2015-04-04
     * countLinesGeneric, countLinesPython should honor the line
         continuation character (backslash at end of line) - but
@@ -33,9 +38,9 @@
         TSLOC is SLOC for tests
     * assume can use the same counter for Java and Go
     * the perils of Perl: www.perlmonks.org/?node_id=100344 
-    * need generic counter
-        - don't count blank lines or those beginning with spaces*
-            followed by hash ('#')
+    * need generic counter                                              * DONE
+        - don't count blank lines or those beginning with spaces*       * DONE
+            followed by hash ('#')                                      * DONE
         - applied by default to anything on the command line
             * if file lang unknown, use 'gen' for generic
 

@@ -1,7 +1,8 @@
 cd /home/jdd/dev/py/pysloc
 rm -rf build
-pySloc  \
+# for normal use, drop the leading ./ and the -v option
+./pySloc -L py -v \
     countem MANIFEST.in \
     pyTripleTester \
     snoCommentTester \
-    pySloc
+    py:pySloc
