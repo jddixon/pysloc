@@ -5,31 +5,107 @@ import binascii, hashlib, os, re
 from stat import *
 
 __all__ = [ '__version__',      '__version_date__',
-            'countLinesInDir',  'countLinesGeneric',
+            'countLinesInDir',  'countLinesGeneric', 'countLinesGo',
             'countLinesPython', 'countLinesSnobol',
             # classes
-            'Q',
+            'K', 'Q',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.4'
-__version_date__ = '2015-04-06'
+__version__      = '0.4.5'
+__version_date__ = '2015-04-07'
 
 
 # private constants -------------------------------------------------
 TQUOTE = '"""'
 
 # class(es) ---------------------------------------------------------
+class K(object):
+    """ a holder for various counts """
+
+    LOC   = 0   # lines of non-test code
+    SLOC  = 1   # of which source lines
+    TLOC  = 2   # lines of test code
+    TSLOC = 3   # of which source lines
+
+    def __init__(self):
+        # we maintain a map from lang to a list of 4: lines, sloc, tlines, tsloc,
+        # where t means test
+        self.m = {}
+
+    def foo(self):
+        print("hi, I'm your neighborhood foo!")
+
+    def addCounts(self, lang, l, s):
+        """ add non-test line count and source line count for language"""
+
+        # XXX we want l and s to be non-negative integers
+
+        if not lang in self.m:
+            self.m[lang] = [0,0,0,0]
+        self.m[lang][K.LOC]  += l
+        self.m[lang][K.SLOC] += s
+
+
+    def addTestCounts(self, lang, l, s):
+        """ add test line count and source line count for language"""
+
+        # XXX we want l and s to be non-negative integers
+
+        if not lang in self.m:
+            self.m[lang] = [0,0,0,0]
+        self.m[lang][K.TLOC]  += l
+        self.m[lang][K.TSLOC] += s
+
+    def getCounts(self, lang):
+        if (not lang) or (not lang in self.m):
+            return (0,0,0,0)
+        else:
+            return self.m[lang]
+
+    def prettyCounts(self, lang):
+        """ 
+        Return a string containing the short name of the language and
+        the total line count, the source line count, and the percentage
+        of source lines which are test lines.  The total line count
+        includes the source line count.  As an example a python file
+        with 17 lines of which 12 are source, of which 9 are test code
+        would produce the string 'py:17/12 T%75.0'
+
+        """
+        if (not lang) or (not lang in self.m):
+            return '%s: 0' % lang
+        else:
+            l, s, tl, ts = self.m[lang]
+            if ts > 0:
+                return "%s:%d/%d T%%%.1f" % (lang, l+tl, s+ts, 100.0*ts/(s+ts))
+            else:
+                return "%s:%d/%d" % (lang, l+tl, s)
+
+    def prettyBreakDown(self):
+        for lang in sorted(self.m):
+            print( self.prettyCounts(lang) )
+
+    def getTotals(self):
+        totalL, totalS, totalTL, totalTS = 0,0,0,0
+        for lang in self.m:
+            l, s, tl, ts = self.m[lang]
+            totalL  += l    # lines of non-test code
+            totalS  += s    # lines of which are source code
+            totalTL += tl   # lines of test code
+            totalTS += ts   # lines of which are source code
+        return totalL, totalS, totalTL, totalTS
+
 class Q(object):
 
-    __all__ = ['ext2lang', 
-            'getCounter', 'getLongName', 
+    __all__ = ['ext2lang',
+            'getCounter', 'getLongName',
             'langMap',
             'nonCodeExt','notCodeFile',
             ]
     def __init__(self):
 
-        # Note Ocaml comments are (* ... *) but allow nesting.  File 
+        # Note Ocaml comments are (* ... *) but allow nesting.  File
         # extensions are .ml (source code) and .mli (header; and then
         # .cmo/.cmx, .cmi, .cma/.cmxa are compiled forms.
 
@@ -38,6 +114,7 @@ class Q(object):
             'asm'       : countLinesGeneric,        # s, S, asm
             'csh'       : countLinesGeneric,        # csh, tcsh
             'gen'       : countLinesGeneric,        # treat # as comment
+            'go'        : countLinesGo,             # golang
             'py'        : countLinesPython,         # yes, Python
             'rb'        : countLinesGeneric,        # ruby
             'sed'       : countLinesGeneric,        # stream editor
@@ -55,7 +132,7 @@ class Q(object):
             'go'        : 'go',                     # same counter as C, Java ?
             'html'      : 'html',                   # no counter
             'itk'       : 'tcl',
-            'java'      : 'java',                   
+            'java'      : 'java',
             'md'        : 'md',                     # no counter
             'py'        : 'py',
             'rb'        : 'rb',
@@ -103,7 +180,7 @@ class Q(object):
         }
         # A set of file and directory names known NOT to contain source code
         self._notCodeDirs = {
-            '.git',     
+            '.git',
             '.svn',
         }
         self._notCodeFiles = {
@@ -113,7 +190,7 @@ class Q(object):
             'AUTHORS',
             'CHANGES',
             'CONTRIBUTORS',
-            'COPYING', 'COPYING.AUTOCONF.EXCEPTION', 
+            'COPYING', 'COPYING.AUTOCONF.EXCEPTION',
                 'COPYING.GNUBL', 'COPYING.LIB',
             'LICENSE',
             'MANIFEST',
@@ -132,10 +209,10 @@ class Q(object):
             return None
 
     def getCounter(self, lang, isCLIArg=False):
-        """ 
-        Enter with the language (abbrev) of a file and whether the name is on 
-        the command line.  If there is a counter matching that name, return a 
-        reference to it.  Otherwise, if this is a CLI argument, return the 
+        """
+        Enter with the language (abbrev) of a file and whether the name is on
+        the command line.  If there is a counter matching that name, return a
+        reference to it.  Otherwise, if this is a CLI argument, return the
         generic counter.  Otherwise, return None.
 
         XXX If the name on the command line is a directory name, should
@@ -164,35 +241,43 @@ class Q(object):
     def notCodeFile(self, s):
         return s in self._notCodeFiles
 
-    def guessLang(self, fileName, isCLIArg = False):
-        """ return the short name of the language """
-        lang = None     # default
-        ext  = None
-        if self.notCodeFile(fileName):
-            # DEBUG
-            print("    %s is a not-code file" % fileName)
-            # END
-        else:
-            # get any extension
-            a, b, c = fileName.rpartition('.')
-            if b == '.':
-                # we have an extension
-                ext = c
-                if not self.nonCodeExt(ext):
-                    # we have an extension and it's not prohibited
-                    lang    = self.ext2Lang(ext)
-                    if lang == None:
-                        lang = 'gen'
-            elif isCLIArg:
-                lang = 'gen'
+    def guessLang(self, fileName, isCLIArg = False, verbose=False):
+        """
+        Guess the short name of the language and whether it is a test file
+        depending on whether the name appears on the command line (we
+        always count any file named on the command line).
+        """
+        lang, isTest = None, False     # defaults
+        if (fileName != None) and (fileName != '') :
+            ext  = None
+            if not self.notCodeFile(fileName):
+                # get any extension
+                a, b, c = fileName.rpartition('.')
+                if b == '.':
+                    # we have an extension
+                    ext = c
+                    if not self.nonCodeExt(ext):
+                        # we have an extension and it's not prohibited
+                        lang    = self.ext2Lang(ext)
+                        if (lang == None) and isCLIArg:
+                            lang = 'gen'
+                elif isCLIArg:
+                    lang = 'gen'
+
+        if lang == 'go':
+            isTest = fileName.endswith('_test.go')
+        elif lang == 'py':
+            isTest = fileName.startswith('test')
+
         # DEBUG
-        if ext != None:
-            print("  %s: find ext '%s', GUESS lang %s" % (fileName, ext, lang))
-        else:
-            print("  %s: NO ext, GUESS lang %s" % (fileName, lang))
+        if verbose > 1:
+            if ext != None:
+                print("  %s: find ext '%s', GUESS lang %s" % (fileName, ext, lang))
+            else:
+                print("  %s: NO ext, GUESS lang %s" % (fileName, lang))
 
         # END
-        return lang
+        return lang, isTest
 
 # functions =========================================================
 
@@ -208,6 +293,7 @@ def countLinesInDir(pathToDir, options):
     #        rs = pair[1]
     #        print("%s => %s" % (ls, rs))
     ## END
+    k       = options.k
     q       = options.q
     verbose = options.verbose
     lines, sloc = (0,0)
@@ -218,6 +304,7 @@ def countLinesInDir(pathToDir, options):
             # consider exclusions ...
             if options.exRE is not None and options.exRE.search(file) is not None:
                 continue
+            isTest = False  # default
             pathToFile = os.path.join(pathToDir, name)
             s = os.lstat(pathToFile)        # ignores symlinks
             mode = s.st_mode
@@ -227,23 +314,29 @@ def countLinesInDir(pathToDir, options):
                 sloc  += moreSloc
             elif S_ISREG(mode):
                 if q.notCodeFile(name):
-                    if verbose:
+                    if verbose > 1:
                         print("Not a code file: %s" % name)
                 else:
                     # XXX Note command line argument may be relative or
                     # absolute path to file, terminated by base file name
                     # and extension.
                     counted = False
-                    lang = q.guessLang(name)    # isCLIArg == False
+                    # isCLIArg == False
+                    lang, isTest = q.guessLang(name,verbose=verbose)
                     if lang != None:
                         counter = q.getCounter(lang, True)
                         if counter:
                             moreLines, moreSloc = counter(pathToFile, options)
-                            lines += moreLines
+                            lines += moreLines  # VESTIGIAL
                             sloc  += moreSloc
+
+                            if isTest:
+                                k.addTestCounts(lang, moreLines, moreSloc)
+                            else:
+                                k.addCounts(lang, moreLines, moreSloc)
                             counted = True
-                    
-                    if not counted and options.verbose:
+
+                    if not counted and options.verbose > 1:
                         print("    skipping %s" % name)
 
     return lines, sloc
@@ -253,11 +346,11 @@ def countLinesInDir(pathToDir, options):
 def checkWhetherAlreadyCounted(pathToFile, options):
     """
     Given a text file, try to split it into a list of lines.  May raise
-    an exception.  If the file has been seen before, will return an 
+    an exception.  If the file has been seen before, will return an
     empty list of lines.  Otherwise it retuns the list of lines and the
     file's hash.
-    
-    options.already is a set containing hashes of files already counted 
+
+    options.already is a set containing hashes of files already counted
     """
     lines, h = None, None
     with open(pathToFile, 'rb') as f:
@@ -266,10 +359,8 @@ def checkWhetherAlreadyCounted(pathToFile, options):
         d = hashlib.sha1()
         d.update(data)
         h = d.hexdigest()   # a string
-        # XXX This is very messy; should distinguish levels of 
-        # verbosity and only print this if more verbose
-        #if options.verbose:
-        #    print("    %s <-- %s" % (h, pathToFile))
+        if options.verbose > 1:
+            print("    %s <-- %s" % (h, pathToFile))
         if h in options.already:
             if options.verbose:
                 print("skipping %s, already counted" % pathToFile)
@@ -287,9 +378,9 @@ def checkWhetherAlreadyCounted(pathToFile, options):
     return lines, h
 
 def countLinesGeneric(pathToFile, options):
-    """ 
+    """
     Count lines in a file where the sharp sign ('#') is the comment
-    marker.  That is, we ignore blank lines, lines consisting solely of 
+    marker.  That is, we ignore blank lines, lines consisting solely of
     spaces, and those starting with zero or more spaces followed by
     a sharp sign.
     """
@@ -312,6 +403,56 @@ def countLinesGeneric(pathToFile, options):
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return linesSoFar, slocSoFar
 
+OLD_COMMENT_PAT = "^(.*)/\*.*\*/(.*)$"
+OLD_COMMENT_RE  = re.compile(OLD_COMMENT_PAT)
+
+def countLinesGo(pathToFile, options):
+    linesSoFar,slocSoFar    = (0,0)
+    inMultiLine             = False
+    try:
+        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        if (hash != None) and (lines != None):
+            for line in lines:
+                linesSoFar += 1
+
+                #print "\nINITIALLY '%s'" % line.strip()
+    
+                if not inMultiLine:
+                    m = OLD_COMMENT_RE.match(line)
+                    if m:
+                        line = m.group(1) + m.group(2)
+                        # print "LINE AFTER OLD COMMENT DROPPED: %s" % line
+                    s = line.partition('/*')
+                    if s[1] == '/*':
+                        line = s[0]
+                        inMultiLine = True
+    
+                if inMultiLine:
+                    s = line.partition('*/')
+                    if s[1] == '*/':
+                        line = s[2]
+                        inMultiLine = False
+                    else:
+                        line = ''
+    
+                #print "AFTER MULTI_LINE TESTS: '%s'" % line.strip()
+                if line is not None and line != '':
+                    s = line.partition('//')[0]     # strip off comments
+                    line = s.strip()                # strip off leading, trailing
+                    if line != '':
+                        slocSoFar += 1
+                #print "AFTER COMMENT STRIPPING: '%s'" % line.strip()
+
+
+            options.already.add(hash)
+            if options.verbose:
+                print ("%-54s: %5d lines, %5d sloc" % (
+                    pathToFile, linesSoFar, slocSoFar))
+
+    # SHOULD BE OK:
+    except Exception as e:
+        print("error reading '%s', skipping: %s" % (pathToFile, e))
+    return (linesSoFar, slocSoFar)
 def countLinesPython(pathToFile, options):
 
     inTripleQuote         = False
@@ -346,8 +487,8 @@ def countLinesPython(pathToFile, options):
 
 
 def countLinesSnobol(pathToFile, options):
-    """ 
-    already is a set containing hashes of files already counted 
+    """
+    already is a set containing hashes of files already counted
     """
 
     linesSoFar, slocSoFar = (0,0)

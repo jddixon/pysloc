@@ -1,24 +1,33 @@
 # ~/dev/py/pysloc/TODO
 
-2015-04-05
-    * suspect deduping not working
+2015-04-06
+    * convert verbose/osity from bool to int                            * DONE
+    * counters should return (lines, sloc), which may be treated        * YEP
+        as (testLines, testSloc) by the caller                          * YEP
+    * add support for Go -- that is, merge gosloc into pysloc           * DONE
+    * add -z/--onlyNamedFiles option, which only counts files named     * DONE
+        on the command line) (and so does not add '.')                  * DONE
 
-    * differentiate count totals by language -- introduce map from
-        short lang name to (LOC, SLOC, TSLOC) totals tuple
+2015-04-06 (edited from -03)
+    * uncomment
+        TQUOTE = '"""'
+        in commentsForPy and get testPyComments.py working
+    * standard output should be in the form                             * DONE
+        LANG MMM/NNN/Tnn.n%                                             * DONE
+        where LANG is the language code (abbrev), MMM the number of     * DONE
+        lines of code, NNN source lines of code, and %nn.n the          * DONE
+        percentage of SLOC which are test code (TSLOC)                  * DONE
+
+2015-04-05
+    * suspect deduping not working                                      * FALSE
+    * differentiate count totals by language -- introduce map from      * DONE
+        short lang name to (LOC, SLOC, TSLOC) totals tuple              * DONE
 2015-04-04
     * countLinesGeneric, countLinesPython should honor the line
         continuation character (backslash at end of line) - but
         how exactly?
 
 2015-04-03 
-    * uncomment
-        TQUOTE = '"""'
-        in pyTripleTester and get testPyTripleQuote.py working
-    * standard output should be in the form
-        LANG MMM/NNN/%nn.nT
-        where LANG is the language code (abbrev), MMM the number of 
-        lines of code, NNN source lines of code, and %nn.n the 
-        percentage of SLOC which are test code (TSLOC)
     * should add . to names list by default (that has been the          * DONE
         behavior until now)                                             * DONE
     * add -L/--mainLang option

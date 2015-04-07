@@ -1,12 +1,16 @@
 # ~/dev/py/pysloc/CHANGES
 
+0.4.5
+    2015-04-07 
+        NOT YET ON GITHUB
+        * introduce K, counter class with lang->counts map          SLOC  803
+        * count lines of Go                                         SLOC  874
 0.4.4
-    2015
+    2015-04-06
         * counting semi-working again                               SLOC  646 ?
-
 0.4.2
     2015-04-05
-        * add languages handled by generic counter                  SLOC 575
+        * add languages handled by generic counter                  SLOC  575
 0.4.1
     2015-04-04
         * introduced extension-to-counter func map                  SLOC  425

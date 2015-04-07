@@ -1,0 +1,14 @@
+/* gotester */
+
+this is the third line                          SLOC 1
+this is the fourth // ending with a comment     SLOC 2
+// this is the fifth
+and this is my very generous 6th line           SLOC 3
+
+/* This is a multiline comment 
+ * runing over several lines
+ * with occasional correct spellings
+ */
+I see four source lines in this 14-line file    SLOC 4
+
+

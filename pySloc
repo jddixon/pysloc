@@ -17,54 +17,69 @@ def doCount(options):
     exclusions      = options.exclusions
     exRE            = options.exRE
     justShow        = options.justShow
+    k               = options.k
     mainLang        = options.mainLang
     matches         = options.matches
     namedFiles      = options.namedFiles
+    onlyNamedFiles  = options.onlyNamedFiles
     q               = options.q
     showTimestamp   = options.showTimestamp
     showVersion     = options.showVersion
     timestamp       = options.timestamp
     verbose         = options.verbose
 
-    lines   = 0
-    sloc    = 0
+    lines   = 0     # VESTIGIAL
+    sloc    = 0     # VESTIGIAL
     options.already = set() # an unordered collection, not a dictionary
 
     # if a file is named on the command line, we always count it.
     for name in namedFiles:
-        lang = None
+        lang,isTest = None,False
         if (exRE is not None) and (exRE.search(name) is not None):
-            if verbose:
+            if verbose > 1:
                 print("skipping %s: excluded" % name)
             continue
+
         # a file name may be prefixed with the short name of a language
         a, b, c = name.partition(':')
         if b == ':':
             lang, name = a, c
 
+        # DEBUG
+        # print("processing %s as %s" % (name, lang))
+        # END
         if os.path.exists(name):
             l,s = 0,0
             if os.path.isfile(name):
                 counter = None
                 if lang == None:
-                    lang = q.guessLang(name, True)  # isCLIArg
+                    lang, isTest = q.guessLang(name,
+                            isCLIArg=True, verbose=options.verbose) 
                 if lang != None:
-                    counter = q.getCounter(name, options)
+                    counter = q.getCounter(lang, True)
                 if counter == None:
                     counter = countLinesGeneric
                 l,s = counter(name, options)
+                if isTest:
+                    k.addTestCounts(lang, l, s)
+                else:
+                    k.addCounts(lang, l, s)
             
             elif os.path.isdir(name):
                 # XXX EXCLUDE SOME DIRS
                 l,s = countLinesInDir(name, options)
             else:
                 print("? don't know how to count %s" % name)
+            # VESTIGIAL
             lines += l
             sloc  += s
         else:
             print("file does not exist: %s" % name)
 
-    print("total of %5d lines of code, of which %5d source" % (lines, sloc))
+    if verbose>1:
+        print("total of %5d lines of code, of which %5d source" % (lines, sloc))
+
+    k.prettyBreakDown()
 
 # MAIN ##############################################################
 if __name__ == '__main__':
@@ -80,17 +95,20 @@ if __name__ == '__main__':
         help = 'count ONLY files with matching names')
     parser.add_argument('-t', '--showTimestamp',action='store_true',
         help = 'output UTC timestamp to command line')
-    parser.add_argument('-v', '--verbose',      action='store_true',
-        help = 'whether the program is chatty')
+    parser.add_argument('-v', '--verbose',      action='count',  default=0,
+        help = 'make me more chatty')
     parser.add_argument('-V', '--showVersion',  action='store_true',
         help = 'show version information')
     parser.add_argument('-X', '--exclusions',   type=str,
         help = 'do not count files/directories with matching names')
+    parser.add_argument('-z', '--onlyNamedFiles',   action='store_true',
+        help = 'only count files named on the command line')
 
     parser.add_argument('namedFiles', nargs='*',
         help = 'any number of namedFiles and/or directories to scan')
     args = parser.parse_args()
 
+    args.k          = K()   # a map, lang => (lines, sloc, tlines, tsloc)
     args.q          = Q()
     args.timestamp  = "%04d%02d%02d-%02d%02d%02d" % time.gmtime()[:6]
 
@@ -101,7 +119,7 @@ if __name__ == '__main__':
     else:
         args.exRE = None
     
-    if not '.' in args.namedFiles:
+    if (not args.onlyNamedFiles) and (not '.' in args.namedFiles):
         args.namedFiles += '.'
     if not args.justShow:
         if len(args.namedFiles) == 0:
@@ -122,17 +140,19 @@ if __name__ == '__main__':
     # sanity checks -------------------------------------------------
 
     # chatter -------------------------------------------------------
-    if args.justShow or args.verbose:
+    if args.justShow or (args.verbose>1):
         
         print("exclusions:      %s" % args.exclusions)
-        print("mainLang:        %s" % args.mainLang)
+        print("mainLang:        %s (%s)" % (args.mainLang, 
+                                    args.q.getLongName(args.mainLang)))
         print("matches:         %s" % args.matches)
+        print("onlyNamedFiles:  %s" % args.onlyNamedFiles)
         print("showTimestamp:   %s" % args.showTimestamp)
         print("timestamp:       %s" % args.timestamp)
         print("verbose:         %s" % args.verbose)
         print("version:         %s %s" % (__version__, __version_date__))
 
-        print("namedFiles:")
+        print("\nnamedFiles:")
         for file in args.namedFiles:
             print("    %s" % file)
 

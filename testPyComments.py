@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# testPyTripleQuote.py
+# testPyComments.py
 
 import os, sys, unittest
 from argparse   import Namespace
@@ -8,7 +8,7 @@ from argparse   import Namespace
 from pysloc     import __version__, __version_date__
 from pysloc     import countLinesInDir, countLinesPython, Q
 
-class TestPyTripleQuote (unittest.TestCase):
+class TestPyComments (unittest.TestCase):
 
     def setUp(self):
         pass
@@ -20,7 +20,7 @@ class TestPyTripleQuote (unittest.TestCase):
     # actual unit tests #############################################
    
     def testNameToFuncMap(self):
-        testFile = './pyTripleTester'
+        testFile = './commentsForPy'
         options = Namespace()
         options.already = set()
         options.exRE    = None

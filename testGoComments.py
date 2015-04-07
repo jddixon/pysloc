@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 
-# testSnoComments.py
+# testGoComments.py
 
 import os, sys, unittest
 
 from argparse   import ArgumentParser, Namespace
 from pysloc     import __version__, __version_date__
-from pysloc     import countLinesInDir, countLinesSnobol
+from pysloc     import countLinesInDir, countLinesGo
 
-class TestSnoComments (unittest.TestCase):
+class TestGoComments (unittest.TestCase):
 
     def setUp(self):
         self.options = Namespace()
@@ -22,10 +22,10 @@ class TestSnoComments (unittest.TestCase):
     # actual unit tests #############################################
    
     def testNameToFuncMap(self):
-        testFile = './commentsForSno'
-        lines, sloc = countLinesSnobol(testFile, self.options)
-        self.assertEqual(lines, 19)
-        self.assertEqual(sloc,   8)
+        testFile = './commentsForGo'
+        lines, sloc = countLinesGo(testFile, self.options)
+        self.assertEqual(lines, 14)
+        self.assertEqual(sloc,   4)
 
 if __name__ == '__main__':
     unittest.main()
