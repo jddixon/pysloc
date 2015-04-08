@@ -5,15 +5,17 @@ import binascii, hashlib, os, re
 from stat import *
 
 __all__ = [ '__version__',      '__version_date__',
-            'countLinesInDir',  'countLinesGeneric', 'countLinesGo',
-            'countLinesPython', 'countLinesSnobol',
+            'countLinesInDir',
+            'countLinesC',      'countLinesGeneric',
+            'countLinesGo',     'countLinesJava',   'countLinesOcaml',
+            'countLinesPython', 'countLinesRuby',   'countLinesSnobol',
             # classes
             'K', 'Q',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.5'
-__version_date__ = '2015-04-07'
+__version__      = '0.4.6'
+__version_date__ = '2015-04-08'
 
 
 # private constants -------------------------------------------------
@@ -64,7 +66,7 @@ class K(object):
             return self.m[lang]
 
     def prettyCounts(self, lang):
-        """ 
+        """
         Return a string containing the short name of the language and
         the total line count, the source line count, and the percentage
         of source lines which are test lines.  The total line count
@@ -78,13 +80,23 @@ class K(object):
         else:
             l, s, tl, ts = self.m[lang]
             if ts > 0:
-                return "%s:%d/%d T%%%.1f" % (lang, l+tl, s+ts, 100.0*ts/(s+ts))
+                return "%s:%d/%d T%.1f%%" % (lang, l+tl, s+ts, 100.0*ts/(s+ts))
             else:
                 return "%s:%d/%d" % (lang, l+tl, s)
 
     def prettyBreakDown(self):
-        for lang in sorted(self.m):
-            print( self.prettyCounts(lang) )
+        """
+        Generate a semicolon-separated list sorted by decreasing SLOC.
+        """
+
+        # flatten the list to make it easier to sort
+        f = []
+        for k,v in self.m.items():
+            f.append([k] + v)
+        results=[]
+        for x in sorted(f, key=lambda fields: fields[K.SLOC+1], reverse=True):
+            results.append( self.prettyCounts(x[0]) )
+        print('; '.join(results))
 
     def getTotals(self):
         totalL, totalS, totalTL, totalTS = 0,0,0,0
@@ -109,14 +121,17 @@ class Q(object):
         # extensions are .ml (source code) and .mli (header; and then
         # .cmo/.cmx, .cmi, .cma/.cmxa are compiled forms.
 
-        # Maps short name to counter function.
+        # Maps short name to counter function; limit these to 4 characters.
         self._lang2Counter = {
             'asm'       : countLinesGeneric,        # s, S, asm
+            'c'         : countLinesC,              # ansic
             'csh'       : countLinesGeneric,        # csh, tcsh
             'gen'       : countLinesGeneric,        # treat # as comment
             'go'        : countLinesGo,             # golang
+            'java'      : countLinesJava,           # plain old Java
+            'ml'        : countLinesOcaml,          # ocaml, tentative abbrev
             'py'        : countLinesPython,         # yes, Python
-            'rb'        : countLinesGeneric,        # ruby
+            'rb'        : countLinesRuby,           # ruby
             'sed'       : countLinesGeneric,        # stream editor
             'sh'        : countLinesGeneric,        # bash, sh
             'sno'       : countLinesSnobol,         # snobol4
@@ -128,12 +143,16 @@ class Q(object):
         self._ext2Lang  = {
             'asm'       : 'asm',
             'bash'      : 'sh',
+            'c'         : 'c',                      # ansi c
             'csh'       : 'csh',
             'go'        : 'go',                     # same counter as C, Java ?
+            'h'         : 'c',                      # PRESUMED ANSI C
             'html'      : 'html',                   # no counter
             'itk'       : 'tcl',
             'java'      : 'java',
             'md'        : 'md',                     # no counter
+            'ml'        : 'ml',                     # ocaml
+            'mli'       : 'ml',                     # ocaml extension
             'py'        : 'py',
             'rb'        : 'rb',
             'S'         : 'asm',
@@ -149,12 +168,14 @@ class Q(object):
         # By convention, short names are limited to 4 chars.
         self._langMap = {
             'asm'       : 'assembler',
+            'c'         : 'ansic',
             'csh'       : 'csh',
             'gen'       : 'generic',
             'go'        : 'golang',
             'html'      : 'html',
             'java'      : 'java',
             'md'        : 'markdown',
+            'ml'        : 'ocaml',
             'py'        : 'python',
             'rb'        : 'ruby',
             'sed'       : 'sed',
@@ -182,13 +203,15 @@ class Q(object):
         self._notCodeDirs = {
             '.git',
             '.svn',
+            'ghpDoc',
         }
+        # files which definitely do not contain source code
         self._notCodeFiles = {
             '.gitignore',
             '.wrapped',
             '__pycache__',
             'AUTHORS',
-            'CHANGES',
+            'CHANGES', 'ChangeLog',
             'CONTRIBUTORS',
             'COPYING', 'COPYING.AUTOCONF.EXCEPTION',
                 'COPYING.GNUBL', 'COPYING.LIB',
@@ -377,6 +400,9 @@ def checkWhetherAlreadyCounted(pathToFile, options):
                     lines = lines[:-1]
     return lines, h
 
+def countLinesC(pathToFile, options):
+    return countLinesJavaStyle(pathToFile, options)
+
 def countLinesGeneric(pathToFile, options):
     """
     Count lines in a file where the sharp sign ('#') is the comment
@@ -403,10 +429,22 @@ def countLinesGeneric(pathToFile, options):
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return linesSoFar, slocSoFar
 
+def countLinesGo(pathToFile, options):
+    linesSoFar,slocSoFar    = (0,0)
+    if not pathToFile.endswith('.pb.go'):
+        linesSoFar, slocSoFar = countLinesJavaStyle(pathToFile, options)
+    return linesSoFar, slocSoFar
+
+def countLinesJava(pathToFile, options):
+    linesSoFar,slocSoFar    = (0,0)
+    if not pathToFile.endswith('Protos.java'):
+        linesSoFar, slocSoFar = countLinesJavaStyle(pathToFile, options)
+    return linesSoFar, slocSoFar
+
 OLD_COMMENT_PAT = "^(.*)/\*.*\*/(.*)$"
 OLD_COMMENT_RE  = re.compile(OLD_COMMENT_PAT)
 
-def countLinesGo(pathToFile, options):
+def countLinesJavaStyle(pathToFile, options):
     linesSoFar,slocSoFar    = (0,0)
     inMultiLine             = False
     try:
@@ -416,7 +454,7 @@ def countLinesGo(pathToFile, options):
                 linesSoFar += 1
 
                 #print "\nINITIALLY '%s'" % line.strip()
-    
+
                 if not inMultiLine:
                     m = OLD_COMMENT_RE.match(line)
                     if m:
@@ -426,7 +464,7 @@ def countLinesGo(pathToFile, options):
                     if s[1] == '/*':
                         line = s[0]
                         inMultiLine = True
-    
+
                 if inMultiLine:
                     s = line.partition('*/')
                     if s[1] == '*/':
@@ -434,7 +472,7 @@ def countLinesGo(pathToFile, options):
                         inMultiLine = False
                     else:
                         line = ''
-    
+
                 #print "AFTER MULTI_LINE TESTS: '%s'" % line.strip()
                 if line is not None and line != '':
                     s = line.partition('//')[0]     # strip off comments
@@ -453,8 +491,86 @@ def countLinesGo(pathToFile, options):
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return (linesSoFar, slocSoFar)
-def countLinesPython(pathToFile, options):
 
+def countLinesOcaml(pathToFile, options):
+    """
+    Count lines in an Ocaml file where comments are delimited by
+    (* and *).  These may be nested.  We ignore blank lines and lines
+    consisting solely of spaces and comments.
+    """
+
+    linesSoFar, slocSoFar = (0,0)
+    try:
+        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        if (hash != None) and (lines != None):
+            depth = 0                           # comment depth
+            for line in lines:
+                linesSoFar += 1
+                nonSpaceSeen = False
+                lParenSeen   = False            # might start (*
+                starSeen     = False            # might start *)
+                for ch in list(line):
+                    # ignore other unicode space chars for now
+                    if ch == ' ' or ch == '\t':
+                        lParenSeen = False
+                        starSeen   = False
+                        continue
+                    elif depth == 0:
+                        if lParenSeen:
+                            if ch == '*':
+                                depth += 1
+                            else:
+                                nonSpaceSeen = True
+                            lParenSeen = False
+                        elif starSeen:
+                            if ch==')':
+                                if depth > 0:
+                                    depth -= 1
+                                else:
+                                    nonSpaceSeen = True
+                                starSeen = False
+                            else:
+                                nonSpaceSeen = True
+                        elif ch == '(':
+                            lParenSeen = True
+                        elif ch == '*':
+                            starSeen = True
+                        else:
+                            nonSpaceSeen = True
+                    else:
+                        # depth > 0
+                        if lParenSeen:
+                            if ch == '*':
+                                depth += 1
+                            lParenSeen = False
+                        elif starSeen:
+                            if ch==')':
+                                if depth > 0:
+                                    depth -= 1
+                                starSeen = False
+                        elif ch == '(':
+                            lParenSeen = True
+                        elif ch == '*':
+                            starSeen = True
+
+                if nonSpaceSeen:
+                    slocSoFar += 1
+
+            options.already.add(hash)
+            if options.verbose:
+                print ("%-54s: %5d lines, %5d sloc" % (
+                        pathToFile, linesSoFar, slocSoFar))
+    except Exception as e:
+        print("error reading '%s', skipping: %s" % (pathToFile, e))
+    return linesSoFar, slocSoFar
+
+def countLinesPython(pathToFile, options):
+    linesSoFar, slocSoFar = (0,0)
+    if not pathToFile.endswith('.pb2.py'):
+        linesSoFar, slocSoFar = _countLinesPython(pathToFile, options)
+    return linesSoFar, slocSoFar
+
+def _countLinesPython(pathToFile, options):
     inTripleQuote         = False
     linesSoFar, slocSoFar = (0,0)
     try:
@@ -485,6 +601,12 @@ def countLinesPython(pathToFile, options):
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return (linesSoFar, slocSoFar)
 
+
+def countLinesRuby(pathToFile, options):
+    linesSoFar,slocSoFar    = (0,0)
+    if not pathToFile.endswith('.pb.rb'):
+        linesSoFar, slocSoFar = countLinesGeneric(pathToFile, options)
+    return linesSoFar, slocSoFar
 
 def countLinesSnobol(pathToFile, options):
     """

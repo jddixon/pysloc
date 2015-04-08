@@ -52,7 +52,7 @@ class TestK (unittest.TestCase):
         self.k.addTestCounts('py', 9,3)
         self.checkCounts('py', 12,5,17,7)
 
-        expected = "py:%d/%d T%%%.1f" % (12+17, 5+7, 700.0/12)
+        expected = "py:%d/%d T%.1f%%" % (12+17, 5+7, 700.0/12)
         # DEBUG
         #print("Expected: %s" % expected)
         # END

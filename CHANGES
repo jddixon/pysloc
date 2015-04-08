@@ -1,8 +1,14 @@
 # ~/dev/py/pysloc/CHANGES
+# SLOC count is python only
 
+0.4.6
+    2015-04-08
+        * default output is lang counts sorted by SLOC              SLOC  884
+        * handle Java; ignore protobuf output Go, Java, Ruby        SLOC  907
+        * handle C, interpreting all *.h as ansi C                  SLOC  920
+        * handle Ocaml (light testing)                              SLOC 1014
 0.4.5
     2015-04-07 
-        NOT YET ON GITHUB
         * introduce K, counter class with lang->counts map          SLOC  803
         * count lines of Go                                         SLOC  874
 0.4.4
