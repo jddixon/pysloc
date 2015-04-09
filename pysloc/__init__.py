@@ -14,8 +14,8 @@ __all__ = [ '__version__',      '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.6'
-__version_date__ = '2015-04-08'
+__version__      = '0.4.7'
+__version_date__ = '2015-04-09'
 
 
 # private constants -------------------------------------------------
@@ -400,8 +400,11 @@ def checkWhetherAlreadyCounted(pathToFile, options):
                     lines = lines[:-1]
     return lines, h
 
-def countLinesC(pathToFile, options):
-    return countLinesJavaStyle(pathToFile, options)
+def countLinesC(path, options):
+    l, s = 0,0
+    if (not path.endswith('.pb-c.c')) and (not path.endswith('.pb-c.h')):
+        l, s = countLinesJavaStyle(path, options)
+    return l, s
 
 def countLinesGeneric(pathToFile, options):
     """

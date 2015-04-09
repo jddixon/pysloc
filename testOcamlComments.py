@@ -24,8 +24,8 @@ class TestOcamlComments (unittest.TestCase):
     def testNameToFuncMap(self):
         testFile = './commentsForOcaml'
         lines, sloc = countLinesOcaml(testFile, self.options)
-        self.assertEqual(lines, 30)
-        self.assertEqual(sloc,   9)
+        self.assertEqual(lines, 37)
+        self.assertEqual(sloc,  13)
 
 if __name__ == '__main__':
     unittest.main()

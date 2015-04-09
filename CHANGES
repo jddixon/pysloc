@@ -1,6 +1,10 @@
 # ~/dev/py/pysloc/CHANGES
 # SLOC count is python only
 
+0.4.7
+    2015-04-09
+        * elaborate commentsForOcaml
+        * skip protobuf generated *.pb-c.c and *.pb-c.h             SLOC 1017
 0.4.6
     2015-04-08
         * default output is lang counts sorted by SLOC              SLOC  884

@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/TODO
 
+2015-04-09
+    * modify C counter to skip protobuf-generated .pb-c.{c,h} files     * DONE
+
 2015-04-08
     * figure out how to differentiate C *.h from C++ *.h 
     * write commentsForJava and testJavaComments
@@ -91,7 +94,7 @@
     * need more elaborate testing, especially of triple quoting         * DONE
     * handle pathelogical cases 
         - SQUOTEd TQUOTE: '"""' or 'like """ this'
-        - DQUOTED TQUOTE: "this is """an example"""" (??)
+        - DQUOTED TQUOTE: "this is """an example"""" (??)               * WRONG
 
 2013-01-28
     * -X switch exists and exRE is calculated -- but it's never used!   * FIXED
