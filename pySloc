@@ -59,7 +59,7 @@ def doCount(options):
                     counter = q.getCounter(lang, True)
                 if counter == None:
                     counter = countLinesGeneric
-                l,s = counter(name, options)
+                l,s = counter(name, options, lang)
                 if isTest:
                     k.addTestCounts(lang, l, s)
                 else:

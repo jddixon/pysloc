@@ -14,8 +14,8 @@ __all__ = [ '__version__',      '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.7'
-__version_date__ = '2015-04-09'
+__version__      = '0.4.8'
+__version_date__ = '2015-04-11'
 
 
 # private constants -------------------------------------------------
@@ -349,7 +349,8 @@ def countLinesInDir(pathToDir, options):
                     if lang != None:
                         counter = q.getCounter(lang, True)
                         if counter:
-                            moreLines, moreSloc = counter(pathToFile, options)
+                            moreLines, moreSloc = counter(
+                                    pathToFile, options, lang)
                             lines += moreLines  # VESTIGIAL
                             sloc  += moreSloc
 
@@ -400,13 +401,13 @@ def checkWhetherAlreadyCounted(pathToFile, options):
                     lines = lines[:-1]
     return lines, h
 
-def countLinesC(path, options):
+def countLinesC(path, options, lang):
     l, s = 0,0
     if (not path.endswith('.pb-c.c')) and (not path.endswith('.pb-c.h')):
-        l, s = countLinesJavaStyle(path, options)
+        l, s = countLinesJavaStyle(path, options, lang)
     return l, s
 
-def countLinesGeneric(pathToFile, options):
+def countLinesGeneric(pathToFile, options, lang):
     """
     Count lines in a file where the sharp sign ('#') is the comment
     marker.  That is, we ignore blank lines, lines consisting solely of
@@ -426,28 +427,28 @@ def countLinesGeneric(pathToFile, options):
                     slocSoFar += 1
             options.already.add(hash)
             if options.verbose:
-                print ("%-54s: %5d lines, %5d sloc" % (
-                        pathToFile, linesSoFar, slocSoFar))
+                print ("%-49s: %-4s %5d lines, %5d sloc" % (
+                        pathToFile, lang, linesSoFar, slocSoFar))
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return linesSoFar, slocSoFar
 
-def countLinesGo(pathToFile, options):
+def countLinesGo(pathToFile, options, lang):
     linesSoFar,slocSoFar    = (0,0)
     if not pathToFile.endswith('.pb.go'):
-        linesSoFar, slocSoFar = countLinesJavaStyle(pathToFile, options)
+        linesSoFar, slocSoFar = countLinesJavaStyle(pathToFile, options, lang)
     return linesSoFar, slocSoFar
 
-def countLinesJava(pathToFile, options):
+def countLinesJava(pathToFile, options, lang):
     linesSoFar,slocSoFar    = (0,0)
     if not pathToFile.endswith('Protos.java'):
-        linesSoFar, slocSoFar = countLinesJavaStyle(pathToFile, options)
+        linesSoFar, slocSoFar = countLinesJavaStyle(pathToFile, options, lang)
     return linesSoFar, slocSoFar
 
 OLD_COMMENT_PAT = "^(.*)/\*.*\*/(.*)$"
 OLD_COMMENT_RE  = re.compile(OLD_COMMENT_PAT)
 
-def countLinesJavaStyle(pathToFile, options):
+def countLinesJavaStyle(pathToFile, options, lang):
     linesSoFar,slocSoFar    = (0,0)
     inMultiLine             = False
     try:
@@ -487,15 +488,15 @@ def countLinesJavaStyle(pathToFile, options):
 
             options.already.add(hash)
             if options.verbose:
-                print ("%-54s: %5d lines, %5d sloc" % (
-                    pathToFile, linesSoFar, slocSoFar))
+                print ("%-49s: %-4s %5d lines, %5d sloc" % (
+                    pathToFile, lang, linesSoFar, slocSoFar))
 
     # SHOULD BE OK:
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return (linesSoFar, slocSoFar)
 
-def countLinesOcaml(pathToFile, options):
+def countLinesOcaml(pathToFile, options, lang):
     """
     Count lines in an Ocaml file where comments are delimited by
     (* and *).  These may be nested.  We ignore blank lines and lines
@@ -561,19 +562,19 @@ def countLinesOcaml(pathToFile, options):
 
             options.already.add(hash)
             if options.verbose:
-                print ("%-54s: %5d lines, %5d sloc" % (
-                        pathToFile, linesSoFar, slocSoFar))
+                print ("%-49s: %-4s %5d lines, %5d sloc" % (
+                        pathToFile, lang, linesSoFar, slocSoFar))
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return linesSoFar, slocSoFar
 
-def countLinesPython(pathToFile, options):
+def countLinesPython(pathToFile, options, lang):
     linesSoFar, slocSoFar = (0,0)
     if not pathToFile.endswith('.pb2.py'):
-        linesSoFar, slocSoFar = _countLinesPython(pathToFile, options)
+        linesSoFar, slocSoFar = _countLinesPython(pathToFile, options, lang)
     return linesSoFar, slocSoFar
 
-def _countLinesPython(pathToFile, options):
+def _countLinesPython(pathToFile, options, lang):
     inTripleQuote         = False
     linesSoFar, slocSoFar = (0,0)
     try:
@@ -598,20 +599,20 @@ def _countLinesPython(pathToFile, options):
                         inTripleQuote = True
             options.already.add(hash)
             if options.verbose:
-                print ("%-54s: %5d lines, %5d sloc" % (
-                    pathToFile, linesSoFar, slocSoFar))
+                print ("%-49s: %-4s %5d lines, %5d sloc" % (
+                    pathToFile, lang, linesSoFar, slocSoFar))
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return (linesSoFar, slocSoFar)
 
 
-def countLinesRuby(pathToFile, options):
+def countLinesRuby(pathToFile, options, lang):
     linesSoFar,slocSoFar    = (0,0)
     if not pathToFile.endswith('.pb.rb'):
-        linesSoFar, slocSoFar = countLinesGeneric(pathToFile, options)
+        linesSoFar, slocSoFar = countLinesGeneric(pathToFile, options, lang)
     return linesSoFar, slocSoFar
 
-def countLinesSnobol(pathToFile, options):
+def countLinesSnobol(pathToFile, options, lang):
     """
     already is a set containing hashes of files already counted
     """
@@ -627,8 +628,8 @@ def countLinesSnobol(pathToFile, options):
                     slocSoFar += 1
             options.already.add(hash)
             if options.verbose:
-                print ("%-54s: %5d lines, %5d sloc" % (
-                        pathToFile, linesSoFar, slocSoFar))
+                print ("%-49s: %-4s %5d lines, %5d sloc" % (
+                        pathToFile, lang, linesSoFar, slocSoFar))
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return linesSoFar, slocSoFar
