@@ -6,17 +6,18 @@ from stat import *
 
 __all__ = [ '__version__',      '__version_date__',
             'countLinesInDir',
-            'countLinesBash',   'countLinesC',      'countLinesGeneric',
+            'countLinesBash',   'countLinesC',      # 'countLinesGeneric',
             'countLinesGo',     'countLinesJava',   'countLinesOcaml',
+            'countLinesNotSharp',
             'countLinesPython', 'countLinesRuby',   'countLinesShell',
-            'countLinesSnobol',
+            'countLinesSnobol', 'countLinesText',
             # classes
             'K', 'Q',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.9'
-__version_date__ = '2015-04-12'
+__version__      = '0.4.10'
+__version_date__ = '2015-04-13'
 
 
 # private constants -------------------------------------------------
@@ -124,20 +125,22 @@ class Q(object):
 
         # Maps short name to counter function; limit these to 4 characters.
         self._lang2Counter = {
-            'asm'       : countLinesGeneric,        # s, S, asm
+            'asm'       : countLinesNotSharp,       # s, S, asm
             'bash'      : countLinesShell,          # bash shell
             'c'         : countLinesC,              # ansic
-            'csh'       : countLinesGeneric,        # csh, tcsh
-            'gen'       : countLinesGeneric,        # treat # as comment
+            'csh'       : countLinesNotSharp,       # csh, tcsh
+            'gen'       : countLinesNotSharp,       # treat # as comment
             'go'        : countLinesGo,             # golang
             'java'      : countLinesJava,           # plain old Java
             'ml'        : countLinesOcaml,          # ocaml, tentative abbrev
+            'not#'      : countLinesNotSharp,
             'py'        : countLinesPython,         # yes, Python
             'rb'        : countLinesRuby,           # ruby
-            'sed'       : countLinesGeneric,        # stream editor
+            'sed'       : countLinesNotSharp,       # stream editor
             'sh'        : countLinesShell,          # shell script
             'sno'       : countLinesSnobol,         # snobol4
-            'tcl'       : countLinesGeneric,        # tcl, tk, itk
+            'tcl'       : countLinesNotSharp,       # tcl, tk, itk
+            'txt'       : countLinesText,           # plain text
         }
         # Guesses language short name (abbrev) from file extension.
         # See sloccount's break_filelist for hints.
@@ -155,6 +158,7 @@ class Q(object):
             'md'        : 'md',                     # no counter
             'ml'        : 'ml',                     # ocaml
             'mli'       : 'ml',                     # ocaml extension
+            'not#'      : 'not#',
             'py'        : 'py',
             'rb'        : 'rb',
             'S'         : 'asm',
@@ -165,6 +169,7 @@ class Q(object):
             'tcsh'      : 'csh',
             'tcl'       : 'tcl',
             'tk'        : 'tcl',
+            'txt'       : 'txt'
         }
         # Maps lang short name (abbrev) to fuller language name.
         # By convention, short names are limited to 4 chars.
@@ -179,12 +184,14 @@ class Q(object):
             'java'      : 'java',
             'md'        : 'markdown',
             'ml'        : 'ocaml',
+            'not#'      : 'not#',
             'py'        : 'python',
             'rb'        : 'ruby',
             'sed'       : 'sed',
             'sh'        : 'shell',
             'sno'       : 'snobol4',
             'tcl'       : 'tcl',
+            'txt'       : 'text',
         }
 
         # A set of extensions known NOT to be source code.
@@ -247,7 +254,7 @@ class Q(object):
         if lang and (len(lang) > 0) and (lang in self._lang2Counter):
             return self._lang2Counter[lang]
         elif isCLIArg:
-            return countLinesGeneric
+            return countLinesNotSharp
         else:
             return None
 
@@ -257,6 +264,9 @@ class Q(object):
             return self._langMap[s]
         else:
             return None
+    def getLangSet(self):
+        "Return a set containing all recognized language abbreviations"""
+        return frozenset(self._langMap.keys())
 
     def nonCodeExt(self, s):
         return s in self._nonCodeExts
@@ -319,9 +329,10 @@ def countLinesInDir(pathToDir, options):
     #        rs = pair[1]
     #        print("%s => %s" % (ls, rs))
     ## END
-    k       = options.k
-    q       = options.q
-    verbose = options.verbose
+    k               = options.k
+    langsCounted   = options.langsCounted
+    q               = options.q
+    verbose         = options.verbose
     lines, sloc = (0,0)
     files = os.listdir(pathToDir)
     if files:
@@ -349,7 +360,7 @@ def countLinesInDir(pathToDir, options):
                     counted = False
                     # isCLIArg == False
                     lang, isTest = q.guessLang(name,verbose=verbose)
-                    if lang != None:
+                    if (lang != None) and (lang in langsCounted):
                         counter = q.getCounter(lang, True)
                         if counter:
                             moreLines, moreSloc = counter(
@@ -413,7 +424,7 @@ def countLinesC(path, options, lang):
         l, s = countLinesJavaStyle(path, options, lang)
     return l, s
 
-def countLinesGeneric(pathToFile, options, lang):
+def countLinesNotSharp(pathToFile, options, lang):
     """
     Count lines in a file where the sharp sign ('#') is the comment
     marker.  That is, we ignore blank lines, lines consisting solely of
@@ -615,11 +626,11 @@ def _countLinesPython(pathToFile, options, lang):
 def countLinesRuby(pathToFile, options, lang):
     linesSoFar,slocSoFar    = (0,0)
     if not pathToFile.endswith('.pb.rb'):
-        linesSoFar, slocSoFar = countLinesGeneric(pathToFile, options, lang)
+        linesSoFar, slocSoFar = countLinesNotSharp(pathToFile, options, lang)
     return linesSoFar, slocSoFar
 
 def countLinesShell(path, options, lang):
-    return countLinesGeneric(path, options, lang)
+    return countLinesNotSharp(path, options, lang)
 
 def countLinesSnobol(pathToFile, options, lang):
     """
@@ -643,3 +654,26 @@ def countLinesSnobol(pathToFile, options, lang):
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return linesSoFar, slocSoFar
 
+def countLinesText(pathToFile, options, lang):
+    """
+    Count the lines in a text file.  We ignore empty lines and lines 
+    consisting solely of spaces.
+    """
+
+    linesSoFar, slocSoFar = (0,0)
+    try:
+        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        if (hash != None) and (lines != None):
+            for line in lines:
+                linesSoFar += 1
+                # This could be made more efficient.
+                line = line.strip()
+                if len(line) > 0 :
+                    slocSoFar += 1
+            options.already.add(hash)
+            if options.verbose:
+                print ("%-49s: %-4s %5d lines, %5d sloc" % (
+                        pathToFile, lang, linesSoFar, slocSoFar))
+    except Exception as e:
+        print("error reading '%s', skipping: %s" % (pathToFile, e))
+    return linesSoFar, slocSoFar

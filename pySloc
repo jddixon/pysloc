@@ -18,6 +18,7 @@ def doCount(options):
     exRE            = options.exRE
     justShow        = options.justShow
     k               = options.k
+    langsCounted    = options.langsCounted
     mainLang        = options.mainLang
     matches         = options.matches
     namedFiles      = options.namedFiles
@@ -25,11 +26,13 @@ def doCount(options):
     q               = options.q
     showTimestamp   = options.showTimestamp
     showVersion     = options.showVersion
+    sumSLOC         = options.sumSLOC
     timestamp       = options.timestamp
     verbose         = options.verbose
 
-    lines   = 0     # VESTIGIAL
-    sloc    = 0     # VESTIGIAL
+    lines           = 0
+    sloc            = 0
+
     options.already = set() # an unordered collection, not a dictionary
 
     # if a file is named on the command line, we always count it.
@@ -55,7 +58,7 @@ def doCount(options):
                 if lang == None:
                     lang, isTest = q.guessLang(name,
                             isCLIArg=True, verbose=options.verbose) 
-                if lang != None:
+                if (lang != None) and (lang in langsCounted):
                     counter = q.getCounter(lang, True)
                 if counter == None:
                     counter = countLinesGeneric
@@ -70,16 +73,14 @@ def doCount(options):
                 l,s = countLinesInDir(name, options)
             else:
                 print("? don't know how to count %s" % name)
-            # VESTIGIAL
             lines += l
             sloc  += s
         else:
             print("file does not exist: %s" % name)
 
-    if verbose>1:
-        print("total of %5d lines of code, of which %5d source" % (lines, sloc))
-
     k.prettyBreakDown()
+    print("total of %5d lines of code, of which %5d source" % (lines, sloc))
+
 
 # MAIN ##############################################################
 if __name__ == '__main__':
@@ -87,12 +88,16 @@ if __name__ == '__main__':
     # INTERPRET COMMAND LINE ----------------------------------------
     parser = ArgumentParser('count lines of source code')
 
+    parser.add_argument('-C', '--langsCounted', nargs='?', const='all',
+        help = 'colon-separated list of langugages to be counted (abbrev)')
     parser.add_argument('-j', '--justShow',     action='store_true',
         help = 'list options and exit')
     parser.add_argument('-L', '--mainLang',     type=str,
         help = 'main language expected (short name, optional)')
     parser.add_argument('-M', '--matches',      type=str,
         help = 'count ONLY files with matching names')
+    parser.add_argument('-S', '--sumSLOC',     action='store_true',
+        help = 'total up SLOC counts')
     parser.add_argument('-t', '--showTimestamp',action='store_true',
         help = 'output UTC timestamp to command line')
     parser.add_argument('-v', '--verbose',      action='count',  default=0,
@@ -136,6 +141,21 @@ if __name__ == '__main__':
                 args.mainLang)
             parser.print_help();
             sys.exit(1)
+    
+    langSet = args.q.getLangSet()    # names of all languages (abbrev)
+    if not args.langsCounted or args.langsCounted=='all':
+        args.langsCounted = langSet
+    else:
+        langList = []
+        selected = args.langsCounted.split(':')
+        for x in selected:
+            if x in langSet:
+                langList.append(x)
+            else:
+                print("%s is not recognized as a language abbreviation", x)
+                parser.print_usage()
+                sys.exit(1)
+        args.langsCounted=frozenset(langList)
 
     # sanity checks -------------------------------------------------
 
@@ -145,9 +165,11 @@ if __name__ == '__main__':
         print("exclusions:      %s" % args.exclusions)
         print("mainLang:        %s (%s)" % (args.mainLang, 
                                     args.q.getLongName(args.mainLang)))
+        print("langsCounted:    %s" % args.langsCounted)
         print("matches:         %s" % args.matches)
         print("onlyNamedFiles:  %s" % args.onlyNamedFiles)
         print("showTimestamp:   %s" % args.showTimestamp)
+        print("sumSLOC:         %s" % args.sumSLOC)
         print("timestamp:       %s" % args.timestamp)
         print("verbose:         %s" % args.verbose)
         print("version:         %s %s" % (__version__, __version_date__))

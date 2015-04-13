@@ -7,4 +7,5 @@ rm -rf build
     ml:commentsForOcaml \
     py:commentsForPy \
     sno:commentsForSno \
+    txt:commentsForTxt \
     py:pySloc

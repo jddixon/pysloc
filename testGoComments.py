@@ -23,7 +23,7 @@ class TestGoComments (unittest.TestCase):
    
     def testNameToFuncMap(self):
         testFile = './commentsForGo'
-        lines, sloc = countLinesGo(testFile, self.options)
+        lines, sloc = countLinesGo(testFile, self.options, 'go')
         self.assertEqual(lines, 14)
         self.assertEqual(sloc,   4)
 

@@ -23,7 +23,7 @@ class TestSnoComments (unittest.TestCase):
    
     def testNameToFuncMap(self):
         testFile = './commentsForSno'
-        lines, sloc = countLinesSnobol(testFile, self.options)
+        lines, sloc = countLinesSnobol(testFile, self.options, 'sno')
         self.assertEqual(lines, 19)
         self.assertEqual(sloc,   8)
 

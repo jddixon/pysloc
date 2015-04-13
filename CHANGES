@@ -1,8 +1,13 @@
 # ~/dev/py/pysloc/CHANGES
-# SLOC count is python only
+# SLOC count is now all languages
 
+NOT YET IN GITHUB
+0.4.10
+    2015-04-13
+        * add 'txt' lang and test, fixed other tests                SLOC 1074
+        * countLinesGeneric renamed countLinesNotSharp
+        * add -C/--linesCounted (all or colon-separated list)       SLOC 1119
 0.4.9
-    NOT YET ON GITHUB
     2015-04-12
         * add lang 'bash'                                           SLOC 1027
 0.4.8

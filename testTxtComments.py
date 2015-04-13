@@ -1,14 +1,17 @@
 #!/usr/bin/python3
 
-# testPyComments.py
+# testTextComments.py 
+#
+# There aren't any coments in plain text files.  What we do is count
+# all lines which aren't empty and don't consist solely of white space.
 
 import os, sys, unittest
 from argparse   import Namespace
 
 from pysloc     import __version__, __version_date__
-from pysloc     import countLinesInDir, countLinesPython, Q
+from pysloc     import countLinesInDir, countLinesText, Q
 
-class TestPyComments (unittest.TestCase):
+class TestTextComments (unittest.TestCase):
 
     def setUp(self):
         pass
@@ -20,16 +23,16 @@ class TestPyComments (unittest.TestCase):
     # actual unit tests #############################################
    
     def testNameToFuncMap(self):
-        testFile = './commentsForPy'
+        testFile = './commentsForTxt'
         options = Namespace()
         options.already = set()
         options.exRE    = None
         options.q       = Q()
         options.verbose = False
 
-        lines, sloc = countLinesPython(testFile, options, 'py')
+        lines, sloc = countLinesText(testFile, options, 'txt')
         self.assertEqual(lines, 30)
-        self.assertEqual(sloc, 13)
+        self.assertEqual(sloc,  20)
 
 if __name__ == '__main__':
     unittest.main()

@@ -41,9 +41,9 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.getCounter('foo',False),None)
        
         # on the command line we are more generous
-        self.assertEqual(self.q.getCounter(None,True),  countLinesGeneric)
-        self.assertEqual(self.q.getCounter('',True),    countLinesGeneric)
-        self.assertEqual(self.q.getCounter('foo',True), countLinesGeneric)
+        self.assertEqual(self.q.getCounter(None,True),  countLinesNotSharp)
+        self.assertEqual(self.q.getCounter('',True),    countLinesNotSharp)
+        self.assertEqual(self.q.getCounter('foo',True), countLinesNotSharp)
         
         # where the language is known we should always succeed
         # ... whether this is a command line argument
