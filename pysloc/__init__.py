@@ -6,16 +6,17 @@ from stat import *
 
 __all__ = [ '__version__',      '__version_date__',
             'countLinesInDir',
-            'countLinesC',      'countLinesGeneric',
+            'countLinesBash',   'countLinesC',      'countLinesGeneric',
             'countLinesGo',     'countLinesJava',   'countLinesOcaml',
-            'countLinesPython', 'countLinesRuby',   'countLinesSnobol',
+            'countLinesPython', 'countLinesRuby',   'countLinesShell',
+            'countLinesSnobol',
             # classes
             'K', 'Q',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.8'
-__version_date__ = '2015-04-11'
+__version__      = '0.4.9'
+__version_date__ = '2015-04-12'
 
 
 # private constants -------------------------------------------------
@@ -124,6 +125,7 @@ class Q(object):
         # Maps short name to counter function; limit these to 4 characters.
         self._lang2Counter = {
             'asm'       : countLinesGeneric,        # s, S, asm
+            'bash'      : countLinesShell,          # bash shell
             'c'         : countLinesC,              # ansic
             'csh'       : countLinesGeneric,        # csh, tcsh
             'gen'       : countLinesGeneric,        # treat # as comment
@@ -133,7 +135,7 @@ class Q(object):
             'py'        : countLinesPython,         # yes, Python
             'rb'        : countLinesRuby,           # ruby
             'sed'       : countLinesGeneric,        # stream editor
-            'sh'        : countLinesGeneric,        # bash, sh
+            'sh'        : countLinesShell,          # shell script
             'sno'       : countLinesSnobol,         # snobol4
             'tcl'       : countLinesGeneric,        # tcl, tk, itk
         }
@@ -142,7 +144,7 @@ class Q(object):
         # Note {pl,pm,perl,pl} => perl
         self._ext2Lang  = {
             'asm'       : 'asm',
-            'bash'      : 'sh',
+            'bash'      : 'bash',                   # yes, never used
             'c'         : 'c',                      # ansi c
             'csh'       : 'csh',
             'go'        : 'go',                     # same counter as C, Java ?
@@ -168,6 +170,7 @@ class Q(object):
         # By convention, short names are limited to 4 chars.
         self._langMap = {
             'asm'       : 'assembler',
+            'bash'      : 'bash',
             'c'         : 'ansic',
             'csh'       : 'csh',
             'gen'       : 'generic',
@@ -401,6 +404,9 @@ def checkWhetherAlreadyCounted(pathToFile, options):
                     lines = lines[:-1]
     return lines, h
 
+def countLinesBash(path, options, lang):
+    return countLinesShell(path, options, lang)
+
 def countLinesC(path, options, lang):
     l, s = 0,0
     if (not path.endswith('.pb-c.c')) and (not path.endswith('.pb-c.h')):
@@ -611,6 +617,9 @@ def countLinesRuby(pathToFile, options, lang):
     if not pathToFile.endswith('.pb.rb'):
         linesSoFar, slocSoFar = countLinesGeneric(pathToFile, options, lang)
     return linesSoFar, slocSoFar
+
+def countLinesShell(path, options, lang):
+    return countLinesGeneric(path, options, lang)
 
 def countLinesSnobol(pathToFile, options, lang):
     """

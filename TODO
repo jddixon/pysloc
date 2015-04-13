@@ -5,6 +5,7 @@
     * option -S should take colon-separated list of langs as argument,
         and then total only those languages
     * add simple counter that just counts lines, call the lang '____'
+    * add lang 'bash' to distinguish utility scripts from autotools  
 
 2015-04-09
     * modify C counter to skip protobuf-generated .pb-c.{c,h} files     * DONE

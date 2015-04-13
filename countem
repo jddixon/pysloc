@@ -2,7 +2,7 @@ cd /home/jdd/dev/py/pysloc
 rm -rf build
 # for normal use, drop the leading ./ and the -v option
 ./pySloc -v -L py \
-    countem MANIFEST.in \
+    bash:countem MANIFEST.in \
     go:commentsForGo \
     ml:commentsForOcaml \
     py:commentsForPy \

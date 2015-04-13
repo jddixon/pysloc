@@ -1,6 +1,10 @@
 # ~/dev/py/pysloc/CHANGES
 # SLOC count is python only
 
+0.4.9
+    NOT YET ON GITHUB
+    2015-04-12
+        * add lang 'bash'                                           SLOC 1027
 0.4.8
     2015-04-11
         * add language abbrev to -v output line                     SLOC 1018
