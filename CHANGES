@@ -1,8 +1,9 @@
 # ~/dev/py/pysloc/CHANGES
 # SLOC count is now all languages
 
-NOT YET IN GITHUB
 0.4.10
+    2015-04-15
+        * corrected error in countLinesInDir ('file' for 'name')    SLOC 1119
     2015-04-13
         * add 'txt' lang and test, fixed other tests                SLOC 1074
         * countLinesGeneric renamed countLinesNotSharp

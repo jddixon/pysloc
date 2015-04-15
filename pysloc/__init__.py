@@ -339,7 +339,7 @@ def countLinesInDir(pathToDir, options):
         q = options.q
         for name in sorted(files):
             # consider exclusions ...
-            if options.exRE is not None and options.exRE.search(file) is not None:
+            if options.exRE is not None and options.exRE.search(name) is not None:
                 continue
             isTest = False  # default
             pathToFile = os.path.join(pathToDir, name)
