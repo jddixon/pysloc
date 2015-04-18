@@ -16,8 +16,8 @@ __all__ = [ '__version__',      '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.10'
-__version_date__ = '2015-04-13'
+__version__      = '0.4.11'
+__version_date__ = '2015-04-18'
 
 
 # private constants -------------------------------------------------

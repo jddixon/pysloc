@@ -61,7 +61,7 @@ def doCount(options):
                 if (lang != None) and (lang in langsCounted):
                     counter = q.getCounter(lang, True)
                 if counter == None:
-                    counter = countLinesGeneric
+                    counter = countLinesNotSharp
                 l,s = counter(name, options, lang)
                 if isTest:
                     k.addTestCounts(lang, l, s)
