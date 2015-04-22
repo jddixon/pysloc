@@ -1,8 +1,16 @@
 # ~/dev/py/pysloc/TODO
 
+2015-04-22
+    * FIX: XML processing is remarkably inefficient
+        - and needs more testing
+
+2015-04-19
+    * sudo pip3 install beautifulsoup4                                  * DONE
+        - but to use: from bs4 import BeautifulSoup                     * DONE
+
 2015-04-15 (edited from -13)
-    * XXX running countem in xlevent causes error, __init__.py line 
-        342 'file' is not defined 
+    * XXX running countem in xlevent causes error, __init__.py line     * FIXED
+        342 'file' is not defined                                       * FIXED 
 
 2015-04-13 (edited from -11)
     * add simple counter that just counts lines, call the lang 'txt'    * DONE

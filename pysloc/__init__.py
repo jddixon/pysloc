@@ -3,6 +3,7 @@
 from abc import ABCMeta, abstractmethod, abstractproperty
 import binascii, hashlib, os, re
 from stat import *
+from bs4 import BeautifulSoup, Comment
 
 __all__ = [ '__version__',      '__version_date__',
             'countLinesInDir',
@@ -16,8 +17,8 @@ __all__ = [ '__version__',      '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.11'
-__version_date__ = '2015-04-18'
+__version__      = '0.4.12'
+__version_date__ = '2015-04-22'
 
 
 # private constants -------------------------------------------------
@@ -305,14 +306,12 @@ class Q(object):
         elif lang == 'py':
             isTest = fileName.startswith('test')
 
-        # DEBUG
         if verbose > 1:
             if ext != None:
                 print("  %s: find ext '%s', GUESS lang %s" % (fileName, ext, lang))
             else:
                 print("  %s: NO ext, GUESS lang %s" % (fileName, lang))
 
-        # END
         return lang, isTest
 
 # functions =========================================================
@@ -677,3 +676,45 @@ def countLinesText(pathToFile, options, lang):
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return linesSoFar, slocSoFar
+
+def countLinesXml(pathToFile, options, lang):
+    """
+    Count the lines in an xml file.  We ignore empty lines and lines 
+    consisting solely of spaces, and of course we ignore xml comments.
+    """
+
+    try:
+        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+    except Exception as e:
+        print("error reading '%s', skipping: %s" % (pathToFile, e))
+        return 0,0
+
+    try:
+        lineCount, slocSoFar = (0,0)
+        if (hash != None) and (lines != None):
+            lineCount = len(lines)
+            raw = '\n'.join(lines)
+            soup = BeautifulSoup(raw)
+            comments = soup.findAll(text=lambda text:isinstance(text,Comment))
+            [comment.extract() for comment in comments]
+           
+            # soup begins with '<html><body><p>' and ends with 
+            #</p></body></html> on a separate line.
+
+            elm = soup.html.body.p
+            stripped = str(elm)[3:-4]       # drop leading <p> and trailing </p>
+            
+            lines = stripped.split('\n')
+
+            for line in lines:
+                # This could be made more efficient.
+                line = line.strip()
+                if len(line) > 0 :
+                    slocSoFar += 1
+            options.already.add(hash)
+            if options.verbose:
+                print ("%-49s: %-4s %5d lines, %5d sloc" % (
+                        pathToFile, lang, lineCount, slocSoFar))
+    except Exception as e:
+        print("error parsing '%s', skipping: %s" % (pathToFile, e))
+    return lineCount, slocSoFar

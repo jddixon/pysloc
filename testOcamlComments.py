@@ -23,7 +23,7 @@ class TestOcamlComments (unittest.TestCase):
    
     def testNameToFuncMap(self):
         testFile = './commentsForOcaml'
-        lines, sloc = countLinesOcaml(testFile, self.options)
+        lines, sloc = countLinesOcaml(testFile, self.options, 'ml')
         self.assertEqual(lines, 37)
         self.assertEqual(sloc,  13)
 

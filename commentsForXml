@@ -1,0 +1,11 @@
+<!-- CommentsForXml -->
+
+line 1  <!-- this comment spans two
+lines -->
+
+this junk is line 2, or should be
+
+<!-- we don't care if it's actually XML, we are just counting lines -->
+<!-- nada --> line 3 <!-- more nada -->
+
+<this>is XML with <!-- an embedded -->  comment</this> line 4

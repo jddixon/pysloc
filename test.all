@@ -1,7 +1,9 @@
 ./testGoComments.py
 ./testK.py
 ./testK.py
+./testOcamlComments.py
 ./testPyComments.py
 ./testQ.py
 ./testSnoComments.py
 ./testTxtComments.py
+./testXmlComments.py

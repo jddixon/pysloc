@@ -1,6 +1,9 @@
 # ~/dev/py/pysloc/CHANGES
 # SLOC count is now all languages
 
+0.4.12
+    2015-04-22
+        * add xml lang and test                                     SLOC 1181
 0.4.11
     2015-04-18
         * corrected erroreous invocation of countLinesGeneric       SLOC 1119

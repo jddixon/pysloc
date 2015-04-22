@@ -8,4 +8,5 @@ rm -rf build
     py:commentsForPy \
     sno:commentsForSno \
     txt:commentsForTxt \
+    xml:commentsForXml \
     py:pySloc
