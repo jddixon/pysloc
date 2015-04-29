@@ -11,7 +11,87 @@
 <div class="content">
 <h1>pysloc</h1>
 
-<p>A utility for counting lines of source code in a file, directory, or project.</p>
+<p>pySloc is a Python 3 utility for counting lines of source code in a file,
+directory,
+or project.  It provides a count by language of source lines of code found
+and a total for all languages.</p>
+
+<h2>SLOC</h2>
+
+<p>Counting lines of source code is a crude measure of the size of a program
+or project.  For most languages there is a conventional way to distinguish
+comments; in C, for example, anything /* enclosed like this */ is considered
+a comment and such comments can span more than one line.  In counting lines
+of source code normally comments are first removed and then spaces at the
+beginning of the line are stripped off.  If there is anything left it is
+considered a Source Line Of Code and included in the SLOC count.</p>
+
+<p>SLOC counts are useful for guesstimating how much effort will be required
+to fix or replace code.  SLOC counts can also be used to coarsely
+guage progress on a project.</p>
+
+<h2>Languages</h2>
+
+<p>Languages are primarily distinguished by the extension on the file name.
+Thus for example <code>example.py</code> would be counted according to the rules for
+Python files whereas <code>example.java</code> would be treated as a Java file and
+Java-style comments would be ignored in counting lines of source code.</p>
+
+<p>Languages currently covered include, by short name,</p>
+
+<ul>
+<li><strong>asm</strong>,    assembly language</li>
+<li><strong>c</strong>,   the venerable C programming language aka ANSI C</li>
+<li><strong>csh</strong>,   csh, another shell; tcsh is a variant</li>
+<li><strong>go</strong>,   Google&rsquo;s Go programming language</li>
+<li><strong>java</strong>,    the Sun programming language</li>
+<li><strong>ml</strong>,   Ocaml, a functional langauge</li>
+<li><strong>not#</strong>,  &lsquo;not#&rsquo;, a pseudo-language; counts any non-blank line not beginning with the sharp sign (&lsquo;#&rsquo;)</li>
+<li><strong>rb</strong>,   Ruby</li>
+<li><strong>sed</strong>,   the language for scripts used to edit files from the command line</li>
+<li><strong>sh</strong>,     bash or the shell, sh</li>
+<li><strong>sno</strong>,    Snobol, the string-oriented programming language</li>
+<li><strong>tcl</strong>,   the Tool Command Language, a dynamic scripting language</li>
+<li><strong>txt</strong>,   plain text; counts all non-blank lines</li>
+<li><strong>xml</strong>, XML</li>
+</ul>
+
+<h2>Command Line</h2>
+
+<pre><code>usage: count lines of source code [-h] [-C [LANGSCOUNTED]] [-j] [-L MAINLANG]
+                                  [-M MATCHES] [-S] [-t] [-v] [-V]
+                                  [-X EXCLUSIONS] [-z]
+                                  [namedFiles [namedFiles ...]]
+
+positional arguments:
+  namedFiles            any number of namedFiles and/or directories to scan
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -C [LANGSCOUNTED], --langsCounted [LANGSCOUNTED]
+                        colon-separated list of langugages to be counted
+                        (abbrev)
+  -j, --justShow        list options and exit
+  -L MAINLANG, --mainLang MAINLANG
+                        main language expected (short name, optional)
+  -M MATCHES, --matches MATCHES
+                        count ONLY files with matching names
+  -S, --sumSLOC         total up SLOC counts
+  -t, --showTimestamp   output UTC timestamp to command line
+  -v, --verbose         make me more chatty
+  -V, --showVersion     show version information
+  -X EXCLUSIONS, --exclusions EXCLUSIONS
+                        do not count files/directories with matching names
+  -z, --onlyNamedFiles  only count files named on the command line
+</code></pre>
+
+<p>Files named in the command line are always counted, even if their language
+is not</p>
+
+<h2>Deduping</h2>
+
+<p>Files are only counted once.  Differently put, if two files have identical
+content, only the first encountered will be counted.</p>
   <div class="f">
     <hr />
     <div class="license">
