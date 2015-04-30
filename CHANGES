@@ -1,6 +1,9 @@
 # ~/dev/py/pysloc/CHANGES
 # SLOC count is now all languages
 
+0.4.13
+    2015-04-30
+        * documentation elaborated                                  SLOC 1181
 0.4.12
     2015-04-22
         * add xml lang and test                                     SLOC 1181

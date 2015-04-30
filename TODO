@@ -1,5 +1,13 @@
 # ~/dev/py/pysloc/TODO
 
+2015-04-30
+    * investigate: SLOC reported by countem much smaller than that
+        reported by just running pySloc
+2015-04-29
+    * xml is not in the language table
+    * grand total line contains no test information (compare 
+        goSloc, which has two such lines, first source, then test)
+
 2015-04-22
     * FIX: XML processing is remarkably inefficient
         - and needs more testing
