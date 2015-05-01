@@ -17,8 +17,8 @@ __all__ = [ '__version__',      '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.13'
-__version_date__ = '2015-04-30'
+__version__      = '0.4.14'
+__version_date__ = '2015-05-01'
 
 
 # private constants -------------------------------------------------
@@ -142,6 +142,7 @@ class Q(object):
             'sno'       : countLinesSnobol,         # snobol4
             'tcl'       : countLinesNotSharp,       # tcl, tk, itk
             'txt'       : countLinesText,           # plain text
+            'xml'       : countLinesXml,
         }
         # Guesses language short name (abbrev) from file extension.
         # See sloccount's break_filelist for hints.
@@ -170,7 +171,8 @@ class Q(object):
             'tcsh'      : 'csh',
             'tcl'       : 'tcl',
             'tk'        : 'tcl',
-            'txt'       : 'txt'
+            'txt'       : 'txt',
+            'xml'       : 'xml',
         }
         # Maps lang short name (abbrev) to fuller language name.
         # By convention, short names are limited to 4 chars.
@@ -193,6 +195,7 @@ class Q(object):
             'sno'       : 'snobol4',
             'tcl'       : 'tcl',
             'txt'       : 'text',
+            'xml'       : 'XML',
         }
 
         # A set of extensions known NOT to be source code.

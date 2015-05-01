@@ -4,6 +4,7 @@ include netDistrib.conf
 include CHANGES README TODO MANIFEST.in
 include snoCommentTester pySloc
 recursive-include pysloc *.py
+recursive-include test *
 global-exclude junk* .*swp 
 prune   .svn
 

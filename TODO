@@ -1,10 +1,12 @@
 # ~/dev/py/pysloc/TODO
 
 2015-04-30
-    * investigate: SLOC reported by countem much smaller than that
-        reported by just running pySloc
+    * investigate: SLOC reported by countem much smaller than that      * WRONG
+        reported by just running pySloc                                 * WRONG
+    * SERIOUS: running pySloc on build.xml reports zero SLOC
+
 2015-04-29
-    * xml is not in the language table
+    * xml is not in the language table                                  * FIXED
     * grand total line contains no test information (compare 
         goSloc, which has two such lines, first source, then test)
 
