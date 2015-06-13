@@ -1,6 +1,9 @@
 # ~/dev/py/pysloc/CHANGES
 # SLOC count is now all languages
 
+v0.4.15
+    2015-06-13
+        * add LICENSE.md                                            SLOC 1186
 0.4.14
     2015-05-01
         * xml added to language table                               SLOC 1182
@@ -68,3 +71,4 @@
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+

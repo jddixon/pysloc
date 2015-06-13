@@ -17,8 +17,8 @@ __all__ = [ '__version__',      '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.14'
-__version_date__ = '2015-05-01'
+__version__      = '0.4.15'
+__version_date__ = '2015-06-13'
 
 
 # private constants -------------------------------------------------
@@ -721,3 +721,4 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
