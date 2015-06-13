@@ -1,7 +1,8 @@
 # see http://docs.python.org/distutils/sourcedist.html
 
 include netDistrib.conf
-include CHANGES README TODO MANIFEST.in
+include CHANGES LICENSE.md README.* TODO MANIFEST.in
+include countem installit
 include snoCommentTester pySloc
 recursive-include pysloc *.py
 recursive-include test *
