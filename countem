@@ -4,10 +4,13 @@ rm -rf build
 ./pySloc -v -L py \
     txt:MANIFEST.in \
     bash:countem bash:installit  \
-    go:commentsForGo \
+    css:commentsForCss  \
+    go:commentsForGo    \
     ml:commentsForOcaml \
-    py:commentsForPy \
-    sno:commentsForSno \
-    txt:commentsForTxt \
-    xml:commentsForXml \
-    py:pySloc
+    py:commentsForPy    \
+    sno:commentsForSno  \
+    txt:commentsForTxt  \
+    xml:commentsForXml  \
+    py:pySloc           \
+    $@
+
