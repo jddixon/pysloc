@@ -17,8 +17,8 @@ __all__ = [ '__version__',      '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.15'
-__version_date__ = '2015-06-13'
+__version__      = '0.4.16'
+__version_date__ = '2015-08-11'
 
 
 # private constants -------------------------------------------------
@@ -130,6 +130,7 @@ class Q(object):
             'bash'      : countLinesShell,          # bash shell
             'c'         : countLinesC,              # ansic
             'csh'       : countLinesNotSharp,       # csh, tcsh
+            'css'       : countLinesJava,           # css, as in stylesheets
             'gen'       : countLinesNotSharp,       # treat # as comment
             'go'        : countLinesGo,             # golang
             'java'      : countLinesJava,           # plain old Java
@@ -152,6 +153,7 @@ class Q(object):
             'bash'      : 'bash',                   # yes, never used
             'c'         : 'c',                      # ansi c
             'csh'       : 'csh',
+            'css'       : 'css',
             'go'        : 'go',                     # same counter as C, Java ?
             'h'         : 'c',                      # PRESUMED ANSI C
             'html'      : 'html',                   # no counter
@@ -181,6 +183,7 @@ class Q(object):
             'bash'      : 'bash',
             'c'         : 'ansic',
             'csh'       : 'csh',
+            'css'       : 'css',
             'gen'       : 'generic',
             'go'        : 'golang',
             'html'      : 'html',
@@ -721,4 +724,5 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
