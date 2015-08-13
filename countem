@@ -6,6 +6,7 @@ rm -rf build
     bash:countem bash:installit  \
     css:commentsForCss  \
     go:commentsForGo    \
+    go:commentsForHtml  \
     ml:commentsForOcaml \
     py:commentsForPy    \
     sno:commentsForSno  \

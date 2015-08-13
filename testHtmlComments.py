@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 
-# testGoComments.py
+# testHtmlComments.py
 
 import os, sys, unittest
 
 from argparse   import ArgumentParser, Namespace
 from pysloc     import __version__, __version_date__
-from pysloc     import countLinesInDir, countLinesGo
+from pysloc     import countLinesInDir, countLinesHtml
 
-class TestGoComments (unittest.TestCase):
+class TestHtmlComments (unittest.TestCase):
 
     def setUp(self):
         self.options = Namespace()
@@ -22,8 +22,8 @@ class TestGoComments (unittest.TestCase):
     # actual unit tests #############################################
    
     def testNameToFuncMap(self):
-        testFile = './commentsForGo'
-        lines, sloc = countLinesGo(testFile, self.options, 'go')
+        testFile = './commentsForHtml'
+        lines, sloc = countLinesHtml(testFile, self.options, 'html')
         self.assertEqual(lines, 19)
         self.assertEqual(sloc,   5)
 

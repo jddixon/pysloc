@@ -8,17 +8,20 @@ from bs4 import BeautifulSoup, Comment
 __all__ = [ '__version__',      '__version_date__',
             'countLinesInDir',
             'countLinesBash',   'countLinesC',      # 'countLinesGeneric',
-            'countLinesGo',     'countLinesJava',   'countLinesOcaml',
+            'countLinesGo',     
+            'countLinesHtml',     
+            'countLinesJava',   'countLinesOcaml',
             'countLinesNotSharp',
             'countLinesPython', 'countLinesRuby',   'countLinesShell',
             'countLinesSnobol', 'countLinesText',
+            'uncommentHtml',    'uncommentJava',
             # classes
             'K', 'Q',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.16'
-__version_date__ = '2015-08-11'
+__version__      = '0.4.17'
+__version_date__ = '2015-08-12'
 
 
 # private constants -------------------------------------------------
@@ -130,9 +133,10 @@ class Q(object):
             'bash'      : countLinesShell,          # bash shell
             'c'         : countLinesC,              # ansic
             'csh'       : countLinesNotSharp,       # csh, tcsh
-            'css'       : countLinesJava,           # css, as in stylesheets
+            'css'       : countLinesJavaStyle,      # css, as in stylesheets
             'gen'       : countLinesNotSharp,       # treat # as comment
             'go'        : countLinesGo,             # golang
+            'html'      : countLinesHtml,           # html
             'java'      : countLinesJava,           # plain old Java
             'ml'        : countLinesOcaml,          # ocaml, tentative abbrev
             'not#'      : countLinesNotSharp,
@@ -420,14 +424,20 @@ def checkWhetherAlreadyCounted(pathToFile, options):
                     lines = lines[:-1]
     return lines, h
 
+# BASH ==============================================================
+
 def countLinesBash(path, options, lang):
     return countLinesShell(path, options, lang)
+
+# C =================================================================
 
 def countLinesC(path, options, lang):
     l, s = 0,0
     if (not path.endswith('.pb-c.c')) and (not path.endswith('.pb-c.h')):
         l, s = countLinesJavaStyle(path, options, lang)
     return l, s
+
+# NOT_SHARP =========================================================
 
 def countLinesNotSharp(pathToFile, options, lang):
     """
@@ -455,11 +465,47 @@ def countLinesNotSharp(pathToFile, options, lang):
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return linesSoFar, slocSoFar
 
+# GO ================================================================
+
 def countLinesGo(pathToFile, options, lang):
     linesSoFar,slocSoFar    = (0,0)
     if not pathToFile.endswith('.pb.go'):
         linesSoFar, slocSoFar = countLinesJavaStyle(pathToFile, options, lang)
     return linesSoFar, slocSoFar
+
+# HTML ==============================================================
+
+# XXX JUST A HACK OF countLinesJavaStyle -- FIX ME! 
+
+# A better definition of a comment is that it begins with <!-- and ends
+# with --> but does not contain -- or >
+
+def countLinesHtml(pathToFile, options, lang):
+    linesSoFar,slocSoFar    = (0,0)
+    inComment               = False
+    try:
+        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        if (hash != None) and (lines != None):
+            for line in lines:
+                linesSoFar += 1
+
+                code, inComment = uncommentHtml(line, inComment)
+                if code:
+                    code = code.strip()
+                    if code:
+                        slocSoFar += 1
+
+            options.already.add(hash)
+            if options.verbose:
+                print ("%-49s: %-4s %5d lines, %5d sloc" % (
+                    pathToFile, lang, linesSoFar, slocSoFar))
+
+    # SHOULD BE OK:
+    except Exception as e:
+        print("error reading '%s', skipping: %s" % (pathToFile, e))
+    return (linesSoFar, slocSoFar)
+
+# JAVA ==============================================================
 
 def countLinesJava(pathToFile, options, lang):
     linesSoFar,slocSoFar    = (0,0)
@@ -467,7 +513,70 @@ def countLinesJava(pathToFile, options, lang):
         linesSoFar, slocSoFar = countLinesJavaStyle(pathToFile, options, lang)
     return linesSoFar, slocSoFar
 
-OLD_COMMENT_PAT = "^(.*)/\*.*\*/(.*)$"
+def _findJavaCode(text):
+    """
+    We are in a comment.  Return a ref to the beginning of the text
+    outside the comment block (which may be '') and the value of inComment.
+    """
+    posn = text.find('*/') 
+    if posn == -1:
+        return '', True
+
+    if posn + 2 < len(text):
+        return text[posn+2:], False
+    else:
+        return '', False
+
+def _findJavaComment(text):
+    """
+    We are NOT in a comment.  Return a ref to any code found, a ref to the
+    rest of the text, and the value of inComment.
+    """
+    multiLine   = False
+    posnOld     = text.find('/*')       # multi-line comment
+    posnNew     = text.find('//')       # one-line comment
+
+    if posnOld == -1 and posnNew == -1:
+        return text, '', False
+
+    if posnNew == -1:
+        posn      = posnOld
+        inComment = True
+        multiLine = True
+    else:
+        # posnNew is non-negative
+        if posnOld == -1 or posnOld > posnNew:
+            posn      = posnNew
+            inComment = False
+        else:
+            posn      = posnOld
+            inComment = True
+            multiLine = True
+
+    if multiLine and (posn + 2 < len(text)):
+        return text[:posn], text[posn+2:], inComment
+    else:
+        return text[:posn], '', inComment
+
+
+def uncommentJava(text, inComment):
+    """
+    Given a line of text, return a ref to any code found and the value of
+    inComment, which may have changed.
+    """
+    code = ''
+    text = text.strip()
+    while text:
+        if inComment:
+            text, inComment = _findJavaCode(text)
+        else:
+            chunk, text, inComment = _findJavaComment(text.strip())
+            code += chunk   # XXX INEFFICIENT
+
+    return code, inComment
+
+# XXX Won't work if multiple comments on a line.
+OLD_COMMENT_PAT = "(.*)/\*.*?\*/(.*)"
 OLD_COMMENT_RE  = re.compile(OLD_COMMENT_PAT)
 
 def countLinesJavaStyle(pathToFile, options, lang):
@@ -479,13 +588,13 @@ def countLinesJavaStyle(pathToFile, options, lang):
             for line in lines:
                 linesSoFar += 1
 
-                #print "\nINITIALLY '%s'" % line.strip()
+                print("\nINITIALLY: '%s'" % line.strip())
 
                 if not inMultiLine:
                     m = OLD_COMMENT_RE.match(line)
                     if m:
                         line = m.group(1) + m.group(2)
-                        # print "LINE AFTER OLD COMMENT DROPPED: %s" % line
+                        print("  LINE AFTER OLD COMMENT DROPPED: '%s'" % line)
                     s = line.partition('/*')
                     if s[1] == '/*':
                         line = s[0]
@@ -499,13 +608,17 @@ def countLinesJavaStyle(pathToFile, options, lang):
                     else:
                         line = ''
 
-                #print "AFTER MULTI_LINE TESTS: '%s'" % line.strip()
+                print("  AFTER MULTI_LINE TESTS:         '%s'" % line.strip())
                 if line is not None and line != '':
                     s = line.partition('//')[0]     # strip off comments
                     line = s.strip()                # strip off leading, trailing
                     if line != '':
                         slocSoFar += 1
-                #print "AFTER COMMENT STRIPPING: '%s'" % line.strip()
+                        # DEBUG
+                        print("    slocSoFar := %d" % slocSoFar)
+                        
+                print("  AFTER COMMENT STRIPPING:        '%s'" % line.strip())
+                # END
 
 
             options.already.add(hash)
@@ -517,6 +630,8 @@ def countLinesJavaStyle(pathToFile, options, lang):
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return (linesSoFar, slocSoFar)
+
+# OCAML =============================================================
 
 def countLinesOcaml(pathToFile, options, lang):
     """
@@ -590,6 +705,8 @@ def countLinesOcaml(pathToFile, options, lang):
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return linesSoFar, slocSoFar
 
+# PYTHON ============================================================
+
 def countLinesPython(pathToFile, options, lang):
     linesSoFar, slocSoFar = (0,0)
     if not pathToFile.endswith('.pb2.py'):
@@ -627,6 +744,7 @@ def _countLinesPython(pathToFile, options, lang):
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return (linesSoFar, slocSoFar)
 
+# RUBY ==============================================================
 
 def countLinesRuby(pathToFile, options, lang):
     linesSoFar,slocSoFar    = (0,0)
@@ -634,8 +752,12 @@ def countLinesRuby(pathToFile, options, lang):
         linesSoFar, slocSoFar = countLinesNotSharp(pathToFile, options, lang)
     return linesSoFar, slocSoFar
 
+# SHELL =============================================================
+
 def countLinesShell(path, options, lang):
     return countLinesNotSharp(path, options, lang)
+
+# SNOBOL ============================================================
 
 def countLinesSnobol(pathToFile, options, lang):
     """
@@ -658,6 +780,8 @@ def countLinesSnobol(pathToFile, options, lang):
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return linesSoFar, slocSoFar
+
+# TEXT ==============================================================
 
 def countLinesText(pathToFile, options, lang):
     """
@@ -682,6 +806,8 @@ def countLinesText(pathToFile, options, lang):
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return linesSoFar, slocSoFar
+
+# XML ===============================================================
 
 def countLinesXml(pathToFile, options, lang):
     """
@@ -725,4 +851,51 @@ def countLinesXml(pathToFile, options, lang):
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
 
+# NEW HTML ==========================================================
+
+def _findHtmlCode(text):
+    """
+    We are in a comment.  Return a ref to the beginning of the text
+    outside the comment block (which may be '') and the value of inComment.
+    """
+    posn = text.find('-->') 
+    if posn == -1:
+        return '', True
+
+    if posn + 3 < len(text):
+        return text[posn+3:], False
+    else:
+        return '', False
+
+def _findHtmlComment(text):
+    """
+    We are NOT in a comment.  Return a ref to any code found, a ref to the
+    rest of the text, and the value of inComment.
+    """
+    posn = text.find('<!--')       # one-line comment
+
+    if posn == -1:
+        return text, '', False
+
+    if posn + 4 < len(text):
+        return text[:posn], text[posn+4:], True
+    else:
+        return text[:posn], '', True
+
+
+def uncommentHtml(text, inComment):
+    """
+    Given a line of text, return a ref to any code found and the value of
+    inComment, which may have changed.
+    """
+    code = ''
+    text = text.strip()
+    while text:
+        if inComment:
+            text, inComment = _findHtmlCode(text)
+        else:
+            chunk, text, inComment = _findHtmlComment(text.strip())
+            code += chunk   # XXX INEFFICIENT
+
+    return code, inComment
 
