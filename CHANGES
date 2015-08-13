@@ -1,6 +1,9 @@
 # ~/dev/py/pysloc/CHANGES
 # SLOC count is now all languages
 
+v0.4.17
+    2015-08-12
+        * html added to language table                              SLOC 1596
 v0.4.16
     2015-08-11
         * css added to language table                               SLOC 1363
@@ -74,5 +77,6 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
