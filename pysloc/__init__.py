@@ -20,8 +20,8 @@ __all__ = [ '__version__',      '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.17'
-__version_date__ = '2015-08-12'
+__version__      = '0.4.18'
+__version_date__ = '2015-08-13'
 
 
 # private constants -------------------------------------------------
@@ -475,7 +475,51 @@ def countLinesGo(pathToFile, options, lang):
 
 # HTML ==============================================================
 
-# XXX JUST A HACK OF countLinesJavaStyle -- FIX ME! 
+def _findHtmlCode(text):
+    """
+    We are in a comment.  Return a ref to the beginning of the text
+    outside the comment block (which may be '') and the value of inComment.
+    """
+    posn = text.find('-->') 
+    if posn == -1:
+        return '', True
+
+    if posn + 3 < len(text):
+        return text[posn+3:], False
+    else:
+        return '', False
+
+def _findHtmlComment(text):
+    """
+    We are NOT in a comment.  Return a ref to any code found, a ref to the
+    rest of the text, and the value of inComment.
+    """
+    posn = text.find('<!--')       # one-line comment
+
+    if posn == -1:
+        return text, '', False
+
+    if posn + 4 < len(text):
+        return text[:posn], text[posn+4:], True
+    else:
+        return text[:posn], '', True
+
+
+def uncommentHtml(text, inComment):
+    """
+    Given a line of text, return a ref to any code found and the value of
+    inComment, which may have changed.
+    """
+    code = ''
+    text = text.strip()
+    while text:
+        if inComment:
+            text, inComment = _findHtmlCode(text)
+        else:
+            chunk, text, inComment = _findHtmlComment(text.strip())
+            code += chunk   # XXX INEFFICIENT
+
+    return code, inComment
 
 # A better definition of a comment is that it begins with <!-- and ends
 # with --> but does not contain -- or >
@@ -500,7 +544,6 @@ def countLinesHtml(pathToFile, options, lang):
                 print ("%-49s: %-4s %5d lines, %5d sloc" % (
                     pathToFile, lang, linesSoFar, slocSoFar))
 
-    # SHOULD BE OK:
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return (linesSoFar, slocSoFar)
@@ -575,58 +618,26 @@ def uncommentJava(text, inComment):
 
     return code, inComment
 
-# XXX Won't work if multiple comments on a line.
-OLD_COMMENT_PAT = "(.*)/\*.*?\*/(.*)"
-OLD_COMMENT_RE  = re.compile(OLD_COMMENT_PAT)
-
 def countLinesJavaStyle(pathToFile, options, lang):
     linesSoFar,slocSoFar    = (0,0)
-    inMultiLine             = False
+    inComment               = False
     try:
         lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
         if (hash != None) and (lines != None):
             for line in lines:
                 linesSoFar += 1
 
-                print("\nINITIALLY: '%s'" % line.strip())
-
-                if not inMultiLine:
-                    m = OLD_COMMENT_RE.match(line)
-                    if m:
-                        line = m.group(1) + m.group(2)
-                        print("  LINE AFTER OLD COMMENT DROPPED: '%s'" % line)
-                    s = line.partition('/*')
-                    if s[1] == '/*':
-                        line = s[0]
-                        inMultiLine = True
-
-                if inMultiLine:
-                    s = line.partition('*/')
-                    if s[1] == '*/':
-                        line = s[2]
-                        inMultiLine = False
-                    else:
-                        line = ''
-
-                print("  AFTER MULTI_LINE TESTS:         '%s'" % line.strip())
-                if line is not None and line != '':
-                    s = line.partition('//')[0]     # strip off comments
-                    line = s.strip()                # strip off leading, trailing
-                    if line != '':
+                code, inComment = uncommentJava(line, inComment)
+                if code:
+                    code = code.strip()
+                    if code:
                         slocSoFar += 1
-                        # DEBUG
-                        print("    slocSoFar := %d" % slocSoFar)
-                        
-                print("  AFTER COMMENT STRIPPING:        '%s'" % line.strip())
-                # END
-
 
             options.already.add(hash)
             if options.verbose:
                 print ("%-49s: %-4s %5d lines, %5d sloc" % (
                     pathToFile, lang, linesSoFar, slocSoFar))
 
-    # SHOULD BE OK:
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return (linesSoFar, slocSoFar)
@@ -850,52 +861,4 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
-
-# NEW HTML ==========================================================
-
-def _findHtmlCode(text):
-    """
-    We are in a comment.  Return a ref to the beginning of the text
-    outside the comment block (which may be '') and the value of inComment.
-    """
-    posn = text.find('-->') 
-    if posn == -1:
-        return '', True
-
-    if posn + 3 < len(text):
-        return text[posn+3:], False
-    else:
-        return '', False
-
-def _findHtmlComment(text):
-    """
-    We are NOT in a comment.  Return a ref to any code found, a ref to the
-    rest of the text, and the value of inComment.
-    """
-    posn = text.find('<!--')       # one-line comment
-
-    if posn == -1:
-        return text, '', False
-
-    if posn + 4 < len(text):
-        return text[:posn], text[posn+4:], True
-    else:
-        return text[:posn], '', True
-
-
-def uncommentHtml(text, inComment):
-    """
-    Given a line of text, return a ref to any code found and the value of
-    inComment, which may have changed.
-    """
-    code = ''
-    text = text.strip()
-    while text:
-        if inComment:
-            text, inComment = _findHtmlCode(text)
-        else:
-            chunk, text, inComment = _findHtmlComment(text.strip())
-            code += chunk   # XXX INEFFICIENT
-
-    return code, inComment
 
