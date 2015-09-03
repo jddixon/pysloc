@@ -20,8 +20,8 @@ __all__ = [ '__version__',      '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.18'
-__version_date__ = '2015-08-13'
+__version__      = '0.4.19'
+__version_date__ = '2015-09-02'
 
 
 # private constants -------------------------------------------------
@@ -138,9 +138,11 @@ class Q(object):
             'go'        : countLinesGo,             # golang
             'html'      : countLinesHtml,           # html
             'java'      : countLinesJava,           # plain old Java
+            'js'        : countLinesJavaStyle,      # Javascript
             'ml'        : countLinesOcaml,          # ocaml, tentative abbrev
             'not#'      : countLinesNotSharp,
             'py'        : countLinesPython,         # yes, Python
+            'r'         : countLinesNotSharp,       # R
             'rb'        : countLinesRuby,           # ruby
             'sed'       : countLinesNotSharp,       # stream editor
             'sh'        : countLinesShell,          # shell script
@@ -163,11 +165,13 @@ class Q(object):
             'html'      : 'html',                   # no counter
             'itk'       : 'tcl',
             'java'      : 'java',
+            'js'        : 'js',                     # javascript, node.js
             'md'        : 'md',                     # no counter
             'ml'        : 'ml',                     # ocaml
             'mli'       : 'ml',                     # ocaml extension
             'not#'      : 'not#',
             'py'        : 'py',
+            'r'         : 'r',                      # R programming language 
             'rb'        : 'rb',
             'S'         : 'asm',
             's'         : 'asm',
@@ -192,10 +196,12 @@ class Q(object):
             'go'        : 'golang',
             'html'      : 'html',
             'java'      : 'java',
+            'js'        : 'javascript',
             'md'        : 'markdown',
             'ml'        : 'ocaml',
             'not#'      : 'not#',
             'py'        : 'python',
+            'r'         : 'R',
             'rb'        : 'ruby',
             'sed'       : 'sed',
             'sh'        : 'shell',

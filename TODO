@@ -1,5 +1,14 @@
 # ~/dev/py/pysloc/TODO
 
+2015-09-02
+    * testQ mapping of *.r to R programming language
+    * ditto for *.js
+
+2015-09-02
+    * add Haskell: comments begin with --, file names end with .hs
+    * add R, comments begin with #                                      * DONE
+    * add Javascript/node.js, comments like Java                        * DONE
+
 2015-08-12
     * Html handling needs improvement, specifically an HTML comment
         should be <!-- (.*) --> where the middle bit excludes -- and >
