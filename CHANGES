@@ -1,6 +1,10 @@
 # ~/dev/py/pysloc/CHANGES
-# SLOC count is now all languages
 
+v0.4.20
+    2015-09-03
+        * updated language list in README/index.md
+    2015-09-11
+        * cleaned up docs further                                   SLOC 1613
 v0.4.19
     2015-09-02
         * R, javascript added to language table                     SLOC 1583

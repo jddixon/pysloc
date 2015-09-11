@@ -20,9 +20,8 @@ __all__ = [ '__version__',      '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.19'
-__version_date__ = '2015-09-02'
-
+__version__      = '0.4.20'
+__version_date__ = '2015-09-11'
 
 # private constants -------------------------------------------------
 TQUOTE = '"""'
@@ -142,7 +141,7 @@ class Q(object):
             'ml'        : countLinesOcaml,          # ocaml, tentative abbrev
             'not#'      : countLinesNotSharp,
             'py'        : countLinesPython,         # yes, Python
-            'r'         : countLinesNotSharp,       # R
+            'R'         : countLinesNotSharp,       # R
             'rb'        : countLinesRuby,           # ruby
             'sed'       : countLinesNotSharp,       # stream editor
             'sh'        : countLinesShell,          # shell script
@@ -171,7 +170,8 @@ class Q(object):
             'mli'       : 'ml',                     # ocaml extension
             'not#'      : 'not#',
             'py'        : 'py',
-            'r'         : 'r',                      # R programming language 
+            'R'         : 'R',                      # R programming language 
+            'r'         : 'R',                      # R programming language 
             'rb'        : 'rb',
             'S'         : 'asm',
             's'         : 'asm',
@@ -201,7 +201,7 @@ class Q(object):
             'ml'        : 'ocaml',
             'not#'      : 'not#',
             'py'        : 'python',
-            'r'         : 'R',
+            'R'         : 'R',
             'rb'        : 'ruby',
             'sed'       : 'sed',
             'sh'        : 'shell',

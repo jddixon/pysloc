@@ -26,13 +26,15 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.ext2Lang(''),      None)
         self.assertEqual(self.q.ext2Lang('foo'),   None)
         # expect success
+        self.assertEqual(self.q.ext2Lang('css'),  'css')
         self.assertEqual(self.q.ext2Lang('go'),   'go')
         self.assertEqual(self.q.ext2Lang('html'), 'html')
         self.assertEqual(self.q.ext2Lang('java'), 'java')
         self.assertEqual(self.q.ext2Lang('js'),   'js')
         self.assertEqual(self.q.ext2Lang('md'),   'md')
         self.assertEqual(self.q.ext2Lang('py'),   'py')
-        self.assertEqual(self.q.ext2Lang('r'),    'r')      # short name 
+        self.assertEqual(self.q.ext2Lang('R'),    'R')      # short name 
+        self.assertEqual(self.q.ext2Lang('r'),    'R')      # short name 
         self.assertEqual(self.q.ext2Lang('sh'),   'sh')
         self.assertEqual(self.q.ext2Lang('sno'),  'sno')
 
