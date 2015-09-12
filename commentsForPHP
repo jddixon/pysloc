@@ -1,0 +1,21 @@
+/* phpTester */
+
+this is the third line                          SLOC 1
+this is the fourth // ending with a comment     SLOC 2
+// this is the fifth 
+and this is my very generous 6th line           SLOC 3
+
+/**/ A degenerate comment or two /* */          SLOC 4
+
+/*
+*/
+
+/* This is a multiline comment 
+ * runing over several lines
+ * with occasional correct spellings
+ */
+I see five source lines in this 21-line file    SLOC 5
+
+# This is the only comment starting with a sharp sign
+  # Well, it was until this one showed up
+and this one    # ...                           SLOC 6

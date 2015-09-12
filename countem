@@ -1,17 +1,16 @@
 cd /home/jdd/dev/py/pysloc
 rm -rf build
 # for normal use, drop the leading ./ and the -v option
-./pySloc -v -L py \
-    txt:MANIFEST.in \
-    bash:countem bash:installit  \
+./pySloc $@ -v -L py    \
+    txt:MANIFEST.in     \
+    bash:countem bash:installit bash:test.all \
     css:commentsForCss  \
     go:commentsForGo    \
     go:commentsForHtml  \
     ml:commentsForOcaml \
+    ml:commentsForPHP   \
     py:commentsForPy    \
     sno:commentsForSno  \
     txt:commentsForTxt  \
     xml:commentsForXml  \
-    py:pySloc           \
-    $@
-
+    py:pySloc

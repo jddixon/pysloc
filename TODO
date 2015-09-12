@@ -1,7 +1,15 @@
 # ~/dev/py/pysloc/TODO
 
+2015-09-03
+    * support PHP comments 
+        - single line: comment starts with # or //
+        - multi-line: C-style /* like this */
+    * map .php extension to php programming language
+    * write testPHPComments.py to exercise commentsForPHP (21 lines, 
+        6 of which SLOC)
+
 2015-09-02
-    * testQ mapping of *.r to R programming language
+    * testQ mapping of *.r to R programming language                    * DONE
     * ditto for *.js
 
 2015-09-02
@@ -13,15 +21,12 @@
     * Html handling needs improvement, specifically an HTML comment
         should be <!-- (.*) --> where the middle bit excludes -- and >
     * countLinesJavaStyle() should be reworked to use uncommentJava()
-    * get rid of debug print statements!
+    * get rid of debug print statements!                                * DONE
 
 2015-04-30
-    * investigate: SLOC reported by countem much smaller than that      * WRONG
-        reported by just running pySloc                                 * WRONG
-    * SERIOUS: running pySloc on build.xml reports zero SLOC
+    * SERIOUS: running pySloc on build.xml reports zero SLOC            * FIXED
 
 2015-04-29
-    * xml is not in the language table                                  * FIXED
     * grand total line contains no test information (compare 
         goSloc, which has two such lines, first source, then test)
 
@@ -29,30 +34,9 @@
     * FIX: XML processing is remarkably inefficient
         - and needs more testing
 
-2015-04-19
-    * sudo pip3 install beautifulsoup4                                  * DONE
-        - but to use: from bs4 import BeautifulSoup                     * DONE
-
-2015-04-15 (edited from -13)
-    * XXX running countem in xlevent causes error, __init__.py line     * FIXED
-        342 'file' is not defined                                       * FIXED 
-
 2015-04-13 (edited from -11)
-    * add simple counter that just counts lines, call the lang 'txt'    * DONE
-    * rename countLinesGeneric countLinesNotSharp                       * DONE
-    * lang is 'not#'                                                    * DONE
     * add countLinesGeneric which has a pattern or regexp for whatever
         starts a comment line
-    * option -C should take colon-separated list of langs as argument,  * DONE
-        and then total only those languages; bare -S means total all    * DONE
-        languages
-
-2015-04-11
-    * add language (abbrev) to -v output line                           * DONE
-    * add lang 'bash' to distinguish utility scripts from autotools     * DONE
-
-2015-04-09
-    * modify C counter to skip protobuf-generated .pb-c.{c,h} files     * DONE
 
 2015-04-08
     * figure out how to differentiate C *.h from C++ *.h 
@@ -85,9 +69,6 @@
         continuation character (backslash at end of line) - but
         how exactly?
 
-2015-04-03 
-    * add -L/--mainLang option                                          * DONE
-
 2015-04-01 [from snosloc/TODO]
     * add ext2lang, map guessing language from file extension
         - one language is 'notCode'
@@ -100,15 +81,8 @@
         TSLOC is SLOC for tests
     * assume can use the same counter for Java and Go
     * the perils of Perl: www.perlmonks.org/?node_id=100344 
-    * need generic counter                                              * DONE
-        - applied by default to anything on the command line
-            * if file lang unknown, use 'gen' for generic               * DONE
 
 2015-02-16
-    * triple-quoted strings (such as """...""") should be included in   * DONE
-        the count                                                       * DONE
-    * need more elaborate testing, especially of triple quoting         * DONE
     * handle pathelogical cases 
         - SQUOTEd TQUOTE: '"""' or 'like """ this'
-        - DQUOTED TQUOTE: "this is """an example"""" (??)               * WRONG
 

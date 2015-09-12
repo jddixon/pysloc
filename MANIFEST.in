@@ -2,11 +2,10 @@
 
 include netDistrib.conf
 include CHANGES LICENSE.md README.* TODO MANIFEST.in
-include countem installit
-include snoCommentTester pySloc
+include ghpDoc/*
+include countem installit test.all
+include commentsFor* pySloc
 recursive-include pysloc *.py
 recursive-include test *
 global-exclude junk* .*swp 
 prune   .svn
-
-

@@ -11,15 +11,22 @@ Counting lines of source code is a crude measure of the size of a program
 or project.  For most languages there is a conventional way to distinguish
 comments; in C, for example, anything /* enclosed like this */ is considered
 a comment and such comments can span more than one line.  In counting lines
-of source code normally comments are first removed and then spaces at the
-beginning of the line are stripped off.  If there is anything left it is
-considered a Source Line Of Code and included in the SLOC count.
+of source code, 
+
+* comments are first removed
+* then spaces at the beginning of the line are stripped of
+* if there is anything left, it is considered a *Source Line Of Code* 
+and included in the SLOC count.
 
 SLOC counts are useful for guesstimating how much effort will be required 
-to fix or replace code.  SLOC counts can also be used to coarsely
-guage progress on a project.
+to understand, fix, or replace code.  SLOC counts can also be used to coarsely
+gauge progress on a project.
 
-## Languages 
+Users should bear in mind, of course, that often cleaning up code will
+reduce the SLOC count but improve performance and otherwise improve code
+quality.
+
+## Languages Handled
 
 Languages are primarily distinguished by the extension on the file name.
 Thus for example `example.py` would be counted according to the rules for
@@ -28,25 +35,32 @@ Java-style comments would be ignored in counting lines of source code.
 
 Languages currently covered include, by short name,
 
-*   **asm**,    assembly language
-*  **c**,   the venerable C programming language aka ANSI C
-*  **csh**,   csh, another shell; tcsh is a variant
-*  **go**,   Google's Go programming language
-*   **java**,    the Sun programming language
-*  **ml**,   Ocaml, a functional langauge
-*  **not#**,  'not#', a pseudo-language; counts any non-blank line not beginning with the sharp sign ('#')
-*  **rb**,   Ruby
-*  **sed**,   the language for scripts used to edit files from the command line
-*   **sh**,     bash or the shell, sh
-*   **sno**,    Snobol, the string-oriented programming language
-*  **tcl**,   the Tool Command Language, a dynamic scripting language
-*  **txt**,   plain text; counts all non-blank lines
-* **xml**, XML
+* **asm**,  assembly language
+* **c**,    the venerable C programming language; ANSI C
+* **csh**,  csh, another shell; tcsh is a variant
+* **css**,  css, used for writing style sheets
+* **go**,   Google's Go programming language
+* **html**, the Web's markup language
+* **java**, the Sun programming language
+* **js**,   javascript, the Web's programming language
+* **md**,   markdown
+* **ml**,   Ocaml, a functional langauge
+* **not#**, 'not#', a pseudo-language; counts any line whose first non-space character is not the sharp sign ('#')
+* **py**,   Python
+* **R**,    R, the statistics programming language
+* **rb**,   Ruby
+* **sed**,  the language for `sed` scripts used to edit files from the command line
+* **sh**,   bash or the shell, `sh`
+* **sno**,  Snobol, the string-oriented programming language
+* **tcl**,  the Tool Command Language, a dynamic scripting language
+* **txt**,  plain text; counts all non-blank lines
+* **xml**,  XML
 
 ## Command Line
 
 	usage: count lines of source code [-h] [-C [LANGSCOUNTED]] [-j] [-L MAINLANG]
-	                                  [-M MATCHES] [-S] [-t] [-v] [-V]
+	                                  
+                                      [-M MATCHES] [-S] [-t] [-v] [-V]
 	                                  [-X EXCLUSIONS] [-z]
 	                                  [namedFiles [namedFiles ...]]
 	
@@ -78,6 +92,10 @@ is not
 
 Files are only counted once.  Differently put, if two files have identical
 content, only the first encountered will be counted.
+
+## Project Status
+
+A good beta: usable for practical purposes.
 
 ## On-line Documentation
 
