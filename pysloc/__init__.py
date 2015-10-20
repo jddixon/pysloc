@@ -20,8 +20,8 @@ __all__ = [ '__version__',      '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.20'
-__version_date__ = '2015-09-11'
+__version__      = '0.4.21'
+__version_date__ = '2015-10-20'
 
 # private constants -------------------------------------------------
 TQUOTE = '"""'
@@ -230,7 +230,6 @@ class Q(object):
         self._notCodeDirs = {
             '.git',
             '.svn',
-            'ghpDoc',
         }
         # files which definitely do not contain source code
         self._notCodeFiles = {
