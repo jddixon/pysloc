@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="content">
-<h1>pysloc</h1>
+<h1 class="libTop">pysloc</h1>
 
 <p>pySloc is a Python 3 utility for counting lines of source code in a file,
 directory,
@@ -22,15 +22,24 @@ and a total for all languages.</p>
 or project.  For most languages there is a conventional way to distinguish
 comments; in C, for example, anything /* enclosed like this */ is considered
 a comment and such comments can span more than one line.  In counting lines
-of source code normally comments are first removed and then spaces at the
-beginning of the line are stripped off.  If there is anything left it is
-considered a Source Line Of Code and included in the SLOC count.</p>
+of source code,</p>
+
+<ul>
+<li>comments are first removed</li>
+<li>then spaces at the beginning of the line are stripped of</li>
+<li>if there is anything left, it is considered a <em>Source Line Of Code</em>
+and included in the SLOC count.</li>
+</ul>
 
 <p>SLOC counts are useful for guesstimating how much effort will be required
-to fix or replace code.  SLOC counts can also be used to coarsely
-guage progress on a project.</p>
+to understand, fix, or replace code.  SLOC counts can also be used to coarsely
+gauge progress on a project.</p>
 
-<h2>Languages</h2>
+<p>Users should bear in mind, of course, that often cleaning up code will
+reduce the SLOC count but improve performance and otherwise improve code
+quality.</p>
+
+<h2>Languages Handled</h2>
 
 <p>Languages are primarily distinguished by the extension on the file name.
 Thus for example <code>example.py</code> would be counted according to the rules for
@@ -40,25 +49,32 @@ Java-style comments would be ignored in counting lines of source code.</p>
 <p>Languages currently covered include, by short name,</p>
 
 <ul>
-<li><strong>asm</strong>,    assembly language</li>
-<li><strong>c</strong>,   the venerable C programming language aka ANSI C</li>
-<li><strong>csh</strong>,   csh, another shell; tcsh is a variant</li>
+<li><strong>asm</strong>,  assembly language</li>
+<li><strong>c</strong>,    the venerable C programming language; ANSI C</li>
+<li><strong>csh</strong>,  csh, another shell; tcsh is a variant</li>
+<li><strong>css</strong>,  css, used for writing style sheets</li>
 <li><strong>go</strong>,   Google&rsquo;s Go programming language</li>
-<li><strong>java</strong>,    the Sun programming language</li>
+<li><strong>html</strong>, the Web&rsquo;s markup language</li>
+<li><strong>java</strong>, the Sun programming language</li>
+<li><strong>js</strong>,   javascript, the Web&rsquo;s programming language</li>
+<li><strong>md</strong>,   markdown</li>
 <li><strong>ml</strong>,   Ocaml, a functional langauge</li>
-<li><strong>not#</strong>,  &lsquo;not#&rsquo;, a pseudo-language; counts any non-blank line not beginning with the sharp sign (&lsquo;#&rsquo;)</li>
+<li><strong>not#</strong>, &lsquo;not#&rsquo;, a pseudo-language; counts any line whose first non-space character is not the sharp sign (&lsquo;#&rsquo;)</li>
+<li><strong>py</strong>,   Python</li>
+<li><strong>R</strong>,    R, the statistics programming language</li>
 <li><strong>rb</strong>,   Ruby</li>
-<li><strong>sed</strong>,   the language for scripts used to edit files from the command line</li>
-<li><strong>sh</strong>,     bash or the shell, sh</li>
-<li><strong>sno</strong>,    Snobol, the string-oriented programming language</li>
-<li><strong>tcl</strong>,   the Tool Command Language, a dynamic scripting language</li>
-<li><strong>txt</strong>,   plain text; counts all non-blank lines</li>
-<li><strong>xml</strong>, XML</li>
+<li><strong>sed</strong>,  the language for <code>sed</code> scripts used to edit files from the command line</li>
+<li><strong>sh</strong>,   bash or the shell, <code>sh</code></li>
+<li><strong>sno</strong>,  Snobol, the string-oriented programming language</li>
+<li><strong>tcl</strong>,  the Tool Command Language, a dynamic scripting language</li>
+<li><strong>txt</strong>,  plain text; counts all non-blank lines</li>
+<li><strong>xml</strong>,  XML</li>
 </ul>
 
 <h2>Command Line</h2>
 
 <pre><code>usage: count lines of source code [-h] [-C [LANGSCOUNTED]] [-j] [-L MAINLANG]
+
                                   [-M MATCHES] [-S] [-t] [-v] [-V]
                                   [-X EXCLUSIONS] [-z]
                                   [namedFiles [namedFiles ...]]
@@ -92,6 +108,10 @@ is not</p>
 
 <p>Files are only counted once.  Differently put, if two files have identical
 content, only the first encountered will be counted.</p>
+
+<h2>Project Status</h2>
+
+<p>A good beta: usable for practical purposes.</p>
 
 <h2>Licensing</h2>
 <p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />The material on this github.io website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
