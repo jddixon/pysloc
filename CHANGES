@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.4.21
+    2015-10-20
+        * ghpDoc/ dropped from not-code-dirs list
 v0.4.20
     2015-09-03
         * updated language list in README/index.md
