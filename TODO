@@ -1,5 +1,9 @@
 # ~/dev/py/pysloc/TODO
 
+2015-10-20
+    * FIX ME: -V does not print version number                          * FIXED
+    * pySloc still not counting xlattice/ghpDoc                         * FIXED
+
 2015-09-03
     * support PHP comments 
         - single line: comment starts with # or //

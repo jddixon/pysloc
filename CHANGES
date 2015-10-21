@@ -1,8 +1,11 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.4.22
+    2015-10-21
+        * -V displays version number and date, then halt            SLOC 1616
 v0.4.21
     2015-10-20
-        * ghpDoc/ dropped from not-code-dirs list
+        * ghpDoc/ dropped from not-code-dirs list                   SLOC 1612
 v0.4.20
     2015-09-03
         * updated language list in README/index.md

@@ -14,7 +14,7 @@ a comment and such comments can span more than one line.  In counting lines
 of source code, 
 
 * comments are first removed
-* then spaces at the beginning of the line are stripped of
+* then spaces at the beginning of the line are stripped off
 * if there is anything left, it is considered a *Source Line Of Code* 
 and included in the SLOC count.
 

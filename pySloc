@@ -86,7 +86,8 @@ def doCount(options):
 if __name__ == '__main__':
    
     # INTERPRET COMMAND LINE ----------------------------------------
-    parser = ArgumentParser('count lines of source code')
+    DESC = 'count lines of source code'
+    parser = ArgumentParser(description=DESC)
 
     parser.add_argument('-C', '--langsCounted', nargs='?', const='all',
         help = 'colon-separated list of langugages to be counted (abbrev)')
@@ -160,6 +161,9 @@ if __name__ == '__main__':
     # sanity checks -------------------------------------------------
 
     # chatter -------------------------------------------------------
+    if args.showVersion:
+        print('pySloc v%s %s' % (__version__, __version_date__))
+        sys.exit()
     if args.justShow or (args.verbose>1):
         
         print("exclusions:      %s" % args.exclusions)
