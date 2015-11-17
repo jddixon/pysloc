@@ -1,7 +1,7 @@
 # pysloc
 
-pySloc is a Python 3 utility for counting lines of source code in a file, 
-directory, 
+pySloc is a Python 3 utility for counting lines of source code in a file,
+directory,
 or project.  It provides a count by language of source lines of code found
 and a total for all languages.
 
@@ -11,14 +11,14 @@ Counting lines of source code is a crude measure of the size of a program
 or project.  For most languages there is a conventional way to distinguish
 comments; in C, for example, anything /* enclosed like this */ is considered
 a comment and such comments can span more than one line.  In counting lines
-of source code, 
+of source code,
 
 * comments are first removed
 * then spaces at the beginning of the line are stripped off
-* if there is anything left, it is considered a *Source Line Of Code* 
+* if there is anything left, it is considered a *Source Line Of Code*
 and included in the SLOC count.
 
-SLOC counts are useful for guesstimating how much effort will be required 
+SLOC counts are useful for guesstimating how much effort will be required
 to understand, fix, or replace code.  SLOC counts can also be used to coarsely
 gauge progress on a project.
 
@@ -59,7 +59,7 @@ Languages currently covered include, by short name,
 ## Command Line
 
 	usage: count lines of source code [-h] [-C [LANGSCOUNTED]] [-j] [-L MAINLANG]
-	                                  
+	
                                       [-M MATCHES] [-S] [-t] [-v] [-V]
 	                                  [-X EXCLUSIONS] [-z]
 	                                  [namedFiles [namedFiles ...]]
@@ -86,7 +86,7 @@ Languages currently covered include, by short name,
 	  -z, --onlyNamedFiles  only count files named on the command line
 
 Files named in the command line are always counted, even if their language
-is not 
+is not
 
 ## Deduping
 
@@ -99,4 +99,5 @@ A good beta: usable for practical purposes.
 
 ## On-line Documentation
 
-More information on the **pysloc** project can be found [here](https://jddixon.github.io/pysloc)
+More information on the **pysloc** project can be found
+[here](://jddixon.github.io/pysloc)
