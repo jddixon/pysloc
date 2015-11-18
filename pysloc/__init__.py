@@ -20,8 +20,8 @@ __all__ = [ '__version__',      '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.22'
-__version_date__ = '2015-10-21'
+__version__      = '0.4.23'
+__version_date__ = '2015-11-18'
 
 # private constants -------------------------------------------------
 TQUOTE = '"""'
