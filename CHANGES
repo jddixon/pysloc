@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.4.23
+    2015-11-18
+        * correct version info                                      SLOC 1616
 v0.4.22
     2015-10-21
         * -V displays version number and date, then halt            SLOC 1616
