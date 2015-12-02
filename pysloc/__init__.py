@@ -20,8 +20,8 @@ __all__ = [ '__version__',      '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.23'
-__version_date__ = '2015-11-18'
+__version__      = '0.4.24'
+__version_date__ = '2015-12-01'
 
 # private constants -------------------------------------------------
 TQUOTE = '"""'
@@ -131,6 +131,7 @@ class Q(object):
             'asm'       : countLinesNotSharp,       # s, S, asm
             'bash'      : countLinesShell,          # bash shell
             'c'         : countLinesC,              # ansic
+            'cpp'       : countLinesC,              # C++
             'csh'       : countLinesNotSharp,       # csh, tcsh
             'css'       : countLinesJavaStyle,      # css, as in stylesheets
             'gen'       : countLinesNotSharp,       # treat # as comment
@@ -157,10 +158,18 @@ class Q(object):
             'asm'       : 'asm',
             'bash'      : 'bash',                   # yes, never used
             'c'         : 'c',                      # ansi c
+            'C'         : 'cpp',                    # C++
+            'cc'        : 'cpp',                    # C++
+            'cp'        : 'cpp',                    # C++
+            'cpp'       : 'cpp',                    # C++
+            'CPP'       : 'cpp',                    # C++
+            'c++'       : 'cpp',                    # C++
+            'cxx'       : 'cpp',                    # C++
             'csh'       : 'csh',
             'css'       : 'css',
             'go'        : 'go',                     # same counter as C, Java ?
             'h'         : 'c',                      # PRESUMED ANSI C
+            'hpp'       : 'cpp',                    # C++
             'html'      : 'html',                   # no counter
             'itk'       : 'tcl',
             'java'      : 'java',
@@ -190,6 +199,7 @@ class Q(object):
             'asm'       : 'assembler',
             'bash'      : 'bash',
             'c'         : 'ansic',
+            'cpp'       : 'C++',
             'csh'       : 'csh',
             'css'       : 'css',
             'gen'       : 'generic',
@@ -866,4 +876,5 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 

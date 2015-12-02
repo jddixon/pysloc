@@ -17,3 +17,4 @@ MANIFEST
 THIS.IS.A.GIT*
 tmp
 __pycache__
+*.bak

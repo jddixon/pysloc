@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.4.24
+    2015-12-01
+        * add C++ support, lightly considered                       SLOC 1632
 v0.4.23
     2015-11-18
         * correct version info                                      SLOC 1616
@@ -96,6 +99,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 
