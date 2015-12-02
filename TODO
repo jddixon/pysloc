@@ -1,13 +1,15 @@
 # ~/dev/py/pysloc/TODO
 
-2015-10-20
-    * FIX ME: -V does not print version number                          * FIXED
-    * pySloc still not counting xlattice/ghpDoc                         * FIXED
-
-2015-09-03
+2015-11-28 (edited from -09-03)
     * support PHP comments 
         - single line: comment starts with # or //
         - multi-line: C-style /* like this */
+        - comments preceded by sharp sign (#)
+        - see php.net/manual/en/language.basic.syntax.comments.php
+            * 'The "one-line" comment styles only comment to the end
+                of the line or the current block of PHP code, 
+                whichever comes first.'
+            * C-style comments (/* ... */) may not be nested
     * map .php extension to php programming language
     * write testPHPComments.py to exercise commentsForPHP (21 lines, 
         6 of which SLOC)
