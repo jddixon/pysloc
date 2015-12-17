@@ -3,6 +3,7 @@
 ./testK.py
 ./testK.py
 ./testOcamlComments.py
+./testOccamComments.py
 ./testPyComments.py
 ./testQ.py
 ./testSnoComments.py

@@ -20,8 +20,8 @@ __all__ = [ '__version__',      '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.24'
-__version_date__ = '2015-12-01'
+__version__      = '0.4.25'
+__version_date__ = '2015-12-17'
 
 # private constants -------------------------------------------------
 TQUOTE = '"""'
@@ -141,6 +141,7 @@ class Q(object):
             'js'        : countLinesJavaStyle,      # Javascript
             'ml'        : countLinesOcaml,          # ocaml, tentative abbrev
             'not#'      : countLinesNotSharp,
+            'occ'       : countLinesOccam,          # concurrent programming
             'py'        : countLinesPython,         # yes, Python
             'R'         : countLinesNotSharp,       # R
             'rb'        : countLinesRuby,           # ruby
@@ -169,6 +170,7 @@ class Q(object):
             'css'       : 'css',
             'go'        : 'go',                     # same counter as C, Java ?
             'h'         : 'c',                      # PRESUMED ANSI C
+            'hh'        : 'cpp',                    # C++; I've never seen this
             'hpp'       : 'cpp',                    # C++
             'html'      : 'html',                   # no counter
             'itk'       : 'tcl',
@@ -178,6 +180,7 @@ class Q(object):
             'ml'        : 'ml',                     # ocaml
             'mli'       : 'ml',                     # ocaml extension
             'not#'      : 'not#',
+            'occ'       : 'occ',
             'py'        : 'py',
             'R'         : 'R',                      # R programming language 
             'r'         : 'R',                      # R programming language 
@@ -210,6 +213,7 @@ class Q(object):
             'md'        : 'markdown',
             'ml'        : 'ocaml',
             'not#'      : 'not#',
+            'occ'       : 'Occam',
             'py'        : 'python',
             'R'         : 'R',
             'rb'        : 'ruby',
@@ -731,6 +735,34 @@ def countLinesOcaml(pathToFile, options, lang):
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return linesSoFar, slocSoFar
 
+# OCCAM =============================================================
+
+def countLinesOccam(pathToFile, options, lang):
+    """
+    Count lines in a file where the double dash ('--') is the comment
+    marker.  That is, we ignore blank lines, lines consisting solely of
+    spaces, and those starting with zero or more spaces followed by
+    a double dash.
+    """
+
+    linesSoFar, slocSoFar = (0,0)
+    try:
+        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        if (hash != None) and (lines != None):
+            for line in lines:
+                linesSoFar += 1
+                # This could be made more efficient.
+                line = line.strip()
+                if len(line) > 0 and not line.startswith('--'):
+                    slocSoFar += 1
+            options.already.add(hash)
+            if options.verbose:
+                print ("%-49s: %-4s %5d lines, %5d sloc" % (
+                        pathToFile, lang, linesSoFar, slocSoFar))
+    except Exception as e:
+        print("error reading '%s', skipping: %s" % (pathToFile, e))
+    return linesSoFar, slocSoFar
+
 # PYTHON ============================================================
 
 def countLinesPython(pathToFile, options, lang):
@@ -876,5 +908,6 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
