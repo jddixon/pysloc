@@ -1,5 +1,16 @@
 # ~/dev/py/pysloc/TODO
 
+2015-12-17
+    * occam comments begin with double dash (--) and extend to end      * DONE
+        of line; file names generally seem to have the .occ extension   * DONE
+    * the extension .inc is sometimes used for occam source code; 
+        most uses seem more recent and often particular to Fred Barnes
+        - possibly add a switch temporarily mapping an extension to
+            a language abbreviation?
+
+2015-12-01
+    * need some testing for C++ other than that in testQ.py
+
 2015-11-28 (edited from -09-03)
     * support PHP comments 
         - single line: comment starts with # or //
@@ -89,6 +100,6 @@
     * the perils of Perl: www.perlmonks.org/?node_id=100344 
 
 2015-02-16
-    * handle pathelogical cases 
+    * handle pathological cases 
         - SQUOTEd TQUOTE: '"""' or 'like """ this'
 

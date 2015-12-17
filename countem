@@ -8,7 +8,8 @@ rm -rf build
     go:commentsForGo    \
     go:commentsForHtml  \
     ml:commentsForOcaml \
-    ml:commentsForPHP   \
+    oc:commentsForOccam \
+    php:commentsForPHP  \
     py:commentsForPy    \
     sno:commentsForSno  \
     txt:commentsForTxt  \

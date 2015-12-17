@@ -31,6 +31,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.ext2Lang('cpp'),  'cpp')
         self.assertEqual(self.q.ext2Lang('c++'),  'cpp')
         self.assertEqual(self.q.ext2Lang('cxx'),  'cpp')
+        self.assertEqual(self.q.ext2Lang('hh'),   'cpp')
         self.assertEqual(self.q.ext2Lang('hpp'),  'cpp')
 
         self.assertEqual(self.q.ext2Lang('css'),  'css')
@@ -39,6 +40,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.ext2Lang('java'), 'java')
         self.assertEqual(self.q.ext2Lang('js'),   'js')
         self.assertEqual(self.q.ext2Lang('md'),   'md')
+        self.assertEqual(self.q.ext2Lang('occ'),  'occ')
         self.assertEqual(self.q.ext2Lang('py'),   'py')
         self.assertEqual(self.q.ext2Lang('R'),    'R')      # short name 
         self.assertEqual(self.q.ext2Lang('r'),    'R')      # short name 
@@ -79,6 +81,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.getLongName('html'), 'html')
         self.assertEqual(self.q.getLongName('java'), 'java')
         self.assertEqual(self.q.getLongName('md'),   'markdown')
+        self.assertEqual(self.q.getLongName('occ'),  'Occam')
         self.assertEqual(self.q.getLongName('py'),   'python')
         self.assertEqual(self.q.getLongName('sno'),  'snobol4')
 
@@ -133,6 +136,13 @@ class TestQ (unittest.TestCase):
         lang,isTest = self.q.guessLang('fred_test.go', isCLIArg=False)
         self.assertEqual(lang, 'go')
         self.assertEqual(isTest, True)
+        
+        lang,isTest = self.q.guessLang('fred_test.occ', isCLIArg=True)
+        self.assertEqual(lang, 'occ')
+        self.assertEqual(isTest, False)
+        lang,isTest = self.q.guessLang('fred_test.occ', isCLIArg=False)
+        self.assertEqual(lang, 'occ')
+        self.assertEqual(isTest, False)
         
         lang,isTest = self.q.guessLang('myTestFoo.py', isCLIArg=True)
         self.assertEqual(lang, 'py')
