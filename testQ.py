@@ -31,6 +31,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.ext2Lang('cpp'),  'cpp')
         self.assertEqual(self.q.ext2Lang('c++'),  'cpp')
         self.assertEqual(self.q.ext2Lang('cxx'),  'cpp')
+        self.assertEqual(self.q.ext2Lang('h'),    'c')
         self.assertEqual(self.q.ext2Lang('hh'),   'cpp')
         self.assertEqual(self.q.ext2Lang('hpp'),  'cpp')
 
@@ -46,6 +47,13 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.ext2Lang('r'),    'R')      # short name 
         self.assertEqual(self.q.ext2Lang('sh'),   'sh')
         self.assertEqual(self.q.ext2Lang('sno'),  'sno')
+
+    def testIrregularExt2Lang(self):
+        qCpp = Q('cpp')
+        self.assertEqual(qCpp.ext2Lang('h'),    'cpp')
+
+        qOcc = Q('occ')
+        self.assertEqual(qOcc.ext2Lang('inc'),  'occ')
 
     def testGetCounter(self):
         # expect failure if unknown lang and not a command line argument

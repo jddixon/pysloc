@@ -48,9 +48,6 @@ def doCount(options):
         if b == ':':
             lang, name = a, c
 
-        # DEBUG
-        # print("processing %s as %s" % (name, lang))
-        # END
         if os.path.exists(name):
             l,s = 0,0
             if os.path.isfile(name):
@@ -115,7 +112,10 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     args.k          = K()   # a map, lang => (lines, sloc, tlines, tsloc)
-    args.q          = Q()
+    if args.mainLang:
+        args.q          = Q(args.mainLang)
+    else:
+        args.q          = Q('')
     args.timestamp  = "%04d%02d%02d-%02d%02d%02d" % time.gmtime()[:6]
 
     # fixups --------------------------------------------------------

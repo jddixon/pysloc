@@ -1,12 +1,20 @@
 # ~/dev/py/pysloc/TODO
 
+2015-12-18
+    * in the case of dplyr, there is NO C code present but many		    * DONE
+        *.h and *.cpp; we want to be able to specify that the primary	* DONE
+        language is C++ and automatically switch the mapping of *.h		* DONE
+        to C++		                                                    * DONE
+
 2015-12-17
     * occam comments begin with double dash (--) and extend to end      * DONE
         of line; file names generally seem to have the .occ extension   * DONE
-    * the extension .inc is sometimes used for occam source code; 
-        most uses seem more recent and often particular to Fred Barnes
-        - possibly add a switch temporarily mapping an extension to
-            a language abbreviation?
+    * the extension .inc is sometimes used for occam source code; 		* FIXED
+        most uses seem more recent and often particular to Fred Barnes	* FIXED
+        - PRACTICE: if mainLang=='occ' add 'inc' to 'occ' mapping for	* FIXED
+            this run only		*                                       * FIXED
+            * so we add 'inc' => 'occ' to _langMap		                * FIXED
+        - can verify this works uing the kroc distribution		        * FIXED
 
 2015-12-01
     * need some testing for C++ other than that in testQ.py

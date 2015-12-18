@@ -20,8 +20,8 @@ __all__ = [ '__version__',      '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.25'
-__version_date__ = '2015-12-17'
+__version__      = '0.4.26'
+__version_date__ = '2015-12-18'
 
 # private constants -------------------------------------------------
 TQUOTE = '"""'
@@ -120,7 +120,7 @@ class Q(object):
             'langMap',
             'nonCodeExt','notCodeFile',
             ]
-    def __init__(self):
+    def __init__(self, mainLang=''):
 
         # Note Ocaml comments are (* ... *) but allow nesting.  File
         # extensions are .ml (source code) and .mli (header; and then
@@ -196,6 +196,11 @@ class Q(object):
             'txt'       : 'txt',
             'xml'       : 'xml',
         }
+        if mainLang == 'cpp':
+            self._ext2Lang['h']     = 'cpp'
+        elif mainLang == 'occ':
+            self._ext2Lang['inc']   = 'occ'
+
         # Maps lang short name (abbrev) to fuller language name.
         # By convention, short names are limited to 4 chars.
         self._langMap = {
@@ -908,6 +913,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 
