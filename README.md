@@ -45,6 +45,7 @@ Languages currently covered include, by short name,
 * **js**,   javascript, the Web's programming language
 * **md**,   markdown
 * **ml**,   Ocaml, a functional langauge
+* **occ**,  Occam, the concurrent programming language
 * **not#**, 'not#', a pseudo-language; counts any line whose first non-space character is not the sharp sign ('#')
 * **py**,   Python
 * **R**,    R, the statistics programming language
@@ -100,4 +101,4 @@ A good beta: usable for practical purposes.
 ## On-line Documentation
 
 More information on the **pysloc** project can be found
-[here](://jddixon.github.io/pysloc)
+[here](https://jddixon.github.io/pysloc)
