@@ -46,6 +46,7 @@ Languages currently covered include, by short name,
 * **md**,   markdown
 * **ml**,   Ocaml, a functional langauge
 * **not#**, 'not#', a pseudo-language; counts any line whose first non-space character is not the sharp sign ('#')
+* **occ**,  Occam, the concurrent programming language
 * **py**,   Python
 * **R**,    R, the statistics programming language
 * **rb**,   Ruby

@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.4.27
+    2015-12-28
+        * added occam to web site
 v0.4.26
     2015-12-18
         * if mainLang is 'occam', files with 'inc' extension get
@@ -107,6 +110,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 
