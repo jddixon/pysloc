@@ -12,7 +12,8 @@ __all__ = [ '__version__',      '__version_date__',
             'countLinesHtml',     
             'countLinesJava',   'countLinesOcaml',
             'countLinesNotSharp',
-            'countLinesPython', 'countLinesRuby',   'countLinesShell',
+            'countLinesPython', 'countLinesRuby',   
+            'countLinesScala',  'countLinesShell',
             'countLinesSnobol', 'countLinesText',
             'uncommentHtml',    'uncommentJava',
             # classes
@@ -20,8 +21,8 @@ __all__ = [ '__version__',      '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.27'
-__version_date__ = '2015-12-28'
+__version__      = '0.4.28'
+__version_date__ = '2015-12-30'
 
 # private constants -------------------------------------------------
 TQUOTE = '"""'
@@ -145,6 +146,7 @@ class Q(object):
             'py'        : countLinesPython,         # yes, Python
             'R'         : countLinesNotSharp,       # R
             'rb'        : countLinesRuby,           # ruby
+            'scala'     : countLinesScala, 
             'sed'       : countLinesNotSharp,       # stream editor
             'sh'        : countLinesShell,          # shell script
             'sno'       : countLinesSnobol,         # snobol4
@@ -187,6 +189,7 @@ class Q(object):
             'rb'        : 'rb',
             'S'         : 'asm',
             's'         : 'asm',
+            'scala'     : 'scala',
             'sed'       : 'sed',
             'sh'        : 'sh',
             'sno'       : 'sno',
@@ -222,6 +225,7 @@ class Q(object):
             'py'        : 'python',
             'R'         : 'R',
             'rb'        : 'ruby',
+            'scala'     : 'scala',
             'sed'       : 'sed',
             'sh'        : 'shell',
             'sno'       : 'snobol4',
@@ -666,6 +670,7 @@ def countLinesJavaStyle(pathToFile, options, lang):
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return (linesSoFar, slocSoFar)
 
+
 # OCAML =============================================================
 
 def countLinesOcaml(pathToFile, options, lang):
@@ -820,6 +825,94 @@ def countLinesRuby(pathToFile, options, lang):
 def countLinesShell(path, options, lang):
     return countLinesNotSharp(path, options, lang)
 
+# SCALA =============================================================
+
+def countLinesScala(pathToFile, options, lang):
+    linesSoFar,slocSoFar    = (0,0)
+    inComment               = False
+    try:
+        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        if (hash != None) and (lines != None):
+            for line in lines:
+                linesSoFar += 1
+
+                code, inComment = uncommentScala(line, inComment)
+                if code:
+                    code = code.strip()
+                    if code:
+                        slocSoFar += 1
+
+            options.already.add(hash)
+            if options.verbose:
+                print ("%-49s: %-4s %5d lines, %5d sloc" % (
+                    pathToFile, lang, linesSoFar, slocSoFar))
+
+    except Exception as e:
+        print("error reading '%s', skipping: %s" % (pathToFile, e))
+    return (linesSoFar, slocSoFar)
+
+def _findScalaCode(text):
+    """
+    We are in a comment.  Return a ref to the beginning of the text
+    outside the comment block (which may be '') and the value of inComment.
+    """
+    posn = text.find('*/') 
+    if posn == -1:
+        return '', True
+
+    if posn + 2 < len(text):
+        return text[posn+2:], False
+    else:
+        return '', False
+
+def _findScalaComment(text):
+    """
+    We are NOT in a comment.  Return a ref to any code found, a ref to the
+    rest of the text, and the value of inComment.
+    """
+    multiLine   = False
+    posnOld     = text.find('/*')       # multi-line comment
+    posnNew     = text.find('//')       # one-line comment
+
+    if posnOld == -1 and posnNew == -1:
+        return text, '', False
+
+    if posnNew == -1:
+        posn      = posnOld
+        inComment = True
+        multiLine = True
+    else:
+        # posnNew is non-negative
+        if posnOld == -1 or posnOld > posnNew:
+            posn      = posnNew
+            inComment = False
+        else:
+            posn      = posnOld
+            inComment = True
+            multiLine = True
+
+    if multiLine and (posn + 2 < len(text)):
+        return text[:posn], text[posn+2:], inComment
+    else:
+        return text[:posn], '', inComment
+
+
+def uncommentScala(text, inComment):
+    """
+    Given a line of text, return a ref to any code found and the value of
+    inComment, which may have changed.
+    """
+    code = ''
+    text = text.strip()
+    while text:
+        if inComment:
+            text, inComment = _findScalaCode(text)
+        else:
+            chunk, text, inComment = _findScalaComment(text.strip())
+            code += chunk   # XXX INEFFICIENT
+
+    return code, inComment
+
 # SNOBOL ============================================================
 
 def countLinesSnobol(pathToFile, options, lang):
@@ -913,6 +1006,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 

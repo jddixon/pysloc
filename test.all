@@ -6,6 +6,7 @@
 ./testOccamComments.py
 ./testPyComments.py
 ./testQ.py
+./testScalaComments.py
 ./testSnoComments.py
 ./testTxtComments.py
 ./testXmlComments.py

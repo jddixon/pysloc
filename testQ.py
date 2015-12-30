@@ -45,6 +45,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.ext2Lang('py'),   'py')
         self.assertEqual(self.q.ext2Lang('R'),    'R')      # short name 
         self.assertEqual(self.q.ext2Lang('r'),    'R')      # short name 
+        self.assertEqual(self.q.ext2Lang('scala'),'scala')
         self.assertEqual(self.q.ext2Lang('sh'),   'sh')
         self.assertEqual(self.q.ext2Lang('sno'),  'sno')
 
@@ -90,7 +91,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.getLongName('java'), 'java')
         self.assertEqual(self.q.getLongName('md'),   'markdown')
         self.assertEqual(self.q.getLongName('occ'),  'Occam')
-        self.assertEqual(self.q.getLongName('py'),   'python')
+        self.assertEqual(self.q.getLongName('scala'),'scala')
         self.assertEqual(self.q.getLongName('sno'),  'snobol4')
 
     def testGuessLang(self):
