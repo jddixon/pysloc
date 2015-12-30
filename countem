@@ -6,11 +6,12 @@ rm -rf build
     bash:countem bash:installit bash:test.all \
     css:commentsForCss  \
     go:commentsForGo    \
-    go:commentsForHtml  \
+    html:commentsForHtml  \
     ml:commentsForOcaml \
     oc:commentsForOccam \
     php:commentsForPHP  \
     py:commentsForPy    \
+    scala:commentsForScala  \
     sno:commentsForSno  \
     txt:commentsForTxt  \
     xml:commentsForXml  \

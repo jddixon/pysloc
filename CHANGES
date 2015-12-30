@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.4.28
+    2015-12-30
+        * add support for scala w/out nested comments               SLOC 1814
 v0.4.27
     2015-12-28
         * added occam to web site
@@ -110,6 +113,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 

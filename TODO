@@ -1,5 +1,17 @@
 # ~/dev/py/pysloc/TODO
 
+2015-12-30
+    * edit commentsForScala to test nested comments
+    * ediit __init__.py :: to handle nested comments correctly
+
+2015-12-30
+    * pySloc needs to be able to count scala SLOC                       * DONE
+        - java style comments                                           * DONE
+            * comments may be nested
+        - file names end in .scala                                      * DONE
+            * but scripts ending in .sca and .scb are for another       * YEP
+                language also called 'scala'                            * YEP
+
 2015-12-18
     * in the case of dplyr, there is NO C code present but many		    * DONE
         *.h and *.cpp; we want to be able to specify that the primary	* DONE
