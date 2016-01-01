@@ -829,14 +829,14 @@ def countLinesShell(path, options, lang):
 
 def countLinesScala(pathToFile, options, lang):
     linesSoFar,slocSoFar    = (0,0)
-    inComment               = False
+    commentDepth            = 0
     try:
         lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
         if (hash != None) and (lines != None):
             for line in lines:
                 linesSoFar += 1
 
-                code, inComment = uncommentScala(line, inComment)
+                code, commentDepth = uncommentScala(line, commentDepth)
                 if code:
                     code = code.strip()
                     if code:
@@ -846,72 +846,111 @@ def countLinesScala(pathToFile, options, lang):
             if options.verbose:
                 print ("%-49s: %-4s %5d lines, %5d sloc" % (
                     pathToFile, lang, linesSoFar, slocSoFar))
+            if commentDepth > 0:
+                print("unclosed comment at end of %s" % pathToFile)
 
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return (linesSoFar, slocSoFar)
 
-def _findScalaCode(text):
+def _findScalaCode(text, commentDepth):
     """
     We are in a comment.  Return a ref to the beginning of the text
-    outside the comment block (which may be '') and the value of inComment.
+    outside the comment block (which may be '') and the value of commentDepth.
     """
-    posn = text.find('*/') 
-    if posn == -1:
-        return '', True
+    # DEBUG
+    #print("entering _findScalaCode at depth=%d; text is\n  '%s" % (
+    #    commentDepth, text))
+    # END
+   
+    startMulti  = text.find ('/*')
+    endMulti    = text.find('*/') 
+    textBack    = ''
 
-    if posn + 2 < len(text):
-        return text[posn+2:], False
+    if startMulti == -1 and endMulti == -1:
+        # DEBUG
+        #print("  no */, returning depth=%d, unchanged" % commentDepth)
+        # END
+        return textBack, commentDepth
+
+    elif endMulti == -1 or (startMulti != -1 and startMulti < endMulti):
+        # DEBUG
+        #print("  found /* at %d" % startMulti)
+        # END
+        commentDepth = commentDepth + 1
+        if startMulti + 2 < len(text):
+            textBack = text[startMulti+2:]
+
     else:
-        return '', False
+        # DEBUG
+        #print("  found */ at %d" % endMulti)
+        # END
+    
+        commentDepth = commentDepth - 1
+        if endMulti + 2 < len(text):
+            textBack = text[endMulti+2:]
 
-def _findScalaComment(text):
+    # DEBUG
+    #print("  returning depth=%d, textBack\n  '%s'" % (commentDepth, textBack))
+    # END
+
+    return textBack, commentDepth
+
+def _findScalaComment(text, commentDepth):
     """
-    We are NOT in a comment.  Return a ref to any code found, a ref to the
-    rest of the text, and the value of inComment.
+    We are NOT at comment depth > 0.  Return a ref to any code found, a 
+    ref to the rest of the text, and the value of commentDepth
     """
+    # DEBUG
+    #if commentDepth:
+    #    print("warning: entering _findScalaComment, non-zero depth %d" % 
+    #            commentDepth)
+    # END
     multiLine   = False
     posnOld     = text.find('/*')       # multi-line comment
     posnNew     = text.find('//')       # one-line comment
 
     if posnOld == -1 and posnNew == -1:
-        return text, '', False
+        return text, '', 0
 
     if posnNew == -1:
-        posn      = posnOld
-        inComment = True
-        multiLine = True
+        posn         = posnOld
+        commentDepth = True
+        multiLine    = True
     else:
         # posnNew is non-negative
         if posnOld == -1 or posnOld > posnNew:
-            posn      = posnNew
-            inComment = False
+            posn         = posnNew
+            commentDepth = 0
         else:
-            posn      = posnOld
-            inComment = True
-            multiLine = True
+            posn         = posnOld
+            commentDepth = 1
+            multiLine    = True 
 
     if multiLine and (posn + 2 < len(text)):
-        return text[:posn], text[posn+2:], inComment
+        return text[:posn], text[posn+2:], commentDepth
     else:
-        return text[:posn], '', inComment
+        return text[:posn], '', commentDepth
 
 
-def uncommentScala(text, inComment):
+def uncommentScala(text, commentDepth):
     """
     Given a line of text, return a ref to any code found and the value of
-    inComment, which may have changed.
+    commentDepth, which may have changed.
     """
     code = ''
     text = text.strip()
     while text:
-        if inComment:
-            text, inComment = _findScalaCode(text)
-        else:
-            chunk, text, inComment = _findScalaComment(text.strip())
+        if commentDepth > 0:
+            text, commentDepth = _findScalaCode(text, commentDepth)
+        elif commentDepth == 0:
+            chunk, text, commentDepth = _findScalaComment(
+                                        text.strip(), commentDepth)
             code += chunk   # XXX INEFFICIENT
+        else:
+           print("INTERNAL ERROR: negative comment depth %d" % commentDepth)
 
-    return code, inComment
+    return code, commentDepth
 
 # SNOBOL ============================================================
 
