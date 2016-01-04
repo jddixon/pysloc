@@ -1,5 +1,11 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.4.30
+    2016-01-04
+        * add support for Haskell                                   SLOC 1835
+v0.4.29
+    2016-01-01
+        * Scala passes nested comments tests                        SLOC 1828
 v0.4.28
     2015-12-30
         * add support for scala w/out nested comments               SLOC 1814
@@ -113,6 +119,8 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
+
 
 
 

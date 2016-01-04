@@ -37,6 +37,7 @@ class TestQ (unittest.TestCase):
 
         self.assertEqual(self.q.ext2Lang('css'),  'css')
         self.assertEqual(self.q.ext2Lang('go'),   'go')
+        self.assertEqual(self.q.ext2Lang('hs'),   'hs')
         self.assertEqual(self.q.ext2Lang('html'), 'html')
         self.assertEqual(self.q.ext2Lang('java'), 'java')
         self.assertEqual(self.q.ext2Lang('js'),   'js')
@@ -69,6 +70,7 @@ class TestQ (unittest.TestCase):
         
         # where the language is known we should always succeed
         # ... whether this is a command line argument
+        self.assertEqual(self.q.getCounter('hs',True),  countLinesDoubleDash)
         self.assertEqual(self.q.getCounter('py',True),  countLinesPython)
         self.assertEqual(self.q.getCounter('sno',True), countLinesSnobol)
        
@@ -87,6 +89,7 @@ class TestQ (unittest.TestCase):
         # expect success
         self.assertEqual(self.q.getLongName('gen'),  'generic')
         self.assertEqual(self.q.getLongName('go'),   'golang')
+        self.assertEqual(self.q.getLongName('hs'),   'haskell')
         self.assertEqual(self.q.getLongName('html'), 'html')
         self.assertEqual(self.q.getLongName('java'), 'java')
         self.assertEqual(self.q.getLongName('md'),   'markdown')
