@@ -5,24 +5,25 @@ import binascii, hashlib, os, re
 from stat import *
 from bs4 import BeautifulSoup, Comment
 
-__all__ = [ '__version__',      '__version_date__',
+__all__ = [ '__version__',          '__version_date__',
             'countLinesInDir',
-            'countLinesBash',   'countLinesC',      # 'countLinesGeneric',
+            'countLinesBash',       'countLinesC',
+            'countLinesDoubleDash', # 'countLinesGeneric',
             'countLinesGo',     
             'countLinesHtml',     
-            'countLinesJava',   'countLinesOcaml',
+            'countLinesJava',       'countLinesOcaml',
             'countLinesNotSharp',
-            'countLinesPython', 'countLinesRuby',   
-            'countLinesScala',  'countLinesShell',
-            'countLinesSnobol', 'countLinesText',
-            'uncommentHtml',    'uncommentJava',
+            'countLinesPython',     'countLinesRuby',   
+            'countLinesScala',      'countLinesShell',
+            'countLinesSnobol',     'countLinesText',
+            'uncommentHtml',        'uncommentJava',
             # classes
             'K', 'Q',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.28'
-__version_date__ = '2015-12-30'
+__version__      = '0.4.30'
+__version_date__ = '2016-01-04'
 
 # private constants -------------------------------------------------
 TQUOTE = '"""'
@@ -137,12 +138,13 @@ class Q(object):
             'css'       : countLinesJavaStyle,      # css, as in stylesheets
             'gen'       : countLinesNotSharp,       # treat # as comment
             'go'        : countLinesGo,             # golang
+            'hs'        : countLinesDoubleDash,     # Haskell
             'html'      : countLinesHtml,           # html
             'java'      : countLinesJava,           # plain old Java
             'js'        : countLinesJavaStyle,      # Javascript
             'ml'        : countLinesOcaml,          # ocaml, tentative abbrev
             'not#'      : countLinesNotSharp,
-            'occ'       : countLinesOccam,          # concurrent programming
+            'occ'       : countLinesDoubleDash,     # concurrent programming
             'py'        : countLinesPython,         # yes, Python
             'R'         : countLinesNotSharp,       # R
             'rb'        : countLinesRuby,           # ruby
@@ -174,6 +176,7 @@ class Q(object):
             'h'         : 'c',                      # PRESUMED ANSI C
             'hh'        : 'cpp',                    # C++; I've never seen this
             'hpp'       : 'cpp',                    # C++
+            'hs'        : 'hs',                     # Haskell
             'html'      : 'html',                   # no counter
             'itk'       : 'tcl',
             'java'      : 'java',
@@ -215,6 +218,7 @@ class Q(object):
             'css'       : 'css',
             'gen'       : 'generic',
             'go'        : 'golang',
+            'hs'        : 'haskell',
             'html'      : 'html',
             'java'      : 'java',
             'js'        : 'javascript',
@@ -747,7 +751,7 @@ def countLinesOcaml(pathToFile, options, lang):
 
 # OCCAM =============================================================
 
-def countLinesOccam(pathToFile, options, lang):
+def countLinesDoubleDash(pathToFile, options, lang):
     """
     Count lines in a file where the double dash ('--') is the comment
     marker.  That is, we ignore blank lines, lines consisting solely of
@@ -1045,6 +1049,8 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
+
 
 
 

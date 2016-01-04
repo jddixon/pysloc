@@ -6,7 +6,7 @@ import os, sys, unittest
 from argparse   import Namespace
 
 from pysloc     import __version__, __version_date__
-from pysloc     import countLinesInDir, countLinesOccam, Q
+from pysloc     import countLinesInDir, countLinesDoubleDash, Q
 
 class TestOccamComments (unittest.TestCase):
 
@@ -27,7 +27,7 @@ class TestOccamComments (unittest.TestCase):
         options.q       = Q()
         options.verbose = False
 
-        lines, sloc = countLinesOccam(testFile, options, 'occ')
+        lines, sloc = countLinesDoubleDash(testFile, options, 'occ')
         self.assertEqual(lines, 27)
         self.assertEqual(sloc,  10)
 
