@@ -6,6 +6,7 @@ rm -rf build
     bash:countem bash:installit bash:test.all \
     css:commentsForCss  \
     go:commentsForGo    \
+    hs:commentsForHaskell    \
     html:commentsForHtml  \
     ml:commentsForOcaml \
     oc:commentsForOccam \

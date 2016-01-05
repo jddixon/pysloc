@@ -1,5 +1,7 @@
 ./testCssComments.py
 ./testGoComments.py
+./testHaskellComments.py
+./testHtmlComments.py
 ./testK.py
 ./testK.py
 ./testOcamlComments.py

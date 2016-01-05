@@ -3,10 +3,12 @@
 2016-01-04
     * need to test for pathological cases, like Scala or Java
         file beginning with */
+    * review haskell, consider adding separate commentsForHaskell       * DONE
+        and testHaskellComments                                         * DONE
 
 2015-12-30
-    * edit commentsForScala to test nested comments
-    * ediit __init__.py :: to handle nested comments correctly
+    * edit commentsForScala to test nested comments                     * DONE
+    * ediit __init__.py to handle nested comments correctly             * DONE
 
 2015-12-30
     * pySloc needs to be able to count scala SLOC                       * DONE
@@ -53,8 +55,8 @@
     * testQ mapping of *.r to R programming language                    * DONE
     * ditto for *.js
 
-2015-09-02
-    * add Haskell: comments begin with --, file names end with .hs
+2015-09-02  
+    * add Haskell: comments begin with --, file names end with .hs      * DONE
 
 2015-08-12
     * Html handling needs improvement, specifically an HTML comment
