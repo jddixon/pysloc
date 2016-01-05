@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.4.31
+    2016-01-05
+        * add Haskell tests                                         SLOC 1852
 v0.4.30
     2016-01-04
         * add support for Haskell                                   SLOC 1835
@@ -119,6 +122,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 
