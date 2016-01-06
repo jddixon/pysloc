@@ -24,8 +24,8 @@ class TestScalaComments (unittest.TestCase):
     def testNameToFuncMap(self):
         testFile = './commentsForScala'
         lines, sloc = countLinesScala(testFile, self.options, 'scala')
-        self.assertEqual(lines, 44)
-        self.assertEqual(sloc,   7)
+        self.assertEqual(lines, 48)
+        self.assertEqual(sloc,   9)
 
 if __name__ == '__main__':
     unittest.main()

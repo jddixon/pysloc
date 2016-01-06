@@ -2,6 +2,7 @@
 ./testGoComments.py
 ./testHaskellComments.py
 ./testHtmlComments.py
+./testJavaComments.py
 ./testK.py
 ./testK.py
 ./testOcamlComments.py

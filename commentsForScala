@@ -1,11 +1,13 @@
 /* commentsForScala */  
 
-this is the third line                          SLOC 1
-this is the fourth // ending with a comment     SLOC 2
-// this is the fifth 
-and this is my very generous 6th line           SLOC 3
+*/                                              SLOC 1
 
-/**/ A degenerate comment or two /* */          SLOC 4
+this is the third line                          SLOC 2
+this is the fourth // ending with a comment     SLOC 3
+// this is the fifth 
+and this is my very generous 6th line           SLOC 4
+
+/**/ A degenerate comment or two /* */          SLOC 5
 
 /*
 */
@@ -14,7 +16,7 @@ and this is my very generous 6th line           SLOC 3
  * runing over several lines
  * with occasional correct spellings
  */
-I see five source lines in this 32-line file    SLOC 5
+I see five source lines in this 32-line file    SLOC 6
 
 /* This is a nested comment
 
@@ -30,7 +32,7 @@ We are still in a comment here at one level down
 
 */
 
-Zero depth, so not a comment.                    SLOC 6
+Zero depth, so not a comment.                    SLOC 7 
 
 /* /* /* oh hello */ */ */
 
@@ -41,4 +43,6 @@ Zero depth, so not a comment.                    SLOC 6
 */ for you
 */
 
-Freedom is precious.                            SLOC 7
+Freedom is precious.                            SLOC 8 
+
+*/                                              SLOC 9

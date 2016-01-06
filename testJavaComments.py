@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 
-# testGoComments.py
+# testJavaComments.py
 
 import os, sys, unittest
 
 from argparse   import ArgumentParser, Namespace
 from pysloc     import __version__, __version_date__
-from pysloc     import countLinesInDir, countLinesGo
+from pysloc     import countLinesInDir, countLinesJava
 
-class TestGoComments (unittest.TestCase):
+class TestJavaComments (unittest.TestCase):
 
     def setUp(self):
         self.options = Namespace()
@@ -22,8 +22,8 @@ class TestGoComments (unittest.TestCase):
     # actual unit tests #############################################
    
     def testNameToFuncMap(self):
-        testFile = './commentsForGo'
-        lines, sloc = countLinesGo(testFile, self.options, 'go')
+        testFile = './commentsForJava'
+        lines, sloc = countLinesJava(testFile, self.options, 'java')
         self.assertEqual(lines, 21)
         self.assertEqual(sloc,   7)
 
