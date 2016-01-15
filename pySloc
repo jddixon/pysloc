@@ -43,6 +43,10 @@ def doCount(options):
                 print("skipping %s: excluded" % name)
             continue
 
+        # DEBUG
+        #print("NAMED FILE: '%s'" % name)
+        # END
+
         # a file name may be prefixed with the short name of a language
         a, b, c = name.partition(':')
         if b == ':':
@@ -74,6 +78,11 @@ def doCount(options):
             sloc  += s
         else:
             print("file does not exist: %s" % name)
+
+    # handle the current directory
+    l,s = countLinesInDir('.', options)
+    lines   = lines + l
+    sloc    = sloc  + s
 
     k.prettyBreakDown()
     print("total of %5d lines of code, of which %5d source" % (lines, sloc))
@@ -125,8 +134,6 @@ if __name__ == '__main__':
     else:
         args.exRE = None
     
-    if (not args.onlyNamedFiles) and (not '.' in args.namedFiles):
-        args.namedFiles += '.'
     if not args.justShow:
         if len(args.namedFiles) == 0:
             print("you need to provide some file names")
@@ -156,7 +163,7 @@ if __name__ == '__main__':
                 print("%s is not recognized as a language abbreviation", x)
                 parser.print_usage()
                 sys.exit(1)
-        args.langsCounted=frozenset(langList)
+        args.langsCounted=frozenset(langList)    # in place
 
     # sanity checks -------------------------------------------------
 
@@ -178,9 +185,11 @@ if __name__ == '__main__':
         print("verbose:         %s" % args.verbose)
         print("version:         %s %s" % (__version__, __version_date__))
 
-        print("\nnamedFiles:")
-        for file in args.namedFiles:
-            print("    %s" % file)
+        if args.namedFiles:
+            print("\nnamedFiles:")
+            for file in args.namedFiles:
+                print("    %s" % file)
+            print()
 
     # do it ---------------------------------------------------------
     if not args.justShow:

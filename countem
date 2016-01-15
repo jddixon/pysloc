@@ -1,20 +1,24 @@
 cd /home/jdd/dev/py/pysloc
 rm -rf build
 # for normal use, drop the leading ./ and the -v option
-./pySloc $@ -v -L py    \
-    txt:MANIFEST.in     \
-    bash:countem bash:installit bash:test.all \
-    css:commentsForCss  \
-    go:commentsForGo    \
-    hs:commentsForHaskell   \
-    html:commentsForHtml    \
-    java:commentsForJava    \
-    ml:commentsForOcaml \
-    oc:commentsForOccam \
-    php:commentsForPHP  \
-    py:commentsForPy    \
-    scala:commentsForScala  \
-    sno:commentsForSno  \
-    txt:commentsForTxt  \
-    xml:commentsForXml  \
+./pySloc $@ -v -L py -X "^test$|^dist$|\.swp$|\.pyc$"     \
+    txt:MANIFEST.in             \
+    bash:countem                \
+    bash:installit              \
+    bash:test.all               \
+    css:commentsForCss          \
+    go:commentsForGo            \
+    gperf:commentsForGperf      \
+    hs:commentsForHaskell       \
+    html:commentsForHtml        \
+    java:commentsForJava        \
+    ml:commentsForOcaml         \
+    oc:commentsForOccam         \
+    php:commentsForPHP          \
+    py:commentsForPy            \
+    r2c:commentsForRe2c         \
+    scala:commentsForScala      \
+    sno:commentsForSno          \
+    txt:commentsForTxt          \
+    xml:commentsForXml          \
     py:pySloc
