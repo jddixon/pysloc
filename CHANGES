@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.4.33
+    2016-01-14
+        * added gperf, re2c support                                 SLOC 2010
 v0.4.32
     2016-01-06
         * add Java tests, check odd cases for Go, Java              SLOC 1899
@@ -125,6 +128,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 

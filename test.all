@@ -1,5 +1,6 @@
 ./testCssComments.py
 ./testGoComments.py
+./testGperfComments.py
 ./testHaskellComments.py
 ./testHtmlComments.py
 ./testJavaComments.py
@@ -9,6 +10,7 @@
 ./testOccamComments.py
 ./testPyComments.py
 ./testQ.py
+./testRe2CComments.py
 ./testScalaComments.py
 ./testSnoComments.py
 ./testTxtComments.py
