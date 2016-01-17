@@ -10,13 +10,17 @@ __all__ = [ '__version__',          '__version_date__',
             'GPERF_RE', 'RE2C_RE',
             # functions
             'countLinesInDir',
-            'countLinesBash',       'countLinesC',
-            'countLinesDoubleDash', # 'countLinesGeneric',
+            'countLinesBash',       
+            'countLinesC',
+            'countLinesCpp',
+            'countLinesDoubleDash', 
+            # 'countLinesGeneric',
             'countLinesGperf',
             'countLinesGo',     
             'countLinesHtml',     
             'countLinesJava',       'countLinesOcaml',
             'countLinesNotSharp',
+            'countLinesProtobuf',     
             'countLinesPython',     
             'countLinesRe2c',
             'countLinesRuby',   
@@ -28,8 +32,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.33'
-__version_date__ = '2016-01-14'
+__version__      = '0.4.34'
+__version_date__ = '2016-01-16'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -142,7 +146,7 @@ class Q(object):
             'asm'       : countLinesNotSharp,       # s, S, asm
             'bash'      : countLinesShell,          # bash shell
             'c'         : countLinesC,              # ansic
-            'cpp'       : countLinesC,              # C++
+            'cpp'       : countLinesCpp,            # C++
             'csh'       : countLinesNotSharp,       # csh, tcsh
             'css'       : countLinesJavaStyle,      # css, as in stylesheets
             'gen'       : countLinesNotSharp,       # treat # as comment
@@ -155,6 +159,7 @@ class Q(object):
             'ml'        : countLinesOcaml,          # ocaml, tentative abbrev
             'not#'      : countLinesNotSharp,
             'occ'       : countLinesDoubleDash,     # concurrent programming
+            'proto'     : countLinesProtobuf,       # Google Protocol Buffers
             'py'        : countLinesPython,         # yes, Python
             'R'         : countLinesNotSharp,       # R
             're2c'      : countLinesRe2c,           # re2c
@@ -198,6 +203,7 @@ class Q(object):
             'mli'       : 'ml',                     # ocaml extension
             'not#'      : 'not#',
             'occ'       : 'occ',
+            'proto'     : 'proto',                  # Google protobuf
             'py'        : 'py',
             'R'         : 'R',                      # R programming language 
             'r'         : 'R',                      # R programming language 
@@ -240,6 +246,7 @@ class Q(object):
             'ml'        : 'ocaml',
             'not#'      : 'not#',
             'occ'       : 'Occam',
+            'proto'     : 'proto',                  # Google protobuf
             'py'        : 'python',
             'R'         : 'R',
             're2c'      : 're2c',
@@ -525,6 +532,27 @@ def countLinesC(path, options, lang):
     l, s = 0,0
     if (not path.endswith('.pb-c.c')) and (not path.endswith('.pb-c.h')):
         l, s = countLinesJavaStyle(path, options, lang)
+    
+    if path.endswith('.h'):
+        if not path.endswith('.pb-c.h'):
+            l, s = countLinesJavaStyle(path, options, lang)
+    elif path.endswith('.c'):
+        if not path.endswith('.pb-c.c'):
+            l, s = countLinesJavaStyle(path, options, lang)
+
+    return l, s
+
+# C++ ===============================================================
+
+def countLinesCpp(path, options, lang):
+    l, s = 0,0
+    if path.endswith('.h'):
+        if not path.endswith('.pb.h'):
+            l, s = countLinesJavaStyle(path, options, lang)
+    elif path.endswith('.cpp'):
+        if not path.endswith('.pb.cpp'):
+            l, s = countLinesJavaStyle(path, options, lang)
+
     return l, s
 
 # NOT_SHARP =========================================================
@@ -841,11 +869,17 @@ def countLinesDoubleDash(pathToFile, options, lang):
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return linesSoFar, slocSoFar
 
+# PROTOBUF ==========================================================
+
+def countLinesProtobuf(path, options, lang):
+    l, s = countLinesJavaStyle(path, options, lang)
+    return l, s
+
 # PYTHON ============================================================
 
 def countLinesPython(pathToFile, options, lang):
     linesSoFar, slocSoFar = (0,0)
-    if not pathToFile.endswith('.pb2.py'):
+    if not pathToFile.endswith('_pb2.py'):
         linesSoFar, slocSoFar = _countLinesPython(pathToFile, options, lang)
     return linesSoFar, slocSoFar
 
@@ -1119,6 +1153,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 
