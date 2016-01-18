@@ -32,8 +32,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.34'
-__version_date__ = '2016-01-16'
+__version__      = '0.4.35'
+__version_date__ = '2016-01-17'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -448,6 +448,9 @@ def countLinesInDir(pathToDir, options):
                 # print("EXCLUDED: %s" % name)
                 # END
                 continue
+            # DEBUG
+            #print("FILE IN DIRECTORY: %s" % name)
+            # END
             isTest = False  # default
             pathToFile = os.path.join(pathToDir, name)
             s = os.lstat(pathToFile)        # ignores symlinks
@@ -530,8 +533,6 @@ def countLinesBash(path, options, lang):
 
 def countLinesC(path, options, lang):
     l, s = 0,0
-    if (not path.endswith('.pb-c.c')) and (not path.endswith('.pb-c.h')):
-        l, s = countLinesJavaStyle(path, options, lang)
     
     if path.endswith('.h'):
         if not path.endswith('.pb-c.h'):
@@ -1153,6 +1154,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 

@@ -1,22 +1,25 @@
 # ~/dev/py/pysloc/TODO
 
 2016-01-16
-    * add protobuf (extension .proto) to languages recognized
-    * count .gitignore as text
-    * need specific testing for filters on protobuf-generated
-        - C
-        - C++
-        - Go
-        - Java
-        - Python
+    * add protobuf (extension .proto) to languages recognized           * DONE
+    * count .gitignore as text                                          * DONE
+    * filters protobuf-generated files from line counts; and test		* DONE
+        - C								                                * DONE
+        - C++								                            * DONE
+        - Go								                            * DONE
+        - Java								                            * DONE
+        - Python								                        * DONE
+    * add filter-and-test for ruby
+    * add filter-and-test for OCaml
+    * add filter-and-test for haskell
 
 2016-01-15
-    * yesterday's fixes introduced a BUG: you now need to specify
-        at least one file name (such as '.') on the pySloc command line 
+    * yesterday's fixes introduced a BUG: you now need to specify       * FIXED
+        at least one file name (such as '.') on the pySloc command line * FIXED
 
 2016-01-14
-    * testXmlComments.py is now generating a warning from 
-        BeautifulSoup :-(
+    * testXmlComments.py is now generating a warning from               * GONE
+        BeautifulSoup :-(                                               * GOND
 
 2016-01-14
     * must examine effects of for line continuation character 

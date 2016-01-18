@@ -1,3 +1,5 @@
+
+./testCouldBeGenerated.py
 ./testCssComments.py
 ./testGoComments.py
 ./testGperfComments.py
