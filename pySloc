@@ -44,7 +44,7 @@ def doCount(options):
             continue
 
         # DEBUG
-        #print("NAMED FILE: '%s'" % name)
+        #print("CLI ARG IS FILE: '%s'" % name)
         # END
 
         # a file name may be prefixed with the short name of a language
@@ -80,9 +80,10 @@ def doCount(options):
             print("file does not exist: %s" % name)
 
     # handle the current directory
-    l,s = countLinesInDir('.', options)
-    lines   = lines + l
-    sloc    = sloc  + s
+    if not onlyNamedFiles:
+        l,s = countLinesInDir('.', options)
+        lines   = lines + l
+        sloc    = sloc  + s
 
     k.prettyBreakDown()
     print("total of %5d lines of code, of which %5d source" % (lines, sloc))
@@ -103,6 +104,8 @@ if __name__ == '__main__':
         help = 'main language expected (short name, optional)')
     parser.add_argument('-M', '--matches',      type=str,
         help = 'count ONLY files with matching names')
+    parser.add_argument('-q', '--quiet',      action='count',  default=0,
+        help = 'be quiet (overrides -v if later')
     parser.add_argument('-S', '--sumSLOC',     action='store_true',
         help = 'total up SLOC counts')
     parser.add_argument('-t', '--showTimestamp',action='store_true',
@@ -133,12 +136,9 @@ if __name__ == '__main__':
         args.exRE = re.compile(args.exclusions)
     else:
         args.exRE = None
-    
-    if not args.justShow:
-        if len(args.namedFiles) == 0:
-            print("you need to provide some file names")
-            parser.print_help()
-            sys.exit(0)
+   
+    if args.quiet:
+        args.verbose = 0
 
     if not args.mainLang:
         args.mainLang = ''
@@ -179,6 +179,7 @@ if __name__ == '__main__':
         print("langsCounted:    %s" % args.langsCounted)
         print("matches:         %s" % args.matches)
         print("onlyNamedFiles:  %s" % args.onlyNamedFiles)
+        print("quiet:           %s" % args.quiet)
         print("showTimestamp:   %s" % args.showTimestamp)
         print("sumSLOC:         %s" % args.sumSLOC)
         print("timestamp:       %s" % args.timestamp)

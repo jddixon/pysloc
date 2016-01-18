@@ -1,7 +1,9 @@
 cd /home/jdd/dev/py/pysloc
 rm -rf build
+
 # for normal use, drop the leading ./ and the -v option
-./pySloc $@ -v -L py -X "^test$|^dist$|\.swp$|\.pyc$"     \
+./pySloc -v -L py -X "^junk|^test$|^dist$|\.swp$|\.pyc$"  $@    \
+    txt:.gitignore              \
     txt:MANIFEST.in             \
     bash:countem                \
     bash:installit              \
@@ -22,4 +24,12 @@ rm -rf build
     sno:commentsForSno          \
     txt:commentsForTxt          \
     xml:commentsForXml          \
+    c:couldBeGenerated.pb-c.c           \
+    c:couldBeGenerated.pb-c.h           \
+    cpp:couldBeGenerated.pb.cpp         \
+    cpp:couldBeGenerated.pb.h           \
+    go:couldBeGenerated.pb.go           \
+    py:couldBeGenerated_pb2.py          \
+    java:couldBeGeneratedProtos.java    \
     py:pySloc
+
