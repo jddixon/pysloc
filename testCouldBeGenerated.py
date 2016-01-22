@@ -22,6 +22,8 @@ class TestCouldBeGenerated (unittest.TestCase):
     # utility functions #############################################
    
     def expectZeroCounts(self, fileName, lang):
+
+        self.assertTrue(os.path.exists(fileName))
         counter = self.q.getCounter(lang, True)
         self.assertNotEqual(counter, None)
 
