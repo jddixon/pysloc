@@ -18,6 +18,11 @@ class TestQ (unittest.TestCase):
 
     # actual unit tests #############################################
 
+    #################################################################
+    # TEST FILE NAMES beginning with 'yy' should exist in the test
+    # directory; those beginning with 'zz' should not exist.
+    #################################################################
+
     def testExt2Lang(self):
         """ exhaustive test of mapping extension to short lang name """
 
@@ -25,6 +30,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.ext2Lang(None),    None)
         self.assertEqual(self.q.ext2Lang(''),      None)
         self.assertEqual(self.q.ext2Lang('foo'),   None)
+
         # expect success
         self.assertEqual(self.q.ext2Lang('C'),    'cpp')
         self.assertEqual(self.q.ext2Lang('cc'),   'cpp')
@@ -88,6 +94,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.getLongName(None),    None)
         self.assertEqual(self.q.getLongName(''),      None)
         self.assertEqual(self.q.getLongName('foo'),   None)
+        
         # expect success
         self.assertEqual(self.q.getLongName('gen'),  'generic')
         self.assertEqual(self.q.getLongName('go'),   'golang')
@@ -101,83 +108,83 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.getLongName('scala'),'scala')
         self.assertEqual(self.q.getLongName('sno'),  'snobol4')
 
-    def testGuessLang(self):
+    def testGuessLangFromFileName(self):
         # expect failure --------------------------------------------
         lang,isTest = self.q.guessLang('./', None, isCLIArg=True)
         self.assertEqual(lang, None)
         self.assertEqual(isTest, False)
 
-        lang,isTest = self.q._guessLang( '', isCLIArg=True)
+        lang,isTest = self.q.guessLang('./',  '', isCLIArg=True)
         self.assertEqual(lang, None)
         self.assertEqual(isTest, False)
        
         # not recognized but on command line, so use generic counter
-        lang,isTest = self.q._guessLang( 'foo', isCLIArg=True)
+        lang,isTest = self.q.guessLang('./',  'yyFoo', isCLIArg=True)
         self.assertEqual(lang, 'gen')
         self.assertEqual(isTest, False)
 
         # if not recognized and not on command line, fail -----------
-        lang,isTest = self.q._guessLang( 'foo', isCLIArg=False)
+        lang,isTest = self.q.guessLang('./',  'yyFoo', isCLIArg=False)
         self.assertEqual(lang, None)
         self.assertEqual(isTest, False)
         
-        lang,isTest = self.q._guessLang( 'go', isCLIArg=False)
+        lang,isTest = self.q.guessLang('./',  'go', isCLIArg=False)
         self.assertEqual(lang, None)
         self.assertEqual(isTest, False)
         
-        lang,isTest = self.q._guessLang( 'py', isCLIArg=False)
+        lang,isTest = self.q.guessLang('./',  'py', isCLIArg=False)
         self.assertEqual(lang, None)
         self.assertEqual(isTest, False)
 
         # no extension, not on command line -------------------------
-        lang,isTest = self.q._guessLang( 'joego', isCLIArg=False)
+        lang,isTest = self.q.guessLang('./',  'joego', isCLIArg=False)
         self.assertEqual(lang, None)
         self.assertEqual(isTest, False)
 
-        lang,isTest = self.q._guessLang( 'py', isCLIArg=False)
+        lang,isTest = self.q.guessLang('./',  'py', isCLIArg=False)
         self.assertEqual(lang, None)
         self.assertEqual(isTest, False)
 
         # if known language should always get language --------------
-        lang,isTest = self.q._guessLang( 'fred.go', isCLIArg=True)
+        lang,isTest = self.q.guessLang('./',  'yyFoo.go', isCLIArg=True)
         self.assertEqual(lang, 'go')
         self.assertEqual(isTest, False)
-        lang,isTest = self.q._guessLang( 'fred.go', isCLIArg=False)
+        lang,isTest = self.q.guessLang('./',  'yyFoo.go', isCLIArg=False)
         self.assertEqual(lang, 'go')
         self.assertEqual(isTest, False)
         
-        lang,isTest = self.q._guessLang( 'fred_test.go', isCLIArg=True)
+        lang,isTest = self.q.guessLang('./',  'yyFoo_test.go', isCLIArg=True)
         self.assertEqual(lang, 'go')
         self.assertEqual(isTest, True)
-        lang,isTest = self.q._guessLang( 'fred_test.go', isCLIArg=False)
+        lang,isTest = self.q.guessLang('./',  'yyFoo_test.go', isCLIArg=False)
         self.assertEqual(lang, 'go')
         self.assertEqual(isTest, True)
         
-        lang,isTest = self.q._guessLang( 'fred_test.occ', isCLIArg=True)
+        lang,isTest = self.q.guessLang('./',  'yyFoo.occ', isCLIArg=True)
         self.assertEqual(lang, 'occ')
         self.assertEqual(isTest, False)
-        lang,isTest = self.q._guessLang( 'fred_test.occ', isCLIArg=False)
+        lang,isTest = self.q.guessLang('./',  'yyFoo.occ', isCLIArg=False)
         self.assertEqual(lang, 'occ')
         self.assertEqual(isTest, False)
-        
-        lang,isTest = self.q._guessLang( 'myTestFoo.py', isCLIArg=True)
+       
+        lang,isTest = self.q.guessLang('./',  'yyFoo.py', isCLIArg=True)
         self.assertEqual(lang, 'py')
         self.assertEqual(isTest, False)
-        lang,isTest = self.q._guessLang( 'myTestFoo.py', isCLIArg=False)
+        lang,isTest = self.q.guessLang('./',  'yyFoo.py', isCLIArg=False)
         self.assertEqual(lang, 'py')
         self.assertEqual(isTest, False)
 
-        lang,isTest = self.q._guessLang( 'testFoo.py', isCLIArg=True)
+        lang,isTest = self.q.guessLang('./',  'testFoo.py', isCLIArg=True)
         self.assertEqual(lang, 'py')
         self.assertEqual(isTest, True)
-        lang,isTest = self.q._guessLang( 'testFoo.py', isCLIArg=False)
+        lang,isTest = self.q.guessLang('./',  'testFoo.py', isCLIArg=False)
         self.assertEqual(lang, 'py')
         self.assertEqual(isTest, True)
 
-        lang,isTest = self.q._guessLang( 'joe.sno', isCLIArg=True)
+        lang,isTest = self.q.guessLang('./',  'yyFoo.sno', isCLIArg=True)
         self.assertEqual(lang, 'sno')
         self.assertEqual(isTest, False)
-        lang,isTest = self.q._guessLang( 'joe.sno', isCLIArg=False)
+        lang,isTest = self.q.guessLang('./',  'yyFoo.sno', isCLIArg=False)
         self.assertEqual(lang, 'sno')
         self.assertEqual(isTest, False)
 
@@ -186,16 +193,16 @@ class TestQ (unittest.TestCase):
         # expect failure
         self.assertEqual(self.q.nonCodeExt(None),       False)
         self.assertEqual(self.q.nonCodeExt(''),         False)
-        self.assertEqual(self.q.nonCodeExt('foo'),      False)
+        self.assertEqual(self.q.nonCodeExt('yyFoo'),      False)
         # expect success
         self.assertEqual(self.q.nonCodeExt('jar'),      True)
         self.assertEqual(self.q.nonCodeExt('pyc'),      True)
 
     def testNotCodeFile(self):
         # expect failure
-        self.assertEqual(self.q.notCodeFile(None),    False)
-        self.assertEqual(self.q.notCodeFile(''),      False)
-        self.assertEqual(self.q.notCodeFile('foo'),   False)
+        self.assertEqual(self.q.notCodeFile(None),              False)
+        self.assertEqual(self.q.notCodeFile(''),                False)
+        self.assertEqual(self.q.notCodeFile('yyFoo'),           False)
         # expect success
         self.assertEqual(self.q.notCodeFile('__pycache__'),     True)
         self.assertEqual(self.q.notCodeFile('AUTHORS'),         True)

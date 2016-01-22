@@ -1,8 +1,11 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.4.36
+    2016-01-22
+        * improve handling of non-code files                        SLOC 2154
 v0.4.35
     2016-01-17
-        * added testCouldBeGenerated.py etc                         SLOC 2140
+        * added testCouldBeGenerated.py etc                         SLOC 2155
 v0.4.34
     2016-01-16
         * count protobuf (*.proto) files; filter generated files    SLOC 2094
@@ -134,6 +137,8 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
+
 
 
 

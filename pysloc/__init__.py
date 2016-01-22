@@ -10,20 +10,20 @@ __all__ = [ '__version__',          '__version_date__',
             'GPERF_RE', 'RE2C_RE',
             # functions
             'countLinesInDir',
-            'countLinesBash',       
+            'countLinesBash',
             'countLinesC',
             'countLinesCpp',
-            'countLinesDoubleDash', 
+            'countLinesDoubleDash',
             # 'countLinesGeneric',
             'countLinesGperf',
-            'countLinesGo',     
-            'countLinesHtml',     
+            'countLinesGo',
+            'countLinesHtml',
             'countLinesJava',       'countLinesOcaml',
             'countLinesNotSharp',
-            'countLinesProtobuf',     
-            'countLinesPython',     
+            'countLinesProtobuf',
+            'countLinesPython',
             'countLinesRe2c',
-            'countLinesRuby',   
+            'countLinesRuby',
             'countLinesScala',      'countLinesShell',
             'countLinesSnobol',     'countLinesText',
             'uncommentHtml',        'uncommentJava',
@@ -32,8 +32,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.35'
-__version_date__ = '2016-01-17'
+__version__      = '0.4.36'
+__version_date__ = '2016-01-22'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -151,7 +151,7 @@ class Q(object):
             'css'       : countLinesJavaStyle,      # css, as in stylesheets
             'gen'       : countLinesNotSharp,       # treat # as comment
             'go'        : countLinesGo,             # golang
-            'gperf'     : countLinesGperf,          # 
+            'gperf'     : countLinesGperf,          #
             'hs'        : countLinesDoubleDash,     # Haskell
             'html'      : countLinesHtml,           # html
             'java'      : countLinesJava,           # plain old Java
@@ -164,7 +164,7 @@ class Q(object):
             'R'         : countLinesNotSharp,       # R
             're2c'      : countLinesRe2c,           # re2c
             'rb'        : countLinesRuby,           # ruby
-            'scala'     : countLinesScala, 
+            'scala'     : countLinesScala,
             'sed'       : countLinesNotSharp,       # stream editor
             'sh'        : countLinesShell,          # shell script
             'sno'       : countLinesSnobol,         # snobol4
@@ -205,8 +205,8 @@ class Q(object):
             'occ'       : 'occ',
             'proto'     : 'proto',                  # Google protobuf
             'py'        : 'py',
-            'R'         : 'R',                      # R programming language 
-            'r'         : 'R',                      # R programming language 
+            'R'         : 'R',                      # R programming language
+            'r'         : 'R',                      # R programming language
             'rb'        : 'rb',
             're'        : 're2c',                   # same counter as C, Java ?
             'S'         : 'asm',
@@ -342,51 +342,9 @@ class Q(object):
     def notCodeFile(self, s):
         return s in self._notCodeFiles
 
-    
+
     def isGenerated(firstLine):
         pass        # STUB XXX
-
-    def _guessLang(self, fileName, isCLIArg, verbose=0):
-        # defaults
-        isTest = False     
-        if fileName and isCLIArg:
-            lang = 'gen'
-        else:
-            lang = None
-
-        ext  = None
-        if not self.notCodeFile(fileName):
-            # get any extension
-            a, b, c = fileName.rpartition('.')
-            if b == '.':
-                # we have an extension
-                ext = c
-                if not self.nonCodeExt(ext):
-                    # we have an extension and it's not prohibited
-                    lang    = self.ext2Lang(ext)
-                    if (lang == None) and isCLIArg:
-                        lang = 'gen'
-                elif isCLIArg:
-                    lang = 'gen'
-
-        if lang == 'go':
-            isTest = fileName.endswith('_test.go')
-        elif lang == 'py':
-            isTest = fileName.startswith('test')
-
-        if verbose > 1:
-            if ext != None:
-                print("  %s: find ext '%s', GUESS lang %s" % (
-                                        fileName, ext, lang))
-
-            else:
-                print("  %s: NO ext, GUESS lang %s" % (fileName, lang))
-
-        # DEBUG
-        # print("_guessLang: fileName %s, isCLIArg %s;\treturning lang %s, isTest %s" % (
-        #    fileName, isCLIArg, lang, isTest))
-        # END
-        return lang, isTest
 
     def guessLang(self, pathToDir, fileName, isCLIArg, verbose=0):
         """
@@ -394,27 +352,73 @@ class Q(object):
         depending on whether the name appears on the command line (we
         always count any file named on the command line).
         """
-        lang, isTest = None, False     # defaults
-        if pathToDir and fileName :
-            # filter out generated files
-            pathToFile = os.path.join(pathToDir, fileName)
-            firstLine  = ''
-            if os.path.exists(pathToFile):
-                try:
-                    with open(pathToFile, 'r') as f:
-                        firstLine = f.readline()
-                except Exception as e:
-                    print("problem reading '%s': %s" % (pathToFile, e))
-                    return lang, isTest
-                
-                for regex in [GPERF_RE, RE2C_RE]:
-                    if regex.match(firstLine):
-                        return lang, isTest
 
-                # XXX presumably gets indented
-                lang, isTest = self._guessLang(fileName, isCLIArg, verbose)
+        # defaults
+        isTest  = False
+        lang    = None
+        ext     = None
+
+        if pathToDir and fileName:
+            pathToFile  = os.path.join(pathToDir, fileName)
+            # DEBUG
+            #print("pathToFile: '%s'" % pathToFile)
+            # END
+            if os.path.exists(pathToFile):
+
+                if not self.notCodeFile(fileName):
+                    # get any extension
+                    PATH, DELIM, EXT = fileName.rpartition('.')
+                    if DELIM == '.':
+                        # we have an extension
+                        ext = EXT
+                        if not self.nonCodeExt(ext):
+                            # we have an extension and it's not prohibited
+                            lang    = self.ext2Lang(ext)
+                            if (lang == None) and isCLIArg:
+                                lang = 'gen'            # generic
+                    if not lang and isCLIArg:
+                        lang = 'gen'
+
+                if lang == 'go':
+                    isTest = fileName.endswith('_test.go')
+                elif lang == 'py':
+                    isTest = fileName.startswith('test')
+
+                # filter out generated files
+                if lang and lang != 'gen':
+                    if self.isGenerated(pathToFile, verbose):
+                        return None, False
+
+                if verbose > 1:
+                    if ext != None:
+                        print("  %s: find ext '%s', GUESS lang %s" % (
+                                                fileName, ext, lang))
+
+                    else:
+                        print("  %s: NO ext, GUESS lang %s" % (fileName, lang))
+
+
+        # DEBUG
+        #print("guessLang: fileName %s, isCLIArg %s;\treturning lang %s, isTest %s" % (
+        #    fileName, isCLIArg, lang, isTest))
+        # END
 
         return lang, isTest
+
+    def isGenerated (self, pathToFile, verbose=0):
+        firstLine  = ''
+        try:
+            with open(pathToFile, 'r') as f:
+                firstLine = f.readline()
+        except Exception as e:
+            print("problem reading '%s': %s" % (pathToFile, e))
+            return False
+
+        for regex in [GPERF_RE, RE2C_RE]:
+            if regex.match(firstLine):
+                return True
+
+        return False
 
 # functions =========================================================
 
@@ -533,7 +537,7 @@ def countLinesBash(path, options, lang):
 
 def countLinesC(path, options, lang):
     l, s = 0,0
-    
+
     if path.endswith('.h'):
         if not path.endswith('.pb-c.h'):
             l, s = countLinesJavaStyle(path, options, lang)
@@ -605,7 +609,7 @@ def _findHtmlCode(text):
     We are in a comment.  Return a ref to the beginning of the text
     outside the comment block (which may be '') and the value of inComment.
     """
-    posn = text.find('-->') 
+    posn = text.find('-->')
     if posn == -1:
         return '', True
 
@@ -686,7 +690,7 @@ def _findJavaCode(text):
     We are in a comment.  Return a ref to the beginning of the text
     outside the comment block (which may be '') and the value of inComment.
     """
-    posn = text.find('*/') 
+    posn = text.find('*/')
     if posn == -1:
         return '', True
 
@@ -967,13 +971,13 @@ def _findScalaCode(text, commentDepth):
     We are in a comment.  Return a ref to the beginning of the text
     outside the comment block (which may be '') and the value of commentDepth.
     """
-    # DEBUG
+    # #DEBUG
     #print("entering _findScalaCode at depth=%d; text is\n  '%s" % (
     #    commentDepth, text))
     # END
-   
+
     startMulti  = text.find ('/*')
-    endMulti    = text.find('*/') 
+    endMulti    = text.find('*/')
     textBack    = ''
 
     if startMulti == -1 and endMulti == -1:
@@ -994,7 +998,7 @@ def _findScalaCode(text, commentDepth):
         # DEBUG
         #print("  found */ at %d" % endMulti)
         # END
-    
+
         commentDepth = commentDepth - 1
         if endMulti + 2 < len(text):
             textBack = text[endMulti+2:]
@@ -1007,12 +1011,12 @@ def _findScalaCode(text, commentDepth):
 
 def _findScalaComment(text, commentDepth):
     """
-    We are NOT at comment depth > 0.  Return a ref to any code found, a 
+    We are NOT at comment depth > 0.  Return a ref to any code found, a
     ref to the rest of the text, and the value of commentDepth
     """
     # DEBUG
     #if commentDepth:
-    #    print("warning: entering _findScalaComment, non-zero depth %d" % 
+    #    print("warning: entering _findScalaComment, non-zero depth %d" %
     #            commentDepth)
     # END
     multiLine   = False
@@ -1034,7 +1038,7 @@ def _findScalaComment(text, commentDepth):
         else:
             posn         = posnOld
             commentDepth = 1
-            multiLine    = True 
+            multiLine    = True
 
     if multiLine and (posn + 2 < len(text)):
         return text[:posn], text[posn+2:], commentDepth
@@ -1089,7 +1093,7 @@ def countLinesSnobol(pathToFile, options, lang):
 
 def countLinesText(pathToFile, options, lang):
     """
-    Count the lines in a text file.  We ignore empty lines and lines 
+    Count the lines in a text file.  We ignore empty lines and lines
     consisting solely of spaces.
     """
 
@@ -1115,7 +1119,7 @@ def countLinesText(pathToFile, options, lang):
 
 def countLinesXml(pathToFile, options, lang):
     """
-    Count the lines in an xml file.  We ignore empty lines and lines 
+    Count the lines in an xml file.  We ignore empty lines and lines
     consisting solely of spaces, and of course we ignore xml comments.
     """
 
@@ -1133,13 +1137,13 @@ def countLinesXml(pathToFile, options, lang):
             soup = BeautifulSoup(raw, 'lxml')
             comments = soup.findAll(text=lambda text:isinstance(text,Comment))
             [comment.extract() for comment in comments]
-           
-            # soup begins with '<html><body><p>' and ends with 
+
+            # soup begins with '<html><body><p>' and ends with
             #</p></body></html> on a separate line.
 
             elm = soup.html.body.p
             stripped = str(elm)[3:-4]       # drop leading <p> and trailing </p>
-            
+
             lines = stripped.split('\n')
 
             for line in lines:
@@ -1154,6 +1158,8 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
+
 
 
 
