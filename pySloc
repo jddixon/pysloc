@@ -57,7 +57,7 @@ def doCount(options):
             if os.path.isfile(name):
                 counter = None
                 if lang == None:
-                    lang, isTest = q.guessLang(name,
+                    lang, isTest = q.guessLang('./', name,
                             isCLIArg=True, verbose=options.verbose) 
                 if (lang != None) and (lang in langsCounted):
                     counter = q.getCounter(lang, True)

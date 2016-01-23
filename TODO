@@ -1,5 +1,10 @@
 # ~/dev/py/pysloc/TODO
 
+2016-01-23
+    * in upax_go, cmd/ and subdirectories are ignored unless eg 
+        cmd/upaxMirror/upaxMirror.go is added to command line;
+        should be found automatically
+
 2016-01-22
     * countem in eg upax_go reads executable upaxServer although
         it should be ignored, given that it has no file name 
