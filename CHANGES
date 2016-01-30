@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.4.38
+    2016-01-30
+        * minor edits                                               SLOC 2154
 v0.4.37
     2016-01-23
         * fixed missing pathToDir in pySloc guessLang call          SLOC 2154
@@ -140,6 +143,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 

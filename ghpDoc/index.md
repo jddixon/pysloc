@@ -45,12 +45,12 @@ Languages currently covered include, by short name,
 * **js**,   javascript, the Web's programming language
 * **md**,   markdown
 * **ml**,   Ocaml, a functional langauge
-* **not#**, 'not#', a pseudo-language; counts any line whose first non-space character is not the sharp sign ('#')
 * **occ**,  Occam, the concurrent programming language
+* **not#**, 'not#', a pseudo-language; counts any line whose first non-space character is not the sharp sign ('#')
 * **py**,   Python
 * **R**,    R, the statistics programming language
 * **rb**,   Ruby
-* **scala**,    Scala 
+* **scala**,    Scala
 * **sed**,  the language for `sed` scripts used to edit files from the command line
 * **sh**,   bash or the shell, `sh`
 * **sno**,  Snobol, the string-oriented programming language

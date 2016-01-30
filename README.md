@@ -50,7 +50,7 @@ Languages currently covered include, by short name,
 * **py**,   Python
 * **R**,    R, the statistics programming language
 * **rb**,   Ruby
-* **scala**,    Scala   
+* **scala**,    Scala
 * **sed**,  the language for `sed` scripts used to edit files from the command line
 * **sh**,   bash or the shell, `sh`
 * **sno**,  Snobol, the string-oriented programming language
