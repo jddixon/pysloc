@@ -38,7 +38,7 @@ class TestCouldBeGenerated (unittest.TestCase):
         self.expectZeroCounts('couldBeGenerated.pb-c.h',       'c')
         self.expectZeroCounts('couldBeGenerated.pb.cpp',       'cpp')
         self.expectZeroCounts('couldBeGenerated.pb.h',         'cpp')
-        self.expectZeroCounts('couldBeGenerated.pb.go',        'cpp')
+        self.expectZeroCounts('couldBeGenerated.pb.go',        'go')
         self.expectZeroCounts('couldBeGenerated_pb2.py',       'py')
         self.expectZeroCounts('couldBeGeneratedProtos.java',   'java')
 

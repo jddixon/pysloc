@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.5.0
+    2016-02-02
+        * correct significant error in counting C++ files           SLOC 2174
 v0.4.38
     2016-01-30
         * minor edits                                               SLOC 2154
@@ -143,6 +146,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 

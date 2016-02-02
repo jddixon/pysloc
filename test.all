@@ -1,5 +1,6 @@
 
 ./testCouldBeGenerated.py
+./testCppComments.py
 ./testCssComments.py
 ./testGoComments.py
 ./testGperfComments.py

@@ -3,12 +3,13 @@ cd /home/jdd/dev/py/pysloc
 rm -rf build/*
 
 # for normal use, drop the leading ./ and the -v option
-./pySloc -v -L py -X "^junk|^test$|^dist$|\.swp$|\.pyc$"  $@    \
+pySloc -v -L py -X "^junk|^test$|^dist$|\.swp$|\.pyc$"  $@    \
     txt:.gitignore              \
     txt:MANIFEST.in             \
     bash:countem                \
     bash:installit              \
     bash:test.all               \
+    cpp:commentsForCpp          \
     css:commentsForCss          \
     go:commentsForGo            \
     gperf:commentsForGperf      \
