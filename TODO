@@ -1,15 +1,20 @@
 # ~/dev/py/pysloc/TODO
 
+2016-01-24
+    * in eg xlreg_py testData is NOT covered by an exclusion (-X)
+        but files are not being counted: investigate
+    * xlreg_py: which sudden drop of roughly 300 SLOC ?
+
 2016-01-23
-    * in upax_go, cmd/ and subdirectories are ignored unless eg 
+    * in upax_go, cmd/ and subdirectories are ignored unless eg
         cmd/upaxMirror/upaxMirror.go is added to command line;
         should be found automatically
 
 2016-01-22
-    * countem in eg upax_go reads executable upaxServer although
-        it should be ignored, given that it has no file name 
-        extension; this in turn causes a utf-8 decode error
-        (invalid start byte)
+    * countem in eg upax_go reads executable upaxServer although        * GONE
+        it should be ignored, given that it has no file name            * GONE
+        extension; this in turn causes a utf-8 decode error             * GONE
+        (invalid start byte)                                            * GONE
 
 2016-01-17
     * couldBeGenerated_pb2.py resists being committed                   * FIXED
@@ -36,9 +41,9 @@
         BeautifulSoup :-(                                               * GONE
 
 2016-01-14
-    * must examine effects of for line continuation character 
-        (backslash at EOL)  
-        - C 
+    * must examine effects of for line continuation character
+        (backslash at EOL)
+        - C
         - python
     * examine rhinomank/go-commonmark where pysloc counts 30544         * FIXED
         SLOC ansi C whereas sloccount sees 18223                        * FIXED
@@ -61,7 +66,7 @@
     * source file should be counted; might have extension .re;          * DONE
         could be counted as either C or C++ or uhm as re                * DONE
 
-    * for a list of such tools see 
+    * for a list of such tools see
         https://en.wikipedia. rg/wiki/Comparison_of_parser_generators
 2016-01-04
     * need to test for pathological cases, like Scala or Java
@@ -101,24 +106,24 @@
     * need some testing for C++ other than that in testQ.py
 
 2015-11-28 (edited from -09-03)
-    * support PHP comments 
+    * support PHP comments
         - single line: comment starts with # or //
         - multi-line: C-style /* like this */
         - comments preceded by sharp sign (#)
         - see php.net/manual/en/language.basic.syntax.comments.php
             * 'The "one-line" comment styles only comment to the end
-                of the line or the current block of PHP code, 
+                of the line or the current block of PHP code,
                 whichever comes first.'
             * C-style comments (/* ... */) may not be nested
     * map .php extension to php programming language
-    * write testPHPComments.py to exercise commentsForPHP (21 lines, 
+    * write testPHPComments.py to exercise commentsForPHP (21 lines,
         6 of which SLOC)
 
 2015-09-02
     * testQ mapping of *.r to R programming language                    * DONE
     * ditto for *.js
 
-2015-09-02  
+2015-09-02
     * add Haskell: comments begin with --, file names end with .hs      * DONE
 
 2015-08-12
@@ -130,7 +135,7 @@
     * SERIOUS: running pySloc on build.xml reports zero SLOC            * FIXED
 
 2015-04-29
-    * grand total line contains no test information (compare 
+    * grand total line contains no test information (compare
         goSloc, which has two such lines, first source, then test)
 
 2015-04-22
@@ -142,7 +147,7 @@
         starts a comment line
 
 2015-04-08
-    * figure out how to differentiate C *.h from C++ *.h 
+    * figure out how to differentiate C *.h from C++ *.h
     * write commentsForJava and testJavaComments
     * write commentsForC and testCComments
     * write commentsForCPlusPlus and testCPlusPlusComments
@@ -152,12 +157,12 @@
     * FIX: markdown counts are dominated by html:6927/6695; dunno
         where the test counts come from!
     * FIX: xxxfs counts are from autogen.sh and ltmain.sh; nothing
-        for *.c, *.h -- ie 
-        - we need to ignore library and generated shell code 
+        for *.c, *.h -- ie
+        - we need to ignore library and generated shell code
         - we need to count Makefiles, *.ac, *.am
         - but ignore Makefile.in, other generated files
         - and we need to count C code
-            * ah but in this case (a) *.inc and (b) all *.c/h is 
+            * ah but in this case (a) *.inc and (b) all *.c/h is
                 generated code
     * FIX: notCodeDir() is not being used
     * commentsForOcaml needs to be longer
@@ -183,9 +188,9 @@
     * output is langCount, a map, abbrev->(LOC, SLOC, TSLOC), where
         TSLOC is SLOC for tests
     * assume can use the same counter for Java and Go
-    * the perils of Perl: www.perlmonks.org/?node_id=100344 
+    * the perils of Perl: www.perlmonks.org/?node_id=100344
 
 2015-02-16
-    * handle pathological cases 
+    * handle pathological cases
         - SQUOTEd TQUOTE: '"""' or 'like """ this'
 

@@ -32,8 +32,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.4.37'
-__version_date__ = '2016-01-23'
+__version__      = '0.5.0'
+__version_date__ = '2016-02-02'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -557,6 +557,8 @@ def countLinesCpp(path, options, lang):
     elif path.endswith('.cpp'):
         if not path.endswith('.pb.cpp'):
             l, s = countLinesJavaStyle(path, options, lang)
+    else:
+        l, s = countLinesJavaStyle(path, options, lang)
 
     return l, s
 
@@ -1158,6 +1160,8 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
+
 
 
 
