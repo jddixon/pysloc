@@ -1,5 +1,30 @@
 # ~/dev/py/pysloc/TODO
 
+2016-02-02
+    * consider modifying pySloc to consider triple-DQUOTEd strings
+        that are not assigned to a variable to be comments
+        - so """this would be a comment"""
+        - but this = """ would be counted as source code"""
+
+    * pySloc counts files whose names end in .txt by default; this
+        SHOULD NOT be the default behavior.  Modify to simply ignore
+        *.txt except where on the command line
+        - or add an option to count *.txt
+
+    * add Augeas as a language, files have extension .aug, comments
+        are (* like this *) and can be nested
+    
+    * add support for yacc  (C-style comments, *.y)
+    * add support for lex   (C-style comments, *.l)
+    * add support for perl  (*.pl, *.pm)
+    * add support for pascal (*.pas; comments are {...} or (*...*) 
+        but the starters and enders can be swapped; some people 
+        allow comments to be nested
+
+    * it would be only reasonable to look at the first line of files
+        without an extension for sha-bang lines like #!/bin/bash
+        - could also look at the permissions bit on the file
+
 2016-01-24
     * in eg xlreg_py testData is NOT covered by an exclusion (-X)
         but files are not being counted: investigate

@@ -9,6 +9,7 @@ pySloc -v -L py -X "^junk|^test$|^dist$|\.swp$|\.pyc$"  $@    \
     bash:countem                \
     bash:installit              \
     bash:test.all               \
+    aug:commentsForAugeas       \
     cpp:commentsForCpp          \
     css:commentsForCss          \
     go:commentsForGo            \
@@ -16,8 +17,8 @@ pySloc -v -L py -X "^junk|^test$|^dist$|\.swp$|\.pyc$"  $@    \
     hs:commentsForHaskell       \
     html:commentsForHtml        \
     java:commentsForJava        \
-    ml:commentsForOcaml         \
-    oc:commentsForOccam         \
+    ml:commentsForOCaml         \
+    occ:commentsForOccam        \
     php:commentsForPHP          \
     php:commentsForProtobuf     \
     py:commentsForPy            \

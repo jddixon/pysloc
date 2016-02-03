@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 
-# testOcamlComments.py
+# testOCamlComments.py
 
 import os, sys, unittest
 
 from argparse   import ArgumentParser, Namespace
 from pysloc     import __version__, __version_date__
-from pysloc     import countLinesInDir, countLinesOcaml
+from pysloc     import countLinesInDir, countLinesOCaml
 
-class TestOcamlComments (unittest.TestCase):
+class TestOCamlComments (unittest.TestCase):
 
     def setUp(self):
         self.options = Namespace()
@@ -22,8 +22,8 @@ class TestOcamlComments (unittest.TestCase):
     # actual unit tests #############################################
    
     def testNameToFuncMap(self):
-        testFile = './commentsForOcaml'
-        lines, sloc = countLinesOcaml(testFile, self.options, 'ml')
+        testFile = './commentsForOCaml'
+        lines, sloc = countLinesOCaml(testFile, self.options, 'ml')
         self.assertEqual(lines, 37)
         self.assertEqual(sloc,  13)
 

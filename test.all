@@ -1,4 +1,7 @@
 
+cd ~/dev/py/pysloc
+
+./testAugeasComments.py
 ./testCouldBeGenerated.py
 ./testCppComments.py
 ./testCssComments.py
@@ -9,7 +12,7 @@
 ./testJavaComments.py
 ./testK.py
 ./testK.py
-./testOcamlComments.py
+./testOCamlComments.py
 ./testOccamComments.py
 ./testPyComments.py
 ./testQ.py

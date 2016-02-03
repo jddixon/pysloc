@@ -32,6 +32,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.ext2Lang('foo'),   None)
 
         # expect success
+        self.assertEqual(self.q.ext2Lang('aug'),  'augeas')
         self.assertEqual(self.q.ext2Lang('C'),    'cpp')
         self.assertEqual(self.q.ext2Lang('cc'),   'cpp')
         self.assertEqual(self.q.ext2Lang('cpp'),  'cpp')
@@ -96,6 +97,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.getLongName('foo'),   None)
         
         # expect success
+        self.assertEqual(self.q.getLongName('aug'),  'augeas')
         self.assertEqual(self.q.getLongName('gen'),  'generic')
         self.assertEqual(self.q.getLongName('go'),   'golang')
         self.assertEqual(self.q.getLongName('hs'),   'haskell')
