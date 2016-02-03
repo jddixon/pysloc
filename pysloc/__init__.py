@@ -9,16 +9,16 @@ __all__ = [ '__version__',          '__version_date__',
             # constants
             'GPERF_RE', 'RE2C_RE',
             # functions
-            'countLinesInDir',
+            'countLinesAugeas',
             'countLinesBash',
             'countLinesC',
             'countLinesCpp',
             'countLinesDoubleDash',
-            # 'countLinesGeneric',
             'countLinesGperf',
             'countLinesGo',
             'countLinesHtml',
-            'countLinesJava',       'countLinesOcaml',
+            'countLinesInDir',
+            'countLinesJava',       'countLinesOCaml',
             'countLinesNotSharp',
             'countLinesProtobuf',
             'countLinesPython',
@@ -32,8 +32,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.5.0'
-__version_date__ = '2016-02-02'
+__version__      = '0.6.0'
+__version_date__ = '2016-02-03'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -137,13 +137,14 @@ class Q(object):
             ]
     def __init__(self, mainLang=''):
 
-        # Note Ocaml comments are (* ... *) but allow nesting.  File
+        # Note OCaml comments are (* ... *) but allow nesting.  File
         # extensions are .ml (source code) and .mli (header; and then
         # .cmo/.cmx, .cmi, .cma/.cmxa are compiled forms.
 
         # Maps short name to counter function; limit these to 4 characters.
         self._lang2Counter = {
             'asm'       : countLinesNotSharp,       # s, S, asm
+            'aug'       : countLinesAugeas,         # Augeas config manager
             'bash'      : countLinesShell,          # bash shell
             'c'         : countLinesC,              # ansic
             'cpp'       : countLinesCpp,            # C++
@@ -156,7 +157,7 @@ class Q(object):
             'html'      : countLinesHtml,           # html
             'java'      : countLinesJava,           # plain old Java
             'js'        : countLinesJavaStyle,      # Javascript
-            'ml'        : countLinesOcaml,          # ocaml, tentative abbrev
+            'ml'        : countLinesOCaml,          # ocaml, tentative abbrev
             'not#'      : countLinesNotSharp,
             'occ'       : countLinesDoubleDash,     # concurrent programming
             'proto'     : countLinesProtobuf,       # Google Protocol Buffers
@@ -177,6 +178,7 @@ class Q(object):
         # Note {pl,pm,perl,pl} => perl
         self._ext2Lang  = {
             'asm'       : 'asm',
+            'aug'       : 'augeas',
             'bash'      : 'bash',                   # yes, never used
             'c'         : 'c',                      # ansi c
             'C'         : 'cpp',                    # C++
@@ -199,8 +201,8 @@ class Q(object):
             'java'      : 'java',
             'js'        : 'js',                     # javascript, node.js
             'md'        : 'md',                     # no counter
-            'ml'        : 'ml',                     # ocaml
-            'mli'       : 'ml',                     # ocaml extension
+            'ml'        : 'ml',                     # OCaml
+            'mli'       : 'ml',                     # OCaml extension
             'not#'      : 'not#',
             'occ'       : 'occ',
             'proto'     : 'proto',                  # Google protobuf
@@ -227,9 +229,10 @@ class Q(object):
             self._ext2Lang['inc']   = 'occ'
 
         # Maps lang short name (abbrev) to fuller language name.
-        # By convention, short names are limited to 4 chars.
+        # By convention, short names are limited to 5 chars.
         self._langMap = {
             'asm'       : 'assembler',
+            'aug'       : 'augeas',
             'bash'      : 'bash',
             'c'         : 'ansic',
             'cpp'       : 'C++',
@@ -243,7 +246,7 @@ class Q(object):
             'java'      : 'java',
             'js'        : 'javascript',
             'md'        : 'markdown',
-            'ml'        : 'ocaml',
+            'ml'        : 'OCaml',
             'not#'      : 'not#',
             'occ'       : 'Occam',
             'proto'     : 'proto',                  # Google protobuf
@@ -263,7 +266,7 @@ class Q(object):
         # A set of extensions known NOT to be source code.
         self._nonCodeExts = {
             'a',                                    # library, linked object
-            'cma', 'cmi', 'cmo', 'cmx', 'cmxa',     # ocaml compiled
+            'cma', 'cmi', 'cmo', 'cmx', 'cmxa',     # OCaml compiled
             # 'dat',                                # arguable
             'gz',
             'jar',
@@ -528,6 +531,11 @@ def checkWhetherAlreadyCounted(pathToFile, options):
                     lines = lines[:-1]
     return lines, h
 
+# AUGEAS ============================================================
+
+def countLinesAugeas(path, options, lang):
+    return countLinesOCaml(path, options, lang)
+
 # BASH ==============================================================
 
 def countLinesBash(path, options, lang):
@@ -774,11 +782,11 @@ def countLinesJavaStyle(pathToFile, options, lang):
     return (linesSoFar, slocSoFar)
 
 
-# OCAML =============================================================
+# OCaml =============================================================
 
-def countLinesOcaml(pathToFile, options, lang):
+def countLinesOCaml(pathToFile, options, lang):
     """
-    Count lines in an Ocaml file where comments are delimited by
+    Count lines in an OCaml file where comments are delimited by
     (* and *).  These may be nested.  We ignore blank lines and lines
     consisting solely of spaces and comments.
     """
@@ -1160,6 +1168,8 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
+
 
 
 
