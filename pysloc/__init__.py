@@ -18,7 +18,9 @@ __all__ = [ '__version__',          '__version_date__',
             'countLinesGo',
             'countLinesHtml',
             'countLinesInDir',
-            'countLinesJava',       'countLinesOCaml',
+            'countLinesJava',
+            'countLinesJavaStyle',
+            'countLinesOCaml',
             'countLinesNotSharp',
             'countLinesProtobuf',
             'countLinesPython',
@@ -32,8 +34,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.6.0'
-__version_date__ = '2016-02-03'
+__version__      = '0.6.1'
+__version_date__ = '2016-02-04'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -157,6 +159,7 @@ class Q(object):
             'html'      : countLinesHtml,           # html
             'java'      : countLinesJava,           # plain old Java
             'js'        : countLinesJavaStyle,      # Javascript
+            'l'         : countLinesJavaStyle,      # lex/flex
             'ml'        : countLinesOCaml,          # ocaml, tentative abbrev
             'not#'      : countLinesNotSharp,
             'occ'       : countLinesDoubleDash,     # concurrent programming
@@ -200,6 +203,7 @@ class Q(object):
             'itk'       : 'tcl',
             'java'      : 'java',
             'js'        : 'js',                     # javascript, node.js
+            'l'         : 'lex',                    # javascript, node.js
             'md'        : 'md',                     # no counter
             'ml'        : 'ml',                     # OCaml
             'mli'       : 'ml',                     # OCaml extension
@@ -244,6 +248,7 @@ class Q(object):
             'hs'        : 'haskell',
             'html'      : 'html',
             'java'      : 'java',
+            'lex'       : 'lex',
             'js'        : 'javascript',
             'md'        : 'markdown',
             'ml'        : 'OCaml',
@@ -1168,6 +1173,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 

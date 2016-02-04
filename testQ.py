@@ -32,7 +32,6 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.ext2Lang('foo'),   None)
 
         # expect success
-        self.assertEqual(self.q.ext2Lang('aug'),  'augeas')
         self.assertEqual(self.q.ext2Lang('C'),    'cpp')
         self.assertEqual(self.q.ext2Lang('cc'),   'cpp')
         self.assertEqual(self.q.ext2Lang('cpp'),  'cpp')
@@ -42,6 +41,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.ext2Lang('hh'),   'cpp')
         self.assertEqual(self.q.ext2Lang('hpp'),  'cpp')
 
+        self.assertEqual(self.q.ext2Lang('aug'),  'augeas')
         self.assertEqual(self.q.ext2Lang('css'),  'css')
         self.assertEqual(self.q.ext2Lang('go'),   'go')
         self.assertEqual(self.q.ext2Lang('gperf'),'gperf')
@@ -49,6 +49,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.ext2Lang('html'), 'html')
         self.assertEqual(self.q.ext2Lang('java'), 'java')
         self.assertEqual(self.q.ext2Lang('js'),   'js')
+        self.assertEqual(self.q.ext2Lang('l'),    'lex')
         self.assertEqual(self.q.ext2Lang('md'),   'md')
         self.assertEqual(self.q.ext2Lang('occ'),  'occ')
         self.assertEqual(self.q.ext2Lang('proto'),'proto')
@@ -80,6 +81,7 @@ class TestQ (unittest.TestCase):
         # where the language is known we should always succeed
         # ... whether this is a command line argument
         self.assertEqual(self.q.getCounter('hs',True),    countLinesDoubleDash)
+        self.assertEqual(self.q.getCounter('l',True),     countLinesJavaStyle)
         self.assertEqual(self.q.getCounter('proto',True), countLinesProtobuf)
         self.assertEqual(self.q.getCounter('sno',True),   countLinesSnobol)
        
@@ -162,6 +164,13 @@ class TestQ (unittest.TestCase):
         self.assertEqual(lang, 'go')
         self.assertEqual(isTest, True)
         
+        lang,isTest = self.q.guessLang('./',  'yyFoo.l', isCLIArg=True)
+        self.assertEqual(lang, 'lex')
+        self.assertEqual(isTest, False)
+        lang,isTest = self.q.guessLang('./',  'yyFoo.l', isCLIArg=False)
+        self.assertEqual(lang, 'lex')
+        self.assertEqual(isTest, False)
+       
         lang,isTest = self.q.guessLang('./',  'yyFoo.occ', isCLIArg=True)
         self.assertEqual(lang, 'occ')
         self.assertEqual(isTest, False)

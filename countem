@@ -34,5 +34,11 @@ pySloc -v -L py -X "^junk|^test$|^dist$|\.swp$|\.pyc$"  $@    \
     go:couldBeGenerated.pb.go           \
     py:couldBeGenerated_pb2.py          \
     java:couldBeGeneratedProtos.java    \
+    txt:yyFoo                           \
+    txt:yyFoo.go                        \
+    txt:yyFoo.l                         \
+    txt:yyFoo.occ                       \
+    txt:yyFoo.py                        \
+    txt:yyFoo.sno                       \
     py:pySloc
 
