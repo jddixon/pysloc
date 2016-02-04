@@ -41,8 +41,9 @@ Languages currently covered include, by short name,
 * **csh**,  csh, another shell; tcsh is a variant
 * **css**,  css, used for writing style sheets
 * **go**,   Google's Go programming language
-* **gperf**,  hash function generator 
+* **gperf**,  hash function generator
 * **hs**,     Haskell
+* **lex**,  lex/flex scanner
 * **html**, the Web's markup language
 * **java**, the Sun programming language
 * **js**,   javascript, the Web's programming language
@@ -50,7 +51,7 @@ Languages currently covered include, by short name,
 * **ml**,   Ocaml, a functional language
 * **occ**,  Occam, the concurrent programming language
 * **not#**, 'not#', a pseudo-language; counts any line whose first non-space character is not the sharp sign ('#')
-* **proto**,    Google Protobuf 
+* **proto**,    Google Protobuf
 * **py**,   Python
 * **R**,    R, the statistics programming language
 * **rb**,   Ruby

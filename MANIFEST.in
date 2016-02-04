@@ -5,6 +5,7 @@ include CHANGES LICENSE.md README.* TODO MANIFEST.in
 include ghpDoc/*
 include countem installit test.all
 include commentsFor* pySloc
+include yyFoo*
 recursive-include pysloc *.py
 recursive-include test *
 global-exclude junk* .*swp 
