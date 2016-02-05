@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.6.2
+    2016-02-05
+        * add support for yacc                                      SLOC 2261
 v0.6.1
     2016-02-04
         * add support for lex                                       SLOC 2249
@@ -153,6 +156,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 

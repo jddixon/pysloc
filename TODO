@@ -15,7 +15,7 @@
         are (* like this *) and can be nested
     
     * add support for yacc  (C-style comments, *.y)
-    * add support for lex   (C-style comments, *.l)
+    * add support for lex   (C-style comments, *.l)                     * DONE
     * add support for perl  (*.pl, *.pm)
     * add support for pascal (*.pas; comments are {...} or (*...*) 
         but the starters and enders can be swapped; some people 

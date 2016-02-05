@@ -34,8 +34,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.6.1'
-__version_date__ = '2016-02-04'
+__version__      = '0.6.2'
+__version_date__ = '2016-02-05'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -159,7 +159,7 @@ class Q(object):
             'html'      : countLinesHtml,           # html
             'java'      : countLinesJava,           # plain old Java
             'js'        : countLinesJavaStyle,      # Javascript
-            'l'         : countLinesJavaStyle,      # lex/flex
+            'lex'       : countLinesJavaStyle,      # lex/flex
             'ml'        : countLinesOCaml,          # ocaml, tentative abbrev
             'not#'      : countLinesNotSharp,
             'occ'       : countLinesDoubleDash,     # concurrent programming
@@ -175,6 +175,7 @@ class Q(object):
             'tcl'       : countLinesNotSharp,       # tcl, tk, itk
             'txt'       : countLinesText,           # plain text
             'xml'       : countLinesXml,
+            'yacc'      : countLinesJavaStyle,      # yacc, bison
         }
         # Guesses language short name (abbrev) from file extension.
         # See sloccount's break_filelist for hints.
@@ -203,7 +204,7 @@ class Q(object):
             'itk'       : 'tcl',
             'java'      : 'java',
             'js'        : 'js',                     # javascript, node.js
-            'l'         : 'lex',                    # javascript, node.js
+            'l'         : 'lex',                    # lex/flex parser generator
             'md'        : 'md',                     # no counter
             'ml'        : 'ml',                     # OCaml
             'mli'       : 'ml',                     # OCaml extension
@@ -226,6 +227,7 @@ class Q(object):
             'tk'        : 'tcl',
             'txt'       : 'txt',
             'xml'       : 'xml',
+            'y'         : 'yacc',                   # parser generator
         }
         if mainLang == 'cpp':
             self._ext2Lang['h']     = 'cpp'
@@ -266,6 +268,7 @@ class Q(object):
             'tcl'       : 'tcl',
             'txt'       : 'text',
             'xml'       : 'XML',
+            'yacc'      : 'yacc',
         }
 
         # A set of extensions known NOT to be source code.
@@ -1173,6 +1176,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 
