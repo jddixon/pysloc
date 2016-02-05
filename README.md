@@ -63,6 +63,7 @@ Languages currently covered include, by short name,
 * **tcl**,  the Tool Command Language, a dynamic scripting language
 * **txt**,  plain text; counts all non-blank lines
 * **xml**,  XML
+* **yacc**, yacc parser generator
 
 ## Command Line
 

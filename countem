@@ -40,5 +40,6 @@ pySloc -v -L py -X "^junk|^test$|^dist$|\.swp$|\.pyc$"  $@    \
     txt:yyFoo.occ                       \
     txt:yyFoo.py                        \
     txt:yyFoo.sno                       \
+    txt:yyFoo.y                         \
     py:pySloc
 

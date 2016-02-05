@@ -59,6 +59,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.ext2Lang('scala'),'scala')
         self.assertEqual(self.q.ext2Lang('sh'),   'sh')
         self.assertEqual(self.q.ext2Lang('sno'),  'sno')
+        self.assertEqual(self.q.ext2Lang('y'),    'yacc')
 
     def testIrregularExt2Lang(self):
         qCpp = Q('cpp')
@@ -81,9 +82,10 @@ class TestQ (unittest.TestCase):
         # where the language is known we should always succeed
         # ... whether this is a command line argument
         self.assertEqual(self.q.getCounter('hs',True),    countLinesDoubleDash)
-        self.assertEqual(self.q.getCounter('l',True),     countLinesJavaStyle)
+        self.assertEqual(self.q.getCounter('lex',True),   countLinesJavaStyle)
         self.assertEqual(self.q.getCounter('proto',True), countLinesProtobuf)
         self.assertEqual(self.q.getCounter('sno',True),   countLinesSnobol)
+        self.assertEqual(self.q.getCounter('yacc',True),  countLinesJavaStyle)
        
         # ... or not
         self.assertEqual(self.q.getCounter('py',False), countLinesPython)
@@ -199,6 +201,13 @@ class TestQ (unittest.TestCase):
         self.assertEqual(lang, 'sno')
         self.assertEqual(isTest, False)
 
+        lang,isTest = self.q.guessLang('./',  'yyFoo.y', isCLIArg=True)
+        self.assertEqual(lang, 'yacc')
+        self.assertEqual(isTest, False)
+        lang,isTest = self.q.guessLang('./',  'yyFoo.y', isCLIArg=False)
+        self.assertEqual(lang, 'yacc')
+        self.assertEqual(isTest, False)
+       
         # DON'T KNOW TEST PATTERN FOR SNOB
     def testNonCodeExt(self):
         # expect failure

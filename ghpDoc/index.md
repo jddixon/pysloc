@@ -43,6 +43,7 @@ Languages currently covered include, by short name,
 * **go**,   Google's Go programming language
 * **gperf**,  hash function generator
 * **hs**,     Haskell
+* **lex**,  lex/flex scanner
 * **html**, the Web's markup language
 * **java**, the Sun programming language
 * **js**,   javascript, the Web's programming language
@@ -62,6 +63,7 @@ Languages currently covered include, by short name,
 * **tcl**,  the Tool Command Language, a dynamic scripting language
 * **txt**,  plain text; counts all non-blank lines
 * **xml**,  XML
+* **yacc**, yacc parser generator
 
 ## Command Line
 
