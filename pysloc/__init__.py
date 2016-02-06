@@ -22,6 +22,7 @@ __all__ = [ '__version__',          '__version_date__',
             'countLinesJavaStyle',
             'countLinesOCaml',
             'countLinesNotSharp',
+            'countLinesPascal',
             'countLinesProtobuf',
             'countLinesPython',
             'countLinesRe2c',
@@ -34,8 +35,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.6.2'
-__version_date__ = '2016-02-05'
+__version__      = '0.6.3'
+__version_date__ = '2016-02-06'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -892,6 +893,101 @@ def countLinesDoubleDash(pathToFile, options, lang):
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return linesSoFar, slocSoFar
 
+# PASCAL ============================================================
+
+def countLinesPascal(pathToFile, options, lang):
+    """
+    Count lines in an Pascal file where comments are delimited by
+    (* and *) or { and } -- interchangeably.  These may be nested.  We
+    ignore blank lines and lines consisting solely of spaces and comments.
+    """
+
+    linesSoFar, slocSoFar = (0,0)
+    try:
+        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        if (hash != None) and (lines != None):
+            depth = 0                           # comment depth
+            for ndx,line in enumerate(lines):
+                linesSoFar += 1
+                nonSpaceSeen = False
+                lParenSeen   = False            # might start (*
+                starSeen     = False            # might start *)
+                for ch in list(line):
+                    # ignore other unicode space chars for now
+                    if ch == ' ' or ch == '\t':
+                        lParenSeen = False
+                        starSeen   = False
+                        continue
+                    elif depth == 0:
+                        if lParenSeen:
+                            if ch == '}':
+                                nonSpaceSeen = True 
+                            elif ch == '*' or ch == '{':
+                                depth += 1
+                            else:
+                                nonSpaceSeen = True
+                            lParenSeen = False
+                        elif starSeen:
+                            if ch == '{':
+                                depth += 1
+                            elif ch==')' or ch == '}':
+                                nonSpaceSeen = True
+                                starSeen = False
+                            else:
+                                nonSpaceSeen = True
+                        elif ch == '{':
+                            depth += 1
+                        elif ch == '}':
+                            pass
+                        elif ch == '(':
+                            lParenSeen = True
+                        elif ch == '*':
+                            starSeen = True
+                        else:
+                            nonSpaceSeen = True
+                    else:
+                        # depth > 0
+                        if lParenSeen:
+                            if ch == '}':
+                                if depth > 0:
+                                    depth -= 1
+                            elif ch == '*' or ch == '{':
+                                depth += 1
+                            lParenSeen = False
+                        elif starSeen :
+                            if ch == '{':
+                                depth += 1
+                            elif ch == '}':
+                                depth -= 1
+                            elif ch==')':
+                                if depth > 0:
+                                    depth -= 1
+                                starSeen = False
+                        elif ch == '{':
+                            depth += 1
+                        elif ch == '}':
+                            depth -= 1
+                        elif ch == '(':
+                            lParenSeen = True
+                        elif ch == '*':
+                            starSeen = True
+
+                if nonSpaceSeen:
+                    slocSoFar += 1
+
+                # DEBUG
+                #print("line %3d depth %2d slocSeen %3d: '%s'" % (
+                #    ndx, depth, slocSoFar, line))
+                # END
+
+            options.already.add(hash)
+            if options.verbose:
+                print ("%-49s: %-4s %5d lines, %5d sloc" % (
+                        pathToFile, lang, linesSoFar, slocSoFar))
+    except Exception as e:
+        print("error reading '%s', skipping: %s" % (pathToFile, e))
+    return linesSoFar, slocSoFar
+
 # PROTOBUF ==========================================================
 
 def countLinesProtobuf(path, options, lang):
@@ -1176,6 +1272,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 

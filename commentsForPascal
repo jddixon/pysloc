@@ -3,7 +3,7 @@
 *)
 foo                                                         (* line 1 *)
 """ this is a triple quote confined to a single line """    (* line 2 *)
-#  OCaml doesn't recognize this as a comment                (* line 3 *)
+#  Pascal doesn't recognize this as a comment               (* line 3 *)
 (* This line starts a multi-line nested comment
 bar (*
 
@@ -16,7 +16,7 @@ this might be a bit tricky
 hi                                                          (* line 4 *)
 (* as might this """ ;-) """ *)
 
-'an isolated string should count as python'                 (* line 5 *)
+"an isolated string should count as Pascal"                 (* line 5 *)
 
 "even if it's DQUOTEd"                                      (* line 6 *)
 
@@ -24,8 +24,7 @@ hi                                                          (* line 4 *)
 ...                                                         (* line 8 *)
 and still more b """                                        (* line 9 *)
 
-(* That's 9 lines before the OCaml interpreter gets involved *)
-
+(* That's 9 lines before the Pascal interpreter gets involved *)
 
 (*(* doubly nested *)*)   
 (*(*(* triply nested *)*)*) 
@@ -35,3 +34,25 @@ and still more b """                                        (* line 9 *)
 
 (*(* doubly nested *)*)   a b c (**)                        (* line 12 *)
 (*(*(* triply nested *)*)*)  d e f (*(**)*)                 (* line 13 *)
+
+
+{   not nested    }
+{{  doubly nested }}   
+{{{ triply nested }}} 
+
+{   not nested    }    a b c                                { line 14 }
+{{  doubly nested }}   a b c                                { line 15 }
+{{{ triply nested }}}  d e f                                { line 16 }
+
+{{ doubly nested }}    a b c {}                             { line 17 }
+{{{ triply nested }}}  d e f {{}}                           { line 18 }
+
+(* This is a comment *)
+(*  So is this        }
+{   So is this       *)
+{   So is this        }
+
+(* This is a comment *)  (* as is this *)
+(*  So is this        }  (* as is this *)
+{   So is this       *)  (* as is this *)
+{   So is this        }  (* as is this *)
