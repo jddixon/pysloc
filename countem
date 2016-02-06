@@ -19,6 +19,7 @@ pySloc -v -L py -X "^junk|^test$|^dist$|\.swp$|\.pyc$"  $@    \
     java:commentsForJava        \
     ml:commentsForOCaml         \
     occ:commentsForOccam        \
+    occ:commentsForPascal       \
     php:commentsForPHP          \
     php:commentsForProtobuf     \
     py:commentsForPy            \
