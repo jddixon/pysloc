@@ -26,12 +26,14 @@ and still more b """                                        (* line 9 *)
 
 (* That's 9 lines before the OCaml interpreter gets involved *)
 
-
-(*(* doubly nested *)*)   
+(*     singly nested *)
+(*(*   doubly nested *)*)   
 (*(*(* triply nested *)*)*) 
 
-(*(* doubly nested *)*)   a b c                             (* line 10 *)
-(*(*(* triply nested *)*)*)  d e f                          (* line 11 *)
+(*     singly nested *)      x y z                          (* line 10 *)
+(*(*   doubly nested *)*)    a b c                          (* line 11 *)
+(*(*(* triply nested *)*)*)  d e f                          (* line 12 *)
 
-(*(* doubly nested *)*)   a b c (**)                        (* line 12 *)
-(*(*(* triply nested *)*)*)  d e f (*(**)*)                 (* line 13 *)
+(*     singly nested *)      x y z (**)                     (* line 13 *)
+(*(*   doubly nested *)*)    a b c (**)                     (* line 14 *)
+(*(*(* triply nested *)*)*)  d e f (*(**)*)                 (* line 15 *)

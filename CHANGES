@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.6.4
+    2016-02-07
+        * add yaml                                                  SLOC 2428
 v0.6.3
     2016-02-06
         * add support for Pascal                                    SLOC 2419
@@ -159,6 +162,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 

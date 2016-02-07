@@ -60,6 +60,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.ext2Lang('sh'),   'sh')
         self.assertEqual(self.q.ext2Lang('sno'),  'sno')
         self.assertEqual(self.q.ext2Lang('y'),    'yacc')
+        self.assertEqual(self.q.ext2Lang('yaml'), 'yaml')
 
     def testIrregularExt2Lang(self):
         qCpp = Q('cpp')
@@ -86,6 +87,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.getCounter('proto',True), countLinesProtobuf)
         self.assertEqual(self.q.getCounter('sno',True),   countLinesSnobol)
         self.assertEqual(self.q.getCounter('yacc',True),  countLinesJavaStyle)
+        self.assertEqual(self.q.getCounter('yaml',True),  countLinesNotSharp)
        
         # ... or not
         self.assertEqual(self.q.getCounter('py',False), countLinesPython)
@@ -113,6 +115,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.getLongName('re2c'), 're2c')
         self.assertEqual(self.q.getLongName('scala'),'scala')
         self.assertEqual(self.q.getLongName('sno'),  'snobol4')
+        self.assertEqual(self.q.getLongName('yaml'), 'yaml')
 
     def testGuessLangFromFileName(self):
         # expect failure --------------------------------------------

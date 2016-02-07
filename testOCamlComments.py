@@ -24,8 +24,8 @@ class TestOCamlComments (unittest.TestCase):
     def testNameToFuncMap(self):
         testFile = './commentsForOCaml'
         lines, sloc = countLinesOCaml(testFile, self.options, 'ml')
-        self.assertEqual(lines, 37)
-        self.assertEqual(sloc,  13)
+        self.assertEqual(lines, 39)
+        self.assertEqual(sloc,  15)
 
 if __name__ == '__main__':
     unittest.main()
