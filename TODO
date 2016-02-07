@@ -1,5 +1,12 @@
 # ~/dev/py/pysloc/TODO
 
+2016-02-07
+    * yaml counting not quite right: need whitespace between sharp
+        sign and precding token, if any
+
+2016-02-06
+    * revisit commentsForOCaml and its test                             * DONE
+
 2016-02-05
     * add support for *.Rmd (RMarkdown)
         - count YAML at top ... as R 

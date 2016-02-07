@@ -35,8 +35,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.6.3'
-__version_date__ = '2016-02-06'
+__version__      = '0.6.4'
+__version_date__ = '2016-02-07'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -177,6 +177,7 @@ class Q(object):
             'txt'       : countLinesText,           # plain text
             'xml'       : countLinesXml,
             'yacc'      : countLinesJavaStyle,      # yacc, bison
+            'yaml'      : countLinesNotSharp,       # yaml
         }
         # Guesses language short name (abbrev) from file extension.
         # See sloccount's break_filelist for hints.
@@ -229,6 +230,8 @@ class Q(object):
             'txt'       : 'txt',
             'xml'       : 'xml',
             'y'         : 'yacc',                   # parser generator
+            'yaml'      : 'yaml',
+            'xml'       : 'xml',
         }
         if mainLang == 'cpp':
             self._ext2Lang['h']     = 'cpp'
@@ -270,6 +273,7 @@ class Q(object):
             'txt'       : 'text',
             'xml'       : 'XML',
             'yacc'      : 'yacc',
+            'yaml'      : 'yaml',
         }
 
         # A set of extensions known NOT to be source code.
@@ -1272,6 +1276,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 
