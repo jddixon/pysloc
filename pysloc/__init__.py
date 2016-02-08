@@ -20,9 +20,10 @@ __all__ = [ '__version__',          '__version_date__',
             'countLinesInDir',
             'countLinesJava',
             'countLinesJavaStyle',
-            'countLinesOCaml',
             'countLinesNotSharp',
+            'countLinesOCaml',
             'countLinesPascal',
+            'countLinesPerl',
             'countLinesProtobuf',
             'countLinesPython',
             'countLinesRe2c',
@@ -35,8 +36,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.6.4'
-__version_date__ = '2016-02-07'
+__version__      = '0.6.5'
+__version_date__ = '2016-02-08'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -165,6 +166,7 @@ class Q(object):
             'not#'      : countLinesNotSharp,
             'occ'       : countLinesDoubleDash,     # concurrent programming
             'proto'     : countLinesProtobuf,       # Google Protocol Buffers
+            'perl'      : countLinesPerl, 
             'py'        : countLinesPython,         # yes, Python
             'R'         : countLinesNotSharp,       # R
             're2c'      : countLinesRe2c,           # re2c
@@ -212,6 +214,8 @@ class Q(object):
             'mli'       : 'ml',                     # OCaml extension
             'not#'      : 'not#',
             'occ'       : 'occ',
+            'pl'        : 'perl',
+            'pm'        : 'perl',
             'proto'     : 'proto',                  # Google protobuf
             'py'        : 'py',
             'R'         : 'R',                      # R programming language
@@ -260,6 +264,7 @@ class Q(object):
             'ml'        : 'OCaml',
             'not#'      : 'not#',
             'occ'       : 'Occam',
+            'perl'      : 'Perl',
             'proto'     : 'proto',                  # Google protobuf
             'py'        : 'python',
             'R'         : 'R',
@@ -583,34 +588,6 @@ def countLinesCpp(path, options, lang):
 
     return l, s
 
-# NOT_SHARP =========================================================
-
-def countLinesNotSharp(pathToFile, options, lang):
-    """
-    Count lines in a file where the sharp sign ('#') is the comment
-    marker.  That is, we ignore blank lines, lines consisting solely of
-    spaces, and those starting with zero or more spaces followed by
-    a sharp sign.
-    """
-
-    linesSoFar, slocSoFar = (0,0)
-    try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
-        if (hash != None) and (lines != None):
-            for line in lines:
-                linesSoFar += 1
-                # This could be made more efficient.
-                line = line.strip()
-                if len(line) > 0 and (line[0] != '#'):
-                    slocSoFar += 1
-            options.already.add(hash)
-            if options.verbose:
-                print ("%-49s: %-4s %5d lines, %5d sloc" % (
-                        pathToFile, lang, linesSoFar, slocSoFar))
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
-    return linesSoFar, slocSoFar
-
 # GO ================================================================
 
 def countLinesGo(pathToFile, options, lang):
@@ -794,6 +771,34 @@ def countLinesJavaStyle(pathToFile, options, lang):
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return (linesSoFar, slocSoFar)
 
+
+# NOT_SHARP =========================================================
+
+def countLinesNotSharp(pathToFile, options, lang):
+    """
+    Count lines in a file where the sharp sign ('#') is the comment
+    marker.  That is, we ignore blank lines, lines consisting solely of
+    spaces, and those starting with zero or more spaces followed by
+    a sharp sign.
+    """
+
+    linesSoFar, slocSoFar = (0,0)
+    try:
+        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        if (hash != None) and (lines != None):
+            for line in lines:
+                linesSoFar += 1
+                # This could be made more efficient.
+                line = line.strip()
+                if len(line) > 0 and (line[0] != '#'):
+                    slocSoFar += 1
+            options.already.add(hash)
+            if options.verbose:
+                print ("%-49s: %-4s %5d lines, %5d sloc" % (
+                        pathToFile, lang, linesSoFar, slocSoFar))
+    except Exception as e:
+        print("error reading '%s', skipping: %s" % (pathToFile, e))
+    return linesSoFar, slocSoFar
 
 # OCaml =============================================================
 
@@ -984,6 +989,39 @@ def countLinesPascal(pathToFile, options, lang):
                 #    ndx, depth, slocSoFar, line))
                 # END
 
+            options.already.add(hash)
+            if options.verbose:
+                print ("%-49s: %-4s %5d lines, %5d sloc" % (
+                        pathToFile, lang, linesSoFar, slocSoFar))
+    except Exception as e:
+        print("error reading '%s', skipping: %s" % (pathToFile, e))
+    return linesSoFar, slocSoFar
+
+# PERL ==============================================================
+
+def countLinesPerl(pathToFile, options, lang):
+    """
+    XXX REWRITE:
+
+    Count lines in a file where the sharp sign ('#') is the comment
+    marker.  That is, we ignore blank lines, lines consisting solely of
+    spaces, and those starting with zero or more spaces followed by
+    a sharp sign.
+
+    XXX EXPAND THIS TO HANDLE POD BLOCKS, treated as multi-line comments.
+
+    """
+
+    linesSoFar, slocSoFar = (0,0)
+    try:
+        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        if (hash != None) and (lines != None):
+            for line in lines:
+                linesSoFar += 1
+                # This could be made more efficient.
+                line = line.strip()
+                if len(line) > 0 and (line[0] != '#'):
+                    slocSoFar += 1
             options.already.add(hash)
             if options.verbose:
                 print ("%-49s: %-4s %5d lines, %5d sloc" % (
@@ -1276,6 +1314,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 

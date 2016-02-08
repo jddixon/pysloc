@@ -15,6 +15,7 @@ cd ~/dev/py/pysloc
 ./testOCamlComments.py
 ./testOccamComments.py
 ./testPascalComments.py
+./testPerlComments.py
 ./testPyComments.py
 ./testQ.py
 ./testRe2CComments.py
