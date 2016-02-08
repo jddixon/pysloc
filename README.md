@@ -35,35 +35,36 @@ Java-style comments would be ignored in counting lines of source code.
 
 Languages currently covered include, by short name,
 
-* **asm**,  assembly language
-* **aug**,  Augeas configuration editor
-* **c**,    the venerable C programming language; ANSI C
-* **csh**,  csh, another shell; tcsh is a variant
-* **css**,  css, used for writing style sheets
-* **go**,   Google's Go programming language
-* **gperf**,  hash function generator
-* **hs**,     Haskell
-* **lex**,  lex/flex scanner
-* **html**, the Web's markup language
-* **java**, the Sun programming language
-* **js**,   javascript, the Web's programming language
-* **md**,   markdown
-* **ml**,   Ocaml, a functional language
-* **occ**,  Occam, the concurrent programming language
-* **not#**, 'not#', a pseudo-language; counts any line whose first non-space character is not the sharp sign ('#')
-* **proto**,    Google Protobuf
-* **py**,   Python
-* **R**,    R, the statistics programming language
-* **rb**,   Ruby
-* **re2c**, tool for writing fast lexers
-* **scala**,    Scala
-* **sed**,  the language for `sed` scripts used to edit files from the command line
-* **sh**,   bash or the shell, `sh`
-* **sno**,  Snobol, the string-oriented programming language
-* **tcl**,  the Tool Command Language, a dynamic scripting language
-* **txt**,  plain text; counts all non-blank lines
-* **xml**,  XML
-* **yacc**, yacc parser generator
+* **asm**,	assembly language
+* **aug**,	Augeas configuration editor
+* **c**,	the venerable C programming language; ANSI C
+* **csh**,	csh, another shell; tcsh is a variant
+* **css**,	css, used for writing style sheets
+* **go**,	Google's Go programming language
+* **gperf**,hash function generator
+* **hs**,	Haskell
+* **lex**,	lex/flex scanner
+* **html**,	the Web's markup language
+* **java**,	the Sun programming language
+* **js**,	javascript, the Web's programming language
+* **md**,	markdown
+* **ml**,	Ocaml, a functional language
+* **not#**,	'not#', a pseudo-language; counts any line whose first non-space character is not the sharp sign ('#')
+* **occ**,	Occam, the concurrent programming language
+* **perl**,	Perl, the sysadmin's language
+* **proto**,Google Protobuf
+* **py**,	Python
+* **R**,	R, the statistics programming language
+* **rb**,	Ruby
+* **re2c**,	tool for writing fast lexers
+* **scala**,Scala
+* **sed**,	the language for `sed` scripts used to edit files from the command line
+* **sh**,	bash or the shell, `sh`
+* **sno**,	Snobol, the string-oriented programming language
+* **tcl**,	the Tool Command Language, a dynamic scripting language
+* **txt**,	plain text; counts all non-blank lines
+* **xml**,	XML
+* **yacc**,	yacc parser generator
 
 ## Command Line
 

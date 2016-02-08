@@ -4,30 +4,31 @@ rm -rf build/*
 
 # for normal use, drop the leading ./ and the -v option
 pySloc -v -L py -X "^junk|^test$|^dist$|\.swp$|\.pyc$"  $@    \
-    txt:.gitignore              \
-    txt:MANIFEST.in             \
-    bash:countem                \
-    bash:installit              \
-    bash:test.all               \
-    aug:commentsForAugeas       \
-    cpp:commentsForCpp          \
-    css:commentsForCss          \
-    go:commentsForGo            \
-    gperf:commentsForGperf      \
-    hs:commentsForHaskell       \
-    html:commentsForHtml        \
-    java:commentsForJava        \
-    ml:commentsForOCaml         \
-    occ:commentsForOccam        \
-    occ:commentsForPascal       \
-    php:commentsForPHP          \
-    php:commentsForProtobuf     \
-    py:commentsForPy            \
-    r2c:commentsForRe2c         \
-    scala:commentsForScala      \
-    sno:commentsForSno          \
-    txt:commentsForTxt          \
-    xml:commentsForXml          \
+    txt:.gitignore              		\
+    txt:MANIFEST.in             		\
+    bash:countem                		\
+    bash:installit              		\
+    bash:test.all               		\
+    aug:commentsForAugeas       		\
+    cpp:commentsForCpp          		\
+    css:commentsForCss          		\
+    go:commentsForGo            		\
+    gperf:commentsForGperf      		\
+    hs:commentsForHaskell       		\
+    html:commentsForHtml        		\
+    java:commentsForJava        		\
+    ml:commentsForOCaml         		\
+    occ:commentsForOccam        		\
+    pas:commentsForPascal       		\
+    perl:commentsForPerl        		\
+    php:commentsForPHP          		\
+    proto:commentsForProtobuf     		\
+    py:commentsForPy            		\
+    r2c:commentsForRe2c         		\
+    scala:commentsForScala      		\
+    sno:commentsForSno          		\
+    txt:commentsForTxt          		\
+    xml:commentsForXml          		\
     c:couldBeGenerated.pb-c.c           \
     c:couldBeGenerated.pb-c.h           \
     cpp:couldBeGenerated.pb.cpp         \

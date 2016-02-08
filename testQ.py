@@ -53,6 +53,8 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.ext2Lang('md'),   'md')
         self.assertEqual(self.q.ext2Lang('occ'),  'occ')
         self.assertEqual(self.q.ext2Lang('proto'),'proto')
+        self.assertEqual(self.q.ext2Lang('pl'),   'perl')
+        self.assertEqual(self.q.ext2Lang('pm'),   'perl')
         self.assertEqual(self.q.ext2Lang('py'),   'py')
         self.assertEqual(self.q.ext2Lang('R'),    'R')      # short name 
         self.assertEqual(self.q.ext2Lang('r'),    'R')      # short name 
@@ -84,6 +86,7 @@ class TestQ (unittest.TestCase):
         # ... whether this is a command line argument
         self.assertEqual(self.q.getCounter('hs',True),    countLinesDoubleDash)
         self.assertEqual(self.q.getCounter('lex',True),   countLinesJavaStyle)
+        self.assertEqual(self.q.getCounter('perl',True),  countLinesPerl)
         self.assertEqual(self.q.getCounter('proto',True), countLinesProtobuf)
         self.assertEqual(self.q.getCounter('sno',True),   countLinesSnobol)
         self.assertEqual(self.q.getCounter('yacc',True),  countLinesJavaStyle)
@@ -111,6 +114,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.getLongName('java'), 'java')
         self.assertEqual(self.q.getLongName('md'),   'markdown')
         self.assertEqual(self.q.getLongName('occ'),  'Occam')
+        self.assertEqual(self.q.getLongName('perl'), 'Perl')
         self.assertEqual(self.q.getLongName('proto'),'proto')
         self.assertEqual(self.q.getLongName('re2c'), 're2c')
         self.assertEqual(self.q.getLongName('scala'),'scala')
