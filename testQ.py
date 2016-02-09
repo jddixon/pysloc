@@ -47,6 +47,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.ext2Lang('gperf'),'gperf')
         self.assertEqual(self.q.ext2Lang('hs'),   'hs')
         self.assertEqual(self.q.ext2Lang('html'), 'html')
+        self.assertEqual(self.q.ext2Lang('json'), 'json')
         self.assertEqual(self.q.ext2Lang('java'), 'java')
         self.assertEqual(self.q.ext2Lang('js'),   'js')
         self.assertEqual(self.q.ext2Lang('l'),    'lex')
@@ -85,6 +86,7 @@ class TestQ (unittest.TestCase):
         # where the language is known we should always succeed
         # ... whether this is a command line argument
         self.assertEqual(self.q.getCounter('hs',True),    countLinesDoubleDash)
+        self.assertEqual(self.q.getCounter('json',True),  countLinesNotSharp)
         self.assertEqual(self.q.getCounter('lex',True),   countLinesJavaStyle)
         self.assertEqual(self.q.getCounter('perl',True),  countLinesPerl)
         self.assertEqual(self.q.getCounter('proto',True), countLinesProtobuf)
@@ -112,6 +114,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.getLongName('hs'),   'haskell')
         self.assertEqual(self.q.getLongName('html'), 'html')
         self.assertEqual(self.q.getLongName('java'), 'java')
+        self.assertEqual(self.q.getLongName('json'), 'json')
         self.assertEqual(self.q.getLongName('md'),   'markdown')
         self.assertEqual(self.q.getLongName('occ'),  'Occam')
         self.assertEqual(self.q.getLongName('perl'), 'Perl')

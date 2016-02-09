@@ -36,8 +36,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.6.5'
-__version_date__ = '2016-02-08'
+__version__      = '0.6.6'
+__version_date__ = '2016-02-09'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -149,7 +149,7 @@ class Q(object):
         self._lang2Counter = {
             'asm'       : countLinesNotSharp,       # s, S, asm
             'aug'       : countLinesAugeas,         # Augeas config manager
-            'bash'      : countLinesShell,          # bash shell
+            'ash'      : countLinesShell,          # bash shell
             'c'         : countLinesC,              # ansic
             'cpp'       : countLinesCpp,            # C++
             'csh'       : countLinesNotSharp,       # csh, tcsh
@@ -161,12 +161,13 @@ class Q(object):
             'html'      : countLinesHtml,           # html
             'java'      : countLinesJava,           # plain old Java
             'js'        : countLinesJavaStyle,      # Javascript
+            'json'      : countLinesNotSharp,       # json
             'lex'       : countLinesJavaStyle,      # lex/flex
             'ml'        : countLinesOCaml,          # ocaml, tentative abbrev
             'not#'      : countLinesNotSharp,
             'occ'       : countLinesDoubleDash,     # concurrent programming
-            'proto'     : countLinesProtobuf,       # Google Protocol Buffers
             'perl'      : countLinesPerl, 
+            'proto'     : countLinesProtobuf,       # Google Protocol Buffers
             'py'        : countLinesPython,         # yes, Python
             'R'         : countLinesNotSharp,       # R
             're2c'      : countLinesRe2c,           # re2c
@@ -208,6 +209,7 @@ class Q(object):
             'itk'       : 'tcl',
             'java'      : 'java',
             'js'        : 'js',                     # javascript, node.js
+            'json'      : 'json',
             'l'         : 'lex',                    # lex/flex parser generator
             'md'        : 'md',                     # no counter
             'ml'        : 'ml',                     # OCaml
@@ -258,8 +260,9 @@ class Q(object):
             'hs'        : 'haskell',
             'html'      : 'html',
             'java'      : 'java',
-            'lex'       : 'lex',
             'js'        : 'javascript',
+            'json'      : 'json',
+            'lex'       : 'lex',
             'md'        : 'markdown',
             'ml'        : 'OCaml',
             'not#'      : 'not#',
@@ -1314,6 +1317,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 
