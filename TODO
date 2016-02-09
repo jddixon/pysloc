@@ -4,29 +4,34 @@
     * summary line at bottom of countem report should be sorted and
         should never contain a zero count
 
-2016-02-08 (edited from -02)
-    * add support for perl  (*.pl, *.pm), comments begin with #
-    * treat as multiline comments blocks beginning with ^=pod and 
-        ending with ^=cut
-    * also multiline comments beginning with '^= for comment' and 
-        ending with ^=cut
-
-2016-02-07
-    * yaml counting not quite right: need whitespace between sharp
-        sign and precding token, if any
-
-2016-02-06
-    * revisit commentsForOCaml and its test                             * DONE
-
-2016-02-05
+2016-02-08, edited from 05
     * add support for *.Rmd (RMarkdown)
         - count YAML at top ... as R 
             * including dashed lines before and after
         - count code chunks as R
         - count in-line R values
 
+    * EXPERIMENT: introduce countLinesR() whose third parameter
+        is either 'R' or 'Rmd', calling countLinesNotSharp() in 
+        the first case and _countLinesRmd() in the second
+
+2016-02-08 (edited from -02)
+    * add support for perl  (*.pl, *.pm), comments begin with #         * DONE
+    * treat as multiline comments blocks beginning with ^=pod and 
+        ending with ^=cut
+    * also multiline comments beginning with '^= for comment' and 
+        ending with ^=cut
+
+2016-02-07
+    * YAML counting not quite right: need whitespace between sharp
+        sign and precding token, if any
+
+2016-02-06
+    * revisit commentsForOCaml and its test                             * DONE
+
+2016-02-05
     * add support for YAML 
-        - comments follow #, extend to end of line)
+        - comments follow #, extend to end of line)                     * DONE
         - # MUST be preceded by whitespace
         - # inside string is ignored
         - *.Rmd of course contain YAML ...

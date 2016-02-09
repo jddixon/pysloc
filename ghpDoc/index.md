@@ -43,11 +43,11 @@ Languages currently covered include, by short name,
 * **go**,	Google's Go programming language
 * **gperf**,hash function generator
 * **hs**,	Haskell
-* **lex**,	lex/flex scanner
 * **html**,	the Web's markup language
 * **java**,	the Sun programming language
 * **js**,	javascript, the Web's programming language
-* **md**,	markdown
+* **json**,	JSON serializer
+* **lex**,	lex/flex scanner
 * **ml**,	Ocaml, a functional language
 * **not#**,	'not#', a pseudo-language; counts any line whose first non-space character is not the sharp sign ('#')
 * **occ**,	Occam, the concurrent programming language
@@ -65,6 +65,7 @@ Languages currently covered include, by short name,
 * **txt**,	plain text; counts all non-blank lines
 * **xml**,	XML
 * **yacc**,	yacc parser generator
+* **yaml**,	YAML serializer
 
 ## Command Line
 
