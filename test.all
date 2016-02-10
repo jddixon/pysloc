@@ -10,6 +10,7 @@ cd ~/dev/py/pysloc
 ./testHaskellComments.py
 ./testHtmlComments.py
 ./testJavaComments.py
+./testJsonComments.py
 ./testK.py
 ./testK.py
 ./testOCamlComments.py

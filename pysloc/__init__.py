@@ -36,8 +36,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.6.6'
-__version_date__ = '2016-02-09'
+__version__      = '0.6.7'
+__version_date__ = '2016-02-10'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -161,7 +161,7 @@ class Q(object):
             'html'      : countLinesHtml,           # html
             'java'      : countLinesJava,           # plain old Java
             'js'        : countLinesJavaStyle,      # Javascript
-            'json'      : countLinesNotSharp,       # json
+            'json'      : countLinesText,           # json
             'lex'       : countLinesJavaStyle,      # lex/flex
             'ml'        : countLinesOCaml,          # ocaml, tentative abbrev
             'not#'      : countLinesNotSharp,
@@ -470,6 +470,9 @@ def countLinesInDir(pathToDir, options):
     if files:
         q = options.q
         for name in sorted(files):
+            # we only count *.txt if on the command line
+            if name.endswith('.txt'):
+                continue
             # consider exclusions ...
             if options.exRE is not None and options.exRE.search(name) is not None:
                 # DEBUG
@@ -1317,6 +1320,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 

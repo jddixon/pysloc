@@ -86,11 +86,12 @@ class TestQ (unittest.TestCase):
         # where the language is known we should always succeed
         # ... whether this is a command line argument
         self.assertEqual(self.q.getCounter('hs',True),    countLinesDoubleDash)
-        self.assertEqual(self.q.getCounter('json',True),  countLinesNotSharp)
+        self.assertEqual(self.q.getCounter('json',True),  countLinesText)
         self.assertEqual(self.q.getCounter('lex',True),   countLinesJavaStyle)
         self.assertEqual(self.q.getCounter('perl',True),  countLinesPerl)
         self.assertEqual(self.q.getCounter('proto',True), countLinesProtobuf)
         self.assertEqual(self.q.getCounter('sno',True),   countLinesSnobol)
+        self.assertEqual(self.q.getCounter('txt',True),   countLinesText)
         self.assertEqual(self.q.getCounter('yacc',True),  countLinesJavaStyle)
         self.assertEqual(self.q.getCounter('yaml',True),  countLinesNotSharp)
        
