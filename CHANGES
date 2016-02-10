@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.6.7
+    2016-02-10
+        * don't count *.txt unless on command line; tests for json  SLOC 2520
 v0.6.6
     2016-02-09
         * support json                                              SLOC 2488
@@ -168,6 +171,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 

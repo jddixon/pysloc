@@ -17,6 +17,7 @@ pySloc -v -L py -X "^junk|^test$|^dist$|\.swp$|\.pyc$"  $@    \
     hs:commentsForHaskell       		\
     html:commentsForHtml        		\
     java:commentsForJava        		\
+    json:commentsForJson        		\
     ml:commentsForOCaml         		\
     occ:commentsForOccam        		\
     pas:commentsForPascal       		\
@@ -37,11 +38,11 @@ pySloc -v -L py -X "^junk|^test$|^dist$|\.swp$|\.pyc$"  $@    \
     py:couldBeGenerated_pb2.py          \
     java:couldBeGeneratedProtos.java    \
     txt:yyFoo                           \
-    txt:yyFoo.go                        \
-    txt:yyFoo.l                         \
-    txt:yyFoo.occ                       \
-    txt:yyFoo.py                        \
-    txt:yyFoo.sno                       \
-    txt:yyFoo.y                         \
+    go:yyFoo.go                         \
+    lex:yyFoo.l                         \
+    occ:yyFoo.occ                       \
+    py:yyFoo.py                         \
+    sno:yyFoo.sno                       \
+    yacc:yyFoo.y                        \
     py:pySloc
 

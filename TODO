@@ -1,5 +1,12 @@
 # ~/dev/py/pysloc/TODO
 
+2016-02-09 (edited from -5)
+    * add support for JSON                                              * DONE
+        - comments are deliberately forbidden in the spec               * TRUE
+    * add commentsForJson, should include eg Wikipedia JSON sample      * DONE
+            (with attr)                                                 * DONE
+    * add complementary testJsonComments.py                             * DONE
+
 2016-02-08
     * summary line at bottom of countem report should be sorted and
         should never contain a zero count
@@ -37,19 +44,16 @@
         - *.Rmd of course contain YAML ...
         - yyFoo.yaml should include eg Wikipedia YAML sample
 
-    * add support for JSON
-        - yyFoo.json should include eg Wikipedia JSON sample
-        - comments are deliberately forbidden in the spec
-
 2016-02-02
-    * consider modifying pySloc to consider triple-DQUOTEd strings
+    * py: consider modifying pySloc to consider triple-DQUOTEd strings
         that are not assigned to a variable to be comments
         - so """this would be a comment"""
         - but this = """ would be counted as source code"""
 
-    * pySloc counts files whose names end in .txt by default; this
-        SHOULD NOT be the default behavior.  Modify to simply ignore
-        *.txt except where on the command line
+    * pySloc counts files whose names end in .txt by default; this      * DOEN
+        SHOULD NOT be the default behavior.  Modify to simply ignore    * DONE
+        *.txt except where on the command line                          * DONE
+
         - or add an option to count *.txt
 
     * add Augeas as a language, files have extension .aug, comments     * DONE
