@@ -1,5 +1,9 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.6.8
+    2016-02-11
+        * support m4; zero counts excluded from summary line        SLOC 2531
+        * support MATLAB                                            SLOC 2635
 v0.6.7
     2016-02-10
         * don't count *.txt unless on command line; tests for json  SLOC 2520
@@ -171,6 +175,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 
