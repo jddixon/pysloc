@@ -13,6 +13,7 @@ cd ~/dev/py/pysloc
 ./testJsonComments.py
 ./testK.py
 ./testK.py
+./testMatlabComments.py
 ./testOCamlComments.py
 ./testOccamComments.py
 ./testPascalComments.py

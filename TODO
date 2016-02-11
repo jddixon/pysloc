@@ -1,5 +1,20 @@
 # ~/dev/py/pysloc/TODO
 
+2016-02-10
+    * add m4 macro processing language, extension *.m4                  * DONE
+    * add support for Octave with file extension *.m,
+        - mainlang must be 'octave'
+        - single line comment begins with # or %
+        - multi-line comments begin with #{ or %{, end with #} or %}
+    * add support for MATLAB with file extension *.m,
+        - mainlang must be 'matlab'
+        - single line comment begins with %
+        - multi-line comments begin with %{, end with %}
+
+    * most common use of *.m is probably with Objective C
+    * add support for Objective C as objc
+        - if this is mainLang count *.h and *.m as objec
+
 2016-02-09 (edited from -5)
     * add support for JSON                                              * DONE
         - comments are deliberately forbidden in the spec               * TRUE
@@ -8,8 +23,8 @@
     * add complementary testJsonComments.py                             * DONE
 
 2016-02-08
-    * summary line at bottom of countem report should be sorted and
-        should never contain a zero count
+    * summary line at bottom of countem report should be sorted and     * BYSIZE
+        should never contain a zero count                               * DONE
 
 2016-02-08, edited from 05
     * add support for *.Rmd (RMarkdown)

@@ -51,6 +51,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.ext2Lang('java'), 'java')
         self.assertEqual(self.q.ext2Lang('js'),   'js')
         self.assertEqual(self.q.ext2Lang('l'),    'lex')
+        self.assertEqual(self.q.ext2Lang('m4'),   'm4')
         self.assertEqual(self.q.ext2Lang('md'),   'md')
         self.assertEqual(self.q.ext2Lang('occ'),  'occ')
         self.assertEqual(self.q.ext2Lang('proto'),'proto')
@@ -88,6 +89,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.getCounter('hs',True),    countLinesDoubleDash)
         self.assertEqual(self.q.getCounter('json',True),  countLinesText)
         self.assertEqual(self.q.getCounter('lex',True),   countLinesJavaStyle)
+        self.assertEqual(self.q.getCounter('m4',True),    countLinesNotSharp)
         self.assertEqual(self.q.getCounter('perl',True),  countLinesPerl)
         self.assertEqual(self.q.getCounter('proto',True), countLinesProtobuf)
         self.assertEqual(self.q.getCounter('sno',True),   countLinesSnobol)
@@ -116,6 +118,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.getLongName('html'), 'html')
         self.assertEqual(self.q.getLongName('java'), 'java')
         self.assertEqual(self.q.getLongName('json'), 'json')
+        self.assertEqual(self.q.getLongName('m4'),   'm4')
         self.assertEqual(self.q.getLongName('md'),   'markdown')
         self.assertEqual(self.q.getLongName('occ'),  'Occam')
         self.assertEqual(self.q.getLongName('perl'), 'Perl')
@@ -222,12 +225,13 @@ class TestQ (unittest.TestCase):
         # DON'T KNOW TEST PATTERN FOR SNOB
     def testNonCodeExt(self):
         # expect failure
-        self.assertEqual(self.q.nonCodeExt(None),       False)
-        self.assertEqual(self.q.nonCodeExt(''),         False)
-        self.assertEqual(self.q.nonCodeExt('yyFoo'),      False)
+        self.assertEqual(self.q.nonCodeExt(None),               False)
+        self.assertEqual(self.q.nonCodeExt(''),                 False)
+        self.assertEqual(self.q.nonCodeExt('yyFoo'),            False)
         # expect success
-        self.assertEqual(self.q.nonCodeExt('jar'),      True)
-        self.assertEqual(self.q.nonCodeExt('pyc'),      True)
+        self.assertEqual(self.q.nonCodeExt('jar'),              True)
+        self.assertEqual(self.q.nonCodeExt('md'),               True)
+        self.assertEqual(self.q.nonCodeExt('pyc'),              True)
 
     def testNotCodeFile(self):
         # expect failure

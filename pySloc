@@ -142,7 +142,10 @@ if __name__ == '__main__':
 
     if not args.mainLang:
         args.mainLang = ''
-    elif args.mainLang != '':
+
+    if args.mainLang != '':
+        if args.mainLang == 'octave':
+            args.mainLang = 'matlab'
         h = args.q.getCounter(args.mainLang)
         if h == None:
             print("'%s' is not the short name of a supported language" % 

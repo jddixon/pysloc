@@ -20,6 +20,7 @@ __all__ = [ '__version__',          '__version_date__',
             'countLinesInDir',
             'countLinesJava',
             'countLinesJavaStyle',
+            'countLinesMatlab',
             'countLinesNotSharp',
             'countLinesOCaml',
             'countLinesPascal',
@@ -36,8 +37,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.6.7'
-__version_date__ = '2016-02-10'
+__version__      = '0.6.8'
+__version_date__ = '2016-02-11'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -105,8 +106,10 @@ class K(object):
             l, s, tl, ts = self.m[lang]
             if ts > 0:
                 return "%s:%d/%d T%.1f%%" % (lang, l+tl, s+ts, 100.0*ts/(s+ts))
-            else:
+            elif l>0:
                 return "%s:%d/%d" % (lang, l+tl, s)
+            else:
+                return '' 
 
     def prettyBreakDown(self):
         """
@@ -119,7 +122,9 @@ class K(object):
             f.append([k] + v)
         results=[]
         for x in sorted(f, key=lambda fields: fields[K.SLOC+1], reverse=True):
-            results.append( self.prettyCounts(x[0]) )
+            result = self.prettyCounts(x[0])
+            if result:
+                results.append( result )
         print('; '.join(results))
 
     def getTotals(self):
@@ -163,6 +168,7 @@ class Q(object):
             'js'        : countLinesJavaStyle,      # Javascript
             'json'      : countLinesText,           # json
             'lex'       : countLinesJavaStyle,      # lex/flex
+            'm4'        : countLinesNotSharp,       # m4 macro processor
             'ml'        : countLinesOCaml,          # ocaml, tentative abbrev
             'not#'      : countLinesNotSharp,
             'occ'       : countLinesDoubleDash,     # concurrent programming
@@ -211,6 +217,7 @@ class Q(object):
             'js'        : 'js',                     # javascript, node.js
             'json'      : 'json',
             'l'         : 'lex',                    # lex/flex parser generator
+            'm4'        : 'm4',                     # no counter
             'md'        : 'md',                     # no counter
             'ml'        : 'ml',                     # OCaml
             'mli'       : 'ml',                     # OCaml extension
@@ -241,6 +248,8 @@ class Q(object):
         }
         if mainLang == 'cpp':
             self._ext2Lang['h']     = 'cpp'
+        elif mainLang == 'matlab':
+            self._ext2Lang['m']     = 'matlab'
         elif mainLang == 'occ':
             self._ext2Lang['inc']   = 'occ'
 
@@ -263,6 +272,7 @@ class Q(object):
             'js'        : 'javascript',
             'json'      : 'json',
             'lex'       : 'lex',
+            'm4'        : 'm4',
             'md'        : 'markdown',
             'ml'        : 'OCaml',
             'not#'      : 'not#',
@@ -776,6 +786,73 @@ def countLinesJavaStyle(pathToFile, options, lang):
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return (linesSoFar, slocSoFar)
+
+# MATLAB ============================================================
+
+def countLinesMatlab(pathToFile, options, lang):
+    """
+    Count source lines in an Matlab file where single line comments
+    begin with '%' and muli-line comments are delimited by
+    %{ and %}.  These may be nested.  We ignore blank lines and lines
+    consisting solely of spaces and comments.
+    """
+
+    linesSoFar, slocSoFar = (0,0)
+    try:
+        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        if (hash != None) and (lines != None):
+            depth = 0                           # comment depth
+            for lNdx, line in enumerate(lines):
+                linesSoFar += 1
+                nonSpaceSeen = False
+                percentSeen  = False             # might start %{ or %}
+                for cNdx, ch in enumerate(list(line)):
+                    # DEBUG
+                    #print("line %2d char %2d '%c' depth %2d percent? %s nonSpace? %s" % (
+                    #        lNdx, cNdx, ch, depth, percentSeen, nonSpaceSeen))
+                    # END
+                    if percentSeen:
+                        if ch == '{':
+                            depth += 1
+                        elif ch == '}':
+                            if depth >0:
+                                depth -= 1
+                        else: 
+                            # this would start a comment
+                            if depth == 0:
+                                break
+                        percentSeen = False
+
+                    elif depth == 0:
+                        if ch == '%':
+                            percentSeen = True
+                        elif ch != ' ' and ch != '\t':
+                            nonSpaceSeen = True
+                            # ignore other unicode space chars for now
+                        else:
+                            pass
+
+                    else:
+                        # depth > 0
+                        if percentSeen:
+                            if ch == '{':
+                                depth += 1
+                            elif ch == '}':
+                                depth -= 1
+                            percentSeen = False
+                        elif ch == '%':
+                            percentSeen = True
+
+                if nonSpaceSeen:
+                    slocSoFar += 1
+
+            options.already.add(hash)
+            if options.verbose:
+                print ("%-49s: %-4s %5d lines, %5d sloc" % (
+                        pathToFile, lang, linesSoFar, slocSoFar))
+    except Exception as e:
+        print("error reading '%s', skipping: %s" % (pathToFile, e))
+    return linesSoFar, slocSoFar
 
 
 # NOT_SHARP =========================================================
@@ -1320,6 +1397,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 
