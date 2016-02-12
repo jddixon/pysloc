@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 
-# testMatlabComments.py
+# testOctaveComments.py
 
 import os, sys, unittest
 
 from argparse   import ArgumentParser, Namespace
 from pysloc     import __version__, __version_date__
-from pysloc     import countLinesInDir, countLinesMatlab
+from pysloc     import countLinesInDir, countLinesOctave
 
-class TestMatlabComments (unittest.TestCase):
+class TestOctaveComments (unittest.TestCase):
 
     def setUp(self):
         self.options = Namespace()
@@ -22,10 +22,10 @@ class TestMatlabComments (unittest.TestCase):
     # actual unit tests #############################################
    
     def testNameToFuncMap(self):
-        testFile = './commentsForMatlab'
-        lines, sloc = countLinesMatlab(testFile, self.options, 'matlab')
-        self.assertEqual(lines, 49)
-        self.assertEqual(sloc,  17)
+        testFile = './commentsForOctave'
+        lines, sloc = countLinesOctave(testFile, self.options, 'octave')
+        self.assertEqual(lines, 79)
+        self.assertEqual(sloc,  25)
 
 if __name__ == '__main__':
     unittest.main()
