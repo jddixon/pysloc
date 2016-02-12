@@ -21,6 +21,7 @@ rm -rf build/*
     matlab:commentsForMatlab       		\
     ml:commentsForOCaml         		\
     occ:commentsForOccam        		\
+    octave:commentsForOctave       		\
     pas:commentsForPascal       		\
     perl:commentsForPerl        		\
     php:commentsForPHP          		\

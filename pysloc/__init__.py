@@ -23,6 +23,7 @@ __all__ = [ '__version__',          '__version_date__',
             'countLinesMatlab',
             'countLinesNotSharp',
             'countLinesOCaml',
+            'countLinesOctave',
             'countLinesPascal',
             'countLinesPerl',
             'countLinesProtobuf',
@@ -37,8 +38,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.6.8'
-__version_date__ = '2016-02-11'
+__version__      = '0.6.9'
+__version_date__ = '2016-02-12'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -252,6 +253,8 @@ class Q(object):
             self._ext2Lang['m']     = 'matlab'
         elif mainLang == 'occ':
             self._ext2Lang['inc']   = 'occ'
+        elif mainLang == 'octave':
+            self._ext2Lang['m']     = 'octave'
 
         # Maps lang short name (abbrev) to fuller language name.
         # By convention, short names are limited to 5 chars.
@@ -985,6 +988,76 @@ def countLinesDoubleDash(pathToFile, options, lang):
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return linesSoFar, slocSoFar
 
+# OCTAVE ============================================================
+
+def countLinesOctave(pathToFile, options, lang):
+    """
+    Count source lines in an Octave file where single line comments
+    begin with '%' or '#' and multi-line comments are delimited by
+    %{ and %} or #{ and #}. These may be nested.  We ignore blank lines 
+    and lines consisting solely of spaces and comments.
+
+    NOTE that Octave actually requires that a multi-line comment marker
+    be the only token on the source line.
+    """
+
+    linesSoFar, slocSoFar = (0,0)
+    try:
+        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        if (hash != None) and (lines != None):
+            depth = 0                           # comment depth
+            for lNdx, line in enumerate(lines):
+                linesSoFar += 1
+                nonSpaceSeen = False
+                delimSeen  = False             # might start %{ or %}
+                for cNdx, ch in enumerate(list(line)):
+                    # DEBUG
+                    #print("line %2d char %2d '%c' depth %2d percent? %s nonSpace? %s" % (
+                    #        lNdx, cNdx, ch, depth, delimSeen, nonSpaceSeen))
+                    # END
+                    if delimSeen:
+                        if ch == '{':
+                            depth += 1
+                        elif ch == '}':
+                            if depth >0:
+                                depth -= 1
+                        else: 
+                            # this would start a comment
+                            if depth == 0:
+                                break
+                        delimSeen = False
+
+                    elif depth == 0:
+                        if ch == '%' or ch == '#':
+                            delimSeen = True
+                        elif ch != ' ' and ch != '\t':
+                            nonSpaceSeen = True
+                            # ignore other unicode space chars for now
+                        else:
+                            pass
+
+                    else:
+                        # depth > 0
+                        if delimSeen:
+                            if ch == '{':
+                                depth += 1
+                            elif ch == '}':
+                                depth -= 1
+                            delimSeen = False
+                        elif ch == '%' or ch == '#':
+                            delimSeen = True
+
+                if nonSpaceSeen:
+                    slocSoFar += 1
+
+            options.already.add(hash)
+            if options.verbose:
+                print ("%-49s: %-4s %5d lines, %5d sloc" % (
+                        pathToFile, lang, linesSoFar, slocSoFar))
+    except Exception as e:
+        print("error reading '%s', skipping: %s" % (pathToFile, e))
+    return linesSoFar, slocSoFar
+
 # PASCAL ============================================================
 
 def countLinesPascal(pathToFile, options, lang):
@@ -1397,6 +1470,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 
