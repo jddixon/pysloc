@@ -28,6 +28,7 @@ rm -rf build/*
     proto:commentsForProtobuf     		\
     py:commentsForPy            		\
     r2c:commentsForRe2c         		\
+    Rmd:commentsForRMarkdown            \
     scala:commentsForScala      		\
     sno:commentsForSno          		\
     txt:commentsForTxt          		\

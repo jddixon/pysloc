@@ -55,6 +55,7 @@ Languages currently covered include, by short name,
 * **proto**,Google Protobuf
 * **py**,	Python
 * **R**,	R, the statistics programming language
+* **Rmd",   R Markdown, which combines Markdown and R code
 * **rb**,	Ruby
 * **re2c**,	tool for writing fast lexers
 * **scala**,Scala
