@@ -28,6 +28,7 @@ __all__ = [ '__version__',          '__version_date__',
             'countLinesPerl',
             'countLinesProtobuf',
             'countLinesPython',
+            'countLinesRMarkdown',
             'countLinesRe2c',
             'countLinesRuby',
             'countLinesScala',      'countLinesShell',
@@ -38,8 +39,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.6.9'
-__version_date__ = '2016-02-12'
+__version__      = '0.6.10'
+__version_date__ = '2016-02-13'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -177,6 +178,7 @@ class Q(object):
             'proto'     : countLinesProtobuf,       # Google Protocol Buffers
             'py'        : countLinesPython,         # yes, Python
             'R'         : countLinesNotSharp,       # R
+            'Rmd'       : countLinesRMarkdown,
             're2c'      : countLinesRe2c,           # re2c
             'rb'        : countLinesRuby,           # ruby
             'scala'     : countLinesScala,
@@ -230,6 +232,7 @@ class Q(object):
             'py'        : 'py',
             'R'         : 'R',                      # R programming language
             'r'         : 'R',                      # R programming language
+            'Rmd'       : 'Rmd',                    # RMarkdown
             'rb'        : 'rb',
             're'        : 're2c',                   # same counter as C, Java ?
             'S'         : 'asm',
@@ -284,6 +287,7 @@ class Q(object):
             'proto'     : 'proto',                  # Google protobuf
             'py'        : 'python',
             'R'         : 'R',
+            'Rmd'       : 'R Markdown',
             're2c'      : 're2c',
             'rb'        : 'ruby',
             'scala'     : 'scala',
@@ -1237,6 +1241,83 @@ def countLinesRe2c(path, options, lang):
     l, s = countLinesJavaStyle(path, options, lang)
     return l, s
 
+# R MARKDOWN ========================================================
+
+def countLinesRMarkdown(pathToFile, options, lang):
+    """
+    Count the lines of R in an RMarkdown file.  Count lines in 
+    (a) the YAML section at the top of the file, (b) chunks of R code 
+    following the normal rules (we ignore blank lines and anything
+    following a sharp sign (#), and (c) wherever there is inline R
+    code, we count that line as source code.
+
+    To be counted, the YAML must begin at the very first line in the 
+    file and must be delimited by "^---" lines.  
+
+    This code only counts RMarkdown sections beginning with "```{r " and
+    ending with "```".   That is, these must begin the line in each case.
+    Also, anything beginning with "`r " is counted as an line variable.
+
+    """
+
+    # NOT YET AMENDED
+
+    linesSoFar, slocSoFar = (0,0)
+    inCodeChunk = False
+    try:
+        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        if (hash != None) and (lines != None):
+            inYAML = False
+            for ndx, line in enumerate(lines):
+                linesSoFar += 1
+                line = line.strip()
+
+                # count YAML header if present ----------------------
+                if ndx==0 and line.startswith('---'):
+                    inYAML = True
+                if inYAML:
+                    # DEBUG 
+                    # print("YAML: '%s'" % line)
+                    # END
+                    if len(line):
+                        slocSoFar += 1
+                    if ndx and line.startswith('---'):
+                        inYAML = False
+                        # already counted
+                        # DEBUG
+                        # print('total of %d lines of YAML' % slocSoFar)
+                        # END
+                    continue
+
+                if inCodeChunk:
+                    # DEBUG
+                    # print("CODE: %s" % line)
+                    # END
+                    if len(line) > 0 and (line[0] != '#'):
+                        slocSoFar += 1
+                    if line.startswith('```'):
+                        inCodeChunk = False
+                        # already counted
+
+                else:
+                    # DEBUG
+                    # print("TEXT: %s" % line)
+                    # END
+                    if line.startswith('```{r '): 
+                        slocSoFar += 1
+                        inCodeChunk = True
+                        continue
+                    if line.find('`r ') != -1:
+                        slocSoFar += 1
+
+            options.already.add(hash)
+            if options.verbose:
+                print ("%-49s: %-4s %5d lines, %5d sloc" % (
+                        pathToFile, lang, linesSoFar, slocSoFar))
+    except Exception as e:
+        print("error reading '%s', skipping: %s" % (pathToFile, e))
+    return linesSoFar, slocSoFar
+
 # RUBY ==============================================================
 
 def countLinesRuby(pathToFile, options, lang):
@@ -1470,6 +1551,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 

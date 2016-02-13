@@ -60,14 +60,20 @@ def doCount(options):
                     lang, isTest = q.guessLang('./', name,
                             isCLIArg=True, verbose=options.verbose) 
                 if (lang != None) and (lang in langsCounted):
-                    counter = q.getCounter(lang, True)
+                    counter = q.getCounter(lang, isCLIArg=True)
                 if counter == None:
                     counter = countLinesNotSharp
                 l,s = counter(name, options, lang)
-                if isTest:
-                    k.addTestCounts(lang, l, s)
+                if lang == 'Rmd':
+                    if isTest:
+                        k.addTestCounts('R', l, s)
+                    else:
+                        k.addCounts('R', l, s)
                 else:
-                    k.addCounts(lang, l, s)
+                    if isTest:
+                        k.addTestCounts(lang, l, s)
+                    else:
+                        k.addCounts(lang, l, s)
             
             elif os.path.isdir(name):
                 # XXX EXCLUDE SOME DIRS

@@ -2,18 +2,18 @@
 
 2016-02-10
     * add m4 macro processing language, extension *.m4                  * DONE
-    * add support for Octave with file extension *.m,
-        - mainlang must be 'octave'
-        - single line comment begins with # or %
-        - multi-line comments begin with #{ or %{, end with #} or %}
-    * add support for MATLAB with file extension *.m,
-        - mainlang must be 'matlab'
-        - single line comment begins with %
-        - multi-line comments begin with %{, end with %}
+    * add support for Octave with file extension *.m,					* DONE
+        - mainlang must be 'octave'						                * DONE
+        - single line comment begins with # or %						* DONE
+        - multi-line comments begin with #{ or %{, end with #} or %}	* DONE
+    * add support for MATLAB with file extension *.m,					* DONE
+        - mainlang must be 'matlab'						                * DONE
+        - single line comment begins with %						        * DONE
+        - multi-line comments begin with %{, end with %}				* DONE
 
     * most common use of *.m is probably with Objective C
     * add support for Objective C as objc
-        - if this is mainLang count *.h and *.m as objec
+        - if objc is mainLang count *.h and *.m as objc
 
 2016-02-09 (edited from -5)
     * add support for JSON                                              * DONE

@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.6.10
+    2016-02-13
+        * support R Markdown                                        SLOC 2897
 v0.6.9
     2016-02-12
         * support Octave                                            SLOC 2759
@@ -178,6 +181,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 
