@@ -24,8 +24,8 @@ class TestAugeasComments (unittest.TestCase):
     def testNameToFuncMap(self):
         testFile = './commentsForAugeas'
         lines, sloc = countLinesAugeas(testFile, self.options, 'ml')
-        self.assertEqual(lines, 37)
-        self.assertEqual(sloc,  13)
+        self.assertEqual(lines, 107)
+        self.assertEqual(sloc,   45)
 
 if __name__ == '__main__':
     unittest.main()
