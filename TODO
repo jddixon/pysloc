@@ -27,15 +27,15 @@
         should never contain a zero count                               * DONE
 
 2016-02-08, edited from 05
-    * add support for *.Rmd (RMarkdown)
-        - count YAML at top ... as R 
-            * including dashed lines before and after
-        - count code chunks as R
-        - count in-line R values
+    * add support for *.Rmd (RMarkdown)                                 * DONE
+        - count YAML at top ... as R                                    * DONE
+            * including dashed lines before and after                   * DONE
+        - count code chunks as R                                        * DONE
+        - count in-line R values                                        * DONE
 
-    * EXPERIMENT: introduce countLinesR() whose third parameter
-        is either 'R' or 'Rmd', calling countLinesNotSharp() in 
-        the first case and _countLinesRmd() in the second
+    * EXPERIMENT: introduce countLinesR() whose third parameter         * SKIP
+        is either 'R' or 'Rmd', calling countLinesNotSharp() in         * SKIP
+        the first case and _countLinesRmd() in the second               * SKIP
 
 2016-02-08 (edited from -02)
     * add support for perl  (*.pl, *.pm), comments begin with #         * DONE
@@ -65,7 +65,7 @@
         - so """this would be a comment"""
         - but this = """ would be counted as source code"""
 
-    * pySloc counts files whose names end in .txt by default; this      * DOEN
+    * pySloc counts files whose names end in .txt by default; this      * DONE
         SHOULD NOT be the default behavior.  Modify to simply ignore    * DONE
         *.txt except where on the command line                          * DONE
 
