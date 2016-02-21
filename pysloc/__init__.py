@@ -39,8 +39,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.6.11'
-__version_date__ = '2016-02-14'
+__version__      = '0.6.13'
+__version_date__ = '2016-02-21'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -1173,11 +1173,29 @@ def countLinesPerl(pathToFile, options, lang):
     """
 
     linesSoFar, slocSoFar = (0,0)
+    inPod = False
+    inFor = False
     try:
         lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
         if (hash != None) and (lines != None):
             for line in lines:
                 linesSoFar += 1
+
+                if inPod:
+                    if line == '=cut':
+                        inPod = False
+                    continue
+                if inFor:
+                    if line == '=cut':
+                        inFor = False
+                    continue
+                if line == '=pod':
+                    inPod = True
+                    continue
+                if line.startswith('=for comment'):
+                    inFor = True
+                    continue
+
                 # This could be made more efficient.
                 line = line.strip()
                 if len(line) > 0 and (line[0] != '#'):
@@ -1551,6 +1569,8 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
+
 
 
 

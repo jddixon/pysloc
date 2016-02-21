@@ -14,9 +14,26 @@ This is an oddity and is line 3 #
 "an isolated DQUOTEd string should count as Perl"           # line 5
 
 
-# XXX DELAY THESE TESTS #############################################
+# The following patterns are interpreted as block comments
 #
-# =pod
-# This should be ignored 
-# =cut
+=pod
+This should be ignored.  It is effectively a form of comment.
+=cut
 
+
+=for comment
+This should be ignored.  It is effectively a form of comment.
+=cut
+
+# nested blocks
+=pod
+This should be ignored.  It is effectively a form of comment.
+=pod
+Nested block (not supported)
+=cut
+# This cut closes the 'outer' pod
+
+# So the next two lines are seen as countable text; the =cut is 
+# unexpected and has no effect.
+This is within the outerblock.
+=cut

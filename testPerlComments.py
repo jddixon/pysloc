@@ -30,8 +30,8 @@ class TestPerlComments (unittest.TestCase):
         # XXX possible error reading file, possible errors parsing data
 
         lines, sloc = countLinesPerl(testFile, options, 'perl')
-        self.assertEqual(lines, 22)
-        self.assertEqual(sloc,   5)
+        self.assertEqual(lines, 39)
+        self.assertEqual(sloc,   7)
 
 if __name__ == '__main__':
     unittest.main()

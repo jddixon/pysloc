@@ -1,5 +1,11 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.6.13
+    2016-02-21
+        * tread Perl =pod/=cut as comment blocks                    SLOC 2947 
+v0.6.12
+    2016-02-21
+        * recognize perl comments
 v0.6.11
     2016-02-14
         * add augeas lense for testing                              SLOC 2929
@@ -184,6 +190,8 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
+
 
 
 
