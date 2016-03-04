@@ -1,16 +1,20 @@
 # ~/dev/py/pysloc/TODO
 
 2016-03-03
+    * RMarkdown counts should *include* inline R expressions
+
+2016-03-03
     * note that continuation characters can be used to create what
         amounts to a block comment
 
 2016-03-03 (from -02-10)
-    * most common use of *.m is probably with Objective C
-    * add support for Objective C as objc
-        - if objc is mainLang count *.h and *.m as objc
+    * most common use of *.m is probably with Objective C               * DONE
+    * add support for Objective C as objc                               * DONE
+        - if objc is mainLang count *.h and *.m as objc                 * DONE
 
 2016-03-03
-    * add ada; -- comments, *.adb or *.ads for extensions
+    * add ada; -- comments, *.adb or *.ads for extensions               * DONE
+
     * add awk; # comments, *.awk
     * add cobol;  cob (cbl, COB) extensions
         - if column 1 (begins sequence area) is asterisk or 

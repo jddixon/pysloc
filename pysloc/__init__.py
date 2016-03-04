@@ -39,7 +39,7 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.6.14'
+__version__      = '0.6.15'
 __version_date__ = '2016-03-03'
 
 # private constants -------------------------------------------------
@@ -154,6 +154,7 @@ class Q(object):
 
         # Maps short name to counter function; limit these to 4 characters.
         self._lang2Counter = {
+            'ada'       : countLinesDoubleDash,     # Pentagon language
             'asm'       : countLinesNotSharp,       # s, S, asm
             'aug'       : countLinesAugeas,         # Augeas config manager
             'ash'      : countLinesShell,          # bash shell
@@ -196,6 +197,8 @@ class Q(object):
         # See sloccount's break_filelist for hints.
         # Note {pl,pm,perl,pl} => perl
         self._ext2Lang  = {
+            'adb'       : 'ada',
+            'ads'       : 'ada',
             'asm'       : 'asm',
             'aug'       : 'augeas',
             'bash'      : 'bash',                   # yes, never used
@@ -266,6 +269,7 @@ class Q(object):
         # Maps lang short name (abbrev) to fuller language name.
         # By convention, short names are limited to 5 chars.
         self._langMap = {
+            'ada'       : 'Ada',
             'asm'       : 'assembler',
             'aug'       : 'augeas',
             'bash'      : 'bash',
@@ -1574,6 +1578,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 
