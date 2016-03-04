@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.6.14
+    2016-03-03
+        * add Objective C support; fix long listing                 SLOC 2953
 v0.6.13
     2016-02-21
         * tread Perl =pod/=cut as comment blocks                    SLOC 2947 
@@ -190,6 +193,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 

@@ -39,8 +39,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.6.13'
-__version_date__ = '2016-02-21'
+__version__      = '0.6.14'
+__version_date__ = '2016-03-03'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -173,6 +173,7 @@ class Q(object):
             'm4'        : countLinesNotSharp,       # m4 macro processor
             'ml'        : countLinesOCaml,          # ocaml, tentative abbrev
             'not#'      : countLinesNotSharp,
+            'objc'      : countLinesJavaStyle,      # Objective C
             'occ'       : countLinesDoubleDash,     # concurrent programming
             'perl'      : countLinesPerl, 
             'proto'     : countLinesProtobuf,       # Google Protocol Buffers
@@ -254,6 +255,9 @@ class Q(object):
             self._ext2Lang['h']     = 'cpp'
         elif mainLang == 'matlab':
             self._ext2Lang['m']     = 'matlab'
+        elif mainLang == 'objc':
+            self._ext2Lang['h']     = 'objc'
+            self._ext2Lang['m']     = 'objc'
         elif mainLang == 'occ':
             self._ext2Lang['inc']   = 'occ'
         elif mainLang == 'octave':
@@ -282,6 +286,7 @@ class Q(object):
             'md'        : 'markdown',
             'ml'        : 'OCaml',
             'not#'      : 'not#',
+            'objc'      : 'Objective C',
             'occ'       : 'Occam',
             'perl'      : 'Perl',
             'proto'     : 'proto',                  # Google protobuf
@@ -693,7 +698,7 @@ def countLinesHtml(pathToFile, options, lang):
 
             options.already.add(hash)
             if options.verbose:
-                print ("%-49s: %-4s %5d lines, %5d sloc" % (
+                print ("%-47s: %-6s %5d lines, %5d sloc" % (
                     pathToFile, lang, linesSoFar, slocSoFar))
 
     except Exception as e:
@@ -1569,6 +1574,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 

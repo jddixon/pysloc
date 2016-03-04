@@ -1,55 +1,71 @@
 # ~/dev/py/pysloc/TODO
 
-2016-02-10
-    * add m4 macro processing language, extension *.m4                  * DONE
-    * add support for Octave with file extension *.m,					* DONE
-        - mainlang must be 'octave'						                * DONE
-        - single line comment begins with # or %						* DONE
-        - multi-line comments begin with #{ or %{, end with #} or %}	* DONE
-    * add support for MATLAB with file extension *.m,					* DONE
-        - mainlang must be 'matlab'						                * DONE
-        - single line comment begins with %						        * DONE
-        - multi-line comments begin with %{, end with %}				* DONE
+2016-03-03
+    * note that continuation characters can be used to create what
+        amounts to a block comment
 
+2016-03-03 (from -02-10)
     * most common use of *.m is probably with Objective C
     * add support for Objective C as objc
         - if objc is mainLang count *.h and *.m as objc
 
-2016-02-09 (edited from -5)
-    * add support for JSON                                              * DONE
-        - comments are deliberately forbidden in the spec               * TRUE
-    * add commentsForJson, should include eg Wikipedia JSON sample      * DONE
-            (with attr)                                                 * DONE
-    * add complementary testJsonComments.py                             * DONE
+2016-03-03
+    * add ada; -- comments, *.adb or *.ads for extensions
+    * add awk; # comments, *.awk
+    * add cobol;  cob (cbl, COB) extensions
+        - if column 1 (begins sequence area) is asterisk or 
+            non-printing char < SPACE, treat as comment
+        - if column 7 (indicator area) is asterisk or '/', treat as 
+            comment
+        - a dash in the indicator continues the line
+        - pre-Cobol 2002, ignore all but positions 7-72
+        - Cobol 2002 ignores *> and anything after it
+        - supportline.microfocus.com/documentation/books/nx40/lrintr.htm
+            is example
+    * lisp: comments start with semicolon or M-;
+        - *.el Emacs Lisp
+        - *.lisp
+    * sed: # comments
+    * tcl ('tickle'): file extension is .tcl
+        - # begins comment if it appears where command expected
 
-2016-02-08
-    * summary line at bottom of countem report should be sorted and     * BYSIZE
-        should never contain a zero count                               * DONE
+2016-03-02
+    HANDLE for and f90 SEPARATELY
+    * fortran comments have C or c in the first column
+    * continuation lines have a character in position 6
+        - conventionally '+' 
+        - alternative convention is '&' in column 73 and then in
+            column 6 thereafter
+        - no tabs may precede column 6
+    * source code starts in column 7 or after the first tab
+    * columns 73-80 are ignored
+    * some compilers allow BANG ('!') anywhere but positions
+        6 as a comment marker
+        - specifically allowed by Fortran 90
+    * spaces are simply ignored in fixed format, significant in 
+        free format code
+    * .f and .for for fixed-format source code
+    * .f90 [, .f95, .f03, .f08, .f15, ...] for free-format source code
+    * upper case extensions need to be be preprocessed by 
+        C preprocessor (.F, .F90, perhaps others)
 
-2016-02-08, edited from 05
-    * add support for *.Rmd (RMarkdown)                                 * DONE
-        - count YAML at top ... as R                                    * DONE
-            * including dashed lines before and after                   * DONE
-        - count code chunks as R                                        * DONE
-        - count in-line R values                                        * DONE
 
-    * EXPERIMENT: introduce countLinesR() whose third parameter         * SKIP
-        is either 'R' or 'Rmd', calling countLinesNotSharp() in         * SKIP
-        the first case and _countLinesRmd() in the second               * SKIP
+2016-03-02 (edited from -01-16)
+    * filters protobuf-generated files from line counts; and test		
+        - ruby
+        - ocaml
+        - haskell
 
 2016-02-08 (edited from -02)
     * add support for perl  (*.pl, *.pm), comments begin with #         * DONE
-    * treat as multiline comments blocks beginning with ^=pod and 
-        ending with ^=cut
-    * also multiline comments beginning with '^= for comment' and 
-        ending with ^=cut
+    * treat as multiline comments blocks beginning with ^=pod and       * DONE
+        ending with ^=cut                                               * DONE
+    * also multiline comments beginning with '^= for comment' and       * DONE
+        ending with ^=cut                                               * DONE
 
 2016-02-07
     * YAML counting not quite right: need whitespace between sharp
         sign and precding token, if any
-
-2016-02-06
-    * revisit commentsForOCaml and its test                             * DONE
 
 2016-02-05
     * add support for YAML 
@@ -65,21 +81,6 @@
         - so """this would be a comment"""
         - but this = """ would be counted as source code"""
 
-    * pySloc counts files whose names end in .txt by default; this      * DONE
-        SHOULD NOT be the default behavior.  Modify to simply ignore    * DONE
-        *.txt except where on the command line                          * DONE
-
-        - or add an option to count *.txt
-
-    * add Augeas as a language, files have extension .aug, comments     * DONE
-        are (* like this *) and can be nested                           * DONE
-    
-    * add support for yacc  (C-style comments, *.y)                     * DONE
-    * add support for lex   (C-style comments, *.l)                     * DONE
-    * add support for pascal (*.pas; comments are {...} or (*...*)      * DONE
-        but the starters and enders can be swapped; some people         * DONE
-        allow comments to be nested                                     * DONE
-
     * it would be only reasonable to look at the first line of files
         without an extension for sha-bang lines like #!/bin/bash
         - could also look at the permissions bit on the file
@@ -93,36 +94,6 @@
     * in upax_go, cmd/ and subdirectories are ignored unless eg
         cmd/upaxMirror/upaxMirror.go is added to command line;
         should be found automatically
-
-2016-01-22
-    * countem in eg upax_go reads executable upaxServer although        * GONE
-        it should be ignored, given that it has no file name            * GONE
-        extension; this in turn causes a utf-8 decode error             * GONE
-        (invalid start byte)                                            * GONE
-
-2016-01-17
-    * couldBeGenerated_pb2.py resists being committed                   * FIXED
-
-2016-01-16
-    * add protobuf (extension .proto) to languages recognized           * DONE
-    * count .gitignore as text                                          * DONE
-    * filters protobuf-generated files from line counts; and test		* DONE
-        - C								                                * DONE
-        - C++								                            * DONE
-        - Go								                            * DONE
-        - Java								                            * DONE
-        - Python								                        * DONE
-    * add filter-and-test for ruby
-    * add filter-and-test for OCaml
-    * add filter-and-test for haskell
-
-2016-01-15
-    * yesterday's fixes introduced a BUG: you now need to specify       * FIXED
-        at least one file name (such as '.') on the pySloc command line * FIXED
-
-2016-01-14
-    * testXmlComments.py is now generating a warning from               * GONE
-        BeautifulSoup :-(                                               * GONE
 
 2016-01-14
     * must examine effects of for line continuation character

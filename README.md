@@ -50,6 +50,7 @@ Languages currently covered include, by short name,
 * **lex**,	lex/flex scanner
 * **ml**,	Ocaml, a functional language
 * **not#**,	'not#', a pseudo-language; counts any line whose first non-space character is not the sharp sign ('#')
+* **objc**, Objective C
 * **occ**,	Occam, the concurrent programming language
 * **perl**,	Perl, the sysadmin's language
 * **proto**,Google Protobuf
