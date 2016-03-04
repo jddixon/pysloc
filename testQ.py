@@ -120,6 +120,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.getLongName('json'), 'json')
         self.assertEqual(self.q.getLongName('m4'),   'm4')
         self.assertEqual(self.q.getLongName('md'),   'markdown')
+        self.assertEqual(self.q.getLongName('objc'), 'Objective C')
         self.assertEqual(self.q.getLongName('occ'),  'Occam')
         self.assertEqual(self.q.getLongName('perl'), 'Perl')
         self.assertEqual(self.q.getLongName('proto'),'proto')
