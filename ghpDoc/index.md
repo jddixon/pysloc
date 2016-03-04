@@ -35,6 +35,7 @@ Java-style comments would be ignored in counting lines of source code.
 
 Languages currently covered include, by short name,
 
+* **ada**,  Ada, the Pentagon's favorite language
 * **asm**,	assembly language
 * **aug**,	Augeas configuration editor
 * **c**,	the venerable C programming language; ANSI C

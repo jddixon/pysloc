@@ -41,6 +41,8 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.ext2Lang('hh'),   'cpp')
         self.assertEqual(self.q.ext2Lang('hpp'),  'cpp')
 
+        self.assertEqual(self.q.ext2Lang('adb'),  'ada')
+        self.assertEqual(self.q.ext2Lang('ads'),  'ada')
         self.assertEqual(self.q.ext2Lang('aug'),  'augeas')
         self.assertEqual(self.q.ext2Lang('css'),  'css')
         self.assertEqual(self.q.ext2Lang('go'),   'go')
@@ -86,10 +88,12 @@ class TestQ (unittest.TestCase):
         
         # where the language is known we should always succeed
         # ... whether this is a command line argument
+        self.assertEqual(self.q.getCounter('ada',True),   countLinesDoubleDash)
         self.assertEqual(self.q.getCounter('hs',True),    countLinesDoubleDash)
         self.assertEqual(self.q.getCounter('json',True),  countLinesText)
         self.assertEqual(self.q.getCounter('lex',True),   countLinesJavaStyle)
         self.assertEqual(self.q.getCounter('m4',True),    countLinesNotSharp)
+        self.assertEqual(self.q.getCounter('occ',True),   countLinesDoubleDash)
         self.assertEqual(self.q.getCounter('perl',True),  countLinesPerl)
         self.assertEqual(self.q.getCounter('proto',True), countLinesProtobuf)
         self.assertEqual(self.q.getCounter('sno',True),   countLinesSnobol)
@@ -111,6 +115,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.getLongName('foo'),   None)
         
         # expect success
+        self.assertEqual(self.q.getLongName('ada'),  'Ada')
         self.assertEqual(self.q.getLongName('aug'),  'augeas')
         self.assertEqual(self.q.getLongName('gen'),  'generic')
         self.assertEqual(self.q.getLongName('go'),   'golang')
