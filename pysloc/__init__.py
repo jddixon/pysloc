@@ -39,8 +39,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.6.15'
-__version_date__ = '2016-03-03'
+__version__      = '0.6.16'
+__version_date__ = '2016-03-05'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -156,8 +156,9 @@ class Q(object):
         self._lang2Counter = {
             'ada'       : countLinesDoubleDash,     # Pentagon language
             'asm'       : countLinesNotSharp,       # s, S, asm
+            'awk'       : countLinesNotSharp,       # awk programming language
             'aug'       : countLinesAugeas,         # Augeas config manager
-            'ash'      : countLinesShell,          # bash shell
+            'bash'      : countLinesShell,          # bash shell
             'c'         : countLinesC,              # ansic
             'cpp'       : countLinesCpp,            # C++
             'csh'       : countLinesNotSharp,       # csh, tcsh
@@ -201,6 +202,7 @@ class Q(object):
             'ads'       : 'ada',
             'asm'       : 'asm',
             'aug'       : 'augeas',
+            'awk'       : 'awk',
             'bash'      : 'bash',                   # yes, never used
             'c'         : 'c',                      # ansi c
             'C'         : 'cpp',                    # C++
@@ -272,6 +274,7 @@ class Q(object):
             'ada'       : 'Ada',
             'asm'       : 'assembler',
             'aug'       : 'augeas',
+            'awk'       : 'awk',
             'bash'      : 'bash',
             'c'         : 'ansic',
             'cpp'       : 'C++',
@@ -1578,6 +1581,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 

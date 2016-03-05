@@ -9,10 +9,10 @@ MANIFEST
 *.pyc
 .svn*
 *.swp
-THIS.IS.A.GIT*
 tmp
 .wrapped
 *ZZZ
 .sharedev
 __pycache__
 *.bak
+THIS.IS.A.GIT*
