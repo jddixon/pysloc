@@ -44,6 +44,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.ext2Lang('adb'),  'ada')
         self.assertEqual(self.q.ext2Lang('ads'),  'ada')
         self.assertEqual(self.q.ext2Lang('aug'),  'augeas')
+        self.assertEqual(self.q.ext2Lang('awk'),  'awk')
         self.assertEqual(self.q.ext2Lang('css'),  'css')
         self.assertEqual(self.q.ext2Lang('go'),   'go')
         self.assertEqual(self.q.ext2Lang('gperf'),'gperf')
@@ -89,6 +90,7 @@ class TestQ (unittest.TestCase):
         # where the language is known we should always succeed
         # ... whether this is a command line argument
         self.assertEqual(self.q.getCounter('ada',True),   countLinesDoubleDash)
+        self.assertEqual(self.q.getCounter('awk',True),   countLinesNotSharp)
         self.assertEqual(self.q.getCounter('hs',True),    countLinesDoubleDash)
         self.assertEqual(self.q.getCounter('json',True),  countLinesText)
         self.assertEqual(self.q.getCounter('lex',True),   countLinesJavaStyle)
@@ -117,6 +119,7 @@ class TestQ (unittest.TestCase):
         # expect success
         self.assertEqual(self.q.getLongName('ada'),  'Ada')
         self.assertEqual(self.q.getLongName('aug'),  'augeas')
+        self.assertEqual(self.q.getLongName('awk'),  'awk')
         self.assertEqual(self.q.getLongName('gen'),  'generic')
         self.assertEqual(self.q.getLongName('go'),   'golang')
         self.assertEqual(self.q.getLongName('hs'),   'haskell')

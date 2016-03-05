@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.6.16
+    2016-03-05
+        * add awk support                                           SLOC 2968
 v0.6.15
     2016-03-03
         * add Ada support                                           SLOC 2962
@@ -196,6 +199,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 

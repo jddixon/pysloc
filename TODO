@@ -1,11 +1,18 @@
 # ~/dev/py/pysloc/TODO
 
-2016-03-03
-    * RMarkdown counts should *include* inline R expressions
+2016-03-04
+    * command line summary (-h output) in README is out of date
+    * README should make it clear that -X exclusions are regular
+        eapressions
+
+2016-03-04 (edited from -03)
+    * Note that continuation characters can be used to create what
+        amounts to a block comment (eg in Python if you precede line
+        with sharp sign (#) and then continue it, both lines should
+        be excluded from source line count).
 
 2016-03-03
-    * note that continuation characters can be used to create what
-        amounts to a block comment
+    * RMarkdown counts should *include* inline R expressions
 
 2016-03-03 (from -02-10)
     * most common use of *.m is probably with Objective C               * DONE
@@ -29,9 +36,6 @@
     * lisp: comments start with semicolon or M-;
         - *.el Emacs Lisp
         - *.lisp
-    * sed: # comments
-    * tcl ('tickle'): file extension is .tcl
-        - # begins comment if it appears where command expected
 
 2016-03-02
     HANDLE for and f90 SEPARATELY

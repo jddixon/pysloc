@@ -8,7 +8,8 @@ and a total for all languages.
 ## SLOC
 
 Counting lines of source code is a crude measure of the size of a program
-or project.  For most languages there is a conventional way to distinguish
+or project.  For most programming languages there is a conventional way
+to distinguish
 comments; in C, for example, anything /* enclosed like this */ is considered
 a comment and such comments can span more than one line.  In counting lines
 of source code,
@@ -20,7 +21,7 @@ and included in the SLOC count.
 
 SLOC counts are useful for guesstimating how much effort will be required
 to understand, fix, or replace code.  SLOC counts can also be used to coarsely
-gage progress on a project.
+gauge progress on a project.
 
 Users should bear in mind, of course, that often cleaning up code will
 reduce the SLOC count but improve performance and otherwise improve code
@@ -35,9 +36,10 @@ Java-style comments would be ignored in counting lines of source code.
 
 Languages currently covered include, by short name,
 
-* **ada**,  Ada, the Pentagon's favorite language
+* **ada**,  Ada, the Pentagon's favorite programming language
 * **asm**,	assembly language
 * **aug**,	Augeas configuration editor
+* **awk**,	awk
 * **c**,	the venerable C programming language; ANSI C
 * **csh**,	csh, another shell; tcsh is a variant
 * **css**,	css, used for writing style sheets
@@ -57,7 +59,7 @@ Languages currently covered include, by short name,
 * **proto**,Google Protobuf
 * **py**,	Python
 * **R**,	R, the statistics programming language
-* **Rmd",   R Markdown, which combines Markdown and R code
+* **Rmd**,  R Markdown, which combines Markdown and R code
 * **rb**,	Ruby
 * **re2c**,	tool for writing fast lexers
 * **scala**,Scala
