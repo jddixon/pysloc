@@ -66,6 +66,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.ext2Lang('scala'),'scala')
         self.assertEqual(self.q.ext2Lang('sh'),   'sh')
         self.assertEqual(self.q.ext2Lang('sno'),  'sno')
+        self.assertEqual(self.q.ext2Lang('tex'),  'tex')
         self.assertEqual(self.q.ext2Lang('y'),    'yacc')
         self.assertEqual(self.q.ext2Lang('yaml'), 'yaml')
 
@@ -99,6 +100,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.getCounter('perl',True),  countLinesPerl)
         self.assertEqual(self.q.getCounter('proto',True), countLinesProtobuf)
         self.assertEqual(self.q.getCounter('sno',True),   countLinesSnobol)
+        self.assertEqual(self.q.getCounter('tex',True),   countLinesTeX)
         self.assertEqual(self.q.getCounter('txt',True),   countLinesText)
         self.assertEqual(self.q.getCounter('yacc',True),  countLinesJavaStyle)
         self.assertEqual(self.q.getCounter('yaml',True),  countLinesNotSharp)
@@ -135,6 +137,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.getLongName('re2c'), 're2c')
         self.assertEqual(self.q.getLongName('scala'),'scala')
         self.assertEqual(self.q.getLongName('sno'),  'snobol4')
+        self.assertEqual(self.q.getLongName('tex'),  'TeX/LaTeX')
         self.assertEqual(self.q.getLongName('yaml'), 'yaml')
 
     def testGuessLangFromFileName(self):

@@ -20,6 +20,7 @@ __all__ = [ '__version__',          '__version_date__',
             'countLinesInDir',
             'countLinesJava',
             'countLinesJavaStyle',
+            'countLinesTeX',
             'countLinesMatlab',
             'countLinesNotSharp',
             'countLinesOCaml',
@@ -39,8 +40,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.6.16'
-__version_date__ = '2016-03-05'
+__version__      = '0.6.17'
+__version_date__ = '2016-03-07'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -189,6 +190,7 @@ class Q(object):
             'sh'        : countLinesShell,          # shell script
             'sno'       : countLinesSnobol,         # snobol4
             'tcl'       : countLinesNotSharp,       # tcl, tk, itk
+            'tex'       : countLinesTeX,            # TeX, LaTeX
             'txt'       : countLinesText,           # plain text
             'xml'       : countLinesXml,
             'yacc'      : countLinesJavaStyle,      # yacc, bison
@@ -249,6 +251,7 @@ class Q(object):
             'sno'       : 'sno',
             'tcsh'      : 'csh',
             'tcl'       : 'tcl',
+            'tex'       : 'tex',
             'tk'        : 'tcl',
             'txt'       : 'txt',
             'xml'       : 'xml',
@@ -307,6 +310,7 @@ class Q(object):
             'sh'        : 'shell',
             'sno'       : 'snobol4',
             'tcl'       : 'tcl',
+            'tex'       : 'TeX/LaTeX',
             'txt'       : 'text',
             'xml'       : 'XML',
             'yacc'      : 'yacc',
@@ -805,6 +809,34 @@ def countLinesJavaStyle(pathToFile, options, lang):
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return (linesSoFar, slocSoFar)
+
+# TeX ===============================================================
+
+def countLinesTeX(pathToFile, options, lang):
+    """
+    Count lines in a file where the percent sign ('%') is the comment
+    marker.  That is, we ignore blank lines, lines consisting solely of
+    spaces, and those starting with zero or more spaces followed by
+    a percent sign.
+    """
+
+    linesSoFar, slocSoFar = (0,0)
+    try:
+        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        if (hash != None) and (lines != None):
+            for line in lines:
+                linesSoFar += 1
+                # This could be made more efficient.
+                line = line.strip()
+                if len(line) > 0 and (line[0] != '%'):
+                    slocSoFar += 1
+            options.already.add(hash)
+            if options.verbose:
+                print ("%-47s: %-6s %5d lines, %5d sloc" % (
+                        pathToFile, lang, linesSoFar, slocSoFar))
+    except Exception as e:
+        print("error reading '%s', skipping: %s" % (pathToFile, e))
+    return linesSoFar, slocSoFar
 
 # MATLAB ============================================================
 
@@ -1581,6 +1613,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 

@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/TODO
 
+2016-03-07
+    * need to be able to count *.tex
+
 2016-03-04
     * command line summary (-h output) in README is out of date
     * README should make it clear that -X exclusions are regular
@@ -21,8 +24,7 @@
 
 2016-03-03
     * add ada; -- comments, *.adb or *.ads for extensions               * DONE
-
-    * add awk; # comments, *.awk
+    * add awk; # comments, *.awk                                        * DONE
     * add cobol;  cob (cbl, COB) extensions
         - if column 1 (begins sequence area) is asterisk or 
             non-printing char < SPACE, treat as comment
