@@ -66,6 +66,7 @@ Languages currently covered include, by short name,
 * **sed**,	the language for `sed` scripts used to edit files from the command line
 * **sh**,	bash or the shell, `sh`
 * **sno**,	Snobol, the string-oriented programming language
+* **tex*,   TeX/LaTeX
 * **tcl**,	the Tool Command Language, a dynamic scripting language
 * **txt**,	plain text; counts all non-blank lines
 * **xml**,	XML

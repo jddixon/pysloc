@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.6.17
+    2016-03-07
+        * add support for TeX/LaTeX                                 SLOC 2998
 v0.6.16
     2016-03-05
         * add awk support                                           SLOC 2968
@@ -199,6 +202,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 
