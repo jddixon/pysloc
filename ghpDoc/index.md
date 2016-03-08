@@ -51,6 +51,7 @@ Languages currently covered include, by short name,
 * **js**,	javascript, the Web's programming language
 * **json**,	JSON serializer
 * **lex**,	lex/flex scanner
+* **lisp**, Lisp (Common)
 * **ml**,	Ocaml, a functional language
 * **not#**,	'not#', a pseudo-language; counts any line whose first non-space character is not the sharp sign ('#')
 * **objc**, Objective C
