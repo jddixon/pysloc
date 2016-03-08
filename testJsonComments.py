@@ -6,7 +6,7 @@ import os, sys, unittest
 
 from argparse   import ArgumentParser, Namespace
 from pysloc     import __version__, __version_date__
-from pysloc     import countLinesInDir, countLinesText
+from pysloc     import countLinesInDir, countLinesTxt
 
 class TestJsonComments (unittest.TestCase):
 
@@ -23,7 +23,7 @@ class TestJsonComments (unittest.TestCase):
    
     def testNameToFuncMap(self):
         testFile = './commentsForJson'
-        lines, sloc = countLinesText(testFile, self.options, 'txt')
+        lines, sloc = countLinesTxt(testFile, self.options, 'txt')
         self.assertEqual(lines,  9)
         self.assertEqual(sloc,   9)
 

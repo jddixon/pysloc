@@ -20,7 +20,7 @@ __all__ = [ '__version__',          '__version_date__',
             'countLinesInDir',
             'countLinesJava',
             'countLinesJavaStyle',
-            'countLinesTeX',
+            'countLinesLisp',
             'countLinesMatlab',
             'countLinesNotSharp',
             'countLinesOCaml',
@@ -33,15 +33,17 @@ __all__ = [ '__version__',          '__version_date__',
             'countLinesRe2c',
             'countLinesRuby',
             'countLinesScala',      'countLinesShell',
-            'countLinesSnobol',     'countLinesText',
+            'countLinesSnobol',
+            'countLinesTeX',
+            'countLinesTxt',
             'uncommentHtml',        'uncommentJava',
             # classes
             'K', 'Q',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.6.17'
-__version_date__ = '2016-03-07'
+__version__      = '0.7.0'
+__version_date__ = '2016-03-08'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -112,7 +114,7 @@ class K(object):
             elif l>0:
                 return "%s:%d/%d" % (lang, l+tl, s)
             else:
-                return '' 
+                return ''
 
     def prettyBreakDown(self):
         """
@@ -171,14 +173,15 @@ class Q(object):
             'html'      : countLinesHtml,           # html
             'java'      : countLinesJava,           # plain old Java
             'js'        : countLinesJavaStyle,      # Javascript
-            'json'      : countLinesText,           # json
+            'json'      : countLinesTxt,           # json
             'lex'       : countLinesJavaStyle,      # lex/flex
+            'lisp'      : countLinesLisp,           # Common Lisp
             'm4'        : countLinesNotSharp,       # m4 macro processor
             'ml'        : countLinesOCaml,          # ocaml, tentative abbrev
             'not#'      : countLinesNotSharp,
             'objc'      : countLinesJavaStyle,      # Objective C
             'occ'       : countLinesDoubleDash,     # concurrent programming
-            'perl'      : countLinesPerl, 
+            'perl'      : countLinesPerl,
             'proto'     : countLinesProtobuf,       # Google Protocol Buffers
             'py'        : countLinesPython,         # yes, Python
             'R'         : countLinesNotSharp,       # R
@@ -191,7 +194,7 @@ class Q(object):
             'sno'       : countLinesSnobol,         # snobol4
             'tcl'       : countLinesNotSharp,       # tcl, tk, itk
             'tex'       : countLinesTeX,            # TeX, LaTeX
-            'txt'       : countLinesText,           # plain text
+            'txt'       : countLinesTxt,           # plain text
             'xml'       : countLinesXml,
             'yacc'      : countLinesJavaStyle,      # yacc, bison
             'yaml'      : countLinesNotSharp,       # yaml
@@ -228,6 +231,7 @@ class Q(object):
             'js'        : 'js',                     # javascript, node.js
             'json'      : 'json',
             'l'         : 'lex',                    # lex/flex parser generator
+            'lisp'      : 'lisp',
             'm4'        : 'm4',                     # no counter
             'md'        : 'md',                     # no counter
             'ml'        : 'ml',                     # OCaml
@@ -292,6 +296,7 @@ class Q(object):
             'js'        : 'javascript',
             'json'      : 'json',
             'lex'       : 'lex',
+            'lisp'      : 'lisp',
             'm4'        : 'm4',
             'md'        : 'markdown',
             'ml'        : 'OCaml',
@@ -810,33 +815,10 @@ def countLinesJavaStyle(pathToFile, options, lang):
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return (linesSoFar, slocSoFar)
 
-# TeX ===============================================================
+# Lisp ==============================================================
 
-def countLinesTeX(pathToFile, options, lang):
-    """
-    Count lines in a file where the percent sign ('%') is the comment
-    marker.  That is, we ignore blank lines, lines consisting solely of
-    spaces, and those starting with zero or more spaces followed by
-    a percent sign.
-    """
-
-    linesSoFar, slocSoFar = (0,0)
-    try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
-        if (hash != None) and (lines != None):
-            for line in lines:
-                linesSoFar += 1
-                # This could be made more efficient.
-                line = line.strip()
-                if len(line) > 0 and (line[0] != '%'):
-                    slocSoFar += 1
-            options.already.add(hash)
-            if options.verbose:
-                print ("%-47s: %-6s %5d lines, %5d sloc" % (
-                        pathToFile, lang, linesSoFar, slocSoFar))
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
-    return linesSoFar, slocSoFar
+def countLinesLisp(pathToFile, options, lang):
+    return countLinesPercent(pathToFile, options, lang)
 
 # MATLAB ============================================================
 
@@ -868,7 +850,7 @@ def countLinesMatlab(pathToFile, options, lang):
                         elif ch == '}':
                             if depth >0:
                                 depth -= 1
-                        else: 
+                        else:
                             # this would start a comment
                             if depth == 0:
                                 break
@@ -1042,7 +1024,7 @@ def countLinesOctave(pathToFile, options, lang):
     """
     Count source lines in an Octave file where single line comments
     begin with '%' or '#' and multi-line comments are delimited by
-    %{ and %} or #{ and #}. These may be nested.  We ignore blank lines 
+    %{ and %} or #{ and #}. These may be nested.  We ignore blank lines
     and lines consisting solely of spaces and comments.
 
     NOTE that Octave actually requires that a multi-line comment marker
@@ -1069,7 +1051,7 @@ def countLinesOctave(pathToFile, options, lang):
                         elif ch == '}':
                             if depth >0:
                                 depth -= 1
-                        else: 
+                        else:
                             # this would start a comment
                             if depth == 0:
                                 break
@@ -1134,7 +1116,7 @@ def countLinesPascal(pathToFile, options, lang):
                     elif depth == 0:
                         if lParenSeen:
                             if ch == '}':
-                                nonSpaceSeen = True 
+                                nonSpaceSeen = True
                             elif ch == '*' or ch == '{':
                                 depth += 1
                             else:
@@ -1196,6 +1178,34 @@ def countLinesPascal(pathToFile, options, lang):
             options.already.add(hash)
             if options.verbose:
                 print ("%-49s: %-4s %5d lines, %5d sloc" % (
+                        pathToFile, lang, linesSoFar, slocSoFar))
+    except Exception as e:
+        print("error reading '%s', skipping: %s" % (pathToFile, e))
+    return linesSoFar, slocSoFar
+
+# PERCENT ===========================================================
+
+def countLinesPercent(pathToFile, options, lang):
+    """
+    Count lines in a file where the percent sign ('%') is the comment
+    marker.  That is, we ignore blank lines, lines consisting solely of
+    spaces, and those starting with zero or more spaces followed by
+    a percent sign.
+    """
+
+    linesSoFar, slocSoFar = (0,0)
+    try:
+        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        if (hash != None) and (lines != None):
+            for line in lines:
+                linesSoFar += 1
+                # This could be made more efficient.
+                line = line.strip()
+                if len(line) > 0 and (line[0] != '%'):
+                    slocSoFar += 1
+            options.already.add(hash)
+            if options.verbose:
+                print ("%-47s: %-6s %5d lines, %5d sloc" % (
                         pathToFile, lang, linesSoFar, slocSoFar))
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
@@ -1307,14 +1317,14 @@ def countLinesRe2c(path, options, lang):
 
 def countLinesRMarkdown(pathToFile, options, lang):
     """
-    Count the lines of R in an RMarkdown file.  Count lines in 
-    (a) the YAML section at the top of the file, (b) chunks of R code 
+    Count the lines of R in an RMarkdown file.  Count lines in
+    (a) the YAML section at the top of the file, (b) chunks of R code
     following the normal rules (we ignore blank lines and anything
     following a sharp sign (#), and (c) wherever there is inline R
     code, we count that line as source code.
 
-    To be counted, the YAML must begin at the very first line in the 
-    file and must be delimited by "^---" lines.  
+    To be counted, the YAML must begin at the very first line in the
+    file and must be delimited by "^---" lines.
 
     This code only counts RMarkdown sections beginning with "```{r " and
     ending with "```".   That is, these must begin the line in each case.
@@ -1338,7 +1348,7 @@ def countLinesRMarkdown(pathToFile, options, lang):
                 if ndx==0 and line.startswith('---'):
                     inYAML = True
                 if inYAML:
-                    # DEBUG 
+                    # DEBUG
                     # print("YAML: '%s'" % line)
                     # END
                     if len(line):
@@ -1365,7 +1375,7 @@ def countLinesRMarkdown(pathToFile, options, lang):
                     # DEBUG
                     # print("TEXT: %s" % line)
                     # END
-                    if line.startswith('```{r '): 
+                    if line.startswith('```{r '):
                         slocSoFar += 1
                         inCodeChunk = True
                         continue
@@ -1544,9 +1554,14 @@ def countLinesSnobol(pathToFile, options, lang):
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return linesSoFar, slocSoFar
 
-# TEXT ==============================================================
+# TeX ===============================================================
 
-def countLinesText(pathToFile, options, lang):
+def countLinesTeX(pathToFile, options, lang):
+    return countLinesPercent(pathToFile, options, lang)
+
+# TXT ===============================================================
+
+def countLinesTxt(pathToFile, options, lang):
     """
     Count the lines in a text file.  We ignore empty lines and lines
     consisting solely of spaces.
@@ -1613,6 +1628,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 

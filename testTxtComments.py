@@ -9,7 +9,7 @@ import os, sys, unittest
 from argparse   import Namespace
 
 from pysloc     import __version__, __version_date__
-from pysloc     import countLinesInDir, countLinesText, Q
+from pysloc     import countLinesInDir, countLinesTxt, Q
 
 class TestTextComments (unittest.TestCase):
 
@@ -30,7 +30,7 @@ class TestTextComments (unittest.TestCase):
         options.q       = Q()
         options.verbose = False
 
-        lines, sloc = countLinesText(testFile, options, 'txt')
+        lines, sloc = countLinesTxt(testFile, options, 'txt')
         self.assertEqual(lines, 30)
         self.assertEqual(sloc,  20)
 

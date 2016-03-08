@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.7.0
+    2016-03-08
+        * add Lisp support; text files *.txt                        SLOC 3008
 v0.6.17
     2016-03-07
         * add support for TeX/LaTeX                                 SLOC 2998
@@ -202,6 +205,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 
