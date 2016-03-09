@@ -14,6 +14,7 @@ __all__ = [ '__version__',          '__version_date__',
             'countLinesC',
             'countLinesCpp',
             'countLinesDoubleDash',
+            'countLinesFortran',
             'countLinesGperf',
             'countLinesGo',
             'countLinesHtml',
@@ -42,8 +43,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.7.0'
-__version_date__ = '2016-03-08'
+__version__      = '0.7.1'
+__version_date__ = '2016-03-09'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -166,6 +167,8 @@ class Q(object):
             'cpp'       : countLinesCpp,            # C++
             'csh'       : countLinesNotSharp,       # csh, tcsh
             'css'       : countLinesJavaStyle,      # css, as in stylesheets
+            'f'         : countLinesFortran,        # fixed-format FORTRAN
+            'for'       : countLinesFortran,        # fixed-format FORTRAN
             'gen'       : countLinesNotSharp,       # treat # as comment
             'go'        : countLinesGo,             # golang
             'gperf'     : countLinesGperf,          #
@@ -219,6 +222,8 @@ class Q(object):
             'cxx'       : 'cpp',                    # C++
             'csh'       : 'csh',
             'css'       : 'css',
+            'f'         : 'for',
+            'for'       : 'for',
             'go'        : 'go',                     # same counter as C, Java ?
             'gperf'     : 'gperf',                  # same counter as C, Java ?
             'h'         : 'c',                      # PRESUMED ANSI C
@@ -287,6 +292,7 @@ class Q(object):
             'cpp'       : 'C++',
             'csh'       : 'csh',
             'css'       : 'css',
+            'for'       : 'FORTRAN',
             'gen'       : 'generic',
             'gperf'     : 'gperf',
             'go'        : 'golang',
@@ -631,6 +637,40 @@ def countLinesCpp(path, options, lang):
         l, s = countLinesJavaStyle(path, options, lang)
 
     return l, s
+
+# FORTRAN ===========================================================
+
+def countLinesFortran(pathToFile, options, lang):
+
+    linesSoFar,slocSoFar    = (0,0)
+    try:
+        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        if (hash != None) and (lines != None):
+            for line in lines:
+                linesSoFar += 1
+               
+                lineLen = len(line)
+                if lineLen:
+                    # code area is columns 7-72, 1-based, so 6-71
+                    if line[0].lower() == 'c' or lineLen < 7:
+                        continue
+                    if lineLen > 72:
+                        line = line[6:72]
+                    else:
+                        line = line[6:]
+                    for ch in line:
+                        if ch != ' ':
+                            slocSoFar += 1
+                            break
+            
+            options.already.add(hash)
+            if options.verbose:
+                print ("%-49s: %-4s %5d lines, %5d sloc" % (
+                        pathToFile, lang, linesSoFar, slocSoFar))
+    except Exception as e:
+        print("error reading '%s', skipping: %s" % (pathToFile, e))
+
+    return linesSoFar, slocSoFar
 
 # GO ================================================================
 
@@ -1628,6 +1668,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 
