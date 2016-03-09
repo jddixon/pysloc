@@ -1,11 +1,42 @@
 # ~/dev/py/pysloc/TODO
 
+2016-03-09 (edited from -02)
+    * need commerntsForFortran   and test
+    * need commerntsForFortran90 and test
+
+    FIXED FORM FORTRAN ('for')
+    * .f and .for for fixed-format source code
+    * fortran comments have C or c in the first column
+    * continuation lines have a character in position 6
+        - conventionally '+' 
+        - alternative convention is '&' in column 73 and then in
+            column 6 thereafter
+    * source code starts in column 7 
+    * columns 73-80 are ignored
+    * spaces are simply ignored in fixed format
+
+    FREE FORM FORTRAN ('for90plus')
+    * .f90 [, .f95, .f03, .f08, .f15, ...] for free-format source code
+    * spaces are significant in free format code
+    * source code starts in column 7 or after the first tab
+        - no tabs may precede column 6
+    * some compilers allow BANG ('!') anywhere but positions
+        6 as a comment marker
+        - specifically allowed by Fortran 90
+   
+    PREPROCESSED FORTRAN
+    * upper case extensions need to be be preprocessed by 
+        C preprocessor (.F, .F90, perhaps others)
+
 2016-03-08
     * need commentsForLisp and test
+    * need commentsForPerl and test
     * need commentsForTeX and test
+    * if mainLang is c, *.inc are counted as C ?
+    * if mainLang is cpp, *.inc are counted as C++ ?
 
 2016-03-07
-    * need to be able to count *.tex
+    * need to be able to count *.tex                                    * DONE
 
 2016-03-04
     * command line summary (-h output) in README is out of date
@@ -42,26 +73,6 @@
     * lisp: comments start with semicolon or M-;
         - *.el Emacs Lisp   SKIP: too complicated                       * SKIP
         - *.lisp
-
-2016-03-02
-    HANDLE for and f90 SEPARATELY
-    * fortran comments have C or c in the first column
-    * continuation lines have a character in position 6
-        - conventionally '+' 
-        - alternative convention is '&' in column 73 and then in
-            column 6 thereafter
-        - no tabs may precede column 6
-    * source code starts in column 7 or after the first tab
-    * columns 73-80 are ignored
-    * some compilers allow BANG ('!') anywhere but positions
-        6 as a comment marker
-        - specifically allowed by Fortran 90
-    * spaces are simply ignored in fixed format, significant in 
-        free format code
-    * .f and .for for fixed-format source code
-    * .f90 [, .f95, .f03, .f08, .f15, ...] for free-format source code
-    * upper case extensions need to be be preprocessed by 
-        C preprocessor (.F, .F90, perhaps others)
 
 
 2016-03-02 (edited from -01-16)

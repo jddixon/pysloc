@@ -43,6 +43,7 @@ Languages currently covered include, by short name,
 * **c**,	the venerable C programming language; ANSI C
 * **csh**,	csh, another shell; tcsh is a variant
 * **css**,	css, used for writing style sheets
+* **for**,  fixed-format FORTRAN
 * **go**,	Google's Go programming language
 * **gperf**,hash function generator
 * **hs**,	Haskell
