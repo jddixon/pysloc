@@ -12,6 +12,7 @@ rm -rf build/*
     aug:commentsForAugeas       		\
     cpp:commentsForCpp          		\
     css:commentsForCss          		\
+    for:commentsForFortran        		\
     go:commentsForGo            		\
     gperf:commentsForGperf      		\
     hs:commentsForHaskell       		\

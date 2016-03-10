@@ -5,6 +5,7 @@ cd ~/dev/py/pysloc
 ./testCouldBeGenerated.py
 ./testCppComments.py
 ./testCssComments.py
+./testFortranComments.py
 ./testGoComments.py
 ./testGperfComments.py
 ./testHaskellComments.py
