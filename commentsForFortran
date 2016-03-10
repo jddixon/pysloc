@@ -1,0 +1,32 @@
+c SAMPLE TEXT FOR FIXED-FORMAT FORTRAN
+c
+c Comments are distinguished by a 'c' or 'C' in position 1.
+C So this is a comment (that's an upper case 'C')
+c
+c We ignore everything after position 72
+c
+c...x.!..1....x....2....x....3....x....4....x....5....x....6....x....7..!.x....
+                                                                        SLOC  0
+                                                                       xSLOC  1
+c We also ignore everything else before column 7
+JUNK..
+      S                                                                 SLOC  2
+      ignificant.                                                       SLOC  3
+ NOT
+c
+c A long line of spaces should be ignored
+                                                                             
+c But a printing character anywhere after column 6 gets it counted
+
+c...x.!..1....x....2....x....3....x....4....x....5....x....6....x....7..!.x....
+     x
+      x                                                                 SLOC  4
+       x                                                                SLOC  5
+                        x                                               SLOC  6
+                                                                      x SLOC  7
+                                                                       xSLOC  8
+                                                                        x
+                                                                         x
+                                                                             
+
+
