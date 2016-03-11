@@ -14,6 +14,7 @@ cd ~/dev/py/pysloc
 ./testJsonComments.py
 ./testK.py
 ./testK.py
+./testLispComments.py
 ./testMatlabComments.py
 ./testOCamlComments.py
 ./testOccamComments.py
@@ -26,5 +27,6 @@ cd ~/dev/py/pysloc
 ./testRe2CComments.py
 ./testScalaComments.py
 ./testSnoComments.py
+./testTeXComments.py
 ./testTxtComments.py
 ./testXmlComments.py

@@ -43,8 +43,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.7.2'
-__version_date__ = '2016-03-10'
+__version__      = '0.7.3'
+__version_date__ = '2016-03-11'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -648,7 +648,7 @@ def countLinesFortran(pathToFile, options, lang):
         if (hash != None) and (lines != None):
             for line in lines:
                 linesSoFar += 1
-               
+
                 lineLen = len(line)
                 if lineLen:
                     # code area is columns 7-72, 1-based, so 6-71
@@ -662,7 +662,7 @@ def countLinesFortran(pathToFile, options, lang):
                         if ch != ' ':
                             slocSoFar += 1
                             break
-            
+
             options.already.add(hash)
             if options.verbose:
                 print ("%-49s: %-4s %5d lines, %5d sloc" % (
@@ -858,7 +858,7 @@ def countLinesJavaStyle(pathToFile, options, lang):
 # Lisp ==============================================================
 
 def countLinesLisp(pathToFile, options, lang):
-    return countLinesPercent(pathToFile, options, lang)
+    return countLinesNotSemicolon(pathToFile, options, lang)
 
 # MATLAB ============================================================
 
@@ -1225,7 +1225,7 @@ def countLinesPascal(pathToFile, options, lang):
 
 # PERCENT ===========================================================
 
-def countLinesPercent(pathToFile, options, lang):
+def countLinesNotPercent(pathToFile, options, lang):
     """
     Count lines in a file where the percent sign ('%') is the comment
     marker.  That is, we ignore blank lines, lines consisting solely of
@@ -1241,7 +1241,7 @@ def countLinesPercent(pathToFile, options, lang):
                 linesSoFar += 1
                 # This could be made more efficient.
                 line = line.strip()
-                if len(line) > 0 and (line[0] != '%'):
+                if (len(line) > 0) and (line[0] != '%'):
                     slocSoFar += 1
             options.already.add(hash)
             if options.verbose:
@@ -1570,6 +1570,34 @@ def uncommentScala(text, commentDepth):
 
     return code, commentDepth
 
+# SEMICOLON =========================================================
+
+def countLinesNotSemicolon(pathToFile, options, lang):
+    """
+    Count lines in a file where the semicolon (';') is the comment
+    marker.  That is, we ignore blank lines, lines consisting solely of
+    spaces, and those starting with zero or more spaces followed by
+    a semicolon.
+    """
+
+    linesSoFar, slocSoFar = (0,0)
+    try:
+        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        if (hash != None) and (lines != None):
+            for line in lines:
+                linesSoFar += 1
+                # This could be made more efficient.
+                line = line.strip()
+                if (len(line) > 0) and (line[0] != ';'):
+                    slocSoFar += 1
+            options.already.add(hash)
+            if options.verbose:
+                print ("%-47s: %-6s %5d lines, %5d sloc" % (
+                        pathToFile, lang, linesSoFar, slocSoFar))
+    except Exception as e:
+        print("error reading '%s', skipping: %s" % (pathToFile, e))
+    return linesSoFar, slocSoFar
+
 # SNOBOL ============================================================
 
 def countLinesSnobol(pathToFile, options, lang):
@@ -1597,7 +1625,7 @@ def countLinesSnobol(pathToFile, options, lang):
 # TeX ===============================================================
 
 def countLinesTeX(pathToFile, options, lang):
-    return countLinesPercent(pathToFile, options, lang)
+    return countLinesNotPercent(pathToFile, options, lang)
 
 # TXT ===============================================================
 
@@ -1668,6 +1696,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 
