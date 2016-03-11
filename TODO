@@ -1,19 +1,19 @@
 # ~/dev/py/pysloc/TODO
 
 2016-03-09 (edited from -02)
-    * need commerntsForFortran   and test
+    * need commerntsForFortran   and test                               * DONE
     * need commerntsForFortran90 and test
 
     FIXED FORM FORTRAN ('for')
-    * .f and .for for fixed-format source code
-    * fortran comments have C or c in the first column
-    * continuation lines have a character in position 6
-        - conventionally '+' 
-        - alternative convention is '&' in column 73 and then in
-            column 6 thereafter
-    * source code starts in column 7 
-    * columns 73-80 are ignored
-    * spaces are simply ignored in fixed format
+    * .f and .for for fixed-format source code                          * DONE
+    * fortran comments have C or c in the first column                  * DONE
+    * continuation lines have a character in position 6			        * DONE
+        - conventionally '+' 			                                * DONE
+        - alternative convention is '&' in column 73 and then in		* DONE
+            column 6 thereafter			                                * DONE
+    * source code starts in column 7 							        * DONE
+    * columns 73-80 are ignored							                * DONE
+    * spaces are simply ignored in fixed format							* DONE
 
     FREE FORM FORTRAN ('for90plus')
     * .f90 [, .f95, .f03, .f08, .f15, ...] for free-format source code
@@ -30,7 +30,7 @@
 
 2016-03-08
     * need commentsForLisp and test
-    * need commentsForPerl and test
+    * need commentsForPerl and test                                     * DONE
     * need commentsForTeX and test
     * if mainLang is c, *.inc are counted as C ?
     * if mainLang is cpp, *.inc are counted as C++ ?
