@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 
-# testFortranComments.py
+# testFortran90Comments.py
 
 import os, sys, unittest
 
 from argparse   import ArgumentParser, Namespace
 from pysloc     import __version__, __version_date__
-from pysloc     import countLinesFortran
+from pysloc     import countLinesFortran90
 
-class TestFortranComments (unittest.TestCase):
+class TestFortran90Comments (unittest.TestCase):
 
     def setUp(self):
         self.options = Namespace()
@@ -21,14 +21,12 @@ class TestFortranComments (unittest.TestCase):
     
     # actual unit tests #############################################
    
-    def testNameToFuncMap(self):
-        testFile = './commentsForFortran'
-        lines, sloc = countLinesFortran(testFile, self.options, 'for')
-        self.assertEqual(lines,  32)
-        self.assertEqual(sloc,    8)
+    def testestFortran90Comments(self):
+        testFile = './commentsForFortran90'
+        lang     = 'f90+'
+        lines, sloc = countLinesFortran90(testFile, self.options, lang)
+        self.assertEqual(lines,  42)
+        self.assertEqual(sloc,    9)
 
 if __name__ == '__main__':
     unittest.main()
-
-
-

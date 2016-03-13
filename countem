@@ -13,6 +13,7 @@ rm -rf build/*
     cpp:commentsForCpp          		\
     css:commentsForCss          		\
     for:commentsForFortran        		\
+    f90+:commentsForFortran90     		\
     go:commentsForGo            		\
     gperf:commentsForGperf      		\
     hs:commentsForHaskell       		\
