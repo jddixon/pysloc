@@ -6,6 +6,7 @@ cd ~/dev/py/pysloc
 ./testCppComments.py
 ./testCssComments.py
 ./testFortranComments.py
+./testFortran90Comments.py
 ./testGoComments.py
 ./testGperfComments.py
 ./testHaskellComments.py

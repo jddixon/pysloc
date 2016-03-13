@@ -15,6 +15,7 @@ __all__ = [ '__version__',          '__version_date__',
             'countLinesCpp',
             'countLinesDoubleDash',
             'countLinesFortran',
+            'countLinesFortran90',
             'countLinesGperf',
             'countLinesGo',
             'countLinesHtml',
@@ -43,8 +44,8 @@ __all__ = [ '__version__',          '__version_date__',
           ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.7.3'
-__version_date__ = '2016-03-11'
+__version__      = '0.7.4'
+__version_date__ = '2016-03-12'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile('^/\* ANSI-C code produced by gperf version \d+\.\d\.\d+ \*/')
@@ -167,7 +168,7 @@ class Q(object):
             'cpp'       : countLinesCpp,            # C++
             'csh'       : countLinesNotSharp,       # csh, tcsh
             'css'       : countLinesJavaStyle,      # css, as in stylesheets
-            'f'         : countLinesFortran,        # fixed-format FORTRAN
+            'f90+'      : countLinesFortran90,      # FORTRAN90 plus
             'for'       : countLinesFortran,        # fixed-format FORTRAN
             'gen'       : countLinesNotSharp,       # treat # as comment
             'go'        : countLinesGo,             # golang
@@ -222,7 +223,12 @@ class Q(object):
             'cxx'       : 'cpp',                    # C++
             'csh'       : 'csh',
             'css'       : 'css',
-            'f'         : 'for',
+            'f'         : 'for',                    # fixed-format FORTRAN
+            'f90'       : 'f90+',                   # free-format FORTRAN
+            'f95'       : 'f90+',                   # free-format FORTRAN
+            'f03'       : 'f90+',                   # free-format FORTRAN
+            'f08'       : 'f90+',                   # free-format FORTRAN
+            'f15'       : 'f90+',                   # free-format FORTRAN
             'for'       : 'for',
             'go'        : 'go',                     # same counter as C, Java ?
             'gperf'     : 'gperf',                  # same counter as C, Java ?
@@ -292,6 +298,7 @@ class Q(object):
             'cpp'       : 'C++',
             'csh'       : 'csh',
             'css'       : 'css',
+            'f90+'      : 'FORTRAN90+',
             'for'       : 'FORTRAN',
             'gen'       : 'generic',
             'gperf'     : 'gperf',
@@ -662,6 +669,51 @@ def countLinesFortran(pathToFile, options, lang):
                         if ch != ' ':
                             slocSoFar += 1
                             break
+
+            options.already.add(hash)
+            if options.verbose:
+                print ("%-49s: %-4s %5d lines, %5d sloc" % (
+                        pathToFile, lang, linesSoFar, slocSoFar))
+    except Exception as e:
+        print("error reading '%s', skipping: %s" % (pathToFile, e))
+
+    return linesSoFar, slocSoFar
+
+# FORTRAN 90+ =======================================================
+
+def countLinesFortran90(pathToFile, options, lang):
+    """
+    Count lines of free-format FORTRAN 90+
+    """
+
+    linesSoFar,slocSoFar    = (0,0)
+    try:
+        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        if (hash != None) and (lines != None):
+            for line in lines:
+                linesSoFar += 1
+
+                lineLen = len(line)
+                if lineLen:
+                    # a BANG ('!') anywhere begins a comment
+                    ndx = line.find('!')
+                    if ndx != -1:
+                        line = line[0:ndx]
+                        lineLen = len(line)
+                        if lineLen == 0:
+                            continue
+
+                    # code area is columns 7-72, 1-based, so 6-71
+                    if line[0].lower() == 'c' or lineLen < 7:
+                        continue
+                    if lineLen > 72:
+                        line = line[6:72]
+                    else:
+                        line = line[6:]
+                    for ch in line:
+                        if ch != ' ':
+                            slocSoFar += 1
+                            break 
 
             options.already.add(hash)
             if options.verbose:
@@ -1696,6 +1748,7 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+
 
 
 

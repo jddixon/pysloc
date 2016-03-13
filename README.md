@@ -44,6 +44,7 @@ Languages currently covered include, by short name,
 * **csh**,	csh, another shell; tcsh is a variant
 * **css**,	css, used for writing style sheets
 * **for**,  fixed-format FORTRAN
+* **f90+**, FORTRAN 90, other free format FORTRAN
 * **go**,	Google's Go programming language
 * **gperf**,hash function generator
 * **hs**,	Haskell

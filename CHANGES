@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.7.4
+    2016-03-12
+        * add commentsForFortran90 and test                         SLOC 3262
 v0.7.3
     2016-03-11
         * add commentsFor{Lisp,TeX} and tests                       SLOC 3184
@@ -214,6 +217,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 
