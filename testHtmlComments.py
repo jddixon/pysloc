@@ -2,11 +2,14 @@
 
 # testHtmlComments.py
 
-import os, sys, unittest
+import os
+import sys
+import unittest
 
-from argparse   import ArgumentParser, Namespace
-from pysloc     import __version__, __version_date__
-from pysloc     import countLinesInDir, countLinesHtml
+from argparse import ArgumentParser, Namespace
+from pysloc import __version__, __version_date__
+from pysloc import countLinesInDir, countLinesHtml
+
 
 class TestHtmlComments (unittest.TestCase):
 
@@ -14,21 +17,19 @@ class TestHtmlComments (unittest.TestCase):
         self.options = Namespace()
         self.options.already = set()
         self.options.verbose = False
+
     def tearDown(self):
         pass
 
     # utility functions #############################################
-    
+
     # actual unit tests #############################################
-   
+
     def testNameToFuncMap(self):
         testFile = './commentsForHtml'
         lines, sloc = countLinesHtml(testFile, self.options, 'html')
         self.assertEqual(lines, 19)
-        self.assertEqual(sloc,   5)
+        self.assertEqual(sloc, 5)
 
 if __name__ == '__main__':
     unittest.main()
-
-
-

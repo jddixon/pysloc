@@ -3,7 +3,7 @@
 include netDistrib.conf
 include CHANGES LICENSE.md README.* TODO MANIFEST.in
 include ghpDoc/*
-include countem installit test.all
+include auto8it countem installit test.all
 include commentsFor* pySloc
 include yyFoo*
 recursive-include pysloc *.py

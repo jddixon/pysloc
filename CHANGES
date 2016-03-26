@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.7.5
+    2016-03-26
+        * add and execute auto8it                                   SLOC 3348
 v0.7.4
     2016-03-12
         * add commentsForFortran90 and test                         SLOC 3262
@@ -217,6 +220,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 
