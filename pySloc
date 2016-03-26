@@ -2,42 +2,46 @@
 
 # pySloc, part of pysloc
 
-import os, re, sys, time
-from stat       import *
+import os
+import re
+import sys
+import time
+from stat import *
 
-from argparse   import ArgumentParser
+from argparse import ArgumentParser
 from merkletree import MerkleDoc
-from pysloc     import *
+from pysloc import *
+
 
 def doCount(options):
 
-    # get and check options; XXX should throw exceptions if problems 
+    # get and check options; XXX should throw exceptions if problems
     # are encountered
-   
-    exclusions      = options.exclusions
-    exRE            = options.exRE
-    justShow        = options.justShow
-    k               = options.k
-    langsCounted    = options.langsCounted
-    mainLang        = options.mainLang
-    matches         = options.matches
-    namedFiles      = options.namedFiles
-    onlyNamedFiles  = options.onlyNamedFiles
-    q               = options.q
-    showTimestamp   = options.showTimestamp
-    showVersion     = options.showVersion
-    sumSLOC         = options.sumSLOC
-    timestamp       = options.timestamp
-    verbose         = options.verbose
 
-    lines           = 0
-    sloc            = 0
+    exclusions = options.exclusions
+    exRE = options.exRE
+    justShow = options.justShow
+    k = options.k
+    langsCounted = options.langsCounted
+    mainLang = options.mainLang
+    matches = options.matches
+    namedFiles = options.namedFiles
+    onlyNamedFiles = options.onlyNamedFiles
+    q = options.q
+    showTimestamp = options.showTimestamp
+    showVersion = options.showVersion
+    sumSLOC = options.sumSLOC
+    timestamp = options.timestamp
+    verbose = options.verbose
 
-    options.already = set() # an unordered collection, not a dictionary
+    lines = 0
+    sloc = 0
+
+    options.already = set()  # an unordered collection, not a dictionary
 
     # if a file is named on the command line, we always count it.
     for name in namedFiles:
-        lang,isTest = None,False
+        lang, isTest = None, False
         if (exRE is not None) and (exRE.search(name) is not None):
             if verbose > 1:
                 print("skipping %s: excluded" % name)
@@ -53,17 +57,17 @@ def doCount(options):
             lang, name = a, c
 
         if os.path.exists(name):
-            l,s = 0,0
+            l, s = 0, 0
             if os.path.isfile(name):
                 counter = None
-                if lang == None:
+                if lang is None:
                     lang, isTest = q.guessLang('./', name,
-                            isCLIArg=True, verbose=options.verbose) 
-                if (lang != None) and (lang in langsCounted):
+                                               isCLIArg=True, verbose=options.verbose)
+                if (lang is not None) and (lang in langsCounted):
                     counter = q.getCounter(lang, isCLIArg=True)
-                if counter == None:
+                if counter is None:
                     counter = countLinesNotSharp
-                l,s = counter(name, options, lang)
+                l, s = counter(name, options, lang)
                 if lang == 'Rmd':
                     if isTest:
                         k.addTestCounts('R', l, s)
@@ -74,22 +78,22 @@ def doCount(options):
                         k.addTestCounts(lang, l, s)
                     else:
                         k.addCounts(lang, l, s)
-            
+
             elif os.path.isdir(name):
                 # XXX EXCLUDE SOME DIRS
-                l,s = countLinesInDir(name, options)
+                l, s = countLinesInDir(name, options)
             else:
                 print("? don't know how to count %s" % name)
             lines += l
-            sloc  += s
+            sloc += s
         else:
             print("file does not exist: %s" % name)
 
     # handle the current directory
     if not onlyNamedFiles:
-        l,s = countLinesInDir('.', options)
-        lines   = lines + l
-        sloc    = sloc  + s
+        l, s = countLinesInDir('.', options)
+        lines = lines + l
+        sloc = sloc + s
 
     k.prettyBreakDown()
     print("total of %5d lines of code, of which %5d source" % (lines, sloc))
@@ -97,44 +101,44 @@ def doCount(options):
 
 # MAIN ##############################################################
 if __name__ == '__main__':
-   
+
     # INTERPRET COMMAND LINE ----------------------------------------
     DESC = 'count lines of source code'
     parser = ArgumentParser(description=DESC)
 
     parser.add_argument('-C', '--langsCounted', nargs='?', const='all',
-        help = 'colon-separated list of langugages to be counted (abbrev)')
-    parser.add_argument('-j', '--justShow',     action='store_true',
-        help = 'list options and exit')
-    parser.add_argument('-L', '--mainLang',     type=str,
-        help = 'main language expected (short name, optional)')
-    parser.add_argument('-M', '--matches',      type=str,
-        help = 'count ONLY files with matching names')
-    parser.add_argument('-q', '--quiet',      action='count',  default=0,
-        help = 'be quiet (overrides -v if later')
-    parser.add_argument('-S', '--sumSLOC',     action='store_true',
-        help = 'total up SLOC counts')
-    parser.add_argument('-t', '--showTimestamp',action='store_true',
-        help = 'output UTC timestamp to command line')
-    parser.add_argument('-v', '--verbose',      action='count',  default=0,
-        help = 'make me more chatty')
-    parser.add_argument('-V', '--showVersion',  action='store_true',
-        help = 'show version information')
-    parser.add_argument('-X', '--exclusions',   type=str,
-        help = 'do not count files/directories with matching names')
-    parser.add_argument('-z', '--onlyNamedFiles',   action='store_true',
-        help = 'only count files named on the command line')
+                        help='colon-separated list of langugages to be counted (abbrev)')
+    parser.add_argument('-j', '--justShow', action='store_true',
+                        help='list options and exit')
+    parser.add_argument('-L', '--mainLang', type=str,
+                        help='main language expected (short name, optional)')
+    parser.add_argument('-M', '--matches', type=str,
+                        help='count ONLY files with matching names')
+    parser.add_argument('-q', '--quiet', action='count', default=0,
+                        help='be quiet (overrides -v if later')
+    parser.add_argument('-S', '--sumSLOC', action='store_true',
+                        help='total up SLOC counts')
+    parser.add_argument('-t', '--showTimestamp', action='store_true',
+                        help='output UTC timestamp to command line')
+    parser.add_argument('-v', '--verbose', action='count', default=0,
+                        help='make me more chatty')
+    parser.add_argument('-V', '--showVersion', action='store_true',
+                        help='show version information')
+    parser.add_argument('-X', '--exclusions', type=str,
+                        help='do not count files/directories with matching names')
+    parser.add_argument('-z', '--onlyNamedFiles', action='store_true',
+                        help='only count files named on the command line')
 
     parser.add_argument('namedFiles', nargs='*',
-        help = 'any number of namedFiles and/or directories to scan')
+                        help='any number of namedFiles and/or directories to scan')
     args = parser.parse_args()
 
-    args.k          = K()   # a map, lang => (lines, sloc, tlines, tsloc)
+    args.k = K()   # a map, lang => (lines, sloc, tlines, tsloc)
     if args.mainLang:
-        args.q          = Q(args.mainLang)
+        args.q = Q(args.mainLang)
     else:
-        args.q          = Q('')
-    args.timestamp  = "%04d%02d%02d-%02d%02d%02d" % time.gmtime()[:6]
+        args.q = Q('')
+    args.timestamp = "%04d%02d%02d-%02d%02d%02d" % time.gmtime()[:6]
 
     # fixups --------------------------------------------------------
     if args.exclusions:
@@ -142,7 +146,7 @@ if __name__ == '__main__':
         args.exRE = re.compile(args.exclusions)
     else:
         args.exRE = None
-   
+
     if args.quiet:
         args.verbose = 0
 
@@ -153,14 +157,14 @@ if __name__ == '__main__':
         if args.mainLang == 'octave':
             args.mainLang = 'matlab'
         h = args.q.getCounter(args.mainLang)
-        if h == None:
-            print("'%s' is not the short name of a supported language" % 
-                args.mainLang)
-            parser.print_help();
+        if h is None:
+            print("'%s' is not the short name of a supported language" %
+                  args.mainLang)
+            parser.print_help()
             sys.exit(1)
-    
+
     langSet = args.q.getLangSet()    # names of all languages (abbrev)
-    if not args.langsCounted or args.langsCounted=='all':
+    if not args.langsCounted or args.langsCounted == 'all':
         args.langsCounted = langSet
     else:
         langList = []
@@ -172,7 +176,7 @@ if __name__ == '__main__':
                 print("%s is not recognized as a language abbreviation", x)
                 parser.print_usage()
                 sys.exit(1)
-        args.langsCounted=frozenset(langList)    # in place
+        args.langsCounted = frozenset(langList)    # in place
 
     # sanity checks -------------------------------------------------
 
@@ -180,11 +184,11 @@ if __name__ == '__main__':
     if args.showVersion:
         print('pySloc v%s %s' % (__version__, __version_date__))
         sys.exit()
-    if args.justShow or (args.verbose>1):
-        
+    if args.justShow or (args.verbose > 1):
+
         print("exclusions:      %s" % args.exclusions)
-        print("mainLang:        %s (%s)" % (args.mainLang, 
-                                    args.q.getLongName(args.mainLang)))
+        print("mainLang:        %s (%s)" % (args.mainLang,
+                                            args.q.getLongName(args.mainLang)))
         print("langsCounted:    %s" % args.langsCounted)
         print("matches:         %s" % args.matches)
         print("onlyNamedFiles:  %s" % args.onlyNamedFiles)

@@ -2,7 +2,7 @@
 
 2016-03-09 (edited from -02)
     * need commerntsForFortran   and test                               * DONE
-    * need commerntsForFortran90 and test
+    * need commerntsForFortran90 and test                               * DONE
 
     FIXED FORM FORTRAN ('for')
     * .f and .for for fixed-format source code                          * DONE
@@ -16,13 +16,13 @@
     * spaces are simply ignored in fixed format							* DONE
 
     FREE FORM FORTRAN ('for90plus')
-    * .f90 [, .f95, .f03, .f08, .f15, ...] for free-format source code
+    * .f90 [, .f95, .f03, .f08, .f15, ...] for free-format source code  * DONE
     * spaces are significant in free format code                        * SKIP
-    * source code starts in column 7 or after the first tab
-        - no tabs may precede column 6
-    * some compilers allow BANG ('!') as a comment marker
+    * source code starts in column 7 or after the first tab             * DONE
+        - no tabs may precede column 6                                  * SKIP
+    * some compilers allow BANG ('!') as a comment marker               * YEP
         - anywhere but positions 6                                      * SKIP
-        - specifically allowed by Fortran 90 spec
+        - specifically allowed by Fortran 90 spec                       * YEP
    
     PREPROCESSED FORTRAN
     * upper case extensions need to be be preprocessed by 
@@ -32,8 +32,8 @@
     * need commentsForLisp and test                                     * DONE
     * need commentsForPerl and test                                     * DONE
     * need commentsForTeX and test                                      * DONE
-    * if mainLang is c, *.inc are counted as C ?
-    * if mainLang is cpp, *.inc are counted as C++ ?
+    * if mainLang is c, *.inc are counted as C                          * DONE
+    * if mainLang is cpp, *.inc are counted as C++                      * DONE
 
 2016-03-07
     * need to be able to count *.tex                                    * DONE
@@ -65,14 +65,15 @@
             non-printing char < SPACE, treat as comment
         - if column 7 (indicator area) is asterisk or '/', treat as 
             comment
-        - a dash in the indicator continues the line
+        - a dash in the indicator continues the line                    * SKIP
         - pre-Cobol 2002, ignore all but positions 7-72
         - Cobol 2002 ignores *> and anything after it
         - supportline.microfocus.com/documentation/books/nx40/lrintr.htm
             is example
-    * lisp: comments start with semicolon or M-;
+    * lisp: comments start with semicolon                               * DONE
+        - or M-;                                                        * SKIP
         - *.el Emacs Lisp   SKIP: too complicated                       * SKIP
-        - *.lisp
+        - *.lisp                                                        * DONE
 
 
 2016-03-02 (edited from -01-16)
@@ -80,13 +81,6 @@
         - ruby
         - ocaml
         - haskell
-
-2016-02-08 (edited from -02)
-    * add support for perl  (*.pl, *.pm), comments begin with #         * DONE
-    * treat as multiline comments blocks beginning with ^=pod and       * DONE
-        ending with ^=cut                                               * DONE
-    * also multiline comments beginning with '^= for comment' and       * DONE
-        ending with ^=cut                                               * DONE
 
 2016-02-07
     * YAML counting not quite right: need whitespace between sharp

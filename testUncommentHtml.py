@@ -2,23 +2,27 @@
 
 # testUncommentHtml.py
 
-import os, sys, unittest
+import os
+import sys
+import unittest
 
-from argparse   import ArgumentParser, Namespace
-from pysloc     import __version__, __version_date__
-from pysloc     import uncommentHtml
+from argparse import ArgumentParser, Namespace
+from pysloc import __version__, __version_date__
+from pysloc import uncommentHtml
+
 
 class TestUncommentHtml (unittest.TestCase):
 
     def setUp(self):
         pass
+
     def tearDown(self):
         pass
 
     # utility functions #############################################
-    
+
     # actual unit tests #############################################
-   
+
     def testUncommentHtml(self):
         line = ''
         code, inComment = uncommentHtml(line, True)
@@ -34,13 +38,13 @@ class TestUncommentHtml (unittest.TestCase):
         code, inComment = uncommentHtml(line, False)
         self.assertEqual(code, '')
         self.assertEqual(inComment, False)
-        
+
         line = '<!--'
 
         code, inComment = uncommentHtml(line, False)
         self.assertEqual(code, '')
         self.assertEqual(inComment, True)
-        
+
         line = '-->'
 
         code, inComment = uncommentHtml(line, True)
@@ -55,6 +59,3 @@ class TestUncommentHtml (unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
-
-
