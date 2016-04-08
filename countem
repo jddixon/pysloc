@@ -1,52 +1,8 @@
+#!/bin/bash
+
 cd /home/jdd/dev/py/pysloc
 
 rm -rf build/*
 
 # for normal use, drop the leading ./ and the -v option
-./pySloc -v -L py -X "^junk|^test$|^dist$|\.swp$|\.pyc$"  $@        \
-    txt:.gitignore  txt:MANIFEST.in                                 \
-    bash:auto8it    bash:countem  bash:installit    bash:test.all   \
-    aug:commentsForAugeas               \
-    cpp:commentsForCpp                  \
-    css:commentsForCss                  \
-    for:commentsForFortran                \
-    f90+:commentsForFortran90             \
-    go:commentsForGo                    \
-    gperf:commentsForGperf              \
-    hs:commentsForHaskell               \
-    html:commentsForHtml                \
-    java:commentsForJava                \
-    lisp:commentsForLisp                \
-    json:commentsForJson                \
-    matlab:commentsForMatlab               \
-    ml:commentsForOCaml                 \
-    occ:commentsForOccam                \
-    octave:commentsForOctave               \
-    pas:commentsForPascal               \
-    perl:commentsForPerl                \
-    php:commentsForPHP                  \
-    proto:commentsForProtobuf             \
-    py:commentsForPy                    \
-    r2c:commentsForRe2c                 \
-    Rmd:commentsForRMarkdown            \
-    scala:commentsForScala              \
-    sno:commentsForSno                  \
-    tex:commentsForTeX                  \
-    txt:commentsForTxt                  \
-    xml:commentsForXml                  \
-    c:couldBeGenerated.pb-c.c           \
-    c:couldBeGenerated.pb-c.h           \
-    cpp:couldBeGenerated.pb.cpp         \
-    cpp:couldBeGenerated.pb.h           \
-    go:couldBeGenerated.pb.go           \
-    py:couldBeGenerated_pb2.py          \
-    java:couldBeGeneratedProtos.java    \
-    txt:yyFoo                           \
-    go:yyFoo.go                         \
-    lex:yyFoo.l                         \
-    occ:yyFoo.occ                       \
-    py:yyFoo.py                         \
-    sno:yyFoo.sno                       \
-    yacc:yyFoo.y                        \
-    py:pySloc
-
+./pySloc -v -L py -X "^junk|^test$|^dist$|\.swp$|\.pyc$"  $@  

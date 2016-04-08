@@ -13,6 +13,20 @@ from merkletree import MerkleDoc
 from pysloc import *
 
 
+def readLangMap(fileName, namedFiles):
+    with open(fileName, 'rb') as f:
+        data = f.read().decode('utf-8')
+    if data:
+        lines = data.split('\n')
+        if lines[-1] == '':
+            lines = lines[:-1]
+        for line in lines:
+            line, junk, trash = line.partition('#')
+            line = line.strip()
+            if line:
+                namedFiles.append(line)
+
+
 def doCount(options):
 
     # get and check options; XXX should throw exceptions if problems
@@ -22,6 +36,7 @@ def doCount(options):
     exRE = options.exRE
     justShow = options.justShow
     k = options.k
+    langMap = options.langMap
     langsCounted = options.langsCounted
     mainLang = options.mainLang
     matches = options.matches
@@ -38,6 +53,9 @@ def doCount(options):
     sloc = 0
 
     options.already = set()  # an unordered collection, not a dictionary
+
+    if langMap and os.path.exists(langMap):
+        readLangMap(langMap, namedFiles)
 
     # if a file is named on the command line, we always count it.
     for name in namedFiles:
@@ -114,6 +132,8 @@ if __name__ == '__main__':
                         help='main language expected (short name, optional)')
     parser.add_argument('-M', '--matches', type=str,
                         help='count ONLY files with matching names')
+    parser.add_argument('-m', '--langMap', default='.langMap',
+                        help='file containing language/filename pairs')
     parser.add_argument('-q', '--quiet', action='count', default=0,
                         help='be quiet (overrides -v if later')
     parser.add_argument('-S', '--sumSLOC', action='store_true',
@@ -189,6 +209,7 @@ if __name__ == '__main__':
         print("exclusions:      %s" % args.exclusions)
         print("mainLang:        %s (%s)" % (args.mainLang,
                                             args.q.getLongName(args.mainLang)))
+        print("langMap:         %s" % args.langMap)
         print("langsCounted:    %s" % args.langsCounted)
         print("matches:         %s" % args.matches)
         print("onlyNamedFiles:  %s" % args.onlyNamedFiles)

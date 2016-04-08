@@ -1,7 +1,5 @@
-# pySloc/__init__.py
+# pysloc/pysloc/__init__.py
 
-from abc import ABCMeta, abstractmethod, abstractproperty
-import binascii
 import hashlib
 import os
 import re
@@ -47,8 +45,8 @@ __all__ = ['__version__', '__version_date__',
            ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.7.5'
-__version_date__ = '2016-03-26'
+__version__ = '0.8.0'
+__version_date__ = '2016-04-08'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile(
@@ -168,49 +166,49 @@ class Q(object):
 
         # Maps short name to counter function; limit these to 4 characters.
         self._lang2Counter = {
-            'ada': countLinesDoubleDash,     # Pentagon language
-            'asm': countLinesNotSharp,       # s, S, asm
-            'awk': countLinesNotSharp,       # awk programming language
-            'aug': countLinesAugeas,         # Augeas config manager
-            'bash': countLinesShell,          # bash shell
-            'c': countLinesC,              # ansic
-            'cpp': countLinesCpp,            # C++
-            'csh': countLinesNotSharp,       # csh, tcsh
-            'css': countLinesJavaStyle,      # css, as in stylesheets
-            'f90+': countLinesFortran90,      # FORTRAN90 plus
-            'for': countLinesFortran,        # fixed-format FORTRAN
-            'gen': countLinesNotSharp,       # treat # as comment
+            'ada': countLinesDoubleDash,    # Pentagon language
+            'asm': countLinesNotSharp,      # s, S, asm
+            'awk': countLinesNotSharp,      # awk programming language
+            'aug': countLinesAugeas,        # Augeas config manager
+            'bash': countLinesShell,        # bash shell
+            'c': countLinesC,               # ansic
+            'code': countLinesNotSharp,     # used to be 'not#'
+            'cpp': countLinesCpp,           # C++
+            'csh': countLinesNotSharp,      # csh, tcsh
+            'css': countLinesJavaStyle,     # css, as in stylesheets
+            'f90+': countLinesFortran90,    # FORTRAN90 plus
+            'for': countLinesFortran,       # fixed-format FORTRAN
+            'gen': countLinesNotSharp,      # treat # as comment
             'go': countLinesGo,             # golang
-            'gperf': countLinesGperf,          #
+            'gperf': countLinesGperf,       #
             'hs': countLinesDoubleDash,     # Haskell
-            'html': countLinesHtml,           # html
-            'java': countLinesJava,           # plain old Java
+            'html': countLinesHtml,         # html
+            'java': countLinesJava,         # plain old Java
             'js': countLinesJavaStyle,      # Javascript
-            'json': countLinesTxt,           # json
-            'lex': countLinesJavaStyle,      # lex/flex
-            'lisp': countLinesLisp,           # Common Lisp
+            'json': countLinesTxt,          # json
+            'lex': countLinesJavaStyle,     # lex/flex
+            'lisp': countLinesLisp,         # Common Lisp
             'm4': countLinesNotSharp,       # m4 macro processor
             'ml': countLinesOCaml,          # ocaml, tentative abbrev
-            'not#': countLinesNotSharp,
-            'objc': countLinesJavaStyle,      # Objective C
-            'occ': countLinesDoubleDash,     # concurrent programming
+            'objc': countLinesJavaStyle,    # Objective C
+            'occ': countLinesDoubleDash,    # concurrent programming
             'perl': countLinesPerl,
-            'proto': countLinesProtobuf,       # Google Protocol Buffers
+            'proto': countLinesProtobuf,    # Google Protocol Buffers
             'py': countLinesPython,         # yes, Python
-            'R': countLinesNotSharp,       # R
+            'R': countLinesNotSharp,        # R
             'Rmd': countLinesRMarkdown,
-            're2c': countLinesRe2c,           # re2c
+            're2c': countLinesRe2c,         # re2c
             'rb': countLinesRuby,           # ruby
             'scala': countLinesScala,
-            'sed': countLinesNotSharp,       # stream editor
+            'sed': countLinesNotSharp,      # stream editor
             'sh': countLinesShell,          # shell script
-            'sno': countLinesSnobol,         # snobol4
-            'tcl': countLinesNotSharp,       # tcl, tk, itk
-            'tex': countLinesTeX,            # TeX, LaTeX
+            'sno': countLinesSnobol,        # snobol4
+            'tcl': countLinesNotSharp,      # tcl, tk, itk
+            'tex': countLinesTeX,           # TeX, LaTeX
             'txt': countLinesTxt,           # plain text
             'xml': countLinesXml,
-            'yacc': countLinesJavaStyle,      # yacc, bison
-            'yaml': countLinesNotSharp,       # yaml
+            'yacc': countLinesJavaStyle,    # yacc, bison
+            'yaml': countLinesNotSharp,     # yaml
         }
         # Guesses language short name (abbrev) from file extension.
         # See sloccount's break_filelist for hints.
@@ -256,7 +254,7 @@ class Q(object):
             'md': 'md',                     # no counter
             'ml': 'ml',                     # OCaml
             'mli': 'ml',                     # OCaml extension
-            'not#': 'not#',
+            'code': 'code',
             'occ': 'occ',
             'pl': 'perl',
             'pm': 'perl',
@@ -307,6 +305,7 @@ class Q(object):
             'awk': 'awk',
             'bash': 'bash',
             'c': 'ansic',
+            'code': 'code',                     # the former 'not#'
             'cpp': 'C++',
             'csh': 'csh',
             'css': 'css',
@@ -325,7 +324,6 @@ class Q(object):
             'm4': 'm4',
             'md': 'markdown',
             'ml': 'OCaml',
-            'not#': 'not#',
             'objc': 'Objective C',
             'occ': 'Occam',
             'perl': 'Perl',
@@ -1805,4 +1803,3 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
-
