@@ -1,5 +1,9 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.8.0
+    2016-04-08
+        * replaced 'not#' pseudo-language  with 'code'
+        * add -m/--langMap option                                   SLOC 3367
 v0.7.5
     2016-03-26
         * add and execute auto8it                                   SLOC 3348
@@ -220,6 +224,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 

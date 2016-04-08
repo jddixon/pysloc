@@ -41,6 +41,7 @@ Languages currently covered include, by short name,
 * **aug**,	Augeas configuration editor
 * **awk**,	awk
 * **c**,	the venerable C programming language; ANSI C
+* **code**,	'code', a pseudo-language; counts any line whose first non-space character is not the sharp sign ('#')
 * **csh**,	csh, another shell; tcsh is a variant
 * **css**,	css, used for writing style sheets
 * **for**,  fixed-format FORTRAN
@@ -55,7 +56,6 @@ Languages currently covered include, by short name,
 * **lex**,	lex/flex scanner
 * **lisp**, Lisp (Common)
 * **ml**,	Ocaml, a functional language
-* **not#**,	'not#', a pseudo-language; counts any line whose first non-space character is not the sharp sign ('#')
 * **objc**, Objective C
 * **occ**,	Occam, the concurrent programming language
 * **perl**,	Perl, the sysadmin's language

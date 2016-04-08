@@ -1,0 +1,343 @@
+<!DOCTYPE HTML SYSTEM "E:\SoftQuad\XMetaL_1\Rules\loose.dtd">
+<!--DOCTYPE HTML PUBLIC "-//IETF/DTD HTML 3.0//EN" "html.dtd"-->
+<HTML> 
+  <HEAD> 
+	 <TITLE>Introduction to the COBOL Language</TITLE>
+     <!--* Copyright (C) 2003 Micro Focus International Limited. All rights reserved. *-->
+    <LINK HREF="mfstyle.css" REL="stylesheet" TYPE="text/css">
+<SCRIPT SRC="dkhead.js" type="text/javascript"></SCRIPT><!--TIMESTAMP HTMLINDX V1.2.68 030515 14554511--> </HEAD> 
+  <BODY BGCOLOR="#ffffff" onLoad="loadHead('Language Reference','1. Introduction to the COBOL Language','','lrclan')" onUnload="loadHead('','','','')">
+
+<H1><A NAME="s001"><!--I COBOL;introduction-->Chapter 1: Introduction to
+the COBOL Language</A></H1> 
+	 <P>This chapter introduces you to the COBOL language.</P> 
+	 <H2><A NAME="s002">The COBOL Language</A></H2> 
+	 <P>COBOL (COmmon Business Oriented Language) is the programming language
+		most widely and extensively used in commercial and administrative data
+		processing. </P> 
+	 <P> <A NAME="0002"><!--I ANSI COBOL--></A>This COBOL implementation is a
+		superset of the ANSI and ISO COBOL standard as specified in <B><I>ANSI
+		X3.23-1974 (ISO 1989-1978)</I></B>, and of the current ANSI and ISO COBOL
+		standard as specified in<B><I> ANSI X3.23-1985 (IS 1989:1985)</I></B>,
+		<B><I>ANSI X3.23a-1989 (IS 1989:1985/AM1)</I></B>, and
+		<B><I>ANSI&nbsp;X3.23b-1993 (IS 1989:1985/AM2)</I></B>. <A NAME="0003"><!--I Language extensions--></A>Language
+		extensions include:<B><I></I> </B> </P> 
+	 <UL> 
+		<LI> <A NAME="0004"><!--I OS/VS COBOL--></A>Most of the more commonly
+		  used extensions of IBM OS/VS COBOL (Release 2.3 and later) 
+		  <P></P></LI> 
+		<LI> <A NAME="0005"><!--I VS COBOL II--></A>Most of the language
+		  constructs of IBM VS COBOL II (all releases), IBM DOS/VS COBOL and IBM SAA
+		  AD/Cycle COBOL/370 
+		  <P></P></LI> 
+		<LI> <A NAME="0006"><!--I X/Open extensions--></A>X/Open conforming
+		  extensions 
+		  <P></P></LI> 
+		<LI>Extensions specific to this system. </LI> 
+	 </UL> 
+	 <P>Combinations of these extensions are permissible in program source.</P> 
+	 <P>The ANSI COBOL 1974 and 1985 modules that are fully implemented are:
+		</P> 
+	 <UL> 
+		<LI>Nucleus 
+		  <P></P></LI> 
+		<LI>Table Handling (In the Nucleus as of the ANSI'85 Standard) 
+		  <P></P></LI> 
+		<LI>Record Sequential I/O 
+		  <P></P></LI> 
+		<LI>Relative I/O 
+		  <P></P></LI> 
+		<LI>Indexed I/O 
+		  <P></P></LI> 
+		<LI>Sort-Merge 
+		  <P></P></LI> 
+		<LI>Segmentation 
+		  <P></P></LI> 
+		<LI>Library/Source Text Manipulation 
+		  <P></P></LI> 
+		<LI>Inter-Program Communication 
+		  <P></P></LI> 
+		<LI>Debug 
+		  <P></P></LI> 
+		<LI>Report Writer 
+		  <P></P></LI> 
+	 </UL>
+
+<!--{LI}COMMUNICATIONS (Full ANSI'74 support and ANSI'85 syntax support.)
+        
+        {P}{/P}{/LI}
+-->
+	 <UL> 
+		<LI>
+
+<!--DIAL TYPE=A-->
+		  <IMG SRC="diala.gif">Intrinsic Functions </LI> 
+	 </UL> 
+	 <P>This COBOL system meets the certification requirements for the above
+		modules of the COBOL Compiler Validation System (CCVS) of the U.S. Department
+		of Commerce, National Institute of Standards and Technology. </P> 
+	 <P>
+
+<!--DIAL TYPE=M-->
+		<IMG SRC="dialm.gif">A number of additional enhancements to the COBOL
+		language are present: </P> 
+	 <UL> 
+		<LI>A screen-handling module, comprising a Screen Section and additional
+		  formats of ACCEPT and DISPLAY statements, which enable the user to specify
+		  exact location of fields on a screen, accept data entered at specified
+		  positions, display literal text at specified positions, define screen
+		  attributes, and control console features. 
+		  <P></P></LI> 
+		<LI>Enhanced file I/O with an additional organization to
+		  handle text files efficiently; optional definition of file-names either within
+		  a program source (data variable or literal) or at run time from operating
+		  system environment variables; multiuser file-sharing facilities. 
+		  <P></P></LI> 
+		<LI>Systems programming extension which enhances interlanguage calls and
+		  supports recursive COBOL programs. </LI> 
+	 </UL> 
+	 <H2><A NAME="s003"><!--I Source;format--><!--I COBOL;source format-->Source Format</A></H2> 
+	 <P>Source code can be in </P> 
+	 <P>
+
+<!--DIAL TYPE=MX-->
+		<IMG SRC="dialmx.gif">free format or </P> 
+	 <P>fixed format. </P> 
+	 <H3><A NAME="s004"><!--I Fixed format-->Fixed Format</A></H3> 
+	 <P>In fixed format, the COBOL source format divides each COBOL source
+		record into 72 columns. These columns are used in the following way: </P> 
+	 <P></P> 
+	 <TABLE BORDER="0" WIDTH="100%"> 
+		<TR VALIGN="TOP"> 
+		  <TD ALIGN="LEFT" WIDTH="25%">Columns 1 - 6</TD> 
+		  <TD>Sequence number</TD> 
+		</TR> 
+		<TR VALIGN="TOP"> 
+		  <TD ALIGN="LEFT" WIDTH="25%">Column 7</TD> 
+		  <TD>Indicator area</TD> 
+		</TR> 
+		<TR VALIGN="TOP"> 
+		  <TD ALIGN="LEFT" WIDTH="25%">Column 8 - 11</TD> 
+		  <TD> <A NAME="0009"><!--I Area A--></A>Area A</TD> 
+		</TR> 
+		<TR VALIGN="TOP"> 
+		  <TD ALIGN="LEFT" WIDTH="25%">Columns 12 - 72</TD> 
+		  <TD> <A NAME="0010"><!--I Area B--></A>Area B</TD> 
+		</TR> 
+	 </TABLE> 
+	 <P>
+
+<!--DIAL TYPE=M-->
+		<IMG SRC="dialm.gif"> A COBOL source record can extend
+		up to a maximum of 80
+		columns in length. The contents of columns 73 to 80 are ignored by the
+		COBOL system. </P> 
+	 <H4><A NAME="s005"><!--I Sequence number-->Sequence Number</A></H4>
+	 
+	 <P>A sequence number of six digits can be used to identify each source
+		program line. </P> 
+	 <P>
+
+<!--DIAL TYPE=M-->
+		<IMG SRC="dialm.gif"> <A NAME="0012"><!--I Asterisk--><!--I Comment line--><!--I MFCOMMENT Compiler directive--><!--I Compiler directive;MFCOMMENT--></A>If
+		the first character position of the sequence number field contains an asterisk,
+		or any nonprinting control character (less than the character SPACE in the
+		ASCII collating sequence), then the line is treated as comment and is not
+		output to the listing file or device. This facility allows an output listing
+		file to be used as a source file to a subsequent compilation. </P> 
+	 <P>
+
+<!--DIAL TYPE=M-->
+		<IMG SRC="dialm.gif">This support is sensitive to the MFCOMMENT Compiler
+		directive. </P> 
+	 <P>
+
+<!--DIAL TYPE=A-->
+		<IMG SRC="diala.gif">The sequence number can contain any character in the
+		computer's character set. </P> 
+	 <H4><A NAME="s006"><!--I Indicator area-->Indicator Area</A></H4> 
+	 <P> <A NAME="0014"><!--I Asterisk--><!--I Comment line--></A>An asterisk
+		(*) in the indicator area marks the line as documentary comment only. Such a
+		comment line can appear anywhere in the program after the IDENTIFICATION
+		DIVISION header. Any characters from the ASCII character set can be included in
+		area A and area B of the line. </P> 
+	 <P>
+
+<!--DIAL TYPE=OVM-->
+		<IMG SRC="dialovm.gif"> A comment line can appear before the
+		IDENTIFICATION DIVISION header. </P> 
+	 <P>A slash (/) in the indicator area acts as a comment line above but
+		causes the page to eject before the
+		comment is printed.
+		</P> 
+	 <P> <A NAME="0015"><!--I Debugging;line--></A>A &quot;D&quot; or
+		&quot;d&quot; in the indicator area represents a debugging line. Areas A and B
+		can contain any valid COBOL sentence. </P> 
+	 <P> <A NAME="0016"><!--I Continuation of line--></A>A &quot;&#8211;&quot;
+		in the indicator area represents a continuation of the previous line without
+		spaces or the continuation of a nonnumeric literal (see
+		the section
+		<A HREF="lrcpro.htm#u070"><I>Continuation of
+		Lines</I></A> in the chapter <I>Language Fundamentals</I>). </P> 
+	 <P>
+
+<!--DIAL TYPE=M-->
+		<IMG SRC="dialm.gif"> A &quot;$&quot; in the indicator area indicates a
+		special line for setting directives or conditional compilation. </P> 
+	 <H4><A NAME="s007"><!--I Area A--><!--I Area B-->Areas A and B
+</A></H4> 
+	 <P>Section names and paragraph names begin in area A and are followed by a
+		period and a space. Level indicators FD, SD, CD and RD begin in area A and are
+		followed in area B. </P> 
+	 <P>
+
+<!--DIAL TYPE=A-->
+		<IMG SRC="diala.gif">or area A </P> 
+	 <P>by the appropriate description. Level numbers 01 and 77 begin in area A
+		and are followed in area B </P> 
+	 <P>
+
+<!--DIAL TYPE=A-->
+		<IMG SRC="diala.gif">or area A </P> 
+	 <P>by the data description. Level numbers 02 through 49, 66 and 88 begin in
+		area B. </P> 
+	 <P>
+
+<!--DIAL TYPE=M-->
+		<IMG SRC="dialm.gif">Level number 78 can begin in area A or area B. </P> 
+	 <P>
+
+<!--DIAL TYPE=M-->
+		<IMG SRC="dialm.gif">No rules regarding area A and area B are enforced
+		except in relation to comment-entries in the Identification Division. </P> 
+	 <P>
+
+<!--DIAL TYPE=MX-->
+		<IMG SRC="dialmx.gif">The concept of area A and area B is removed when
+		free format source code is used. See the next section in this chapter for
+		additional information on free format source code. </P> 
+	 <P>More than one sentence is permitted in each source record. </P> 
+	 
+		<H4><A NAME="u007">Sample Program</A></H4>
+	 
+		<P> <A NAME="0018"><!--I Source;format--></A>Figure&nbsp;1-1 shows the
+		  source of a typical program in fixed format. </P> 
+	 <PRE>000010 identification division. 
+000020 program-id. stock-file-set-up. 
+000030 author. MicroFocus. 
+000040 environment division. 
+000050 configuration section. 
+000060 source-computer. mds-800. 
+000070 object-computer. mds-800. 
+000075 special-names. console is crt. 
+000080 input-output section. 
+000090 file-control. 
+000100  select stock-file assign &quot;stock.it&quot; 
+000110  organization indexed 
+000120  access dynamic 
+000130  record key stock-code. 
+000140 data division. 
+000150 file section. 
+000160 fd   stock-file record 32. 
+000170 01   stock-item. 
+000180  02  stock-code       pic x(4). 
+000190  02  product-desc     pic x(24). 
+000200  02  unit-size        pic 9(4). 
+000210 working-storage section. 
+000220 01   screen-headings. 
+000230  02  ask-code pic x(21) value &quot;stock code    &lt;    &gt;&quot;.
+000240  02  filler   pic x(59). 
+000250  02  ask-desc pic x(16) value &quot;description   &lt;&quot;.
+000260  02  si-desc  pic x(25) value &quot;                 &gt;&quot;.
+000270  02  filler   pic x(39). 
+000280  02  ask-size pic x(21) value &quot;unit size &lt;    &gt;&quot;.
+000290 01   enter-it redefines screen-headings. 
+000300  02      filler       pic x(12). 
+000310  02  crt-stock-code   pic x(4).
+000320  02      filler       pic x(80). 
+000330  02  crt-prod-desc    pic x(24). 
+000340  02      filler       pic x(51). 
+000350  02  crt-unit-size    pic 9(4). 
+000360  02  filler           pic x. 
+000370 procedure division. 
+000380 sr1. 
+000390  display space. 
+000400  open i-o stock-file. 
+000410  display screen-headings. 
+000420 normal-input. 
+000430  move space to enter-it. 
+000440  display enter-it. 
+000450 correct-error.
+000460  accept enter-it. 
+000470  if crt-stock-code = space go to end-it. 
+000480  if crt-unit-size not numeric go to correct-error. 
+000490  move crt-prod-desc to product-desc. 
+000500  move crt-unit-size to unit-size. 
+000510  move crt-stock-code to stock-code. 
+000520  write stock-item invalid key go to correct-error. 
+000530  go to normal-input. 000540 end-it. 
+000550  close stock-file. 
+000560  display space. 
+000570  display &quot;end of program&quot;. 
+000580  stop run.
+&lt;----&gt;|&lt;--&gt;&lt;---------------------------------------------------------&gt;
+  |   | |     |
+  |   | |     +-- Columns 12-72 - Area B
+  |   | +-- Columns 8-11 - Area A
+  |   +-- Column 7 - Indicator Area
+  +-- Columns 1-6 - Sequence Numbers</PRE> 
+	 <P><B>Figure&nbsp;1-1: Sample program Listing Showing Source Format</B>
+		</P> 
+	 <H3><A NAME="u008"><!--I Free format--><!--I SOURCEFORMAT Compiler directive--><!--I Compiler directive;SOURCEFORMAT-->Free Format</A></H3> 
+	 <P>
+
+<!--DIAL TYPE=MX-->
+		<IMG SRC="dialmx.gif"> </P> 
+	 <P>Free format COBOL is selected using the SOURCEFORMAT&quot;FREE&quot;
+		directive. </P> 
+	 <P> <A NAME="0019"><!--I Asterisk--><!--I Comment line--><!--I Debugging;line--><!--I Comment-entry--></A>The
+		first six characters are considered part of the normal source line and may
+		contain COBOL source code. Column 1 takes the role of the indicator area as
+		follows: </P> 
+	 <P></P> 
+	 <TABLE BORDER="0" WIDTH="100%"> 
+		<TR VALIGN="TOP"> 
+		  <TD ALIGN="LEFT" WIDTH="25%">*</TD> 
+		  <TD ALIGN="LEFT">comment line</TD> 
+		</TR> 
+		<TR VALIGN="TOP"> 
+		  <TD ALIGN="LEFT" WIDTH="25%">/</TD> 
+		  <TD ALIGN="LEFT">comment line starting on a new page in the listing
+			 file</TD> 
+		</TR> 
+		<TR VALIGN="TOP"> 
+		  <TD ALIGN="LEFT" WIDTH="25%">D or d</TD> 
+		  <TD ALIGN="LEFT">followed by space, debugging line</TD> 
+		</TR> 
+		<TR VALIGN="TOP"> 
+		  <TD ALIGN="LEFT" WIDTH="25%">$</TD> 
+		  <TD ALIGN="LEFT">special line (for example, directive, conditional
+			 compilation)</TD> 
+		</TR> 
+		<TR VALIGN="TOP"> 
+		  <TD ALIGN="LEFT" WIDTH="25%">any other character</TD> 
+		  <TD ALIGN="LEFT">normal source line </TD> 
+		</TR> 
+	 </TABLE> 
+	 <P>There are no continuation lines. Continuation of alphanumeric literals
+		is achieved through concatenation (for example, &quot;A&quot; &amp;
+		&quot;B&quot;). </P> 
+	 <P>There is no distinction between area A and area B. </P> 
+	 <P>There is no fixed right margin, though for practical purposes this
+		implementation restricts the maximum length of a source line to 250 single-byte
+		or 125 double-byte characters. </P> 
+	 <P>Comment-entries are only allowed on the same line as the paragraph
+		header and must not continue onto another line.</P>
+
+<!--COPYRIGHT-->
+<HR><P STYLE="text-align:center;font-size:70%;">Copyright &copy; 2003 Micro Focus International Limited. All rights reserved.<BR>
+This document and the <A HREF="lrfrnt.htm#u001">proprietary marks and names</A>
+used herein are protected by international law.</P><HR>
+<!--/COPYRIGHT-->
+</BODY>
+</HTML>
