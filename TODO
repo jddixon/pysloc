@@ -1,5 +1,22 @@
 # ~/dev/py/pysloc/TODO
 
+2016-04-09
+    * NAME CONFLICT: data structure called langMap and file whose
+        name in pySLoc is langMap:
+
+    * change .langMap to add visibility middle column
+        - so line is FTYPE:VISIBILITY:FILE_NAME
+        - file:X:WHATEVER ignored for now
+            * becomes glob as in -X glob
+        - dir:tmp:WHATEVER also treated as glob
+
+2016-04-08
+    * add null counter
+    * introduce 'bin' pseudo-language meaning 'binary data'
+        - uses null counter
+    * introduce 'dat' pseudo-language meaning "text data"
+        - if on command line uses code counter, otherwise ignored
+
 2016-03-09 (edited from -02)
     * need commerntsForFortran   and test                               * DONE
     * need commerntsForFortran90 and test                               * DONE

@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.8.1
+    2016-04-09
+        * .langMap format change                                    SLOC 3378
 v0.8.0
     2016-04-08
         * replaced 'not#' pseudo-language  with 'code'
@@ -224,6 +227,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 
