@@ -11,12 +11,12 @@
 # sharp sign.
 
 # standard files 
+code:std:.fileMap
 txt:std:.gitignore
 txt:std:MANIFEST.in
 bash:std:auto8it
 bash:std:countem
 bash:std:installit
-code:std:.langMap
 bash:std:test.all
 
 # pairs specific to this project
