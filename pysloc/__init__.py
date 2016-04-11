@@ -45,8 +45,8 @@ __all__ = ['__version__', '__version_date__',
            ]
 
 # exported constants ------------------------------------------------
-__version__ = '0.8.2'
-__version_date__ = '2016-04-10'
+__version__      = '0.8.3'
+__version_date__ = '2016-04-11'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile(
@@ -691,7 +691,7 @@ def countLinesFortran(pathToFile, options, lang):
 
             options.already.add(hash)
             if options.verbose:
-                print("%-49s: %-4s %5d lines, %5d sloc" % (
+                print("%-47s: %-6s %5d lines, %5d sloc" % (
                     pathToFile, lang, linesSoFar, slocSoFar))
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
@@ -737,7 +737,7 @@ def countLinesFortran90(pathToFile, options, lang):
 
             options.already.add(hash)
             if options.verbose:
-                print("%-49s: %-4s %5d lines, %5d sloc" % (
+                print("%-47s: %-6s %5d lines, %5d sloc" % (
                     pathToFile, lang, linesSoFar, slocSoFar))
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
@@ -929,7 +929,7 @@ def countLinesJavaStyle(pathToFile, options, lang):
 
             options.already.add(hash)
             if options.verbose:
-                print("%-49s: %-4s %5d lines, %5d sloc" % (
+                print("%-47s: %-6s %5d lines, %5d sloc" % (
                     pathToFile, lang, linesSoFar, slocSoFar))
 
     except Exception as e:
@@ -1004,7 +1004,7 @@ def countLinesMatlab(pathToFile, options, lang):
 
             options.already.add(hash)
             if options.verbose:
-                print("%-49s: %-4s %5d lines, %5d sloc" % (
+                print("%-47s: %-6s %5d lines, %5d sloc" % (
                     pathToFile, lang, linesSoFar, slocSoFar))
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
@@ -1033,7 +1033,7 @@ def countLinesNotSharp(pathToFile, options, lang):
                     slocSoFar += 1
             options.already.add(hash)
             if options.verbose:
-                print("%-49s: %-4s %5d lines, %5d sloc" % (
+                print("%-47s: %-6s %5d lines, %5d sloc" % (
                     pathToFile, lang, linesSoFar, slocSoFar))
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
@@ -1108,7 +1108,7 @@ def countLinesOCaml(pathToFile, options, lang):
 
             options.already.add(hash)
             if options.verbose:
-                print("%-49s: %-4s %5d lines, %5d sloc" % (
+                print("%-47s: %-6s %5d lines, %5d sloc" % (
                     pathToFile, lang, linesSoFar, slocSoFar))
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
@@ -1137,7 +1137,7 @@ def countLinesDoubleDash(pathToFile, options, lang):
                     slocSoFar += 1
             options.already.add(hash)
             if options.verbose:
-                print("%-49s: %-4s %5d lines, %5d sloc" % (
+                print("%-47s: %-6s %5d lines, %5d sloc" % (
                     pathToFile, lang, linesSoFar, slocSoFar))
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
@@ -1208,7 +1208,7 @@ def countLinesOctave(pathToFile, options, lang):
 
             options.already.add(hash)
             if options.verbose:
-                print("%-49s: %-4s %5d lines, %5d sloc" % (
+                print("%-47s: %-6s %5d lines, %5d sloc" % (
                     pathToFile, lang, linesSoFar, slocSoFar))
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
@@ -1304,7 +1304,7 @@ def countLinesPascal(pathToFile, options, lang):
 
             options.already.add(hash)
             if options.verbose:
-                print("%-49s: %-4s %5d lines, %5d sloc" % (
+                print("%-47s: %-6s %5d lines, %5d sloc" % (
                     pathToFile, lang, linesSoFar, slocSoFar))
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
@@ -1385,7 +1385,7 @@ def countLinesPerl(pathToFile, options, lang):
                     slocSoFar += 1
             options.already.add(hash)
             if options.verbose:
-                print("%-49s: %-4s %5d lines, %5d sloc" % (
+                print("%-47s: %-6s %5d lines, %5d sloc" % (
                     pathToFile, lang, linesSoFar, slocSoFar))
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
@@ -1433,7 +1433,7 @@ def _countLinesPython(pathToFile, options, lang):
                         inTripleQuote = True
             options.already.add(hash)
             if options.verbose:
-                print("%-49s: %-4s %5d lines, %5d sloc" % (
+                print("%-47s: %-6s %5d lines, %5d sloc" % (
                     pathToFile, lang, linesSoFar, slocSoFar))
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
@@ -1518,7 +1518,7 @@ def countLinesRMarkdown(pathToFile, options, lang):
 
             options.already.add(hash)
             if options.verbose:
-                print("%-49s: %-4s %5d lines, %5d sloc" % (
+                print("%-47s: %-6s %5d lines, %5d sloc" % (
                     pathToFile, lang, linesSoFar, slocSoFar))
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
@@ -1559,7 +1559,7 @@ def countLinesScala(pathToFile, options, lang):
 
             options.already.add(hash)
             if options.verbose:
-                print("%-49s: %-4s %5d lines, %5d sloc" % (
+                print("%-47s: %-6s %5d lines, %5d sloc" % (
                     pathToFile, lang, linesSoFar, slocSoFar))
             if commentDepth > 0:
                 print("unclosed comment at end of %s" % pathToFile)
@@ -1717,7 +1717,7 @@ def countLinesSnobol(pathToFile, options, lang):
                     slocSoFar += 1
             options.already.add(hash)
             if options.verbose:
-                print("%-49s: %-4s %5d lines, %5d sloc" % (
+                print("%-47s: %-6s %5d lines, %5d sloc" % (
                     pathToFile, lang, linesSoFar, slocSoFar))
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
@@ -1750,7 +1750,7 @@ def countLinesTxt(pathToFile, options, lang):
                     slocSoFar += 1
             options.already.add(hash)
             if options.verbose:
-                print("%-49s: %-4s %5d lines, %5d sloc" % (
+                print("%-47s: %-6s %5d lines, %5d sloc" % (
                     pathToFile, lang, linesSoFar, slocSoFar))
     except Exception as e:
         print("error reading '%s', skipping: %s" % (pathToFile, e))
@@ -1798,8 +1798,9 @@ def countLinesXml(pathToFile, options, lang):
                     slocSoFar += 1
             options.already.add(hash)
             if options.verbose:
-                print("%-49s: %-4s %5d lines, %5d sloc" % (
+                print("%-47s: %-6s %5d lines, %5d sloc" % (
                     pathToFile, lang, lineCount, slocSoFar))
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
+

@@ -1,16 +1,16 @@
 # ~/dev/py/pysloc/TODO
 
+
+2016-04-11, edited from -09
+    * change .langMap to add visibility middle column                   * DONE
+        - so line is LANG:VISIBILITY:REL_PATH
+        - file:X:WHATEVER ignored for now
+            * becomes glob as in -X glob
 2016-04-10
     * BUG: code, bash, and other 'languages' being ignored by pySloc    * FIXED
 
 2016-04-09
     * NAME CONFLICT: data structure called langMap and file whose       * FIXED
-        name in pySLoc is langMap:                                      * FIXED
-
-    * change .langMap to add visibility middle column                   * DONE
-        - so line is FTYPE:VISIBILITY:FILE_NAME
-        - file:X:WHATEVER ignored for now
-            * becomes glob as in -X glob
         - dir:tmp:WHATEVER also treated as glob
 
 2016-04-08

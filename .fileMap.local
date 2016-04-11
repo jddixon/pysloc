@@ -1,31 +1,19 @@
-# ~/dev/py/pysloc/.langMap
+# ~/dev/py/pysloc/.langMap.local
 
-# All lines in this file must consist of a standard pySloc file short name
-# followed by a colon (':') followed by the name of a file.  This may be a 
-# path relative to the project directory.  Comments started with a sharp
-# sign ('#') are acceptable, as are blank lines.  It is not necessary but
-# it is recommended that the lines be sorted by file name
+# File descriptions which must be retained in .fileMap; a hints file.
+#
+# This file has the same structure as .fileMap and every non-comment line
+# in this file should appear in .fileMap.
 
-# 'code' is a valid "language"; it indicates that lines in a file can be
-# counted by skipping blank lines and ignoring comments beginning with a
-# sharp sign.  The pseudo-language formerly known as 'not#'.
-
-# standard files 
-code:std:.fileMap
-code:std:.fileMap.local
-txt:std:.gitignore
-txt:std:MANIFEST.in
-bash:std:auto8it
-bash:std:countem
-bash:std:installit
-bash:std:test.all
-
+# A list of mappings specific to this project where the mapping is not 
+# obvious follows.  These files are always counted by pySloc.
+#
 # the main executable
 py:global:pySloc
 #
 # directories
 dir:local:test
-
+# 
 # mappings specific to this project
 aug:local:commentsForAugeas
 cpp:local:commentsForCpp
@@ -69,3 +57,4 @@ occ:local:yyFoo.occ
 py:local:yyFoo.py
 sno:local:yyFoo.sno
 yacc:local:yyFoo.y
+

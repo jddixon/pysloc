@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.8.3
+    2016-04-11
+        * prettier file count listings; add .fileMap.local          SLOC 3457
 v0.8.2
     2016-04-10
         * .langMap renamed fileMap                                  SLOC 3380
@@ -230,6 +233,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 
