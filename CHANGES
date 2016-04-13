@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.8.4
+    2016-04-13
+        * rename .fileMap{,.local} to .projCfg{,.local}  :-(        SLOC 3457
 v0.8.3
     2016-04-11
         * prettier file count listings; add .fileMap.local          SLOC 3457
@@ -233,6 +236,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 
