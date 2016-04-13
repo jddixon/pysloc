@@ -11,8 +11,8 @@
 # sharp sign.  The pseudo-language formerly known as 'not#'.
 
 # standard files 
-code:std:.fileMap
-code:std:.fileMap.local
+code:std:.projCfg
+code:std:.projCfg.local
 txt:std:.gitignore
 txt:std:MANIFEST.in
 bash:std:auto8it

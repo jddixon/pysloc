@@ -1,9 +1,9 @@
 # ~/dev/py/pysloc/.langMap.local
 
-# File descriptions which must be retained in .fileMap; a hints file.
+# File descriptions which must be retained in .projCfg; a hints file.
 #
-# This file has the same structure as .fileMap and every non-comment line
-# in this file should appear in .fileMap.
+# This file has the same structure as .projCfg and every non-comment line
+# in this file should appear in .projCfg.
 
 # A list of mappings specific to this project where the mapping is not 
 # obvious follows.  These files are always counted by pySloc.
