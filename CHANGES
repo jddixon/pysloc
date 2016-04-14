@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.8.5
+    2016-04-14
+        * correct accumulation and handling of exclusions           SLOC 3464
 v0.8.4
     2016-04-13
         * rename .fileMap{,.local} to .projCfg{,.local}  :-(        SLOC 3457
@@ -236,6 +239,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 

@@ -45,8 +45,8 @@ __all__ = ['__version__', '__version_date__',
            ]
 
 # exported constants ------------------------------------------------
-__version__      = '0.8.4'
-__version_date__ = '2016-04-13'
+__version__ = '0.8.5'
+__version_date__ = '2016-04-14'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile(
@@ -1803,5 +1803,3 @@ def countLinesXml(pathToFile, options, lang):
     except Exception as e:
         print("error parsing '%s', skipping: %s" % (pathToFile, e))
     return lineCount, slocSoFar
-
-
