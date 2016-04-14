@@ -2,13 +2,14 @@
 
 # pySloc, part of pysloc
 
+import fnmatch
 import os
 import re
 import sys
 import time
+from argparse import ArgumentParser
 from stat import *
 
-from argparse import ArgumentParser
 from merkletree import MerkleDoc
 from pysloc import *
 
@@ -136,7 +137,7 @@ if __name__ == '__main__':
     parser = ArgumentParser(description=DESC)
 
     parser.add_argument('-C', '--langsCounted', nargs='?', const='all',
-        help='colon-separated list of langugages to be counted (abbrev)')
+                        help='colon-separated list of langugages to be counted (abbrev)')
     parser.add_argument('-c', '--projCfg', default='.projCfg',
                         help='file containing language/filename pairs')
     parser.add_argument('-j', '--justShow', action='store_true',
@@ -155,7 +156,7 @@ if __name__ == '__main__':
                         help='make me more chatty')
     parser.add_argument('-V', '--showVersion', action='store_true',
                         help='show version information')
-    parser.add_argument('-X', '--exclusions', type=str,
+    parser.add_argument('-X', '--exclusions', action='append',
                         help='do not count files/directories with matching names')
     parser.add_argument('-z', '--onlyNamedFiles', action='store_true',
                         help='only count files named on the command line')
@@ -172,11 +173,19 @@ if __name__ == '__main__':
     args.timestamp = "%04d%02d%02d-%02d%02d%02d" % time.gmtime()[:6]
 
     # fixups --------------------------------------------------------
+    args.exRE = None
     if args.exclusions:
-        # XXX for now, just handle a single exclusion
-        args.exRE = re.compile(args.exclusions)
-    else:
-        args.exRE = None
+        # assume that the exclusions are a list of globs ...
+        if len(args.exclusions) == 1:
+            exc = args.exclusions[0]
+        else:
+            exc = '|'.join(args.exclusions)
+        globs = fnmatch.translate(exc)
+        args.exRE = re.compile(globs)
+        # DEBUG
+        print("EXCLUSIONS: %s" % exc)
+        print("GLOBS: %s" % globs)
+        # END
 
     if args.quiet:
         args.verbose = 0
