@@ -8,9 +8,9 @@ import re
 import sys
 import time
 from argparse import ArgumentParser
+from xlattice.util import makeExRE
 from stat import *
 
-from merkletree import MerkleDoc
 from pysloc import *
 
 
@@ -173,19 +173,8 @@ if __name__ == '__main__':
     args.timestamp = "%04d%02d%02d-%02d%02d%02d" % time.gmtime()[:6]
 
     # fixups --------------------------------------------------------
-    args.exRE = None
-    if args.exclusions:
-        # assume that the exclusions are a list of globs ...
-        if len(args.exclusions) == 1:
-            exc = args.exclusions[0]
-        else:
-            exc = '|'.join(args.exclusions)
-        globs = fnmatch.translate(exc)
-        args.exRE = re.compile(globs)
-        # DEBUG
-        print("EXCLUSIONS: %s" % exc)
-        print("GLOBS: %s" % globs)
-        # END
+    # assume that the exclusions are a list of globs ...
+    args.exRE = makeExRE(args.exclusions)
 
     if args.quiet:
         args.verbose = 0
