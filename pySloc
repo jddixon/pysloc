@@ -34,7 +34,11 @@ def readFileMap(fileName, namedFiles):
             if line:
                 parts = line.split(':')
                 if len(parts) == 3:
-                    namedFiles.append(parts[0] + ':' + parts[2])
+                    item = parts[0] + ':' + parts[2]
+                    # DEBUG
+                    print("adding '%s' to named file list" % item)
+                    # END
+                    namedFiles.append(item)
                 else:
                     print("%s: can't interpret '%s'" % (fileName, line))
 
@@ -138,7 +142,7 @@ if __name__ == '__main__':
 
     parser.add_argument('-C', '--langsCounted', nargs='?', const='all',
                         help='colon-separated list of langugages to be counted (abbrev)')
-    parser.add_argument('-c', '--projCfg', default='.projCfg',
+    parser.add_argument('-c', '--projCfg', default='.dvcz/projCfg.local',
                         help='file containing language/filename pairs')
     parser.add_argument('-j', '--justShow', action='store_true',
                         help='list options and exit')

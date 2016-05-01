@@ -1,21 +1,23 @@
 # ~/dev/py/pysloc/TODO
 
+2016-04-26
+    * xml counter does not skip normal XML comments
 
 2016-04-11, edited from -09
     * change .langMap to add visibility middle column                   * DONE
-        - so line is LANG:VISIBILITY:REL_PATH
+        - so line is LANG:VISIBILITY:REL_PATH                           * YEP
         - file:X:WHATEVER ignored for now
-            * becomes glob as in -X glob
+            * becomes glob as in -X glob/NA
 2016-04-10
     * BUG: code, bash, and other 'languages' being ignored by pySloc    * FIXED
 
 2016-04-09
     * NAME CONFLICT: data structure called langMap and file whose       * FIXED
-        - dir:tmp:WHATEVER also treated as glob
+        - dir:tmp:WHATEVER also treated as glob                         * FIXED
 
 2016-04-08
     * add null counter
-    * introduce 'bin' pseudo-language meaning 'binary data'
+    * introduce 'bin' pseudo-language meaning 'binary data'             * DONE
         - uses null counter
     * introduce 'dat' pseudo-language meaning "text data"
         - if on command line uses code counter, otherwise ignored

@@ -1,8 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-cd /home/jdd/dev/py/pysloc
+cd $DEV_BASE/py/pysloc
 
-rm -rf build/*
+rm -rf build/* 
 
-# for normal use, drop the leading ./ and the -v option
-./pySloc -v -L py -X "junk*|test|dist|*.swp|*.pyc"  $@  
+pySloc  -X dist -v $@
