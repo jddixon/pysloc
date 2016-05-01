@@ -1,4 +1,4 @@
-# ~/dev/py/pysloc/.langMap.local
+# ~/dev/py/pysloc/.dvcz/projCfg.local
 
 # File descriptions which must be retained in .projCfg; a hints file.
 #
@@ -7,6 +7,19 @@
 
 # A list of mappings specific to this project where the mapping is not 
 # obvious follows.  These files are always counted by pySloc.
+#
+# this file and its cousin
+code:std:.dvcz/projCfg.local
+code:std:.dvcz/projCfg
+#
+## standard bash scripts for Python projects
+bash:std:auto8it
+bash:std:countem
+bash:std:installit
+bash:std:test.all
+#
+# other Python-specific files
+code:std:MANIFEST.in
 #
 # the main executable
 py:global:pySloc
