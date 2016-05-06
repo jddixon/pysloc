@@ -1,5 +1,8 @@
 # ~/dev/py/pys:loc/CHANGES
 
+v0.8.8
+    2016-05-06
+        * some restructuring of code                                SLOC 3577
 v0.8.7
     2016-05-01
         * modified to use .dvcz/projCfg.local                       SLOC 3503
@@ -245,6 +248,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 

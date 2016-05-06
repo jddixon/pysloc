@@ -1,17 +1,17 @@
 #!/usr/bin/python3
 
-# testXmlComments.py
-#
+# testR2CComments.py
+
 import os
 import sys
 import unittest
 from argparse import Namespace
 
 from pysloc import __version__, __version_date__
-from pysloc import countLinesInDir, countLinesXml, Q
+from pysloc import countLinesInDir, countLinesDoubleDash, Q
 
 
-class TestXmlComments (unittest.TestCase):
+class TestR2CComments (unittest.TestCase):
 
     def setUp(self):
         pass
@@ -23,19 +23,17 @@ class TestXmlComments (unittest.TestCase):
 
     # actual unit tests #############################################
 
-    def testXmlComments(self):
-        testFile = './commentsForXml'
+    def testNameToFuncMap(self):
+        testFile = './commentsForR2C'
         options = Namespace()
         options.already = set()
         options.exRE = None
         options.q = Q()
         options.verbose = False
 
-        # XXX possible error reading file, possible errors parsing data
-
-        lines, sloc = countLinesXml(testFile, options, 'xml')
-        self.assertEqual(lines, 29)
-        self.assertEqual(sloc, 6)
+        lines, sloc = countLinesDoubleDash(testFile, options, 'occ')
+        self.assertEqual(lines, 0)
+        self.assertEqual(sloc, 0)
 
 if __name__ == '__main__':
     unittest.main()

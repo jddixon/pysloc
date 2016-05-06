@@ -9,3 +9,21 @@ this junk is line 2, or should be
 <!-- nada --> line 3 <!-- more nada -->
 
 <this>is XML with <!-- an embedded -->  comment</this> line 4
+
+<!-- 
+a
+longer
+comment
+
+
+-->
+
+line 5 <!-- begins
+another longer 
+comment, one
+that also ends 
+with a 
+partial-comment --> This is NOT line 6 because the entire comment was removed
+<!--                including its newlines -->
+
+This is line 6 (out of 29).

@@ -1,7 +1,11 @@
 # ~/dev/py/pysloc/TODO
 
+2016-05-05
+    * edit countLinesXml() so that line6 in comments for Xml
+        is counted as a separate line (ie, is indeed line 6)
+
 2016-04-26
-    * xml counter does not skip normal XML comments
+    * xml counter does not skip normal XML comments                     * WRONG
 
 2016-04-11, edited from -09
     * change .langMap to add visibility middle column                   * DONE
