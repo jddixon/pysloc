@@ -14,14 +14,15 @@ from stat import *
 from pysloc import *
 
 
-def readFileMap(fileName, namedFiles):
+def readFileMap(options, namedFiles):
     """
     Read a file, stripping off comments beginning with sharp signs ('#')
     and dropping blank lines.  What remains should look like
     LANG:VISIBILITY:REL_PATH.  For the moment we ignore pseudo-languages
-    'file' and 'dir' and the visibility column.  Remaining items
-    XXX WORKING HERE
+    'file' and 'dir' and the visibility column. NOT TRUE: these are NOT
+    ignored.
     """
+    fileName = options.projCfg                  # actuall projCfg.local
     with open(fileName, 'rb') as f:
         data = f.read().decode('utf-8')
     if data:
@@ -29,14 +30,18 @@ def readFileMap(fileName, namedFiles):
         if lines[-1] == '':
             lines = lines[:-1]
         for line in lines:
+            # get rid of comments
             line, junk, trash = line.partition('#')
             line = line.strip()
             if line:
                 parts = line.split(':')
                 if len(parts) == 3:
-                    item = parts[0] + ':' + parts[2]
+                    # line is well-formed, by a crude standard
+                    eLang, viz, relPath = parts
+
+                    item = eLang + ':' + relPath
                     # DEBUG
-                    print("adding '%s' to named file list" % item)
+                    # print("adding '%s' to named file list" % item)
                     # END
                     namedFiles.append(item)
                 else:
@@ -52,7 +57,7 @@ def doCount(options):
     exRE = options.exRE
     justShow = options.justShow
     k = options.k
-    projCfg = options.projCfg
+    projCfg = options.projCfg           # this is projCfg.local
     langsCounted = options.langsCounted
     mainLang = options.mainLang
     matches = options.matches
@@ -71,7 +76,7 @@ def doCount(options):
     options.already = set()  # an unordered collection, not a dictionary
 
     if projCfg and os.path.exists(projCfg):
-        readFileMap(projCfg, namedFiles)
+        readFileMap(options, namedFiles)
 
     # if a file is named on the command line, we always count it.
     for name in namedFiles:

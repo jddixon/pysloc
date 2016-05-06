@@ -45,8 +45,8 @@ __all__ = ['__version__', '__version_date__',
            ]
 
 # exported constants ------------------------------------------------
-__version__ = '0.8.7'
-__version_date__ = '2016-05-01'
+__version__ = '0.8.8'
+__version_date__ = '2016-05-06'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile(
@@ -1796,6 +1796,9 @@ def countLinesXml(pathToFile, options, lang):
                 line = line.strip()
                 if len(line) > 0:
                     slocSoFar += 1
+                # DEBUG
+                # print(line)
+                # END
             options.already.add(hash)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
