@@ -14,7 +14,7 @@ from stat import *
 from pysloc import *
 
 
-def readFileMap(options, namedFiles):
+def readFileMap(pathToFile, namedFiles):
     """
     Read a file, stripping off comments beginning with sharp signs ('#')
     and dropping blank lines.  What remains should look like
@@ -22,8 +22,7 @@ def readFileMap(options, namedFiles):
     'file' and 'dir' and the visibility column. NOT TRUE: these are NOT
     ignored.
     """
-    fileName = options.projCfg                  # actuall projCfg.local
-    with open(fileName, 'rb') as f:
+    with open(pathToFile, 'rb') as f:
         data = f.read().decode('utf-8')
     if data:
         lines = data.split('\n')
@@ -45,7 +44,7 @@ def readFileMap(options, namedFiles):
                     # END
                     namedFiles.append(item)
                 else:
-                    print("%s: can't interpret '%s'" % (fileName, line))
+                    print("%s: can't interpret '%s'" % (pathToFile, line))
 
 
 def doCount(options):
@@ -76,7 +75,23 @@ def doCount(options):
     options.already = set()  # an unordered collection, not a dictionary
 
     if projCfg and os.path.exists(projCfg):
-        readFileMap(options, namedFiles)
+        readFileMap(options.projCfg, namedFiles)
+
+    configDir = os.path.join(os.environ['DVCZ_DIR'], 'config')
+    stdFiles = os.path.join(configDir, 'projCfg')
+    if stdFiles and os.path.exists(stdFiles):
+        readFileMap(stdFiles, namedFiles)
+    # DEBUG
+    else:
+        print("%s does not exist" % stdFiles)
+    # END
+    stdFilesForLang = os.path.join(configDir, 'projCfg.' + mainLang)
+    if stdFilesForLang and os.path.exists(stdFilesForLang):
+        readFileMap(stdFilesForLang, namedFiles)
+    # DEBUG
+    else:
+        print("%s does not exist" % stdFilesForLang)
+    # END
 
     # if a file is named on the command line, we always count it.
     for name in namedFiles:

@@ -1,5 +1,9 @@
 # ~/dev/py/pysloc/TODO
 
+2016-05-19
+    * options.already is set in many places but never used; if really
+        unused, drop it
+
 2016-05-05
     * edit countLinesXml() so that line6 in comments for Xml
         is counted as a separate line (ie, is indeed line 6)
