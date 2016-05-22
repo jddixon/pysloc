@@ -1,5 +1,9 @@
 # ~/dev/py/pysloc/TODO
 
+2016-05-21
+    * BUG: options.mainLang is sometimes '' at line 87 pySloc and
+        so pySloc tries to read "projCfg." which does not exist
+
 2016-05-19
     * options.already is set in many places but never used; if really
         unused, drop it

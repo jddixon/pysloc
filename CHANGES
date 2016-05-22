@@ -1,9 +1,12 @@
 # ~/dev/py/pys:loc/CHANGES
 
 v0.8.9
-    # XXX INSTALLED, NOT ON GITHUB XXX
     2016-05-19
         * used $DVCZ_DIR/config/projCfg[.,$LANG]                    SLOC 3559
+    2016-05-21
+        * corrected handling of missing mainLang                
+        * recovered accidentally deleted Scala counter              SLOC 4158
+        * fixed test.all, projCfg.local; updated bash scripts       SLOC 4229
 v0.8.8
     2016-05-06
         * some restructuring of code                                SLOC 3577

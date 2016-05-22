@@ -19,8 +19,7 @@ def readFileMap(pathToFile, namedFiles):
     Read a file, stripping off comments beginning with sharp signs ('#')
     and dropping blank lines.  What remains should look like
     LANG:VISIBILITY:REL_PATH.  For the moment we ignore pseudo-languages
-    'file' and 'dir' and the visibility column. NOT TRUE: these are NOT
-    ignored.
+    'file' and 'dir' and the visibility column.
     """
     with open(pathToFile, 'rb') as f:
         data = f.read().decode('utf-8')
@@ -85,13 +84,15 @@ def doCount(options):
     else:
         print("%s does not exist" % stdFiles)
     # END
-    stdFilesForLang = os.path.join(configDir, 'projCfg.' + mainLang)
-    if stdFilesForLang and os.path.exists(stdFilesForLang):
-        readFileMap(stdFilesForLang, namedFiles)
-    # DEBUG
+
+    if mainLang:
+        stdFilesForLang = os.path.join(configDir, 'projCfg.' + mainLang)
+        if stdFilesForLang and os.path.exists(stdFilesForLang):
+            readFileMap(stdFilesForLang, namedFiles)
+        else:
+            print("WARNING: %s does not exist" % stdFilesForLang)
     else:
-        print("%s does not exist" % stdFilesForLang)
-    # END
+        print("WARNING: no main language (-L) has been defined")
 
     # if a file is named on the command line, we always count it.
     for name in namedFiles:

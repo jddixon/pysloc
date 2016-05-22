@@ -29,6 +29,8 @@ dir:local:test
 # 
 # mappings specific to this project
 aug:local:commentsForAugeas
+# COBOL IS NOT YET SUPPORTED
+txt:local:commentsForCobol
 cpp:local:commentsForCpp
 css:local:commentsForCss
 for:local:commentsForFortran
@@ -38,8 +40,10 @@ gperf:local:commentsForGperf
 hs:local:commentsForHaskell
 html:local:commentsForHtml
 java:local:commentsForJava
-lisp:local:commentsForLisp
 json:local:commentsForJson
+txt:local:commentsForJson.LICENSE
+lisp:local:commentsForLisp
+txt:local:commentsForLisp.LICENSE
 matlab:local:commentsForMatlab
 ml:local:commentsForOCaml
 occ:local:commentsForOccam
