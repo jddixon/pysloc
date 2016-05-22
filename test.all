@@ -1,35 +1,42 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-
-cd ~/dev/py/pysloc
-
-./testAugeasComments.py
-./testCouldBeGenerated.py
-./testCppComments.py
-./testCssComments.py
-./testFortranComments.py
-./testFortran90Comments.py
-./testGoComments.py
-./testGperfComments.py
-./testHaskellComments.py
-./testHtmlComments.py
-./testJavaComments.py
-./testJsonComments.py
-./testK.py
-./testK.py
-./testLispComments.py
-./testMatlabComments.py
-./testOCamlComments.py
-./testOccamComments.py
-./testOctaveComments.py
-./testPascalComments.py
-./testPerlComments.py
-./testPyComments.py
-./testQ.py
-./testRMarkdownComments.py
-./testRe2CComments.py
-./testScalaComments.py
-./testSnoComments.py
-./testTeXComments.py
-./testTxtComments.py
-./testXmlComments.py
+if [ ! -z "${DEV_BASE// }" ]
+then
+  cd $DEV_BASE/py/pysloc
+  
+  ./testAugeasComments.py
+  ./testCouldBeGenerated.py
+  ./testCppComments.py
+  ./testCssComments.py
+  ./testFortran90Comments.py
+  ./testFortranComments.py
+  ./testGoComments.py
+  ./testGperfComments.py
+  ./testHaskellComments.py
+  ./testHtmlComments.py
+  ./testJavaComments.py
+  ./testJsonComments.py
+  ./testK.py
+  ./testLispComments.py
+  ./testMatlabComments.py
+  ./testOCamlComments.py
+  ./testOccamComments.py
+  ./testOctaveComments.py
+  ./testPascalComments.py
+  ./testPerlComments.py
+  ./testProtobufComments.py
+  ./testPyComments.py
+  ./testQ.py
+  ./testRe2CComments.py
+  ./testRMarkdownComments.py
+  ./testScalaComments.py
+  ./testSnoComments.py
+  ./testTeXComments.py
+  ./testTxtComments.py
+  ./testUncommentHtml.py
+  ./testUncommentJava.py
+  ./testXmlComments.py
+  
+else
+  echo "DEV_BASE is not defined"
+fi

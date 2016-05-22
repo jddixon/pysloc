@@ -46,7 +46,7 @@ __all__ = ['__version__', '__version_date__',
 
 # exported constants ------------------------------------------------
 __version__ = '0.8.9'
-__version_date__ = '2016-05-19'
+__version_date__ = '2016-05-21'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile(
@@ -1010,8 +1010,8 @@ def countLinesMatlab(pathToFile, options, lang):
         print("error reading '%s', skipping: %s" % (pathToFile, e))
     return linesSoFar, slocSoFar
 
-
 # NOT_SHARP =========================================================
+
 
 def countLinesNotSharp(pathToFile, options, lang):
     """
