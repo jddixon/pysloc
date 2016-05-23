@@ -1,5 +1,11 @@
 # ~/dev/py/pysloc/TODO
 
+2016-05-22
+    * pySloc fails to count userguide.xml, which begins with an
+        XML declaration line followed by 
+     <document> <header> ... </header>...<body>...</body></document>
+    * See discussion in pysloc/__init__.py 
+
 2016-05-21
     * BUG: options.mainLang is sometimes '' at line 87 pySloc and
         so pySloc tries to read "projCfg." which does not exist

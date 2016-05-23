@@ -60,6 +60,7 @@ sno:local:commentsForSno
 tex:local:commentsForTeX
 txt:local:commentsForTxt
 xml:local:commentsForXml
+xml:local:userguide.xml
 c:local:couldBeGenerated.pb-c.c
 c:local:couldBeGenerated.pb-c.h
 cpp:local:couldBeGenerated.pb.cpp
