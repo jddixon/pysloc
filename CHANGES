@@ -1,5 +1,8 @@
 # ~/dev/py/pys:loc/CHANGES
 
+v0.8.10
+    2016-05-22
+        * improved XML handling                                     sLOC 4260
 v0.8.9
     2016-05-19
         * used $DVCZ_DIR/config/projCfg[.,$LANG]                    SLOC 3559
@@ -255,6 +258,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 

@@ -45,8 +45,8 @@ __all__ = ['__version__', '__version_date__',
            ]
 
 # exported constants ------------------------------------------------
-__version__ = '0.8.9'
-__version_date__ = '2016-05-21'
+__version__ = '0.8.10'
+__version_date__ = '2016-05-22'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile(
@@ -1782,14 +1782,36 @@ def countLinesXml(pathToFile, options, lang):
                     text, Comment))
             [comment.extract() for comment in comments]
 
-            # soup begins with '<html><body><p>' and ends with
-            #</p></body></html> on a separate line.
+            # -------------------------------------------------------
+            # 2016:05:22 userguide.xml's soup begins with an XML decl line
+            # followed by
+            #  <html><body><document>
+            #  <header><title> ... </header>
+            #  <p>
+            #  </p>
+            #  <section> ...
+            #
+            # and ends with
+            #   <p>
+            #   The CryptoServer will continue to serve pages until you kill it.
+            #   </p>
+            #   </section>
+            #   </document>
+            #   </body></html>
+            # -------------------------------------------------------
 
-            elm = soup.html.body.p
+            # PREVIOUS UNDERSTANDING:
+            #   soup begins with '<html><body><p>' and ends with
+            #  </p></body></html> on a separate line.
+
+            # elm = soup.html.body.p
+
             # drop leading <p> and trailing </p>
-            stripped = str(elm)[3:-4]
+            # stripped = str(elm)[3:-4]
+            # lines = stripped.split('\n')
 
-            lines = stripped.split('\n')
+            elm = soup.html
+            lines = str(elm).split('\n')
 
             for line in lines:
                 # This could be made more efficient.

@@ -8,6 +8,7 @@ then
   ./testCouldBeGenerated.py
   ./testCppComments.py
   ./testCssComments.py
+  ./testFoo.py
   ./testFortran90Comments.py
   ./testFortranComments.py
   ./testGoComments.py
@@ -27,15 +28,17 @@ then
   ./testProtobufComments.py
   ./testPyComments.py
   ./testQ.py
-  ./testRe2CComments.py
   ./testRMarkdownComments.py
+  ./testRe2CComments.py
   ./testScalaComments.py
   ./testSnoComments.py
   ./testTeXComments.py
   ./testTxtComments.py
   ./testUncommentHtml.py
   ./testUncommentJava.py
+  ./testUserGuide.py
   ./testXmlComments.py
+  echo "CONGRATULATIONS: YOU HAVE OVERWRITTEN test.all"
   
 else
   echo "DEV_BASE is not defined"
