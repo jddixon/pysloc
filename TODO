@@ -1,18 +1,22 @@
 # ~/dev/py/pysloc/TODO
 
+2016-05-31
+    * get rid of "file does not exist: " messages                       * DONE
+    * "WARNING: no main language (-L) ..." also undesirable             * OK -v
+
 2016-05-22
-    * pySloc fails to count userguide.xml, which begins with an
-        XML declaration line followed by 
-     <document> <header> ... </header>...<body>...</body></document>
-    * See discussion in pysloc/__init__.py 
+    * pySloc fails to count userguide.xml, which begins with an			* FIXED
+        XML declaration line followed by 			                    * FIXED
+     <document> <header> ... </header>...<body>...</body></document>	* FIXED
+    * See discussion in pysloc/__init__.py 			                    * FIXED
 
 2016-05-21
-    * BUG: options.mainLang is sometimes '' at line 87 pySloc and
-        so pySloc tries to read "projCfg." which does not exist
+    * BUG: options.mainLang is sometimes '' at line 87 pySloc and       * FIXED
+        so pySloc tries to read "projCfg." which does not exist         * FIXED
 
 2016-05-19
-    * options.already is set in many places but never used; if really
-        unused, drop it
+    * options.already is set in many places but never used; if really   * IT IS
+        unused, drop it                                                 *  USED
 
 2016-05-05
     * edit countLinesXml() so that line6 in comments for Xml
@@ -26,80 +30,25 @@
         - so line is LANG:VISIBILITY:REL_PATH                           * YEP
         - file:X:WHATEVER ignored for now
             * becomes glob as in -X glob/NA
-2016-04-10
-    * BUG: code, bash, and other 'languages' being ignored by pySloc    * FIXED
-
-2016-04-09
-    * NAME CONFLICT: data structure called langMap and file whose       * FIXED
-        - dir:tmp:WHATEVER also treated as glob                         * FIXED
-
 2016-04-08
     * add null counter
-    * introduce 'bin' pseudo-language meaning 'binary data'             * DONE
-        - uses null counter
     * introduce 'dat' pseudo-language meaning "text data"
         - if on command line uses code counter, otherwise ignored
 
 2016-03-09 (edited from -02)
-    * need commerntsForFortran   and test                               * DONE
-    * need commerntsForFortran90 and test                               * DONE
-
-    FIXED FORM FORTRAN ('for')
-    * .f and .for for fixed-format source code                          * DONE
-    * fortran comments have C or c in the first column                  * DONE
-    * continuation lines have a character in position 6			        * DONE
-        - conventionally '+' 			                                * DONE
-        - alternative convention is '&' in column 73 and then in		* DONE
-            column 6 thereafter			                                * DONE
-    * source code starts in column 7 							        * DONE
-    * columns 73-80 are ignored							                * DONE
-    * spaces are simply ignored in fixed format							* DONE
-
-    FREE FORM FORTRAN ('for90plus')
-    * .f90 [, .f95, .f03, .f08, .f15, ...] for free-format source code  * DONE
-    * spaces are significant in free format code                        * SKIP
-    * source code starts in column 7 or after the first tab             * DONE
-        - no tabs may precede column 6                                  * SKIP
-    * some compilers allow BANG ('!') as a comment marker               * YEP
-        - anywhere but positions 6                                      * SKIP
-        - specifically allowed by Fortran 90 spec                       * YEP
-   
     PREPROCESSED FORTRAN
     * upper case extensions need to be be preprocessed by 
         C preprocessor (.F, .F90, perhaps others)
-
-2016-03-08
-    * need commentsForLisp and test                                     * DONE
-    * need commentsForPerl and test                                     * DONE
-    * need commentsForTeX and test                                      * DONE
-    * if mainLang is c, *.inc are counted as C                          * DONE
-    * if mainLang is cpp, *.inc are counted as C++                      * DONE
-
-2016-03-07
-    * need to be able to count *.tex                                    * DONE
 
 2016-03-04
     * command line summary (-h output) in README is out of date
     * README should make it clear that -X exclusions are regular
         eapressions
 
-2016-03-04 (edited from -03)		                                    * SKIP
-    * Note that continuation characters can be used to create what		* SKIP
-        amounts to a block comment (eg in Python if you precede line	* SKIP
-        with sharp sign (#) and then continue it, both lines should		* SKIP
-        be excluded from source line count).		                    * SKIP
-
 2016-03-03
     * RMarkdown counts should *include* inline R expressions
 
-2016-03-03 (from -02-10)
-    * most common use of *.m is probably with Objective C               * DONE
-    * add support for Objective C as objc                               * DONE
-        - if objc is mainLang count *.h and *.m as objc                 * DONE
-
 2016-03-03
-    * add ada; -- comments, *.adb or *.ads for extensions               * DONE
-    * add awk; # comments, *.awk                                        * DONE
     * add cobol;  cob (cbl, COB) extensions
         - if column 1 (begins sequence area) is asterisk or 
             non-printing char < SPACE, treat as comment
@@ -110,11 +59,6 @@
         - Cobol 2002 ignores *> and anything after it
         - supportline.microfocus.com/documentation/books/nx40/lrintr.htm
             is example
-    * lisp: comments start with semicolon                               * DONE
-        - or M-;                                                        * SKIP
-        - *.el Emacs Lisp   SKIP: too complicated                       * SKIP
-        - *.lisp                                                        * DONE
-
 
 2016-03-02 (edited from -01-16)
     * filters protobuf-generated files from line counts; and test		
@@ -128,7 +72,6 @@
 
 2016-02-05
     * add support for YAML 
-        - comments follow #, extend to end of line)                     * DONE
         - # MUST be preceded by whitespace
         - # inside string is ignored
         - *.Rmd of course contain YAML ...
