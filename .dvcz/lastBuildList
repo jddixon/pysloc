@@ -1,0 +1,215 @@
+-----BEGIN RSA PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoM2sBgX0ChP2JriXkOxS
+e2FjHYVzBGkNvgf0vIAa7FFYZi2pWmxBAVXgl3tTiB3quqqud/MbKqdejM6gkKBK
+v8f7hlcBQLD6BLIZ/RRfhIElc+WlDVfKSnBTB4va5qTQAgvuq5i8+oMj7G8WEy5d
+7cYucWyUJMtHvT4pCDtBWeeqQ62tByWjv34Ud/+A9Mjf0leiWxM3tiToVsqIKb4s
+zPjEShF9rvcNa9XEy1dKpcDz9Szbm2SlxOgM83fDDGtOq4SSCSqndtxrOvXXPB57
+H1mJV/FmerbXRPm5ERJVNIxtLk7Gr2Ce45FVlWyJGMhpfVlKkkk+bRQ02OFfazJI
+GQIDAQAB
+-----END RSA PUBLIC KEY-----
+pysloc v0.8.11
+2016-05-31 23:52:14
+# START CONTENT #
+pysloc
+ .copyright 40a152c0598a7da436fc48b2286fb14b4f2e9101
+ .dvcz
+  builds 27e3feeaf6906219a426da9f9638a7e9bd32b472
+  lastBuildList 6eb8c99ad99e652be42ab77246261f2ce1d53cca
+  projCfg c1a0bf6f628985621d8ef5824e2517afc0dd952a
+  projCfg.local 60b391c31a70f033ff5e9c69416f31ea1589bea7
+  version 3fb6a6b6b21a2653d5a6f8f3b6bc7a93db1e6a42
+ .gitignore 274228c81d7b75ce1888567cdfb763aacfcd74db
+ CHANGES 16b102a14fcf7b6ceb36675eda4795b68f119ede
+ LICENSE.md 7ff8ae89c5e4489f22b3a360a03225241877bc8d
+ MANIFEST.in 8ee6732d59f78c1aa02e2f1ddb3412fbcbe48936
+ OpenCOBOLProgrammersGuide.pdf b9d01f7a62de2c61b2d3469eb83c73c698987817
+ README.md 3451da7bdcae3ceac7decadf590eda4f10b021b0
+ TODO b1cc92fb8035fd5400b28a630a5b71bfb06074cf
+ auto8it 115cca2965b700b0ab4b20ae8bb26aa78b6ed053
+ bkp2U dca9a05cbb595039943e436eb95e565bf4ffef47
+ commentsForAugeas c7667859a9f87163f727addc197c64022cc27523
+ commentsForCobol 4f3810cc322c1bd4b6bb04c99053d84f13d83944
+ commentsForCpp 521280339e1ab1ec6381c3a05083fa2bc9b2830a
+ commentsForCss 018ed80b8a6e6607bc7c08595fa5a7fa56853885
+ commentsForFortran a6b841b6b629d5ba0ab1614fc535e43a35c0a636
+ commentsForFortran90 2cd550a7f99a014f8fc65b7b68fb3e7490d58d45
+ commentsForGo 3685c228a3a34492f992aca3905d507623920d39
+ commentsForGperf ec696fa0a644e957d9a95b50908d8fc36111bb9d
+ commentsForHaskell 09cae02d3af88f5bcdd4d645df6bbfa92ad2bc3d
+ commentsForHtml ffa00010b9757b5fde712da46cfa8c369081049a
+ commentsForJava b94c1074ec0e9fa9b0cfe316983c17292022c805
+ commentsForJson 71f62b2e35515616e43648da7f7379991e30583c
+ commentsForJson.LICENSE a13de95ef264dd40a1e84ee56b5018502d74041a
+ commentsForLisp 77b3fa831dd8856919837438f747f6412c82fa8b
+ commentsForLisp.LICENSE e6e3baa078365ca8625527639f5d3e5ffad094ff
+ commentsForMatlab fcff9e3e1169b9a94f353db18140c95d4cca8bb5
+ commentsForOCaml bea44d72530cbced3b66298b74b3296617d7c359
+ commentsForOccam b4d21f08e0b469b9e8a04b9e457faebeb737b2af
+ commentsForOctave c3081b9a753f79919bd27e87ee8127074baf3531
+ commentsForPHP 64bdd53b2aa74c5f695ed545fc3ac45f755a3448
+ commentsForPascal 8c850f381436498fac451b7f3e6e7c4a6b35027c
+ commentsForPerl 8eb051242e95796edbb33000cbd44b801d97be3c
+ commentsForProtobuf 6c50df9c67a7adf8af8ff8435d5eeab311962867
+ commentsForPy a7a1bcb367f37698d1d5f855e7ff6dcc7a476b0c
+ commentsForRMarkdown 0584ddd0684b98b2a60263638f7c5ed4e677d714
+ commentsForRe2c 57cb8a26213881ed3505cbd9c006f4bce7393a9a
+ commentsForScala 4af372d41e40835a6db9d6c0df5d63b98a3b0b85
+ commentsForSno da43b7afe9f0a573a57c9e576e2e56c74b1212e6
+ commentsForTeX abc2e72dbc374798000fb33c9cba09f80ed1500c
+ commentsForTxt cd19db0488e46180020d10069880de661b784fd7
+ commentsForXml da3a9759c6fb1673c2d8230e9f598547cba1ec21
+ couldBeGenerated.pb-c.c b290f506894e0609a4c1309dca86c504d4caa8a7
+ couldBeGenerated.pb-c.h 1d58d192c050fa672f1453488211523bead9c310
+ couldBeGenerated.pb.cpp 50ce7c5abdb0461e201ddb2ef5cafa64c83b3f0b
+ couldBeGenerated.pb.go 74a740d9f5ee1cd2804b019aebdc2edd9dda0784
+ couldBeGenerated.pb.h bb4c20740de8e1bdd94505c76afc6704f54c9e37
+ couldBeGeneratedProtos.java 4407b976c41cc0caa33ae85881b192d1145bf94b
+ couldBeGenerated_pb2.py cd15d4466c6f4bc6817bb63b72915e3fed75f906
+ countem 74df5a78f469b577ad2c8bb2a33f886aea0eb67e
+ dist
+  pysloc-0.1.0.tar.gz 89a0b0e946d5ea95759e56ae458cd7b3d5c0aa5a
+  pysloc-0.1.1.tar.gz 22d97eb2abefbc87f247f85bca2dcc027bb27c65
+  pysloc-0.1.2.tar.gz f5fbc9a8e70144bb45410d978ad4b4301a0f6e07
+  pysloc-0.1.3.tar.gz 9544868b991a5823e7b8400bce689593b59db9d0
+  pysloc-0.2.0.tar.gz 7d43910bdd8d76c28d2fd60187221b1b2522032b
+  pysloc-0.3.0.tar.gz 03cabf084137365f009e46326d2198fa1de2423f
+  pysloc-0.4.1.tar.gz a47f9599772c07a218e3a3e468d05d4fe4ec7f6b
+  pysloc-0.4.10.tar.gz 3b973d91811409fabfcab2f35b82fe7635fd5349
+  pysloc-0.4.11.tar.gz a1c4d6c487db08373a6de01e6c6906d3d0f3dc93
+  pysloc-0.4.12.tar.gz 56c19527324d26ca735ed5523bfe297d254ed097
+  pysloc-0.4.13.tar.gz 03a44113081948029c57cae189951c349441ac43
+  pysloc-0.4.14.tar.gz 9ca28acdfb91240c2e33fad4d36ced161cde207d
+  pysloc-0.4.15.tar.gz 20c09181d5f60ac61638ce9eafedb79879e0fd77
+  pysloc-0.4.16.tar.gz 008c4edeb2a2dc97ea35479c488472b8c9994499
+  pysloc-0.4.17.tar.gz 2fff535002792a74c95136618d92713e0eabd271
+  pysloc-0.4.18.tar.gz e8c5f26f06e2e5d5f213ad16b77d173f2fbd21a3
+  pysloc-0.4.19.tar.gz 74ce4a1b91d013f4c3312286a5edfb4f6cf81f73
+  pysloc-0.4.20.tar.gz a5248dfafd8ff46d8c9ccb35d035d81eec6a86ab
+  pysloc-0.4.21.tar.gz a86004d8cf294dae53ac850c2cc05c5a5e2cd81f
+  pysloc-0.4.22.tar.gz 62a2903ef374e403efca3a914ee154f5e7a3916b
+  pysloc-0.4.23.tar.gz b0d65fae66c6cff771075d226fc9b597c601c85e
+  pysloc-0.4.24.tar.gz c18ce20e429edad543d47ae9d447685a77bb034f
+  pysloc-0.4.25.tar.gz 549a90fe9a6780d69e48a00d35877daf2e8d3f09
+  pysloc-0.4.26.tar.gz c06bbe008da3ca572b666e1a3f56ed80e275db70
+  pysloc-0.4.28.tar.gz 02b95ae5436cc06c6faf783240242bc55aa2f482
+  pysloc-0.4.29.tar.gz 1bc62d37b844c64d48a79272e58e24bfe1edf150
+  pysloc-0.4.3.tar.gz 3061e41af1054b26bd45618fada817f250b013ed
+  pysloc-0.4.30.tar.gz 4db089c6a086f5fe58be48206b818aa368eae4c7
+  pysloc-0.4.31.tar.gz 6fded35a5feba3b7145724787c85deb23295a511
+  pysloc-0.4.32.tar.gz 91b77eceed0e9b351e4fd3af42c389732a7ba4e5
+  pysloc-0.4.33.tar.gz c4794a1fa259965c733ac77e9839171e8473709e
+  pysloc-0.4.34.tar.gz 9dd045ec8f70047d6d3d4b3586f713f4d30fac21
+  pysloc-0.4.35.tar.gz 698a52ff8863b15fac269cc512eef929d4975594
+  pysloc-0.4.36.tar.gz 89cf91da132ac27f8648c90a04a2ead6fb3b8788
+  pysloc-0.4.37.tar.gz 077b86ca8eb38aed2b2e01629ab83c8c0132bc19
+  pysloc-0.4.38.tar.gz 881dba7f956b6c04f85175980d07293d30fad1a8
+  pysloc-0.4.4.tar.gz 44383d6dcc2223e53329db6c3ef0445d7a8ee593
+  pysloc-0.4.5.tar.gz 328dd7eb9f0265ae85ce071bfc6723a9fa529f85
+  pysloc-0.4.6.tar.gz 615ef38358ead9d0c1756c7904ca58929446f5a1
+  pysloc-0.4.7.tar.gz 11070fab7a45438a511e6886b14f80100427866c
+  pysloc-0.4.8.tar.gz 11d4340e389411ad257761ff7615e569b437d91d
+  pysloc-0.4.9.tar.gz 671caef5f2bd31a36dcb9a4d0efbad14475e379a
+  pysloc-0.5.0.tar.gz c3ec4ca46c339cda24aa12fbc4e2c1f30524cf0a
+  pysloc-0.6.0.tar.gz 4b63ea8d95a4d42a1d36af7a548609ccd8690307
+  pysloc-0.6.1.tar.gz 76623c219b4881baad79d5f82ac4783539d21e74
+  pysloc-0.6.10.tar.gz 50818cce205ce48d3a26cdfeec3b802b73495308
+  pysloc-0.6.11.tar.gz e0fc8bb204cadce4652be208a284040dbc22d810
+  pysloc-0.6.13.tar.gz 9fa4e8a34ea74b92a2012927689fb427208090ea
+  pysloc-0.6.14.tar.gz 2d5f1dd2ac5e35d79a34b3e9c6ee56b4fc75a244
+  pysloc-0.6.15.tar.gz 816b8aeb4a5bb07b3750be9b4ab0d07cf2f70a34
+  pysloc-0.6.16.tar.gz ecadd28934fc888f972b44f30af229d6e4cb3c56
+  pysloc-0.6.17.tar.gz bb30d7ed39203c25de87d0ba9aee6be0c9d06ec5
+  pysloc-0.6.2.tar.gz 9fb2c63bbee6a1f7c40909b1b7dd186382594ba1
+  pysloc-0.6.3.tar.gz c0989582e507b13d1e9f1241f6040ff826d60f58
+  pysloc-0.6.4.tar.gz 82f6079e8d2e55b8dcd189b1d69c0a3de8afd4c9
+  pysloc-0.6.5.tar.gz 237e9357e04565cc33419ed773b742e84ee19640
+  pysloc-0.6.6.tar.gz 0ef9bbe1a30facd424d268fc78f6ea3263da62e4
+  pysloc-0.6.7.tar.gz 03fac16bee5895522401bc0ccf3ecf1e0d40a813
+  pysloc-0.6.8.tar.gz 3f0dd844ec4131b942e49b5dff0373e43f8d12bd
+  pysloc-0.6.9.tar.gz b73fd6a6edbd167a0cd43fc51206d96e6afcae8f
+  pysloc-0.7.0.tar.gz fc2faeb61d747739f8c538ff9f4dd56ed20647b1
+  pysloc-0.7.1.tar.gz 539e1620ce567cb453bce45be513f7b761703f53
+  pysloc-0.7.2.tar.gz 020d797d0dd78ec5d1b772282ab553854dbd2c0a
+  pysloc-0.7.3.tar.gz 70be82b7e884bdd12e94f002bc56818b5d2bd1c5
+  pysloc-0.7.4.tar.gz 3eaed90c36a575e4fd89413140280e6c8b363dbf
+  pysloc-0.7.5.tar.gz 25c927b5f04f71513adc2e1cdb8201333eed0d0f
+  pysloc-0.8.0.tar.gz e1b47676a11688fce010d1fc376569a981ed98d8
+  pysloc-0.8.1.tar.gz 75ad51729b6b543779a7d7e2681fb71e9debb165
+  pysloc-0.8.10.tar.gz 3e4c0ffe26a9804c8441bfc53e3ec7a568e490ff
+  pysloc-0.8.11.tar.gz b5c932a06e7effa9fac28b17715b0b0eff4c0dee
+  pysloc-0.8.2.tar.gz d917688e5d746132a074669d17dac7c62fd2c408
+  pysloc-0.8.3.tar.gz 5257b32a41f6f1e0726ac88a42e255ba282fcd8a
+  pysloc-0.8.4.tar.gz 4739ba9bfcc989349d808f79a862512d1765b1ee
+  pysloc-0.8.5.tar.gz 19fda4682a1fe394b6fa975375621238747a835c
+  pysloc-0.8.6.tar.gz ea73431d2349fc4a025122fac5c7bf330a54c9bb
+  pysloc-0.8.7.tar.gz fe7ecc621146da7635cf869b29a3060512438c36
+  pysloc-0.8.8.tar.gz 27d12a782a5ca9864b7897b1395064fc42035801
+  pysloc-0.8.9.tar.gz 09a6fc8878432eadd36a85ae7447af4101b91a32
+ ghpDoc
+  index.md f67ae9b702f31c8959a6e02c00bb5980d4a3e724
+ installit efaa7c546ff779b9615d1171ced81f84af299685
+ lrintr.htm 72cdcc4880767afe4ab827a30465d98c24b36a1c
+ pySloc b5aef5cc37d568c28398105c78f39aa8228c1a48
+ pysloc
+  __init__.py 9f0f6ce7c97e0831bbdc7315b9bfa56d0d872af2
+ setup.py 8082b8e7f837a83c4525a2583c30518824c5de30
+ styleit fd392b679c8bccfc1542d3af5eaf0f238fb3d918
+ test
+  8bit2.sno d071f3c133db505ad07d8472e4482f8fc97ce61d
+  build.xml f69dc1f55802516344ff29c00ac4865d32944be0
+  dupes
+   8bit2.sno d071f3c133db505ad07d8472e4482f8fc97ce61d
+  notMe.sno edad96e7d2ff582a67f8f61cc68e7e6fdfcff8d1
+  subdir
+   notMeEither.sno 3270b9f6c94eb4078c2e4f1b4c881c8c73b9ec8f
+   oneLiner.sno 77bdfd17b15c862b6b9483452199e18dc7c57476
+   subsubdir
+    twoLiner.sno 74b24c5bb8b430883ed92ebff0f3ed091fe14450
+ test.all 92f51fd50204ac9aa196e48f0de88bb51f198934
+ testAugeasComments.py 6e65a4f92b3674cf0400dd5c37f413d282cb0f40
+ testCouldBeGenerated.py 32c20374ce1c8e6ccbdeb6a54d4d25d156bc4d98
+ testCppComments.py b4aefffea13eb16d897c244592a33ce1f8c7f768
+ testCssComments.py ec646cd5c436350764a38acf823eedc50c2082f5
+ testFoo.py 916f387f197f9798a279ec17ad8a713c852ec58d
+ testFortran90Comments.py 456ace1383e53235642032f3047bf567acf2e719
+ testFortranComments.py bec4a148d8a68fb1db865c1c766c358b5103f2a1
+ testGoComments.py e272bdc10d9627e4b2183ab2528bd16a1e6a7bdd
+ testGperfComments.py d874f659c24371f4fb4b8218afab486d7e5a23da
+ testHaskellComments.py bfe5225e46641161ac27887026147baa2a085e98
+ testHtmlComments.py 12bf69a4f4c5a37d251ddfa541cca8fd1d8b48ad
+ testJavaComments.py bc5ddeb12abd29bf8b86519163112b7ab035b0e2
+ testJsonComments.py ec38fb201d8f72081142b7a337df8bfe322ac9c5
+ testK.py e10b5e5236c63651f906c1936254ef488056c8ff
+ testLispComments.py 92aaa655c07ce65960b9569335ae1b153d148da2
+ testMatlabComments.py 3f80b96a8f7395908262c79e4a5eb99ed08f58fc
+ testOCamlComments.py 23458f966049370422fc211c2295017dcb6d26e0
+ testOccamComments.py 5864e617c3abc27596bdfb95cd91c54bedc2cf84
+ testOctaveComments.py cdaede5d21c15f15631ad8b14e09cc3b0e544857
+ testPascalComments.py f34afdc60e4f5d68d59ddb881f20317dea91e0c3
+ testPerlComments.py 34fdb8ec7d056807fcd937654a52fffdb63ba248
+ testProtobufComments.py 47b8e882fb050978d58a14d85d29a8850e494739
+ testPyComments.py e103b01f6d80ea1abae789c83614db06171be6ab
+ testQ.py bbc6ff99d77455d6d2881d1126e07b6e5325f3bd
+ testRMarkdownComments.py 6e8b15ddc231b1e88f0a897a615a2202cc9af22e
+ testRe2CComments.py 60c508eb17f5ae1fd12bbe4adc4036079a790722
+ testScalaComments.py 4d74a3da1145e57aca9bf19b69b34d73d4988d7a
+ testSnoComments.py 6622e0aaa1d70a17dbb13253c406f2ccc86b7ac3
+ testTeXComments.py 2a3f2a71deb31e8e92c55140fdb95db2a91ac87d
+ testTxtComments.py a15fa729748d280eca7de80f7c33d8617f1b07f7
+ testUncommentHtml.py 540e4cfbbc11eb068b96194beddca173f5853f32
+ testUncommentJava.py 48618fd019d53c63faa1c6fae0200d886ccdb149
+ testUserGuide.py ad11c02b38e22fa1674101f6dea3e8649d51b72a
+ testXmlComments.py 6fd6a9bfb79eeeba177e8a3cc46b3baa8ffc8cbb
+ userguide.xml 4f15f8eb91f0bcaa83ad1b0dcb9a2686bdea1285
+ yyFoo 883520283ff24ba8df4240504d6de148c9272a0d
+ yyFoo.go 883520283ff24ba8df4240504d6de148c9272a0d
+ yyFoo.l 883520283ff24ba8df4240504d6de148c9272a0d
+ yyFoo.occ 883520283ff24ba8df4240504d6de148c9272a0d
+ yyFoo.py 916f387f197f9798a279ec17ad8a713c852ec58d
+ yyFoo.sno 883520283ff24ba8df4240504d6de148c9272a0d
+ yyFoo.txt afc063fd3868effc0b70a9a18fb45555e8e01a45
+ yyFoo.y 883520283ff24ba8df4240504d6de148c9272a0d
+ yyFoo_test.go 883520283ff24ba8df4240504d6de148c9272a0d
+# END CONTENT #
+
+SSIVMOzvm7yLqOkw1R9UvG+6q7lpTDHLofySQfAVLYrMrhVKhpxJtF2OgWsXCw1fPn2q9NmXwR3IMZuVf3hkPLroDMX7lv/UAlo0eJkH8i2CZZysG9gnnS4pzPEJc1FAML9p7TyVoTeQujEzrnaqoef02VkLEIIvemqpK0vCEPXffoBOmxLz+dOJjMKHt88ANciLgzct6L+NQwEKGyB5HxHhAiFY02fq5cOFpk3bkWWr1IIRhT8UicbsiIablfQWk3H0mfIEcDxuU1uSK4chzdrg26HmNL/SZ/zw7+H/uOLQyYRFZGRXjgQZ3wcYxmJ5pt+7OdWqJIbbJKJJB1vmqw==

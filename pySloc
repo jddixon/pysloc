@@ -92,7 +92,8 @@ def doCount(options):
         else:
             print("WARNING: %s does not exist" % stdFilesForLang)
     else:
-        print("WARNING: no main language (-L) has been defined")
+        if verbose:
+            print("WARNING: no main language (-L) has been defined")
 
     # if a file is named on the command line, we always count it.
     for name in namedFiles:
@@ -141,8 +142,8 @@ def doCount(options):
                 print("? don't know how to count %s" % name)
             lines += l
             sloc += s
-        else:
-            print("file does not exist: %s" % name)
+        # else:
+        #   print("file does not exist: %s" % name)
 
     # handle the current directory
     if not onlyNamedFiles:
