@@ -73,8 +73,19 @@ def doCount(options):
 
     options.already = set()  # an unordered collection, not a dictionary
 
+    # NAMED FILES ---------------------------------------------------
+
+    # source 1: the command line --------------------------
+
+    # At this point namedFiles contains those files named on the command
+    # line.  We always count these.
+
+    # source 2: .dvcz/projCfg.local -----------------------
+
     if projCfg and os.path.exists(projCfg):
         readFileMap(options.projCfg, namedFiles)
+
+    # source 3: /var/app/sharedev/config/projCfg ----------
 
     configDir = os.path.join(os.environ['DVCZ_DIR'], 'config')
     stdFiles = os.path.join(configDir, 'projCfg')
@@ -84,6 +95,8 @@ def doCount(options):
     else:
         print("%s does not exist" % stdFiles)
     # END
+
+    # source 4: /var/app/sharedev/config/projCfg.LANG -----
 
     if mainLang:
         stdFilesForLang = os.path.join(configDir, 'projCfg.' + mainLang)
@@ -95,7 +108,8 @@ def doCount(options):
         if verbose:
             print("WARNING: no main language (-L) has been defined")
 
-    # if a file is named on the command line, we always count it.
+    # END NAMED FILES -----------------------------------------------
+
     for name in namedFiles:
         lang, isTest = None, False
         if (exRE is not None) and (exRE.search(name) is not None):
