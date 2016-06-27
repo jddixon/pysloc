@@ -1,5 +1,15 @@
 # ~/dev/py/pysloc/TODO
 
+2016-06-15
+    * files matched by patterns in .gitignore (such as waf*) are 
+        counted but are not counted if the pattern follows -X
+        in the command line
+
+2016-06-09
+    * pySloc needs -P and -G options
+    * need to handle 'top' eLang (just don't set -L !)                  * DONE 
+    * need to handle 'ghp' eLang (just use 'html' instead !)            * DONE
+
 2016-05-31
     * get rid of "file does not exist: " messages                       * DONE
     * "WARNING: no main language (-L) ..." also undesirable             * OK -v
@@ -21,9 +31,6 @@
 2016-05-05
     * edit countLinesXml() so that line6 in comments for Xml
         is counted as a separate line (ie, is indeed line 6)
-
-2016-04-26
-    * xml counter does not skip normal XML comments                     * WRONG
 
 2016-04-11, edited from -09
     * change .langMap to add visibility middle column                   * DONE

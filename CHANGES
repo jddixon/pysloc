@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.8.12
+    2016-06-26
+        * add ghpDoc/{css,img}/                                     SLOC 4488
 v0.8.11
     2016-05-31
         * remove annoying messages                                  SLOC 4180
@@ -261,6 +264,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 
