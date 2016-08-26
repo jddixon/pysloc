@@ -7,7 +7,9 @@
 
 # A list of mappings specific to this project where the mapping is not 
 # obvious follows.  These files are always counted by pySloc.
-#
+
+txt:std:LICENSE-MIT.md
+
 # this file and its cousin
 code:std:.dvcz/projCfg.local
 code:std:.dvcz/projCfg

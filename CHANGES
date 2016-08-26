@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.8.13
+    2016-08-26
+        * fix license, setup.py                                     SLOC 4525
 v0.8.12
     2016-06-26
         * add ghpDoc/{css,img}/                                     SLOC 4488
@@ -264,6 +267,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 

@@ -17,9 +17,17 @@ setup(name='pysloc',
       packages=['pysloc'],
       # following could be in scripts/ subdir
       scripts=['pySloc', ],          # front end module(s)
-      # MISSING description
+      description='counts source lines of code for various languages',
+      url='https://jddixon.github.io/pysloc',
       classifiers=[
+          'Development Status :: 1 - Planning',
+          'Development Status :: 2 - Pre-Alpha',
+          'Development Status :: 3 - Alpha',
+          'Development Status :: 4 - Beta',
+          'Intended Audience :: Developers',
           'License :: OSI Approved :: MIT License',
-          'Programming Language :: Python :: 3',
+          'Natural Language :: English',
+          'Programming Language :: Python 3',
+          'Topic :: Software Development :: Libraries :: Python Modules',
       ],
       )

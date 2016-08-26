@@ -45,8 +45,8 @@ __all__ = ['__version__', '__version_date__',
            ]
 
 # exported constants ------------------------------------------------
-__version__ = '0.8.12'
-__version_date__ = '2016-06-26'
+__version__ = '0.8.13'
+__version_date__ = '2016-08-26'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile(
