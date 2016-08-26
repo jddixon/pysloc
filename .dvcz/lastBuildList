@@ -7,24 +7,25 @@ zPjEShF9rvcNa9XEy1dKpcDz9Szbm2SlxOgM83fDDGtOq4SSCSqndtxrOvXXPB57
 H1mJV/FmerbXRPm5ERJVNIxtLk7Gr2Ce45FVlWyJGMhpfVlKkkk+bRQ02OFfazJI
 GQIDAQAB
 -----END RSA PUBLIC KEY-----
-pysloc v0.8.12
-2016-06-27 02:53:54
-# START CONTENT #
+pysloc v0.8.13
+2016-08-26 18:40:11
+# BEGIN CONTENT #
 pysloc
- .copyright 40a152c0598a7da436fc48b2286fb14b4f2e9101
  .dvcz
-  builds 67f62e74e8757c5d051f6381ac5902d577c57f52
-  lastBuildList 2bf18b0c2934a95f218103d04cd3ab3b8c92ed76
-  projCfg d05374742ae57fecdbe8723dffc1a198470c2d8a
-  projCfg.local 60b391c31a70f033ff5e9c69416f31ea1589bea7
-  version e65f67ee009025f171e462c3ac4a4bd3368d6315
+  builds 7c0bd79d428e14d56a14ee1e6ec252f78fbb95d6
+  copyright 40a152c0598a7da436fc48b2286fb14b4f2e9101
+  lastBuildList 706b48305539425c0a3441ec7374847c6c91e554
+  license 5977a55c75bb4612004451a56b0b4c22d9d3311d
+  projCfg 1c68d1db8b6e2bd2f36fca38fe745b901f791e3e
+  projCfg.local 3c2553d787a9b2cb4e6f544241c988ee443ede81
+  version b956227f9763ad862e18024fc44c773eb6fc808d
  .gitignore 5f1a04317952b671c5828218c6efe88c2594f8fb
- CHANGES 8d5d7b7a3ff117a3828b981c385daf743f626c2a
- LICENSE.md 7ff8ae89c5e4489f22b3a360a03225241877bc8d
+ CHANGES 43889d1db63c77d62316601a7c1847634b075f2d
+ LICENSE-MIT.md 7ff8ae89c5e4489f22b3a360a03225241877bc8d
  MANIFEST.in 8ee6732d59f78c1aa02e2f1ddb3412fbcbe48936
  OpenCOBOLProgrammersGuide.pdf b9d01f7a62de2c61b2d3469eb83c73c698987817
  README.md 3451da7bdcae3ceac7decadf590eda4f10b021b0
- TODO d5b1c1de8248bd7187439497e9a66399aa4c0f70
+ TODO ff133c6fec248745d9ae65cc2a78e3b6ae39b473
  auto8it 115cca2965b700b0ab4b20ae8bb26aa78b6ed053
  bkp2U dca9a05cbb595039943e436eb95e565bf4ffef47
  commentsForAugeas c7667859a9f87163f727addc197c64022cc27523
@@ -65,7 +66,7 @@ pysloc
  couldBeGenerated.pb.h bb4c20740de8e1bdd94505c76afc6704f54c9e37
  couldBeGeneratedProtos.java 4407b976c41cc0caa33ae85881b192d1145bf94b
  couldBeGenerated_pb2.py cd15d4466c6f4bc6817bb63b72915e3fed75f906
- countem 74df5a78f469b577ad2c8bb2a33f886aea0eb67e
+ countem 26b1843ae462eea7d9f86eb57c17188157b80145
  dist
   pysloc-0.1.0.tar.gz 89a0b0e946d5ea95759e56ae458cd7b3d5c0aa5a
   pysloc-0.1.1.tar.gz 22d97eb2abefbc87f247f85bca2dcc027bb27c65
@@ -138,6 +139,7 @@ pysloc
   pysloc-0.8.10.tar.gz 3e4c0ffe26a9804c8441bfc53e3ec7a568e490ff
   pysloc-0.8.11.tar.gz b5c932a06e7effa9fac28b17715b0b0eff4c0dee
   pysloc-0.8.12.tar.gz 11b33ae78b7c22c9696024c784319200ad0c1af3
+  pysloc-0.8.13.tar.gz eadd38d6860415e33275a868ff0c7dc23eae5780
   pysloc-0.8.2.tar.gz d917688e5d746132a074669d17dac7c62fd2c408
   pysloc-0.8.3.tar.gz 5257b32a41f6f1e0726ac88a42e255ba282fcd8a
   pysloc-0.8.4.tar.gz 4739ba9bfcc989349d808f79a862512d1765b1ee
@@ -165,8 +167,8 @@ pysloc
  lrintr.htm 72cdcc4880767afe4ab827a30465d98c24b36a1c
  pySloc 78a4d15ce56ab730f2c125c4c943c0f6757bb8f5
  pysloc
-  __init__.py c31d777e4ff6c829ee33cc58f9135bf0d102c36a
- setup.py 786a4cca3b0308d27d064c9d302b6637d1b7ec08
+  __init__.py 3fa73ed90ec9b8cc14810e488d18ced89e27ba8a
+ setup.py c55c5a7b355730cc492c3d314a54969b4de64ece
  styleit fd392b679c8bccfc1542d3af5eaf0f238fb3d918
  test
   8bit2.sno d071f3c133db505ad07d8472e4482f8fc97ce61d
@@ -226,4 +228,4 @@ pysloc
  yyFoo_test.go 883520283ff24ba8df4240504d6de148c9272a0d
 # END CONTENT #
 
-eToujQpVfQVaPgCcw76+epzQnQp9unlNOJAVKrqwGXXwH4+B7zccOIEo/8lZlfqkPxpVphRPsWf7z/5K4gP4Lc9ikXSbLGWM6Of2/1TrBAbdKiOU7RaOa2yvlh07XbXkVsKvTHIULScYKtQLWiTUOHX3R3SoGn8Adls++6RzSHS92QGVUYrY+8yxui3BPwdsqsgplohkoEoc0DUDoH+zo7LL+F9BlOz0Ep+GVrfzVQhrS0+8oOzY6O7q3Btlzlz05KZsQbAGWaysyudlRRRjqiswCM7h+mO/aBv0/bZAC59Nv1VCeEvTFtUKm6JbdR+AifbiT2ikMP8PC8oQGraFng==
+aZTQfLCfuKUL+aXYSZ97+W7b+pebH7FnY8RHpBWP1w2PQ52L2ovnRLbHx0pzy+QBF9cbe6F/fECorp78wZWYWMkciuJ+MhKE/SEJy77KFoysWHoWmuZIsunoUtSCnY9Mze3lVod+cL0J0WYWs7vN2Z0FbcKXV1+Ts5DHVlskBi8o9SYNAPIxbDiLRmbZKpu4yAil57bTtj/GptpTTFmZgFgdr6V6irzIqFUZb5Q6aSgLfhEs+ff+f9yjdwKaXZfbsiz/xzpZmnymjGYh6MXQNSqWY47XgX0q5iDA4MBx1BF9xfUoY0KQQt7Yz1Bor42Ske/5nucMzHqDl9gHP/OFoA==
