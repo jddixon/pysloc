@@ -6,7 +6,7 @@
 # in this file should appear in .projCfg.
 
 # A list of mappings specific to this project where the mapping is not 
-# obvious follows.  These files are always counted by pySloc.
+# obvious follows.  These files are always counted by runpysloc.
 
 txt:std:LICENSE-MIT.md
 
@@ -15,7 +15,7 @@ code:std:.dvcz/projCfg.local
 code:std:.dvcz/projCfg
 #
 # the main executable
-py:global:pySloc
+py:global:runpysloc
 #
 # directories
 dir:pkg:pysloc
@@ -62,11 +62,11 @@ cpp:local:couldBeGenerated.pb.h
 go:local:couldBeGenerated.pb.go
 py:local:couldBeGenerated_pb2.py
 java:local:couldBeGeneratedProtos.java
-txt:local:yyFoo
-go:local:yyFoo.go
-lex:local:yyFoo.l
-occ:local:yyFoo.occ
-py:local:yyFoo.py
-sno:local:yyFoo.sno
-yacc:local:yyFoo.y
+txt:local:yy_foo
+go:local:yy_foo.go
+lex:local:yy_foo.l
+occ:local:yy_foo.occ
+py:local:yy_foo.py
+sno:local:yy_foo.sno
+yacc:local:yy_foo.y
 

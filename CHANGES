@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.8.14
+    2016-10-17
+        * add pylint, coverage; rename files per PEP 8              SLOC 4465
 v0.8.13
     2016-08-26
         * fix license, setup.py                                     SLOC 4525
@@ -267,6 +270,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 

@@ -4,7 +4,7 @@ if [ ! -z "${DEV_BASE// }" ]
 then
   cd $DEV_BASE/py/pysloc
   
-  autopep8 -ai -r pysloc commentsForPy pySloc *.py
+  autopep8 -ai -r pysloc commentsForPy runpysloc *.py
   echo "not styling test/ subdir"
   
 else
