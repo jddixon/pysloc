@@ -4,40 +4,40 @@ if [ ! -z "${DEV_BASE// }" ]
 then
   cd $DEV_BASE/py/pysloc
   
-  ./testAugeasComments.py
-  ./testCouldBeGenerated.py
-  ./testCppComments.py
-  ./testCssComments.py
-  ./testFoo.py
-  ./testFortran90Comments.py
-  ./testFortranComments.py
-  ./testGoComments.py
-  ./testGperfComments.py
-  ./testHaskellComments.py
-  ./testHtmlComments.py
-  ./testJavaComments.py
-  ./testJsonComments.py
-  ./testK.py
-  ./testLispComments.py
-  ./testMatlabComments.py
-  ./testOCamlComments.py
   ./testOccamComments.py
   ./testOctaveComments.py
-  ./testPascalComments.py
-  ./testPerlComments.py
   ./testProtobufComments.py
   ./testPyComments.py
-  ./testQ.py
-  ./testRMarkdownComments.py
-  ./testRe2CComments.py
-  ./testScalaComments.py
-  ./testSnoComments.py
-  ./testTeXComments.py
-  ./testTxtComments.py
-  ./testUncommentHtml.py
-  ./testUncommentJava.py
-  ./testUserGuide.py
-  ./testXmlComments.py
+  ./test_augeas_comments.py
+  ./test_could_be_generated.py
+  ./test_cpp_comments.py
+  ./test_css_comments.py
+  ./test_foo.py
+  ./test_fortran90_comments.py
+  ./test_fortran_comments.py
+  ./test_go_comments.py
+  ./test_gperf_comments.py
+  ./test_haskell_comments.py
+  ./test_html_comments.py
+  ./test_java_comments.py
+  ./test_json_comments.py
+  ./test_k.py
+  ./test_lisp_comments.py
+  ./test_matlab_comments.py
+  ./test_ocaml_comments.py
+  ./test_pascal_comments.py
+  ./test_perl_comments.py
+  ./test_q.py
+  ./test_r_markdown_comments.py
+  ./test_re2c_comments.py
+  ./test_scala_comments.py
+  ./test_snobol_comments.py
+  ./test_tex_comments.py
+  ./test_txt_comments.py
+  ./test_uncomment_html.py
+  ./test_uncomment_java.py
+  ./test_user_guide.py
+  ./test_xml_comments.py
   
 else
   echo "DEV_BASE is not defined"

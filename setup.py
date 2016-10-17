@@ -16,7 +16,7 @@ setup(name='pysloc',
       py_modules=[],
       packages=['pysloc'],
       # following could be in scripts/ subdir
-      scripts=['pySloc', ],          # front end module(s)
+      scripts=['runpysloc', ],          # front end module(s)
       description='counts source lines of code for various languages',
       url='https://jddixon.github.io/pysloc',
       classifiers=[
