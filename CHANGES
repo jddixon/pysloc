@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.8.15
+    2016-10-22
+        * add support for rust                                      SLOC 4842
 v0.8.14
     2016-10-17
         * add pylint, coverage; rename files per PEP 8              SLOC 4465
@@ -270,6 +273,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 
