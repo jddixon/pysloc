@@ -33,6 +33,7 @@ __all__ = ['__version__', '__version_date__',
            'countLinesProtobuf',
            'countLinesPython',
            'countLinesRMarkdown',
+           'countLinesRust',
            'countLinesRe2c',
            'countLinesRuby',
            'countLinesScala', 'countLinesShell',
@@ -45,8 +46,8 @@ __all__ = ['__version__', '__version_date__',
            ]
 
 # exported constants ------------------------------------------------
-__version__ = '0.8.14'
-__version_date__ = '2016-10-17'
+__version__ = '0.8.15'
+__version_date__ = '2016-10-22'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile(
@@ -199,6 +200,7 @@ class Q(object):
             'Rmd': countLinesRMarkdown,
             're2c': countLinesRe2c,         # re2c
             'rb': countLinesRuby,           # ruby
+            'rs': countLinesRust,           # rust
             'scala': countLinesScala,
             'sed': countLinesNotSharp,      # stream editor
             'sh': countLinesShell,          # shell script
@@ -223,6 +225,7 @@ class Q(object):
             'c': 'c',                      # ansi c
             'C': 'cpp',                    # C++
             'cc': 'cpp',                    # C++
+            'code': 'code',                 # comments begin with sharp sign, #
             'cp': 'cpp',                    # C++
             'cpp': 'cpp',                    # C++
             'CPP': 'cpp',                    # C++
@@ -254,7 +257,6 @@ class Q(object):
             'md': 'md',                     # no counter
             'ml': 'ml',                     # OCaml
             'mli': 'ml',                     # OCaml extension
-            'code': 'code',
             'occ': 'occ',
             'pl': 'perl',
             'pm': 'perl',
@@ -265,6 +267,7 @@ class Q(object):
             'Rmd': 'Rmd',                    # RMarkdown
             'rb': 'rb',
             're': 're2c',                   # same counter as C, Java ?
+            'rs': 'rs',                     # rust, comments start with //
             'S': 'asm',
             's': 'asm',
             'scala': 'scala',
@@ -333,6 +336,7 @@ class Q(object):
             'Rmd': 'R Markdown',
             're2c': 're2c',
             'rb': 'ruby',
+            'rs': 'rust',
             'scala': 'scala',
             'sed': 'sed',
             'sh': 'shell',
@@ -1531,6 +1535,36 @@ def countLinesRuby(pathToFile, options, lang):
     linesSoFar, slocSoFar = (0, 0)
     if not pathToFile.endswith('.pb.rb'):
         linesSoFar, slocSoFar = countLinesNotSharp(pathToFile, options, lang)
+    return linesSoFar, slocSoFar
+
+# RUST ==============================================================
+
+
+def countLinesRust(pathToFile, options, lang):
+    """
+    Count lines in a file where doubled forward slashes ('//') are the comment
+    marker.  That is, we ignore blank lines, lines consisting solely of
+    spaces, and those starting with zero or more spaces followed by
+    doubled slashes.  Documentation lines beginning with '///' are treated as
+    comments.
+    """
+
+    linesSoFar, slocSoFar = (0, 0)
+    try:
+        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        if (hash is not None) and (lines is not None):
+            for line in lines:
+                linesSoFar += 1         # this counts every line
+                # This could be made more efficient.
+                line = line.strip()
+                if len(line) > 0 and not line.startswith('//'):
+                    slocSoFar += 1      # this counts source lines
+            options.already.add(hash)
+            if options.verbose:
+                print("%-47s: %-6s %5d lines, %5d sloc" % (
+                    pathToFile, lang, linesSoFar, slocSoFar))
+    except Exception as e:
+        print("error reading '%s', skipping: %s" % (pathToFile, e))
     return linesSoFar, slocSoFar
 
 # SHELL =============================================================

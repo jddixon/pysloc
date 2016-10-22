@@ -49,6 +49,7 @@ proto:local:commentsForProtobuf
 py:local:commentsForPy
 r2c:local:commentsForRe2c
 Rmd:local:commentsForRMarkdown
+rs:local:commentsForRust
 scala:local:commentsForScala
 sno:local:commentsForSno
 tex:local:commentsForTeX

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# pySloc, part of pysloc
+# runpysloc, part of pysloc
 
 import fnmatch
 import os
@@ -251,7 +251,7 @@ if __name__ == '__main__':
 
     # chatter -------------------------------------------------------
     if args.showVersion:
-        print('pySloc v%s %s' % (__version__, __version_date__))
+        print('runpysloc v%s %s' % (__version__, __version_date__))
         sys.exit()
     if args.justShow or (args.verbose > 1):
 

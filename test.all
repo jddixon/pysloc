@@ -12,7 +12,6 @@ then
   ./test_could_be_generated.py
   ./test_cpp_comments.py
   ./test_css_comments.py
-  ./test_foo.py
   ./test_fortran90_comments.py
   ./test_fortran_comments.py
   ./test_go_comments.py
@@ -30,6 +29,7 @@ then
   ./test_q.py
   ./test_r_markdown_comments.py
   ./test_re2c_comments.py
+  ./test_rust_comments.py
   ./test_scala_comments.py
   ./test_snobol_comments.py
   ./test_tex_comments.py

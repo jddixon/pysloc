@@ -65,6 +65,7 @@ Languages currently covered include, by short name,
 * **Rmd**,  R Markdown, which combines Markdown and R code
 * **rb**,	Ruby
 * **re2c**,	tool for writing fast lexers
+* **rs**,   the Rust system programming language
 * **scala**,Scala
 * **sed**,	the language for `sed` scripts used to edit files from the command line
 * **sh**,	bash or the shell, `sh`
