@@ -46,8 +46,8 @@ __all__ = ['__version__', '__version_date__',
            ]
 
 # exported constants ------------------------------------------------
-__version__ = '0.8.15'
-__version_date__ = '2016-10-22'
+__version__ = '0.8.16'
+__version_date__ = '2016-11-16'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile(
@@ -156,7 +156,7 @@ class Q(object):
     __all__ = ['ext2lang',
                'getCounter', 'getLongName',
                'langMap',
-               'nonCodeExt', 'notCodeFile',
+               'nonCodeExt', 'nonCodeFile',
                ]
 
     def __init__(self, mainLang=''):
@@ -177,6 +177,7 @@ class Q(object):
             'cpp': countLinesCpp,           # C++
             'csh': countLinesNotSharp,      # csh, tcsh
             'css': countLinesJavaStyle,     # css, as in stylesheets
+            'cython': countLinesPython,
             'f90+': countLinesFortran90,    # FORTRAN90 plus
             'for': countLinesFortran,       # fixed-format FORTRAN
             'gen': countLinesNotSharp,      # treat # as comment
@@ -261,7 +262,9 @@ class Q(object):
             'pl': 'perl',
             'pm': 'perl',
             'proto': 'proto',                  # Google protobuf
+            'pxd': 'cython',                # cython header
             'py': 'py',
+            'pyx': 'cython',                # cython code
             'R': 'R',                      # R programming language
             'r': 'R',                      # R programming language
             'Rmd': 'Rmd',                    # RMarkdown
@@ -312,6 +315,7 @@ class Q(object):
             'cpp': 'C++',
             'csh': 'csh',
             'css': 'css',
+            'cython': 'cython',
             'f90+': 'FORTRAN90+',
             'for': 'FORTRAN',
             'gen': 'generic',
@@ -370,7 +374,7 @@ class Q(object):
             '.svn',
         }
         # files which definitely do not contain source code
-        self._notCodeFiles = {
+        self._nonCodeFiles = {
             '.gitignore',
             '.wrapped',
             '__pycache__',
@@ -429,8 +433,8 @@ class Q(object):
     def notCodeDir(self, s):
         return s in self._notCodeDirs
 
-    def notCodeFile(self, s):
-        return s in self._notCodeFiles
+    def nonCodeFile(self, s):
+        return s in self._nonCodeFiles
 
     def isGenerated(firstLine):
         pass        # STUB XXX
@@ -449,12 +453,9 @@ class Q(object):
 
         if pathToDir and fileName:
             pathToFile = os.path.join(pathToDir, fileName)
-            # DEBUG
-            #print("pathToFile: '%s'" % pathToFile)
-            # END
             if os.path.exists(pathToFile):
 
-                if not self.notCodeFile(fileName):
+                if not self.nonCodeFile(fileName):
                     # get any extension
                     PATH, DELIM, EXT = fileName.rpartition('.')
                     if DELIM == '.':
@@ -558,7 +559,7 @@ def countLinesInDir(pathToDir, options):
                 lines += moreLines
                 sloc += moreSloc
             elif S_ISREG(mode):
-                if q.notCodeFile(name):
+                if q.nonCodeFile(name):
                     if verbose > 1:
                         print("Not a code file: %s" % name)
                 else:

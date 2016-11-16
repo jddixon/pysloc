@@ -1,11 +1,11 @@
 # ~/dev/py/pysloc/TODO
 
 2016-10-22
-    * rename executable pySloc runpysloc
-    * add support for rust and the .rs extension
+    * rename executable pySloc runpysloc                                * SKIP!
+    * add support for rust and the .rs extension                        * DONE
 
 2016-08-27
-    * pySloc must ignore cover/ and .covreage
+    * pySloc must ignore cover/ and .coverage
 
 2016-07-10
     * pySloc for xlattice_java needs to exclude xdocs/
