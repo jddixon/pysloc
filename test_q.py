@@ -72,7 +72,9 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.ext2Lang('proto'), 'proto')
         self.assertEqual(self.q.ext2Lang('pl'), 'perl')
         self.assertEqual(self.q.ext2Lang('pm'), 'perl')
+        self.assertEqual(self.q.ext2Lang('pxd'), 'cython')
         self.assertEqual(self.q.ext2Lang('py'), 'py')
+        self.assertEqual(self.q.ext2Lang('pyx'), 'cython')
         self.assertEqual(self.q.ext2Lang('R'), 'R')      # short name
         self.assertEqual(self.q.ext2Lang('r'), 'R')      # short name
         self.assertEqual(self.q.ext2Lang('scala'), 'scala')
@@ -104,6 +106,7 @@ class TestQ (unittest.TestCase):
         # ... whether this is a command line argument
         self.assertEqual(self.q.getCounter('ada', True), countLinesDoubleDash)
         self.assertEqual(self.q.getCounter('awk', True), countLinesNotSharp)
+        self.assertEqual(self.q.getCounter('cython', True), countLinesPython)
         self.assertEqual(self.q.getCounter('for', True), countLinesFortran)
         self.assertEqual(self.q.getCounter('hs', True), countLinesDoubleDash)
         self.assertEqual(self.q.getCounter('json', True), countLinesTxt)
@@ -134,6 +137,7 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.getLongName('ada'), 'Ada')
         self.assertEqual(self.q.getLongName('aug'), 'augeas')
         self.assertEqual(self.q.getLongName('awk'), 'awk')
+        self.assertEqual(self.q.getLongName('cython'), 'cython')
         self.assertEqual(self.q.getLongName('for'), 'FORTRAN')
         self.assertEqual(self.q.getLongName('gen'), 'generic')
         self.assertEqual(self.q.getLongName('go'), 'golang')
@@ -164,12 +168,12 @@ class TestQ (unittest.TestCase):
         self.assertEqual(isTest, False)
 
         # not recognized but on command line, so use generic counter
-        lang, isTest = self.q.guessLang('./', 'yyFoo', isCLIArg=True)
+        lang, isTest = self.q.guessLang('./', 'yy_foo', isCLIArg=True)
         self.assertEqual(lang, 'gen')
         self.assertEqual(isTest, False)
 
         # if not recognized and not on command line, fail -----------
-        lang, isTest = self.q.guessLang('./', 'yyFoo', isCLIArg=False)
+        lang, isTest = self.q.guessLang('./', 'yy_foo', isCLIArg=False)
         self.assertEqual(lang, None)
         self.assertEqual(isTest, False)
 
@@ -191,59 +195,59 @@ class TestQ (unittest.TestCase):
         self.assertEqual(isTest, False)
 
         # if known language should always get language --------------
-        lang, isTest = self.q.guessLang('./', 'yyFoo.go', isCLIArg=True)
+        lang, isTest = self.q.guessLang('./', 'yy_foo.go', isCLIArg=True)
         self.assertEqual(lang, 'go')
         self.assertEqual(isTest, False)
-        lang, isTest = self.q.guessLang('./', 'yyFoo.go', isCLIArg=False)
+        lang, isTest = self.q.guessLang('./', 'yy_foo.go', isCLIArg=False)
         self.assertEqual(lang, 'go')
         self.assertEqual(isTest, False)
 
-        lang, isTest = self.q.guessLang('./', 'yyFoo_test.go', isCLIArg=True)
+        lang, isTest = self.q.guessLang('./', 'yy_foo_test.go', isCLIArg=True)
         self.assertEqual(lang, 'go')
         self.assertEqual(isTest, True)
-        lang, isTest = self.q.guessLang('./', 'yyFoo_test.go', isCLIArg=False)
+        lang, isTest = self.q.guessLang('./', 'yy_foo_test.go', isCLIArg=False)
         self.assertEqual(lang, 'go')
         self.assertEqual(isTest, True)
 
-        lang, isTest = self.q.guessLang('./', 'yyFoo.l', isCLIArg=True)
+        lang, isTest = self.q.guessLang('./', 'yy_foo.l', isCLIArg=True)
         self.assertEqual(lang, 'lex')
         self.assertEqual(isTest, False)
-        lang, isTest = self.q.guessLang('./', 'yyFoo.l', isCLIArg=False)
+        lang, isTest = self.q.guessLang('./', 'yy_foo.l', isCLIArg=False)
         self.assertEqual(lang, 'lex')
         self.assertEqual(isTest, False)
 
-        lang, isTest = self.q.guessLang('./', 'yyFoo.occ', isCLIArg=True)
+        lang, isTest = self.q.guessLang('./', 'yy_foo.occ', isCLIArg=True)
         self.assertEqual(lang, 'occ')
         self.assertEqual(isTest, False)
-        lang, isTest = self.q.guessLang('./', 'yyFoo.occ', isCLIArg=False)
+        lang, isTest = self.q.guessLang('./', 'yy_foo.occ', isCLIArg=False)
         self.assertEqual(lang, 'occ')
         self.assertEqual(isTest, False)
 
-        lang, isTest = self.q.guessLang('./', 'yyFoo.py', isCLIArg=True)
+        lang, isTest = self.q.guessLang('./', 'yy_foo.py', isCLIArg=True)
         self.assertEqual(lang, 'py')
         self.assertEqual(isTest, False)
-        lang, isTest = self.q.guessLang('./', 'yyFoo.py', isCLIArg=False)
+        lang, isTest = self.q.guessLang('./', 'yy_foo.py', isCLIArg=False)
         self.assertEqual(lang, 'py')
         self.assertEqual(isTest, False)
 
-        lang, isTest = self.q.guessLang('./', 'testFoo.py', isCLIArg=True)
+        lang, isTest = self.q.guessLang('./', 'test_foo.py', isCLIArg=True)
         self.assertEqual(lang, 'py')
         self.assertEqual(isTest, True)
-        lang, isTest = self.q.guessLang('./', 'testFoo.py', isCLIArg=False)
+        lang, isTest = self.q.guessLang('./', 'test_foo.py', isCLIArg=False)
         self.assertEqual(lang, 'py')
         self.assertEqual(isTest, True)
 
-        lang, isTest = self.q.guessLang('./', 'yyFoo.sno', isCLIArg=True)
+        lang, isTest = self.q.guessLang('./', 'yy_foo.sno', isCLIArg=True)
         self.assertEqual(lang, 'sno')
         self.assertEqual(isTest, False)
-        lang, isTest = self.q.guessLang('./', 'yyFoo.sno', isCLIArg=False)
+        lang, isTest = self.q.guessLang('./', 'yy_foo.sno', isCLIArg=False)
         self.assertEqual(lang, 'sno')
         self.assertEqual(isTest, False)
 
-        lang, isTest = self.q.guessLang('./', 'yyFoo.y', isCLIArg=True)
+        lang, isTest = self.q.guessLang('./', 'yy_foo.y', isCLIArg=True)
         self.assertEqual(lang, 'yacc')
         self.assertEqual(isTest, False)
-        lang, isTest = self.q.guessLang('./', 'yyFoo.y', isCLIArg=False)
+        lang, isTest = self.q.guessLang('./', 'yy_foo.y', isCLIArg=False)
         self.assertEqual(lang, 'yacc')
         self.assertEqual(isTest, False)
 
@@ -252,7 +256,7 @@ class TestQ (unittest.TestCase):
         # expect failure
         self.assertEqual(self.q.nonCodeExt(None), False)
         self.assertEqual(self.q.nonCodeExt(''), False)
-        self.assertEqual(self.q.nonCodeExt('yyFoo'), False)
+        self.assertEqual(self.q.nonCodeExt('yy_foo'), False)
         # expect success
         self.assertEqual(self.q.nonCodeExt('jar'), True)
         self.assertEqual(self.q.nonCodeExt('md'), True)
@@ -260,23 +264,23 @@ class TestQ (unittest.TestCase):
 
     def testNotCodeFile(self):
         # expect failure
-        self.assertEqual(self.q.notCodeFile(None), False)
-        self.assertEqual(self.q.notCodeFile(''), False)
-        self.assertEqual(self.q.notCodeFile('yyFoo'), False)
+        self.assertEqual(self.q.nonCodeFile(None), False)
+        self.assertEqual(self.q.nonCodeFile(''), False)
+        self.assertEqual(self.q.nonCodeFile('yy_foo'), False)
         # expect success
-        self.assertEqual(self.q.notCodeFile('__pycache__'), True)
-        self.assertEqual(self.q.notCodeFile('AUTHORS'), True)
-        self.assertEqual(self.q.notCodeFile('CONTRIBUTORS'), True)
-        self.assertEqual(self.q.notCodeFile('COPYING'), True)
-        self.assertEqual(self.q.notCodeFile(
+        self.assertEqual(self.q.nonCodeFile('__pycache__'), True)
+        self.assertEqual(self.q.nonCodeFile('AUTHORS'), True)
+        self.assertEqual(self.q.nonCodeFile('CONTRIBUTORS'), True)
+        self.assertEqual(self.q.nonCodeFile('COPYING'), True)
+        self.assertEqual(self.q.nonCodeFile(
             'COPYING.AUTOCONF.EXCEPTION'), True)
-        self.assertEqual(self.q.notCodeFile('COPYING.GNUBL'), True)
-        self.assertEqual(self.q.notCodeFile('COPYING.LIB'), True)
-        self.assertEqual(self.q.notCodeFile('LICENSE'), True)
-        self.assertEqual(self.q.notCodeFile('NEWS'), True)
-        self.assertEqual(self.q.notCodeFile('PATENTS'), True)
-        self.assertEqual(self.q.notCodeFile('README'), True)
-        self.assertEqual(self.q.notCodeFile('TODO'), True)
+        self.assertEqual(self.q.nonCodeFile('COPYING.GNUBL'), True)
+        self.assertEqual(self.q.nonCodeFile('COPYING.LIB'), True)
+        self.assertEqual(self.q.nonCodeFile('LICENSE'), True)
+        self.assertEqual(self.q.nonCodeFile('NEWS'), True)
+        self.assertEqual(self.q.nonCodeFile('PATENTS'), True)
+        self.assertEqual(self.q.nonCodeFile('README'), True)
+        self.assertEqual(self.q.nonCodeFile('TODO'), True)
 
 if __name__ == '__main__':
     unittest.main()

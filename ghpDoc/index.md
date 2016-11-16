@@ -36,46 +36,47 @@ Java-style comments would be ignored in counting lines of source code.
 
 Languages currently covered include, by short name,
 
-* **ada**,  Ada, the Pentagon's favorite programming language
-* **asm**,	assembly language
-* **aug**,	Augeas configuration editor
-* **awk**,	awk
-* **c**,	the venerable C programming language; ANSI C
-* **code**,	'code', a pseudo-language; counts any line whose first non-space character is not the sharp sign ('#')
-* **csh**,	csh, another shell; tcsh is a variant
-* **css**,	css, used for writing style sheets
-* **for**,  fixed-format FORTRAN
-* **f90+**, FORTRAN 90, other free format FORTRAN
-* **go**,	Google's Go programming language
-* **gperf**,hash function generator
-* **hs**,	Haskell
-* **html**,	the Web's markup language
-* **java**,	the Sun programming language
-* **js**,	javascript, the Web's programming language
-* **json**,	JSON serializer
-* **lex**,	lex/flex scanner
-* **lisp**, Lisp (Common)
-* **ml**,	Ocaml, a functional language
-* **objc**, Objective C
-* **occ**,	Occam, the concurrent programming language
-* **perl**,	Perl, the sysadmin's language
-* **proto**,Google Protobuf
-* **py**,	Python
-* **R**,	R, the statistics programming language
-* **Rmd**,  R Markdown, which combines Markdown and R code
-* **rb**,	Ruby
-* **re2c**,	tool for writing fast lexers
-* **rs**,   the Rust system programming language
-* **scala**,Scala
-* **sed**,	the language for `sed` scripts used to edit files from the command line
-* **sh**,	bash or the shell, `sh`
-* **sno**,	Snobol, the string-oriented programming language
-* **tex*,   TeX/LaTeX
-* **tcl**,	the Tool Command Language, a dynamic scripting language
-* **txt**,	plain text; counts all non-blank lines
-* **xml**,	XML
-* **yacc**,	yacc parser generator
-* **yaml**,	YAML serializer
+* **ada**,    Ada, the Pentagon's favorite programming language
+* **asm**,    assembly language
+* **aug**,    Augeas configuration editor
+* **awk**,    awk
+* **c**,      the venerable C programming language; ANSI C
+* **code**,   'code', a pseudo-language; counts any line whose first non-space character is not the sharp sign ('#')
+* **csh**,    csh, another shell; tcsh is a variant
+* **css**,    css, used for writing style sheets
+* **cython**, cython, python-to-c compiler
+* **for**,    fixed-format FORTRAN
+* **f90+**,   FORTRAN 90, other free format FORTRAN
+* **go**,     Google's Go programming language
+* **gperf**,  hash function generator
+* **hs**,     Haskell
+* **html**,   the Web's markup language
+* **java**,   the Sun programming language
+* **js**,     javascript, the Web's programming language
+* **json**,   JSON serializer
+* **lex**,    lex/flex scanner
+* **lisp**,   Lisp (Common)
+* **ml**,     Ocaml, a functional language
+* **objc**,   Objective C
+* **occ**,    Occam, the concurrent programming language
+* **perl**,   Perl, the sysadmin's language
+* **proto**,  Google Protobuf
+* **py**,     Python
+* **R**,      R, the statistics programming language
+* **Rmd**,    R Markdown, which combines Markdown and R code
+* **rb**,     Ruby
+* **re2c**,   tool for writing fast lexers
+* **rs**,     the Rust system programming language
+* **scala**,  Scala
+* **sed**,    the language for `sed` scripts used to edit files from the command line
+* **sh**,     bash or the shell, `sh`
+* **sno**,    Snobol, the string-oriented programming language
+* **tex*,     TeX/LaTeX
+* **tcl**,    the Tool Command Language, a dynamic scripting language
+* **txt**,    plain text; counts all non-blank lines
+* **xml**,    XML
+* **yacc**,   yacc parser generator
+* **yaml**,   YAML serializer
 
 ## Command Line
 

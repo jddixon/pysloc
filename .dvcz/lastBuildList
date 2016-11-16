@@ -1,4 +1,4 @@
------BEGIN RSA PUBLIC KEY-----
+-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoM2sBgX0ChP2JriXkOxS
 e2FjHYVzBGkNvgf0vIAa7FFYZi2pWmxBAVXgl3tTiB3quqqud/MbKqdejM6gkKBK
 v8f7hlcBQLD6BLIZ/RRfhIElc+WlDVfKSnBTB4va5qTQAgvuq5i8+oMj7G8WEy5d
@@ -6,33 +6,35 @@ v8f7hlcBQLD6BLIZ/RRfhIElc+WlDVfKSnBTB4va5qTQAgvuq5i8+oMj7G8WEy5d
 zPjEShF9rvcNa9XEy1dKpcDz9Szbm2SlxOgM83fDDGtOq4SSCSqndtxrOvXXPB57
 H1mJV/FmerbXRPm5ERJVNIxtLk7Gr2Ce45FVlWyJGMhpfVlKkkk+bRQ02OFfazJI
 GQIDAQAB
------END RSA PUBLIC KEY-----
-pysloc v0.8.15
-2016-10-22 21:57:54
+-----END PUBLIC KEY-----
+pysloc v0.8.16
+2016-11-16 22:32:20
 # BEGIN CONTENT #
 pysloc
  .dvcz
-  builds 8ecc9429e3db986a4d087fe2f06394107ea98a40
+  builds 1df1a32c66be7171e72a803c273e5d578efcbf9b
   copyright 40a152c0598a7da436fc48b2286fb14b4f2e9101
-  lastBuildList 65332fc416aba894e2c74afb1eb197db9494be52
+  lastBuildList 6d8ca230f04b30faf6fada345c4e9e7f7d8694f8
   license 5977a55c75bb4612004451a56b0b4c22d9d3311d
   projCfg d50c530c1cb347db8e91f39bbea53b638f96b639
   projCfg.local a7908cabcaa4488641fb36f59909312a21c17242
-  version ac0ef89ab052283c19e787f7579f5cf52d9b893b
+  version cf180155ec84aad6cb5403dd339398322a643a01
  .gitignore 2bc4bcb7826ea9b5fb999444fe18f6785df1de72
- CHANGES d3019e61e26767fe0d8a7a49c9bf2fc1104b77f4
+ CHANGES c6111f5a10b3f523717434a5d0a41f0bbfb42121
  LICENSE-MIT.md 7ff8ae89c5e4489f22b3a360a03225241877bc8d
  MANIFEST.in 8ee6732d59f78c1aa02e2f1ddb3412fbcbe48936
  OpenCOBOLProgrammersGuide.pdf b9d01f7a62de2c61b2d3469eb83c73c698987817
- README.md 1ae6fc50e8f7f9e360a4549301039f24713edb0f
- TODO 0f2027944442ff29e7cac4f3b198c3463a30cdae
+ README.md 6c21200b03cfbac519fc664fe46ff7e867862c14
+ TODO c99043f8f6d216463b8179033e0cc278ab769ba7
  auto8it 115cca2965b700b0ab4b20ae8bb26aa78b6ed053
- bkp2U ce89fc9f872e9e6e4a0727f65e9f203ef9e2b6ff
+ bkp2U 5961ddc3ce44158bdb3ddee6febae84b3d597605
  checkCoverage c17285d7affb7cc8249f8fc1f922faaa69962e6a
  commentsForAugeas c7667859a9f87163f727addc197c64022cc27523
  commentsForCobol 4f3810cc322c1bd4b6bb04c99053d84f13d83944
  commentsForCpp 521280339e1ab1ec6381c3a05083fa2bc9b2830a
  commentsForCss 018ed80b8a6e6607bc7c08595fa5a7fa56853885
+ commentsForCython.pxd 7680b3b6077f0a2ccde20ed5949075e5056993f7
+ commentsForCython.pyx d74f86bf40c222c7c9d22960bf039a344e17afb8
  commentsForFortran a6b841b6b629d5ba0ab1614fc535e43a35c0a636
  commentsForFortran90 2cd550a7f99a014f8fc65b7b68fb3e7490d58d45
  commentsForGo 3685c228a3a34492f992aca3905d507623920d39
@@ -68,7 +70,7 @@ pysloc
  couldBeGenerated.pb.h bb4c20740de8e1bdd94505c76afc6704f54c9e37
  couldBeGeneratedProtos.java 4407b976c41cc0caa33ae85881b192d1145bf94b
  couldBeGenerated_pb2.py cd15d4466c6f4bc6817bb63b72915e3fed75f906
- countem ff09790437f6ff5c64c6f5c6b7a01b75a908c8be
+ countem 0753270be3cfb7fa9cfdff15ee971a346f6fb92d
  dist
   pysloc-0.1.0.tar.gz 89a0b0e946d5ea95759e56ae458cd7b3d5c0aa5a
   pysloc-0.1.1.tar.gz 22d97eb2abefbc87f247f85bca2dcc027bb27c65
@@ -144,6 +146,7 @@ pysloc
   pysloc-0.8.13.tar.gz eadd38d6860415e33275a868ff0c7dc23eae5780
   pysloc-0.8.14.tar.gz 734c410fd85c52394cc065140926766d093c07c5
   pysloc-0.8.15.tar.gz ace3668bbdcced0ba51b30bc6fba67b8bfdf29d4
+  pysloc-0.8.16.tar.gz 518ce063bc3bfb47275279b132fdf480ca9ba165
   pysloc-0.8.2.tar.gz d917688e5d746132a074669d17dac7c62fd2c408
   pysloc-0.8.3.tar.gz 5257b32a41f6f1e0726ac88a42e255ba282fcd8a
   pysloc-0.8.4.tar.gz 4739ba9bfcc989349d808f79a862512d1765b1ee
@@ -167,15 +170,15 @@ pysloc
    simple-cluster.jpg 6b223ddd25937c1ef75ef328f36fc3436f10bd62
    xl-registration.jpg 15cbf951f9db173a45428b32dcec87aca83bbdf0
    xlattice-2014.jpg f185aaad06db71acd9454f31054c62c56d36f37f
-  index.md ae05586082b8d6bbc8bcba92a22a1d171c3ea3fa
+  index.md 7d3e6f2cf99523d4a4565c387cf2388575cb2a04
  installit efaa7c546ff779b9615d1171ced81f84af299685
  lrintr.htm 72cdcc4880767afe4ab827a30465d98c24b36a1c
+ pySloc 78a4d15ce56ab730f2c125c4c943c0f6757bb8f5
  pylintrc dd234fda24a547a9071f1e4608a3c1f3b7de9aa0
  pysloc
-  __init__.py 15c7858ddaee2cb7d7fae8c679c018ea0683273b
- runpysloc 60dc1190c7a74f1da4ec42f73643a92c6811bc50
- setup.py 1b82097c4854dd7fdd8c2d6f26a42fe2761b59ba
- styleit cfd3ff19c552859fc197d081b0c52c18577cfe28
+  __init__.py 95041e248adb9fb0370764232f8996504b3e3416
+ setup.py c55c5a7b355730cc492c3d314a54969b4de64ece
+ styleit fd392b679c8bccfc1542d3af5eaf0f238fb3d918
  test
   8bit2.sno d071f3c133db505ad07d8472e4482f8fc97ce61d
   build.xml f69dc1f55802516344ff29c00ac4865d32944be0
@@ -188,6 +191,7 @@ pysloc
    subsubdir
     twoLiner.sno 74b24c5bb8b430883ed92ebff0f3ed091fe14450
  test.all c4f487557b292e9317b35088811283c06e882226
+ testCythonComments.py db470fb23e6ecf5f2905dfb1d35a4b473444133b
  testOccamComments.py 5864e617c3abc27596bdfb95cd91c54bedc2cf84
  testOctaveComments.py cdaede5d21c15f15631ad8b14e09cc3b0e544857
  testProtobufComments.py 47b8e882fb050978d58a14d85d29a8850e494739
@@ -211,7 +215,7 @@ pysloc
  test_ocaml_comments.py 23458f966049370422fc211c2295017dcb6d26e0
  test_pascal_comments.py f34afdc60e4f5d68d59ddb881f20317dea91e0c3
  test_perl_comments.py 34fdb8ec7d056807fcd937654a52fffdb63ba248
- test_q.py bbc6ff99d77455d6d2881d1126e07b6e5325f3bd
+ test_q.py 5086da6df1c4e409cc3e4cfe6fbf156d2a6035b7
  test_r_markdown_comments.py 6e8b15ddc231b1e88f0a897a615a2202cc9af22e
  test_re2c_comments.py 60c508eb17f5ae1fd12bbe4adc4036079a790722
  test_rust_comments.py c06417526409c97f8e0159386b4cff0443eacd3e
@@ -235,4 +239,4 @@ pysloc
  yy_foo_test.go 883520283ff24ba8df4240504d6de148c9272a0d
 # END CONTENT #
 
-ieKBkVwFNJBNUs74DV0yFZnvCaV7f7K+yNE4YkeLEHpjxAiHehxellTWnsz3WGIvB5rU5/9hL3Bd2/MK0RPqQpTU+e5OZVN/cNfRhkmCgGNF54plnxkHS3q869wiPEYTWjD7vIIFkLATO7rNpgJ6olFjNohDJsaN4pJVcl5Tq86quarOW9mJcy+MIZkrbjVRNBxvRA3nYhFXE3/MkU61tZxVIr/rYOn3j7dvoYwW+oSDXyJJ7T+Lqaohl5ZzP/VH9iAGoqxyT03Ui2j9Po2/sOUl8VbMkeKJExGBj7wdj8A8sE7lL2FKEbvx7lAhLCuYBn9m3zSIEkKynf6FvsS23A==
+TzHNoKyVfgMEsOTOtlW9fGDcRAqK/PpYlS1ovFGv5uaRp2d0YLvKYHSL85vEcb/VPsLtAYfb5aKeIj32JIlVvsFbYrff4ZdMWig4opWOWnUtrYVWcA7bKGa9xVWgjpBOHT2LUlEb8H9cZK+amAgRnvFmPCMs/Eot8kSLG1alCsfYWZZmY9jR7Gn/CUoSyV/WoFNzcEtDG8J+hbjHkWoEaZWiKBijlwKNSjeQ3+OF4w5s2Z1W48maU1CRLfifUk6qm0ww/M2KPT89OTJGxojYLNKCt4UpatxuSmfo5Lo5/dHIXW14flt9GZI+n+8MecLwkkfo3PGnufNPwL3d/AZJPw==
