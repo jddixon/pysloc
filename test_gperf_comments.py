@@ -9,8 +9,8 @@ from argparse import Namespace
 
 from pysloc import (__version__, __version_date__,
                     GPERF_RE,
-                    countLinesInDir, countLinesGperf,
-                    Q)
+                    count_lines_in_dir, count_lines_gperf,
+                    MapHolder)
 
 
 class TestGperfComments (unittest.TestCase):
@@ -25,27 +25,27 @@ class TestGperfComments (unittest.TestCase):
 
     # actual unit tests #############################################
 
-    def testFirstLinePat(self):
+    def test_first_line_pat(self):
 
-        badLine = '/* ANSI-C code produced by gperf version N.N.N */'
-        m = GPERF_RE.match(badLine)
-        self.assertEqual(m, None)
+        bad_line = '/* ANSI-C code produced by gperf version N.N.N */'
+        map_ = GPERF_RE.match(bad_line)
+        self.assertEqual(map_, None)
 
-        goodLine = '/* ANSI-C code produced by gperf version 1.2.3 */'
-        m = GPERF_RE.match(goodLine)
-        self.assertNotEqual(m, None)
-        s = m.group(0)
-        self.assertTrue(s.startswith('/* ANSI-C'))
+        good_line = '/* ANSI-C code produced by gperf version 1.2.3 */'
+        map_ = GPERF_RE.match(good_line)
+        self.assertNotEqual(map_, None)
+        sloc_ = map_.group(0)
+        self.assertTrue(sloc_.startswith('/* ANSI-C'))
 
-    def testNameToFuncMap(self):
-        testFile = './commentsForGperf'
+    def test_name_to_func_map(self):
+        test_file = './commentsForGperf'
         options = Namespace()
         options.already = set()
-        options.exRE = None
-        options.q = Q()
+        options.ex_re = None
+        options.map_holder = MapHolder()
         options.verbose = False
 
-        lines, sloc = countLinesGperf(testFile, options, 'gperf')
+        lines, sloc = count_lines_gperf(test_file, options, 'gperf')
         self.assertEqual(lines, 5)
         self.assertEqual(sloc, 2)
 

@@ -8,7 +8,7 @@ import unittest
 
 from argparse import ArgumentParser, Namespace
 from pysloc import __version__, __version_date__
-from pysloc import countLinesInDir, countLinesGo
+from pysloc import count_lines_in_dir, count_lines_go
 
 
 class TestGoComments (unittest.TestCase):
@@ -25,9 +25,9 @@ class TestGoComments (unittest.TestCase):
 
     # actual unit tests #############################################
 
-    def testNameToFuncMap(self):
-        testFile = './commentsForGo'
-        lines, sloc = countLinesGo(testFile, self.options, 'go')
+    def test_name_to_func_map(self):
+        test_file = './commentsForGo'
+        lines, sloc = count_lines_go(test_file, self.options, 'go')
         self.assertEqual(lines, 21)
         self.assertEqual(sloc, 7)
 

@@ -8,7 +8,7 @@ import unittest
 from argparse import Namespace
 
 from pysloc import __version__, __version_date__
-from pysloc import countLinesInDir, countLinesTeX, Q
+from pysloc import count_lines_in_dir, count_lines_tex, MapHolder
 
 
 class TestTexComments (unittest.TestCase):
@@ -23,17 +23,17 @@ class TestTexComments (unittest.TestCase):
 
     # actual unit tests #############################################
 
-    def testTexComments(self):
-        testFile = './commentsForTeX'
+    def test_tex_comments(self):
+        test_file = './commentsForTeX'
         options = Namespace()
         options.already = set()
-        options.exRE = None
-        options.q = Q()
+        options.ex_re = None
+        options.map_holder = MapHolder()
         options.verbose = False
 
         # XXX possible error reading file, possible errors parsing data
 
-        lines, sloc = countLinesTeX(testFile, options, 'tex')
+        lines, sloc = count_lines_tex(test_file, options, 'tex')
         self.assertEqual(lines, 32)
         self.assertEqual(sloc, 6)
 

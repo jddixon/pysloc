@@ -4,14 +4,12 @@ if [ ! -z "${DEV_BASE// }" ]
 then
   cd $DEV_BASE/py/pysloc
   
-  ./testOccamComments.py
-  ./testOctaveComments.py
-  ./testProtobufComments.py
-  ./testPyComments.py
   ./test_augeas_comments.py
   ./test_could_be_generated.py
   ./test_cpp_comments.py
   ./test_css_comments.py
+  ./test_cython_comments.py
+  ./test_foo.py
   ./test_fortran90_comments.py
   ./test_fortran_comments.py
   ./test_go_comments.py
@@ -24,8 +22,12 @@ then
   ./test_lisp_comments.py
   ./test_matlab_comments.py
   ./test_ocaml_comments.py
+  ./test_occam_comments.py
+  ./test_octave_comments.py
   ./test_pascal_comments.py
   ./test_perl_comments.py
+  ./test_protobuf_comments.py
+  ./test_python_comments.py
   ./test_q.py
   ./test_r_markdown_comments.py
   ./test_re2c_comments.py

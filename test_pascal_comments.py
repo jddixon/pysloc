@@ -8,7 +8,7 @@ import unittest
 
 from argparse import ArgumentParser, Namespace
 from pysloc import __version__, __version_date__
-from pysloc import countLinesInDir, countLinesPascal
+from pysloc import count_lines_in_dir, count_lines_pascal
 
 
 class TestPascalComments (unittest.TestCase):
@@ -25,9 +25,9 @@ class TestPascalComments (unittest.TestCase):
 
     # actual unit tests #############################################
 
-    def testNameToFuncMap(self):
-        testFile = './commentsForPascal'
-        lines, sloc = countLinesPascal(testFile, self.options, 'ml')
+    def test_name_to_func_map(self):
+        test_file = './commentsForPascal'
+        lines, sloc = count_lines_pascal(test_file, self.options, 'ml')
         self.assertEqual(lines, 58)
         self.assertEqual(sloc, 18)
 

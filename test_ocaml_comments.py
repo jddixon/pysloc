@@ -8,7 +8,7 @@ import unittest
 
 from argparse import ArgumentParser, Namespace
 from pysloc import __version__, __version_date__
-from pysloc import countLinesInDir, countLinesOCaml
+from pysloc import count_lines_in_dir, count_lines_ocaml
 
 
 class TestOCamlComments (unittest.TestCase):
@@ -25,9 +25,9 @@ class TestOCamlComments (unittest.TestCase):
 
     # actual unit tests #############################################
 
-    def testNameToFuncMap(self):
-        testFile = './commentsForOCaml'
-        lines, sloc = countLinesOCaml(testFile, self.options, 'ml')
+    def test_name_to_func_map(self):
+        test_file = './commentsForOCaml'
+        lines, sloc = count_lines_ocaml(test_file, self.options, 'ml')
         self.assertEqual(lines, 39)
         self.assertEqual(sloc, 15)
 

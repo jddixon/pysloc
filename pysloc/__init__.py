@@ -1,53 +1,59 @@
 # pysloc/pysloc/__init__.py
 
 import hashlib
-import os
 import re
-from stat import *
+from stat import *      # GETS DROPPED IF USING SCANDIR
+import os
+# try:
+#    from os import scandir
+# except ImportError:
+#    from scandir import scandir
+
+
 from bs4 import BeautifulSoup, Comment
 
 __all__ = ['__version__', '__version_date__',
            # constants
            'GPERF_RE', 'RE2C_RE',
            # functions
-           'countLinesAugeas',
-           'countLinesBash',
-           'countLinesC',
-           'countLinesCpp',
-           'countLinesDoubleDash',
-           'countLinesFortran',
-           'countLinesFortran90',
-           'countLinesGperf',
-           'countLinesGo',
-           'countLinesHtml',
-           'countLinesInDir',
-           'countLinesJava',
-           'countLinesJavaStyle',
-           'countLinesLisp',
-           'countLinesMatlab',
-           'countLinesNotSharp',
-           'countLinesOCaml',
-           'countLinesOctave',
-           'countLinesPascal',
-           'countLinesPerl',
-           'countLinesProtobuf',
-           'countLinesPython',
-           'countLinesRMarkdown',
-           'countLinesRust',
-           'countLinesRe2c',
-           'countLinesRuby',
-           'countLinesScala', 'countLinesShell',
-           'countLinesSnobol',
-           'countLinesTeX',
-           'countLinesTxt',
-           'uncommentHtml', 'uncommentJava',
+           'count_lines_augeas',
+           'count_lines_bash',
+           'count_lines_c',
+           'count_lines_cpp',
+           'count_lines_double_dash',
+           'count_lines_fortran',
+           'count_lines_fortran90',
+           'count_lines_gperf',
+           'count_lines_go',
+           'count_lines_html',
+           'count_lines_in_dir',
+           'count_lines_java',
+           'count_lines_java_style',
+           'count_lines_lisp',
+           'count_lines_matlab',
+           'count_lines_not_sharp',
+           'count_lines_ocaml',
+           'count_lines_occam',
+           'count_lines_pascal',
+           'count_lines_perl',
+           'count_lines_protobuf',
+           'count_lines_python',
+           'count_lines_r_markdown',
+           'count_lines_rust',
+           'count_lines_re2c',
+           'count_lines_ruby',
+           'count_lines_scala', 'count_lines_shell',
+           'count_lines_snobol',
+           'count_lines_tex',
+           'count_lines_txt',
+           'uncomment_html', 'uncomment_java',
            # classes
-           'K', 'Q',
+           'CountHolder', 'MapHolder',
            ]
 
 # exported constants ------------------------------------------------
-__version__ = '0.8.16'
-__version_date__ = '2016-11-16'
+__version__ = '0.8.17'
+__version_date__ = '2016-12-08'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile(
@@ -59,7 +65,7 @@ TQUOTE = '"""'
 # class(es) ---------------------------------------------------------
 
 
-class K(object):
+class CountHolder(object):
     """ a holder for various counts """
 
     LOC = 0   # lines of non-test code
@@ -70,38 +76,38 @@ class K(object):
     def __init__(self):
         # we maintain a map from lang to a list of 4: lines, sloc, tlines, tsloc,
         # where t means test
-        self.m = {}
+        self.map_ = {}
 
     def foo(self):
         print("hi, I'm your neighborhood foo!")
 
-    def addCounts(self, lang, l, s):
+    def add_counts(self, lang, loc_, sloc_):
         """ add non-test line count and source line count for language"""
 
         # XXX we want l and s to be non-negative integers
 
-        if not lang in self.m:
-            self.m[lang] = [0, 0, 0, 0]
-        self.m[lang][K.LOC] += l
-        self.m[lang][K.SLOC] += s
+        if not lang in self.map_:
+            self.map_[lang] = [0, 0, 0, 0]
+        self.map_[lang][CountHolder.LOC] += loc_
+        self.map_[lang][CountHolder.SLOC] += sloc_
 
-    def addTestCounts(self, lang, l, s):
+    def add_test_counts(self, lang, loc_, sloc_):
         """ add test line count and source line count for language"""
 
         # XXX we want l and s to be non-negative integers
 
-        if not lang in self.m:
-            self.m[lang] = [0, 0, 0, 0]
-        self.m[lang][K.TLOC] += l
-        self.m[lang][K.TSLOC] += s
+        if not lang in self.map_:
+            self.map_[lang] = [0, 0, 0, 0]
+        self.map_[lang][CountHolder.TLOC] += loc_
+        self.map_[lang][CountHolder.TSLOC] += sloc_
 
-    def getCounts(self, lang):
-        if (not lang) or (not lang in self.m):
+    def get_counts(self, lang):
+        if (not lang) or (not lang in self.map_):
             return (0, 0, 0, 0)
         else:
-            return self.m[lang]
+            return self.map_[lang]
 
-    def prettyCounts(self, lang):
+    def pretty_counts(self, lang):
         """
         Return a string containing the short name of the language and
         the total line count, the source line count, and the percentage
@@ -111,119 +117,119 @@ class K(object):
         would produce the string 'py:17/12 T%75.0'
 
         """
-        if (not lang) or (not lang in self.m):
+        if (not lang) or (not lang in self.map_):
             return '%s: 0' % lang
         else:
-            l, s, tl, ts = self.m[lang]
-            if ts > 0:
-                return "%s:%d/%d T%.1f%%" % (lang, l +
-                                             tl, s + ts, 100.0 * ts / (s + ts))
-            elif l > 0:
-                return "%s:%d/%d" % (lang, l + tl, s)
+            loc_, sloc_, test_loc, test_sloc = self.map_[lang]
+            if test_sloc > 0:
+                return "%s:%d/%d T%.1f%%" % (lang, loc_ +
+                                             test_loc, sloc_ + test_sloc, 100.0 * test_sloc / (sloc_ + test_sloc))
+            elif loc_ > 0:
+                return "%s:%d/%d" % (lang, loc_ + test_loc, sloc_)
             else:
                 return ''
 
-    def prettyBreakDown(self):
+    def pretty_break_down(self):
         """
         Generate a semicolon-separated list sorted by decreasing SLOC.
         """
 
         # flatten the list to make it easier to sort
-        f = []
-        for k, v in self.m.items():
-            f.append([k] + v)
+        flattened = []
+        for k__, v__ in self.map_.items():
+            flattened.append([k__] + v__)
         results = []
-        for x in sorted(f, key=lambda fields: fields[
-                        K.SLOC + 1], reverse=True):
-            result = self.prettyCounts(x[0])
+        for x__ in sorted(flattened, key=lambda fields: fields[
+                CountHolder.SLOC + 1], reverse=True):
+            result = self.pretty_counts(x__[0])
             if result:
                 results.append(result)
         print('; '.join(results))
 
-    def getTotals(self):
-        totalL, totalS, totalTL, totalTS = 0, 0, 0, 0
-        for lang in self.m:
-            l, s, tl, ts = self.m[lang]
-            totalL += l    # lines of non-test code
-            totalS += s    # lines of which are source code
-            totalTL += tl   # lines of test code
-            totalTS += ts   # lines of which are source code
-        return totalL, totalS, totalTL, totalTS
+    def get_totals(self):
+        tot_loc, tot_sloc, tot_test_loc, tot_test_sloc = 0, 0, 0, 0
+        for lang in self.map_:
+            loc_, sloc_, test_loc, test_sloc = self.map_[lang]
+            tot_loc += loc_    # lines of non-test code
+            tot_sloc += sloc_    # lines of which are source code
+            tot_test_loc += test_loc   # lines of test code
+            tot_test_sloc += test_sloc   # lines of which are source code
+        return tot_loc, tot_sloc, tot_test_loc, tot_test_sloc
 
 
-class Q(object):
+class MapHolder(object):
 
     __all__ = ['ext2lang',
-               'getCounter', 'getLongName',
+               'get_counter', 'get_long_nme',
                'langMap',
-               'nonCodeExt', 'nonCodeFile',
+               'non_code_ext', 'non_code_file',
                ]
 
-    def __init__(self, mainLang=''):
+    def __init__(self, main_lang=''):
 
         # Note OCaml comments are (* ... *) but allow nesting.  File
         # extensions are .ml (source code) and .mli (header; and then
         # .cmo/.cmx, .cmi, .cma/.cmxa are compiled forms.
 
         # Maps short name to counter function; limit these to 4 characters.
-        self._lang2Counter = {
-            'ada': countLinesDoubleDash,    # Pentagon language
-            'asm': countLinesNotSharp,      # s, S, asm
-            'awk': countLinesNotSharp,      # awk programming language
-            'aug': countLinesAugeas,        # Augeas config manager
-            'bash': countLinesShell,        # bash shell
-            'c': countLinesC,               # ansic
-            'code': countLinesNotSharp,     # used to be 'not#'
-            'cpp': countLinesCpp,           # C++
-            'csh': countLinesNotSharp,      # csh, tcsh
-            'css': countLinesJavaStyle,     # css, as in stylesheets
-            'cython': countLinesPython,
-            'f90+': countLinesFortran90,    # FORTRAN90 plus
-            'for': countLinesFortran,       # fixed-format FORTRAN
-            'gen': countLinesNotSharp,      # treat # as comment
-            'go': countLinesGo,             # golang
-            'gperf': countLinesGperf,       #
-            'hs': countLinesDoubleDash,     # Haskell
-            'html': countLinesHtml,         # html
-            'java': countLinesJava,         # plain old Java
-            'js': countLinesJavaStyle,      # Javascript
-            'json': countLinesTxt,          # json
-            'lex': countLinesJavaStyle,     # lex/flex
-            'lisp': countLinesLisp,         # Common Lisp
-            'm4': countLinesNotSharp,       # m4 macro processor
-            'ml': countLinesOCaml,          # ocaml, tentative abbrev
-            'objc': countLinesJavaStyle,    # Objective C
-            'occ': countLinesDoubleDash,    # concurrent programming
-            'perl': countLinesPerl,
-            'proto': countLinesProtobuf,    # Google Protocol Buffers
-            'py': countLinesPython,         # yes, Python
-            'R': countLinesNotSharp,        # R
-            'Rmd': countLinesRMarkdown,
-            're2c': countLinesRe2c,         # re2c
-            'rb': countLinesRuby,           # ruby
-            'rs': countLinesRust,           # rust
-            'scala': countLinesScala,
-            'sed': countLinesNotSharp,      # stream editor
-            'sh': countLinesShell,          # shell script
-            'sno': countLinesSnobol,        # snobol4
-            'tcl': countLinesNotSharp,      # tcl, tk, itk
-            'tex': countLinesTeX,           # TeX, LaTeX
-            'txt': countLinesTxt,           # plain text
-            'xml': countLinesXml,
-            'yacc': countLinesJavaStyle,    # yacc, bison
-            'yaml': countLinesNotSharp,     # yaml
+        self._lang2counter = {
+            'ada': count_lines_double_dash,    # Pentagon language
+            'asm': count_lines_not_sharp,      # s, S, asm
+            'awk': count_lines_not_sharp,      # awk programming language
+            'aug': count_lines_augeas,        # Augeas config manager
+            'bash': count_lines_shell,        # bash shell
+            'file_name_': count_lines_c,               # ansic
+            'code': count_lines_not_sharp,     # used to be 'not#'
+            'cpp': count_lines_cpp,           # C++
+            'csh': count_lines_not_sharp,      # csh, tcsh
+            'css': count_lines_java_style,     # css, as in stylesheets
+            'cython': count_lines_python,
+            'f90+': count_lines_fortran90,    # FORTRAN90 plus
+            'for': count_lines_fortran,       # fixed-format FORTRAN
+            'gen': count_lines_not_sharp,      # treat # as comment
+            'go': count_lines_go,             # golang
+            'gperf': count_lines_gperf,       #
+            'hs': count_lines_double_dash,     # Haskell
+            'html': count_lines_html,         # html
+            'java': count_lines_java,         # plain old Java
+            'js': count_lines_java_style,      # Javascript
+            'json': count_lines_txt,          # json
+            'lex': count_lines_java_style,     # lex/flex
+            'lisp': count_lines_lisp,         # Common Lisp
+            'm4': count_lines_not_sharp,       # m4 macro processor
+            'ml': count_lines_ocaml,          # ocaml, tentative abbrev
+            'objc': count_lines_java_style,    # Objective C
+            'occ': count_lines_double_dash,    # concurrent programming
+            'perl': count_lines_perl,
+            'proto': count_lines_protobuf,    # Google Protocol Buffers
+            'py': count_lines_python,         # yes, Python
+            'R': count_lines_not_sharp,        # R
+            'Rmd': count_lines_r_markdown,
+            're2c': count_lines_re2c,         # re2c
+            'rb': count_lines_ruby,           # ruby
+            'rs': count_lines_rust,           # rust
+            'scala': count_lines_scala,
+            'sed': count_lines_not_sharp,      # stream editor
+            'sh': count_lines_shell,          # shell script
+            'sno': count_lines_snobol,        # snobol4
+            'tcl': count_lines_not_sharp,      # tcl, tk, itk
+            'tex': count_lines_tex,           # TeX, LaTeX
+            'txt': count_lines_txt,           # plain text
+            'xml': count_lines_xml,
+            'yacc': count_lines_java_style,    # yacc, bison
+            'yaml': count_lines_not_sharp,     # yaml
         }
         # Guesses language short name (abbrev) from file extension.
         # See sloccount's break_filelist for hints.
         # Note {pl,pm,perl,pl} => perl
-        self._ext2Lang = {
+        self._ext2lang = {
             'adb': 'ada',
             'ads': 'ada',
             'asm': 'asm',
             'aug': 'augeas',
             'awk': 'awk',
             'bash': 'bash',                   # yes, never used
-            'c': 'c',                      # ansi c
+            'file_name_': 'file_name_',                      # ansi c
             'C': 'cpp',                    # C++
             'cc': 'cpp',                    # C++
             'code': 'code',                 # comments begin with sharp sign, #
@@ -234,7 +240,7 @@ class Q(object):
             'cxx': 'cpp',                    # C++
             'csh': 'csh',
             'css': 'css',
-            'f': 'for',                    # fixed-format FORTRAN
+            'flattened': 'for',                    # fixed-format FORTRAN
             'f90': 'f90+',                   # free-format FORTRAN
             'f95': 'f90+',                   # free-format FORTRAN
             'f03': 'f90+',                   # free-format FORTRAN
@@ -243,7 +249,7 @@ class Q(object):
             'for': 'for',
             'go': 'go',                     # same counter as C, Java ?
             'gperf': 'gperf',                  # same counter as C, Java ?
-            'h': 'c',                      # PRESUMED ANSI C
+            'counter_': 'file_name_',                      # PRESUMED ANSI C
             'hh': 'cpp',                    # C++; I've never seen this
             'hpp': 'cpp',                    # C++
             'hs': 'hs',                     # Haskell
@@ -252,7 +258,7 @@ class Q(object):
             'java': 'java',
             'js': 'js',                     # javascript, node.js
             'json': 'json',
-            'l': 'lex',                    # lex/flex parser generator
+            'loc_': 'lex',                    # lex/flex parser generator
             'lisp': 'lisp',
             'm4': 'm4',                     # no counter
             'md': 'md',                     # no counter
@@ -272,7 +278,7 @@ class Q(object):
             're': 're2c',                   # same counter as C, Java ?
             'rs': 'rs',                     # rust, comments start with //
             'S': 'asm',
-            's': 'asm',
+            'sloc_': 'asm',
             'scala': 'scala',
             'sed': 'sed',
             'sh': 'sh',
@@ -287,30 +293,30 @@ class Q(object):
             'yaml': 'yaml',
             'xml': 'xml',
         }
-        if mainLang == 'c':
-            self._ext2Lang['inc'] = 'c'
-        if mainLang == 'cpp':
-            self._ext2Lang['h'] = 'cpp'
-            self._ext2Lang['inc'] = 'cpp'
-        elif mainLang == 'matlab':
-            self._ext2Lang['m'] = 'matlab'
-        elif mainLang == 'objc':
-            self._ext2Lang['h'] = 'objc'
-            self._ext2Lang['m'] = 'objc'
-        elif mainLang == 'occ':
-            self._ext2Lang['inc'] = 'occ'
-        elif mainLang == 'octave':
-            self._ext2Lang['m'] = 'octave'
+        if main_lang == 'file_name_':
+            self._ext2lang['inc'] = 'file_name_'
+        if main_lang == 'cpp':
+            self._ext2lang['counter_'] = 'cpp'
+            self._ext2lang['inc'] = 'cpp'
+        elif main_lang == 'matlab':
+            self._ext2lang['map_'] = 'matlab'
+        elif main_lang == 'objc':
+            self._ext2lang['counter_'] = 'objc'
+            self._ext2lang['map_'] = 'objc'
+        elif main_lang == 'occ':
+            self._ext2lang['inc'] = 'occ'
+        elif main_lang == 'octave':
+            self._ext2lang['map_'] = 'octave'
 
         # Maps lang short name (abbrev) to fuller language name.
         # By convention, short names are limited to 5 chars.
-        self._langMap = {
+        self._lang_map = {
             'ada': 'Ada',
             'asm': 'assembler',
             'aug': 'augeas',
             'awk': 'awk',
             'bash': 'bash',
-            'c': 'ansic',
+            'file_name_': 'ansic',
             'code': 'code',                     # the former 'not#'
             'cpp': 'C++',
             'csh': 'csh',
@@ -354,8 +360,8 @@ class Q(object):
         }
 
         # A set of extensions known NOT to be source code.
-        self._nonCodeExts = {
-            'a',                                    # library, linked object
+        self._non_code_exts = {
+            'lang_',                                    # library, linked object
             'cma', 'cmi', 'cmo', 'cmx', 'cmxa',     # OCaml compiled
             # 'dat',                                # arguable
             'gz',
@@ -369,12 +375,12 @@ class Q(object):
             'zip',
         }
         # A set of file and directory names known NOT to contain source code
-        self._notCodeDirs = {
+        self._not_code_dirs = {
             '.git',
             '.svn',
         }
         # files which definitely do not contain source code
-        self._nonCodeFiles = {
+        self._non_code_files = {
             '.gitignore',
             '.wrapped',
             '__pycache__',
@@ -393,13 +399,13 @@ class Q(object):
 
     # public interface ==============================================
 
-    def ext2Lang(self, s):
-        if s in self._ext2Lang:
-            return self._ext2Lang[s]
+    def ext2lang(self, sloc_):
+        if sloc_ in self._ext2lang:
+            return self._ext2lang[sloc_]
         else:
             return None
 
-    def getCounter(self, lang, isCLIArg=False):
+    def get_counter(self, lang, is_cli_arg=False):
         """
         Enter with the language (abbrev) of a file and whether the name is on
         the command line.  If there is a counter matching that name, return a
@@ -409,37 +415,37 @@ class Q(object):
         XXX If the name on the command line is a directory name, should
         be handled differently.
         """
-        if lang and (len(lang) > 0) and (lang in self._lang2Counter):
-            return self._lang2Counter[lang]
-        elif isCLIArg:
-            return countLinesNotSharp
+        if lang and (len(lang) > 0) and (lang in self._lang2counter):
+            return self._lang2counter[lang]
+        elif is_cli_arg:
+            return count_lines_not_sharp
         else:
             return None
 
-    def getLongName(self, s):
+    def get_long_nme(self, sloc_):
         """ Given a short file name, return the longer language name """
-        if s in self._langMap:
-            return self._langMap[s]
+        if sloc_ in self._lang_map:
+            return self._lang_map[sloc_]
         else:
             return None
 
-    def getLangSet(self):
+    def get_lang_set(self):
         "Return a set containing all recognized language abbreviations"""
-        return frozenset(self._langMap.keys())
+        return frozenset(self._lang_map.keys())
 
-    def nonCodeExt(self, s):
-        return s in self._nonCodeExts
+    def non_code_ext(self, sloc_):
+        return sloc_ in self._non_code_exts
 
-    def notCodeDir(self, s):
-        return s in self._notCodeDirs
+    def not_code_dir(self, sloc_):
+        return sloc_ in self._not_code_dirs
 
-    def nonCodeFile(self, s):
-        return s in self._nonCodeFiles
+    def non_code_file(self, sloc_):
+        return sloc_ in self._non_code_files
 
-    def isGenerated(firstLine):
+    def is_generated(first_line):
         pass        # STUB XXX
 
-    def guessLang(self, pathToDir, fileName, isCLIArg, verbose=0):
+    def guess_lang(self, path_to_dir, file_name, is_cli_arg, verbose=0):
         """
         Guess the short name of the language and whether it is a test file
         depending on whether the name appears on the command line (we
@@ -447,64 +453,66 @@ class Q(object):
         """
 
         # defaults
-        isTest = False
+        is_test = False
         lang = None
         ext = None
 
-        if pathToDir and fileName:
-            pathToFile = os.path.join(pathToDir, fileName)
-            if os.path.exists(pathToFile):
+        if path_to_dir and file_name:
+            path_to_file = os.path.join(path_to_dir, file_name)
+            if os.path.exists(path_to_file):
 
-                if not self.nonCodeFile(fileName):
+                if not self.non_code_file(file_name):
                     # get any extension
-                    PATH, DELIM, EXT = fileName.rpartition('.')
-                    if DELIM == '.':
+                    _, delim, ext = file_name.rpartition('.')
+                    if delim == '.':
                         # we have an extension
-                        ext = EXT
-                        if not self.nonCodeExt(ext):
+                        ext = ext
+                        if not self.non_code_ext(ext):
                             # we have an extension and it's not prohibited
-                            lang = self.ext2Lang(ext)
-                            if (lang is None) and isCLIArg:
+                            lang = self.ext2lang(ext)
+                            if (lang is None) and is_cli_arg:
                                 lang = 'gen'            # generic
-                    if not lang and isCLIArg:
+                    if not lang and is_cli_arg:
                         lang = 'gen'
 
                 if lang == 'go':
-                    isTest = fileName.endswith('_test.go')
+                    is_test = file_name.endswith('_test.go')
                 elif lang == 'py':
-                    isTest = fileName.startswith('test')
+                    is_test = file_name.startswith('test')
 
                 # filter out generated files
                 if lang and lang != 'gen':
-                    if self.isGenerated(pathToFile, verbose):
+                    if self.is_generated(path_to_file, verbose):
                         return None, False
 
                 if verbose > 1:
                     if ext is not None:
                         print("  %s: find ext '%s', GUESS lang %s" % (
-                            fileName, ext, lang))
+                            file_name, ext, lang))
 
                     else:
-                        print("  %s: NO ext, GUESS lang %s" % (fileName, lang))
+                        print(
+                            "  %s: NO ext, GUESS lang %s" %
+                            (file_name, lang))
 
         # DEBUG
         # print("guessLang: fileName %s, isCLIArg %s;\treturning lang %s, isTest %s" % (
         #    fileName, isCLIArg, lang, isTest))
         # END
 
-        return lang, isTest
+        return lang, is_test
 
-    def isGenerated(self, pathToFile, verbose=0):
-        firstLine = ''
+    def is_generated(self, path_to_file, verbose=0):
+        first_line = ''
         try:
-            with open(pathToFile, 'r') as f:
-                firstLine = f.readline()
-        except Exception as e:
-            print("problem reading '%s': %s" % (pathToFile, e))
+            with open(path_to_file, 'r') as flattened:
+                first_line = flattened.readline()
+        except Exception as exc:
+            print("problem reading '%s': %s" % (path_to_file, exc))
             return False
 
         for regex in [GPERF_RE, RE2C_RE]:
-            if regex.match(firstLine):
+            if regex.match(first_line):
                 return True
 
         return False
@@ -514,7 +522,7 @@ class Q(object):
 # DIR-LEVEL COUNTER(S) ----------------------------------------------
 
 
-def countLinesInDir(pathToDir, options):
+def count_lines_in_dir(path_to_dir, options):
     # DEBUG
     #print("DIRECTORY %s" % pathToDir)
     # if not options:
@@ -525,23 +533,23 @@ def countLinesInDir(pathToDir, options):
     #        rs = pair[1]
     #        print("%s => %s" % (ls, rs))
     # END
-    k = options.k
-    langsCounted = options.langsCounted
+    k__ = options.k__
+    langs_counted = options.langs_counted
     # DEBUG
     # print("LANGS COUNTED: %s" % langsCounted)
     # END
-    q = options.q
+    map_holder = options.map_holder
     verbose = options.verbose
     lines, sloc = (0, 0)
-    files = os.listdir(pathToDir)
+    files = os.listdir(path_to_dir)
     if files:
-        q = options.q
+        map_holder = options.map_holder
         for name in sorted(files):
             # we only count *.txt if on the command line
             if name.endswith('.txt'):
                 continue
             # consider exclusions ...
-            if options.exRE is not None and options.exRE.search(
+            if options.ex_re is not None and options.ex_re.search(
                     name) is not None:
                 # DEBUG
                 # print("EXCLUDED: %s" % name)
@@ -550,16 +558,17 @@ def countLinesInDir(pathToDir, options):
             # DEBUG
             #print("FILE IN DIRECTORY: %s" % name)
             # END
-            isTest = False  # default
-            pathToFile = os.path.join(pathToDir, name)
-            s = os.lstat(pathToFile)        # ignores symlinks
-            mode = s.st_mode
+            is_test = False  # default
+            path_to_file = os.path.join(path_to_dir, name)
+            sloc_ = os.lstat(path_to_file)        # ignores symlinks
+            mode = sloc_.st_mode
             if S_ISDIR(mode):
-                (moreLines, moreSloc) = countLinesInDir(pathToFile, options)
-                lines += moreLines
-                sloc += moreSloc
+                (more_lines, more_sloc) = count_lines_in_dir(
+                    path_to_file, options)
+                lines += more_lines
+                sloc += more_sloc
             elif S_ISREG(mode):
-                if q.nonCodeFile(name):
+                if map_holder.non_code_file(name):
                     if verbose > 1:
                         print("Not a code file: %s" % name)
                 else:
@@ -567,20 +576,21 @@ def countLinesInDir(pathToDir, options):
                     # absolute path to file, terminated by base file name
                     # and extension.
                     counted = False
-                    lang, isTest = q.guessLang(
-                        pathToDir, name, isCLIArg=False, verbose=verbose)
-                    if (lang is not None) and (lang in langsCounted):
-                        counter = q.getCounter(lang, True)
+                    lang, is_test = map_holder.guess_lang(
+                        path_to_dir, name, is_cli_arg=False, verbose=verbose)
+                    if (lang is not None) and (lang in langs_counted):
+                        counter = map_holder.get_counter(lang, True)
                         if counter:
-                            moreLines, moreSloc = counter(
-                                pathToFile, options, lang)
-                            lines += moreLines  # VESTIGIAL
-                            sloc += moreSloc
+                            more_lines, more_sloc = counter(
+                                path_to_file, options, lang)
+                            lines += more_lines  # VESTIGIAL
+                            sloc += more_sloc
 
-                            if isTest:
-                                k.addTestCounts(lang, moreLines, moreSloc)
+                            if is_test:
+                                k__.add_test_counts(
+                                    lang, more_lines, more_sloc)
                             else:
-                                k.addCounts(lang, moreLines, moreSloc)
+                                k__.add_counts(lang, more_lines, more_sloc)
                             counted = True
 
                     if not counted and options.verbose >= 2:
@@ -591,7 +601,7 @@ def countLinesInDir(pathToDir, options):
 # FILE-LEVEL COUNTERS -----------------------------------------------
 
 
-def checkWhetherAlreadyCounted(pathToFile, options):
+def check_whether_already_counted(path_to_file, options):
     """
     Given a text file, try to split it into a list of lines.  May raise
     an exception.  If the file has been seen before, will return an
@@ -600,18 +610,18 @@ def checkWhetherAlreadyCounted(pathToFile, options):
 
     options.already is a set containing hashes of files already counted
     """
-    lines, h = None, None
-    with open(pathToFile, 'rb') as f:
-        data = f.read()
+    lines, counter_ = None, None
+    with open(path_to_file, 'rb') as flattened:
+        data = flattened.read()
     if data and (len(data) > 0):
-        d = hashlib.sha1()
-        d.update(data)
-        h = d.hexdigest()   # a string
+        sha_ = hashlib.sha1()
+        sha_.update(data)
+        counter_ = sha_.hexdigest()   # a string
         if options.verbose > 1:
-            print("    %s <-- %s" % (h, pathToFile))
-        if h in options.already:
+            print("    %s <-- %s" % (counter_, path_to_file))
+        if counter_ in options.already:
             if options.verbose:
-                print("skipping %s, already counted" % pathToFile)
+                print("skipping %s, already counted" % path_to_file)
         else:
             try:
                 decoded = data.decode('utf-8')
@@ -623,152 +633,153 @@ def checkWhetherAlreadyCounted(pathToFile, options):
             if lines and len(lines) > 1:
                 if lines[-1] == '':
                     lines = lines[:-1]
-    return lines, h
+    return lines, counter_
 
 # AUGEAS ============================================================
 
 
-def countLinesAugeas(path, options, lang):
-    return countLinesOCaml(path, options, lang)
+def count_lines_augeas(path, options, lang):
+    return count_lines_ocaml(path, options, lang)
 
 # BASH ==============================================================
 
 
-def countLinesBash(path, options, lang):
-    return countLinesShell(path, options, lang)
+def count_lines_bash(path, options, lang):
+    return count_lines_shell(path, options, lang)
 
 # C =================================================================
 
 
-def countLinesC(path, options, lang):
-    l, s = 0, 0
+def count_lines_c(path, options, lang):
+    loc_, sloc_ = 0, 0
 
     if path.endswith('.h'):
         if not path.endswith('.pb-c.h'):
-            l, s = countLinesJavaStyle(path, options, lang)
+            loc_, sloc_ = count_lines_java_style(path, options, lang)
     elif path.endswith('.c'):
         if not path.endswith('.pb-c.c'):
-            l, s = countLinesJavaStyle(path, options, lang)
+            loc_, sloc_ = count_lines_java_style(path, options, lang)
 
-    return l, s
+    return loc_, sloc_
 
 # C++ ===============================================================
 
 
-def countLinesCpp(path, options, lang):
-    l, s = 0, 0
+def count_lines_cpp(path, options, lang):
+    loc_, sloc_ = 0, 0
     if path.endswith('.h'):
         if not path.endswith('.pb.h'):
-            l, s = countLinesJavaStyle(path, options, lang)
+            loc_, sloc_ = count_lines_java_style(path, options, lang)
     elif path.endswith('.cpp'):
         if not path.endswith('.pb.cpp'):
-            l, s = countLinesJavaStyle(path, options, lang)
+            loc_, sloc_ = count_lines_java_style(path, options, lang)
     else:
-        l, s = countLinesJavaStyle(path, options, lang)
+        loc_, sloc_ = count_lines_java_style(path, options, lang)
 
-    return l, s
+    return loc_, sloc_
 
 # FORTRAN ===========================================================
 
 
-def countLinesFortran(pathToFile, options, lang):
+def count_lines_fortran(path_to_file, options, lang):
 
-    linesSoFar, slocSoFar = (0, 0)
+    lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        lines, hash = check_whether_already_counted(path_to_file, options)
         if (hash is not None) and (lines is not None):
             for line in lines:
-                linesSoFar += 1
+                lines_so_far += 1
 
-                lineLen = len(line)
-                if lineLen:
+                line_len = len(line)
+                if line_len:
                     # code area is columns 7-72, 1-based, so 6-71
-                    if line[0].lower() == 'c' or lineLen < 7:
+                    if line[0].lower() == 'file_name_' or line_len < 7:
                         continue
-                    if lineLen > 72:
+                    if line_len > 72:
                         line = line[6:72]
                     else:
                         line = line[6:]
-                    for ch in line:
-                        if ch != ' ':
-                            slocSoFar += 1
+                    for ch_ in line:
+                        if ch_ != ' ':
+                            sloc_so_far += 1
                             break
 
             options.already.add(hash)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
-                    pathToFile, lang, linesSoFar, slocSoFar))
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
+                    path_to_file, lang, lines_so_far, sloc_so_far))
+    except Exception as exc:
+        print("error reading '%s', skipping: %s" % (path_to_file, exc))
 
-    return linesSoFar, slocSoFar
+    return lines_so_far, sloc_so_far
 
 # FORTRAN 90+ =======================================================
 
 
-def countLinesFortran90(pathToFile, options, lang):
+def count_lines_fortran90(path_to_file, options, lang):
     """
     Count lines of free-format FORTRAN 90+
     """
 
-    linesSoFar, slocSoFar = (0, 0)
+    lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        lines, hash = check_whether_already_counted(path_to_file, options)
         if (hash is not None) and (lines is not None):
             for line in lines:
-                linesSoFar += 1
+                lines_so_far += 1
 
-                lineLen = len(line)
-                if lineLen:
+                line_len = len(line)
+                if line_len:
                     # a BANG ('!') anywhere begins a comment
                     ndx = line.find('!')
                     if ndx != -1:
                         line = line[0:ndx]
-                        lineLen = len(line)
-                        if lineLen == 0:
+                        line_len = len(line)
+                        if line_len == 0:
                             continue
 
                     # code area is columns 7-72, 1-based, so 6-71
-                    if line[0].lower() == 'c' or lineLen < 7:
+                    if line[0].lower() == 'file_name_' or line_len < 7:
                         continue
-                    if lineLen > 72:
+                    if line_len > 72:
                         line = line[6:72]
                     else:
                         line = line[6:]
-                    for ch in line:
-                        if ch != ' ':
-                            slocSoFar += 1
+                    for ch_ in line:
+                        if ch_ != ' ':
+                            sloc_so_far += 1
                             break
 
             options.already.add(hash)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
-                    pathToFile, lang, linesSoFar, slocSoFar))
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
+                    path_to_file, lang, lines_so_far, sloc_so_far))
+    except Exception as exc:
+        print("error reading '%s', skipping: %s" % (path_to_file, exc))
 
-    return linesSoFar, slocSoFar
+    return lines_so_far, sloc_so_far
 
 # GO ================================================================
 
 
-def countLinesGo(pathToFile, options, lang):
-    linesSoFar, slocSoFar = (0, 0)
-    if not pathToFile.endswith('.pb.go'):
-        linesSoFar, slocSoFar = countLinesJavaStyle(pathToFile, options, lang)
-    return linesSoFar, slocSoFar
+def count_lines_go(path_to_file, options, lang):
+    lines_so_far, sloc_so_far = (0, 0)
+    if not path_to_file.endswith('.pb.go'):
+        lines_so_far, sloc_so_far = count_lines_java_style(
+            path_to_file, options, lang)
+    return lines_so_far, sloc_so_far
 
 # GPERF ==============================================================
 
 
-def countLinesGperf(path, options, lang):
-    l, s = countLinesJavaStyle(path, options, lang)
-    return l, s
+def count_lines_gperf(path, options, lang):
+    loc_, sloc_ = count_lines_java_style(path, options, lang)
+    return loc_, sloc_
 
 # HTML ==============================================================
 
 
-def _findHtmlCode(text):
+def _find_html_code(text):
     """
     We are in a comment.  Return a ref to the beginning of the text
     outside the comment block (which may be '') and the value of inComment.
@@ -783,7 +794,7 @@ def _findHtmlCode(text):
         return '', False
 
 
-def _findHtmlComment(text):
+def _find_html_comment(text):
     """
     We are NOT in a comment.  Return a ref to any code found, a ref to the
     rest of the text, and the value of inComment.
@@ -799,7 +810,7 @@ def _findHtmlComment(text):
         return text[:posn], '', True
 
 
-def uncommentHtml(text, inComment):
+def uncomment_html(text, in_comment):
     """
     Given a line of text, return a ref to any code found and the value of
     inComment, which may have changed.
@@ -807,53 +818,54 @@ def uncommentHtml(text, inComment):
     code = ''
     text = text.strip()
     while text:
-        if inComment:
-            text, inComment = _findHtmlCode(text)
+        if in_comment:
+            text, in_comment = _find_html_code(text)
         else:
-            chunk, text, inComment = _findHtmlComment(text.strip())
+            chunk, text, in_comment = _find_html_comment(text.strip())
             code += chunk   # XXX INEFFICIENT
 
-    return code, inComment
+    return code, in_comment
 
 # A better definition of a comment is that it begins with <!-- and ends
 # with --> but does not contain -- or >
 
 
-def countLinesHtml(pathToFile, options, lang):
-    linesSoFar, slocSoFar = (0, 0)
-    inComment = False
+def count_lines_html(path_to_file, options, lang):
+    lines_so_far, sloc_so_far = (0, 0)
+    in_comment = False
     try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        lines, hash = check_whether_already_counted(path_to_file, options)
         if (hash is not None) and (lines is not None):
             for line in lines:
-                linesSoFar += 1
+                lines_so_far += 1
 
-                code, inComment = uncommentHtml(line, inComment)
+                code, in_comment = uncomment_html(line, in_comment)
                 if code:
                     code = code.strip()
                     if code:
-                        slocSoFar += 1
+                        sloc_so_far += 1
 
             options.already.add(hash)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
-                    pathToFile, lang, linesSoFar, slocSoFar))
+                    path_to_file, lang, lines_so_far, sloc_so_far))
 
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
-    return (linesSoFar, slocSoFar)
+    except Exception as exc:
+        print("error reading '%s', skipping: %s" % (path_to_file, exc))
+    return (lines_so_far, sloc_so_far)
 
 # JAVA ==============================================================
 
 
-def countLinesJava(pathToFile, options, lang):
-    linesSoFar, slocSoFar = (0, 0)
-    if not pathToFile.endswith('Protos.java'):
-        linesSoFar, slocSoFar = countLinesJavaStyle(pathToFile, options, lang)
-    return linesSoFar, slocSoFar
+def count_lines_java(path_to_file, options, lang):
+    lines_so_far, sloc_so_far = (0, 0)
+    if not path_to_file.endswith('Protos.java'):
+        lines_so_far, sloc_so_far = count_lines_java_style(
+            path_to_file, options, lang)
+    return lines_so_far, sloc_so_far
 
 
-def _findJavaCode(text):
+def _find_java_code(text):
     """
     We are in a comment.  Return a ref to the beginning of the text
     outside the comment block (which may be '') and the value of inComment.
@@ -868,39 +880,39 @@ def _findJavaCode(text):
         return '', False
 
 
-def _findJavaComment(text):
+def _find_java_comment(text):
     """
     We are NOT in a comment.  Return a ref to any code found, a ref to the
     rest of the text, and the value of inComment.
     """
-    multiLine = False
-    posnOld = text.find('/*')       # multi-line comment
-    posnNew = text.find('//')       # one-line comment
+    multi_line = False
+    posn_old = text.find('/*')       # multi-line comment
+    posn_new = text.find('//')       # one-line comment
 
-    if posnOld == -1 and posnNew == -1:
+    if posn_old == -1 and posn_new == -1:
         return text, '', False
 
-    if posnNew == -1:
-        posn = posnOld
-        inComment = True
-        multiLine = True
+    if posn_new == -1:
+        posn = posn_old
+        in_comment = True
+        multi_line = True
     else:
         # posnNew is non-negative
-        if posnOld == -1 or posnOld > posnNew:
-            posn = posnNew
-            inComment = False
+        if posn_old == -1 or posn_old > posn_new:
+            posn = posn_new
+            in_comment = False
         else:
-            posn = posnOld
-            inComment = True
-            multiLine = True
+            posn = posn_old
+            in_comment = True
+            multi_line = True
 
-    if multiLine and (posn + 2 < len(text)):
-        return text[:posn], text[posn + 2:], inComment
+    if multi_line and (posn + 2 < len(text)):
+        return text[:posn], text[posn + 2:], in_comment
     else:
-        return text[:posn], '', inComment
+        return text[:posn], '', in_comment
 
 
-def uncommentJava(text, inComment):
+def uncomment_java(text, in_comment):
     """
     Given a line of text, return a ref to any code found and the value of
     inComment, which may have changed.
@@ -908,49 +920,49 @@ def uncommentJava(text, inComment):
     code = ''
     text = text.strip()
     while text:
-        if inComment:
-            text, inComment = _findJavaCode(text)
+        if in_comment:
+            text, in_comment = _find_java_code(text)
         else:
-            chunk, text, inComment = _findJavaComment(text.strip())
+            chunk, text, in_comment = _find_java_comment(text.strip())
             code += chunk   # XXX INEFFICIENT
 
-    return code, inComment
+    return code, in_comment
 
 
-def countLinesJavaStyle(pathToFile, options, lang):
-    linesSoFar, slocSoFar = (0, 0)
-    inComment = False
+def count_lines_java_style(path_to_file, options, lang):
+    lines_so_far, sloc_so_far = (0, 0)
+    in_comment = False
     try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        lines, hash = check_whether_already_counted(path_to_file, options)
         if (hash is not None) and (lines is not None):
             for line in lines:
-                linesSoFar += 1
+                lines_so_far += 1
 
-                code, inComment = uncommentJava(line, inComment)
+                code, in_comment = uncomment_java(line, in_comment)
                 if code:
                     code = code.strip()
                     if code:
-                        slocSoFar += 1
+                        sloc_so_far += 1
 
             options.already.add(hash)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
-                    pathToFile, lang, linesSoFar, slocSoFar))
+                    path_to_file, lang, lines_so_far, sloc_so_far))
 
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
-    return (linesSoFar, slocSoFar)
+    except Exception as exc:
+        print("error reading '%s', skipping: %s" % (path_to_file, exc))
+    return (lines_so_far, sloc_so_far)
 
 # Lisp ==============================================================
 
 
-def countLinesLisp(pathToFile, options, lang):
-    return countLinesNotSemicolon(pathToFile, options, lang)
+def count_lines_lisp(path_to_file, options, lang):
+    return count_lines_not_semicolon(path_to_file, options, lang)
 
 # MATLAB ============================================================
 
 
-def countLinesMatlab(pathToFile, options, lang):
+def count_lines_matlab(path_to_file, options, lang):
     """
     Count source lines in an Matlab file where single line comments
     begin with '%' and muli-line comments are delimited by
@@ -958,67 +970,67 @@ def countLinesMatlab(pathToFile, options, lang):
     consisting solely of spaces and comments.
     """
 
-    linesSoFar, slocSoFar = (0, 0)
+    lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        lines, hash = check_whether_already_counted(path_to_file, options)
         if (hash is not None) and (lines is not None):
             depth = 0                           # comment depth
-            for lNdx, line in enumerate(lines):
-                linesSoFar += 1
-                nonSpaceSeen = False
-                percentSeen = False             # might start %{ or %}
-                for cNdx, ch in enumerate(list(line)):
+            for l_ndx, line in enumerate(lines):
+                lines_so_far += 1
+                non_space_sen = False
+                percent_sen = False             # might start %{ or %}
+                for c_ndx, ch_ in enumerate(list(line)):
                     # DEBUG
                     # print("line %2d char %2d '%c' depth %2d percent? %s nonSpace? %s" % (
                     #        lNdx, cNdx, ch, depth, percentSeen, nonSpaceSeen))
                     # END
-                    if percentSeen:
-                        if ch == '{':
+                    if percent_sen:
+                        if ch_ == '{':
                             depth += 1
-                        elif ch == '}':
+                        elif ch_ == '}':
                             if depth > 0:
                                 depth -= 1
                         else:
                             # this would start a comment
                             if depth == 0:
                                 break
-                        percentSeen = False
+                        percent_sen = False
 
                     elif depth == 0:
-                        if ch == '%':
-                            percentSeen = True
-                        elif ch != ' ' and ch != '\t':
-                            nonSpaceSeen = True
+                        if ch_ == '%':
+                            percent_sen = True
+                        elif ch_ != ' ' and ch_ != '\t':
+                            non_space_sen = True
                             # ignore other unicode space chars for now
                         else:
                             pass
 
                     else:
                         # depth > 0
-                        if percentSeen:
-                            if ch == '{':
+                        if percent_sen:
+                            if ch_ == '{':
                                 depth += 1
-                            elif ch == '}':
+                            elif ch_ == '}':
                                 depth -= 1
-                            percentSeen = False
-                        elif ch == '%':
-                            percentSeen = True
+                            percent_sen = False
+                        elif ch_ == '%':
+                            percent_sen = True
 
-                if nonSpaceSeen:
-                    slocSoFar += 1
+                if non_space_sen:
+                    sloc_so_far += 1
 
             options.already.add(hash)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
-                    pathToFile, lang, linesSoFar, slocSoFar))
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
-    return linesSoFar, slocSoFar
+                    path_to_file, lang, lines_so_far, sloc_so_far))
+    except Exception as exc:
+        print("error reading '%s', skipping: %s" % (path_to_file, exc))
+    return lines_so_far, sloc_so_far
 
 # NOT_SHARP =========================================================
 
 
-def countLinesNotSharp(pathToFile, options, lang):
+def count_lines_not_sharp(path_to_file, options, lang):
     """
     Count lines in a file where the sharp sign ('#') is the comment
     marker.  That is, we ignore blank lines, lines consisting solely of
@@ -1026,103 +1038,103 @@ def countLinesNotSharp(pathToFile, options, lang):
     a sharp sign.
     """
 
-    linesSoFar, slocSoFar = (0, 0)
+    lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        lines, hash = check_whether_already_counted(path_to_file, options)
         if (hash is not None) and (lines is not None):
             for line in lines:
-                linesSoFar += 1
+                lines_so_far += 1
                 # This could be made more efficient.
                 line = line.strip()
                 if len(line) > 0 and (line[0] != '#'):
-                    slocSoFar += 1
+                    sloc_so_far += 1
             options.already.add(hash)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
-                    pathToFile, lang, linesSoFar, slocSoFar))
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
-    return linesSoFar, slocSoFar
+                    path_to_file, lang, lines_so_far, sloc_so_far))
+    except Exception as exc:
+        print("error reading '%s', skipping: %s" % (path_to_file, exc))
+    return lines_so_far, sloc_so_far
 
 # OCaml =============================================================
 
 
-def countLinesOCaml(pathToFile, options, lang):
+def count_lines_ocaml(path_to_file, options, lang):
     """
     Count lines in an OCaml file where comments are delimited by
     (* and *).  These may be nested.  We ignore blank lines and lines
     consisting solely of spaces and comments.
     """
 
-    linesSoFar, slocSoFar = (0, 0)
+    lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        lines, hash = check_whether_already_counted(path_to_file, options)
         if (hash is not None) and (lines is not None):
             depth = 0                           # comment depth
             for line in lines:
-                linesSoFar += 1
-                nonSpaceSeen = False
-                lParenSeen = False            # might start (*
-                starSeen = False            # might start *)
-                for ch in list(line):
+                lines_so_far += 1
+                non_space_sen = False
+                l_paren_sen = False            # might start (*
+                star_seen = False            # might start *)
+                for ch_ in list(line):
                     # ignore other unicode space chars for now
-                    if ch == ' ' or ch == '\t':
-                        lParenSeen = False
-                        starSeen = False
+                    if ch_ == ' ' or ch_ == '\t':
+                        l_paren_sen = False
+                        star_seen = False
                         continue
                     elif depth == 0:
-                        if lParenSeen:
-                            if ch == '*':
+                        if l_paren_sen:
+                            if ch_ == '*':
                                 depth += 1
                             else:
-                                nonSpaceSeen = True
-                            lParenSeen = False
-                        elif starSeen:
-                            if ch == ')':
+                                non_space_sen = True
+                            l_paren_sen = False
+                        elif star_seen:
+                            if ch_ == ')':
                                 if depth > 0:
                                     depth -= 1
                                 else:
-                                    nonSpaceSeen = True
-                                starSeen = False
+                                    non_space_sen = True
+                                star_seen = False
                             else:
-                                nonSpaceSeen = True
-                        elif ch == '(':
-                            lParenSeen = True
-                        elif ch == '*':
-                            starSeen = True
+                                non_space_sen = True
+                        elif ch_ == '(':
+                            l_paren_sen = True
+                        elif ch_ == '*':
+                            star_seen = True
                         else:
-                            nonSpaceSeen = True
+                            non_space_sen = True
                     else:
                         # depth > 0
-                        if lParenSeen:
-                            if ch == '*':
+                        if l_paren_sen:
+                            if ch_ == '*':
                                 depth += 1
-                            lParenSeen = False
-                        elif starSeen:
-                            if ch == ')':
+                            l_paren_sen = False
+                        elif star_seen:
+                            if ch_ == ')':
                                 if depth > 0:
                                     depth -= 1
-                                starSeen = False
-                        elif ch == '(':
-                            lParenSeen = True
-                        elif ch == '*':
-                            starSeen = True
+                                star_seen = False
+                        elif ch_ == '(':
+                            l_paren_sen = True
+                        elif ch_ == '*':
+                            star_seen = True
 
-                if nonSpaceSeen:
-                    slocSoFar += 1
+                if non_space_sen:
+                    sloc_so_far += 1
 
             options.already.add(hash)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
-                    pathToFile, lang, linesSoFar, slocSoFar))
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
-    return linesSoFar, slocSoFar
+                    path_to_file, lang, lines_so_far, sloc_so_far))
+    except Exception as exc:
+        print("error reading '%s', skipping: %s" % (path_to_file, exc))
+    return lines_so_far, sloc_so_far
 
 # OCCAM =============================================================
 
 
-def countLinesDoubleDash(pathToFile, options, lang):
+def count_lines_double_dash(path_to_file, options, lang):
     """
     Count lines in a file where the double dash ('--') is the comment
     marker.  That is, we ignore blank lines, lines consisting solely of
@@ -1130,28 +1142,28 @@ def countLinesDoubleDash(pathToFile, options, lang):
     a double dash.
     """
 
-    linesSoFar, slocSoFar = (0, 0)
+    lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        lines, hash = check_whether_already_counted(path_to_file, options)
         if (hash is not None) and (lines is not None):
             for line in lines:
-                linesSoFar += 1
+                lines_so_far += 1
                 # This could be made more efficient.
                 line = line.strip()
                 if len(line) > 0 and not line.startswith('--'):
-                    slocSoFar += 1
+                    sloc_so_far += 1
             options.already.add(hash)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
-                    pathToFile, lang, linesSoFar, slocSoFar))
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
-    return linesSoFar, slocSoFar
+                    path_to_file, lang, lines_so_far, sloc_so_far))
+    except Exception as exc:
+        print("error reading '%s', skipping: %s" % (path_to_file, exc))
+    return lines_so_far, sloc_so_far
 
 # OCTAVE ============================================================
 
 
-def countLinesOctave(pathToFile, options, lang):
+def count_lines_occam(path_to_file, options, lang):
     """
     Count source lines in an Octave file where single line comments
     begin with '%' or '#' and multi-line comments are delimited by
@@ -1162,145 +1174,145 @@ def countLinesOctave(pathToFile, options, lang):
     be the only token on the source line.
     """
 
-    linesSoFar, slocSoFar = (0, 0)
+    lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        lines, hash = check_whether_already_counted(path_to_file, options)
         if (hash is not None) and (lines is not None):
             depth = 0                           # comment depth
-            for lNdx, line in enumerate(lines):
-                linesSoFar += 1
-                nonSpaceSeen = False
-                delimSeen = False             # might start %{ or %}
-                for cNdx, ch in enumerate(list(line)):
+            for l_ndx, line in enumerate(lines):
+                lines_so_far += 1
+                non_space_sen = False
+                delim_seen = False             # might start %{ or %}
+                for c_ndx, ch_ in enumerate(list(line)):
                     # DEBUG
                     # print("line %2d char %2d '%c' depth %2d percent? %s nonSpace? %s" % (
                     #        lNdx, cNdx, ch, depth, delimSeen, nonSpaceSeen))
                     # END
-                    if delimSeen:
-                        if ch == '{':
+                    if delim_seen:
+                        if ch_ == '{':
                             depth += 1
-                        elif ch == '}':
+                        elif ch_ == '}':
                             if depth > 0:
                                 depth -= 1
                         else:
                             # this would start a comment
                             if depth == 0:
                                 break
-                        delimSeen = False
+                        delim_seen = False
 
                     elif depth == 0:
-                        if ch == '%' or ch == '#':
-                            delimSeen = True
-                        elif ch != ' ' and ch != '\t':
-                            nonSpaceSeen = True
+                        if ch_ == '%' or ch_ == '#':
+                            delim_seen = True
+                        elif ch_ != ' ' and ch_ != '\t':
+                            non_space_sen = True
                             # ignore other unicode space chars for now
                         else:
                             pass
 
                     else:
                         # depth > 0
-                        if delimSeen:
-                            if ch == '{':
+                        if delim_seen:
+                            if ch_ == '{':
                                 depth += 1
-                            elif ch == '}':
+                            elif ch_ == '}':
                                 depth -= 1
-                            delimSeen = False
-                        elif ch == '%' or ch == '#':
-                            delimSeen = True
+                            delim_seen = False
+                        elif ch_ == '%' or ch_ == '#':
+                            delim_seen = True
 
-                if nonSpaceSeen:
-                    slocSoFar += 1
+                if non_space_sen:
+                    sloc_so_far += 1
 
             options.already.add(hash)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
-                    pathToFile, lang, linesSoFar, slocSoFar))
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
-    return linesSoFar, slocSoFar
+                    path_to_file, lang, lines_so_far, sloc_so_far))
+    except Exception as exc:
+        print("error reading '%s', skipping: %s" % (path_to_file, exc))
+    return lines_so_far, sloc_so_far
 
 # PASCAL ============================================================
 
 
-def countLinesPascal(pathToFile, options, lang):
+def count_lines_pascal(path_to_file, options, lang):
     """
     Count lines in an Pascal file where comments are delimited by
     (* and *) or { and } -- interchangeably.  These may be nested.  We
     ignore blank lines and lines consisting solely of spaces and comments.
     """
 
-    linesSoFar, slocSoFar = (0, 0)
+    lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        lines, hash = check_whether_already_counted(path_to_file, options)
         if (hash is not None) and (lines is not None):
             depth = 0                           # comment depth
             for ndx, line in enumerate(lines):
-                linesSoFar += 1
-                nonSpaceSeen = False
-                lParenSeen = False            # might start (*
-                starSeen = False            # might start *)
-                for ch in list(line):
+                lines_so_far += 1
+                non_space_sen = False
+                l_paren_sen = False            # might start (*
+                star_seen = False            # might start *)
+                for ch_ in list(line):
                     # ignore other unicode space chars for now
-                    if ch == ' ' or ch == '\t':
-                        lParenSeen = False
-                        starSeen = False
+                    if ch_ == ' ' or ch_ == '\t':
+                        l_paren_sen = False
+                        star_seen = False
                         continue
                     elif depth == 0:
-                        if lParenSeen:
-                            if ch == '}':
-                                nonSpaceSeen = True
-                            elif ch == '*' or ch == '{':
+                        if l_paren_sen:
+                            if ch_ == '}':
+                                non_space_sen = True
+                            elif ch_ == '*' or ch_ == '{':
                                 depth += 1
                             else:
-                                nonSpaceSeen = True
-                            lParenSeen = False
-                        elif starSeen:
-                            if ch == '{':
+                                non_space_sen = True
+                            l_paren_sen = False
+                        elif star_seen:
+                            if ch_ == '{':
                                 depth += 1
-                            elif ch == ')' or ch == '}':
-                                nonSpaceSeen = True
-                                starSeen = False
+                            elif ch_ == ')' or ch_ == '}':
+                                non_space_sen = True
+                                star_seen = False
                             else:
-                                nonSpaceSeen = True
-                        elif ch == '{':
+                                non_space_sen = True
+                        elif ch_ == '{':
                             depth += 1
-                        elif ch == '}':
+                        elif ch_ == '}':
                             pass
-                        elif ch == '(':
-                            lParenSeen = True
-                        elif ch == '*':
-                            starSeen = True
+                        elif ch_ == '(':
+                            l_paren_sen = True
+                        elif ch_ == '*':
+                            star_seen = True
                         else:
-                            nonSpaceSeen = True
+                            non_space_sen = True
                     else:
                         # depth > 0
-                        if lParenSeen:
-                            if ch == '}':
+                        if l_paren_sen:
+                            if ch_ == '}':
                                 if depth > 0:
                                     depth -= 1
-                            elif ch == '*' or ch == '{':
+                            elif ch_ == '*' or ch_ == '{':
                                 depth += 1
-                            lParenSeen = False
-                        elif starSeen:
-                            if ch == '{':
+                            l_paren_sen = False
+                        elif star_seen:
+                            if ch_ == '{':
                                 depth += 1
-                            elif ch == '}':
+                            elif ch_ == '}':
                                 depth -= 1
-                            elif ch == ')':
+                            elif ch_ == ')':
                                 if depth > 0:
                                     depth -= 1
-                                starSeen = False
-                        elif ch == '{':
+                                star_seen = False
+                        elif ch_ == '{':
                             depth += 1
-                        elif ch == '}':
+                        elif ch_ == '}':
                             depth -= 1
-                        elif ch == '(':
-                            lParenSeen = True
-                        elif ch == '*':
-                            starSeen = True
+                        elif ch_ == '(':
+                            l_paren_sen = True
+                        elif ch_ == '*':
+                            star_seen = True
 
-                if nonSpaceSeen:
-                    slocSoFar += 1
+                if non_space_sen:
+                    sloc_so_far += 1
 
                 # DEBUG
                 # print("line %3d depth %2d slocSeen %3d: '%s'" % (
@@ -1310,15 +1322,15 @@ def countLinesPascal(pathToFile, options, lang):
             options.already.add(hash)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
-                    pathToFile, lang, linesSoFar, slocSoFar))
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
-    return linesSoFar, slocSoFar
+                    path_to_file, lang, lines_so_far, sloc_so_far))
+    except Exception as exc:
+        print("error reading '%s', skipping: %s" % (path_to_file, exc))
+    return lines_so_far, sloc_so_far
 
 # PERCENT ===========================================================
 
 
-def countLinesNotPercent(pathToFile, options, lang):
+def count_lines_not_percent(path_to_file, options, lang):
     """
     Count lines in a file where the percent sign ('%') is the comment
     marker.  That is, we ignore blank lines, lines consisting solely of
@@ -1326,28 +1338,28 @@ def countLinesNotPercent(pathToFile, options, lang):
     a percent sign.
     """
 
-    linesSoFar, slocSoFar = (0, 0)
+    lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        lines, hash = check_whether_already_counted(path_to_file, options)
         if (hash is not None) and (lines is not None):
             for line in lines:
-                linesSoFar += 1
+                lines_so_far += 1
                 # This could be made more efficient.
                 line = line.strip()
                 if (len(line) > 0) and (line[0] != '%'):
-                    slocSoFar += 1
+                    sloc_so_far += 1
             options.already.add(hash)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
-                    pathToFile, lang, linesSoFar, slocSoFar))
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
-    return linesSoFar, slocSoFar
+                    path_to_file, lang, lines_so_far, sloc_so_far))
+    except Exception as exc:
+        print("error reading '%s', skipping: %s" % (path_to_file, exc))
+    return lines_so_far, sloc_so_far
 
 # PERL ==============================================================
 
 
-def countLinesPerl(pathToFile, options, lang):
+def count_lines_perl(path_to_file, options, lang):
     """
     XXX REWRITE:
 
@@ -1360,101 +1372,102 @@ def countLinesPerl(pathToFile, options, lang):
 
     """
 
-    linesSoFar, slocSoFar = (0, 0)
-    inPod = False
-    inFor = False
+    lines_so_far, sloc_so_far = (0, 0)
+    in_pod = False
+    in_for = False
     try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        lines, hash = check_whether_already_counted(path_to_file, options)
         if (hash is not None) and (lines is not None):
             for line in lines:
-                linesSoFar += 1
+                lines_so_far += 1
 
-                if inPod:
+                if in_pod:
                     if line == '=cut':
-                        inPod = False
+                        in_pod = False
                     continue
-                if inFor:
+                if in_for:
                     if line == '=cut':
-                        inFor = False
+                        in_for = False
                     continue
                 if line == '=pod':
-                    inPod = True
+                    in_pod = True
                     continue
                 if line.startswith('=for comment'):
-                    inFor = True
+                    in_for = True
                     continue
 
                 # This could be made more efficient.
                 line = line.strip()
                 if len(line) > 0 and (line[0] != '#'):
-                    slocSoFar += 1
+                    sloc_so_far += 1
             options.already.add(hash)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
-                    pathToFile, lang, linesSoFar, slocSoFar))
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
-    return linesSoFar, slocSoFar
+                    path_to_file, lang, lines_so_far, sloc_so_far))
+    except Exception as exc:
+        print("error reading '%s', skipping: %s" % (path_to_file, exc))
+    return lines_so_far, sloc_so_far
 
 # PROTOBUF ==========================================================
 
 
-def countLinesProtobuf(path, options, lang):
-    l, s = countLinesJavaStyle(path, options, lang)
-    return l, s
+def count_lines_protobuf(path, options, lang):
+    loc_, sloc_ = count_lines_java_style(path, options, lang)
+    return loc_, sloc_
 
 # PYTHON ============================================================
 
 
-def countLinesPython(pathToFile, options, lang):
-    linesSoFar, slocSoFar = (0, 0)
-    if not pathToFile.endswith('_pb2.py'):
-        linesSoFar, slocSoFar = _countLinesPython(pathToFile, options, lang)
-    return linesSoFar, slocSoFar
+def count_lines_python(path_to_file, options, lang):
+    lines_so_far, sloc_so_far = (0, 0)
+    if not path_to_file.endswith('_pb2.py'):
+        lines_so_far, sloc_so_far = _count_lines_python(
+            path_to_file, options, lang)
+    return lines_so_far, sloc_so_far
 
 
-def _countLinesPython(pathToFile, options, lang):
-    inTripleQuote = False
-    linesSoFar, slocSoFar = (0, 0)
+def _count_lines_python(path_to_file, options, lang):
+    in_triple_quote = False
+    lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        lines, hash = check_whether_already_counted(path_to_file, options)
         if (lines is not None) and (hash is not None):
             for line in lines:
-                if inTripleQuote:
+                if in_triple_quote:
                     # we always count this line
-                    linesSoFar += 1
-                    slocSoFar += 1
+                    lines_so_far += 1
+                    sloc_so_far += 1
                     count = line.count(TQUOTE)
                     if count % 2:
-                        inTripleQuote = False
+                        in_triple_quote = False
                 else:
-                    linesSoFar += 1
-                    s = line.partition('#')[0]  # strip off comments
-                    line = s.strip()            # strip leading & trailing
+                    lines_so_far += 1
+                    sloc_ = line.partition('#')[0]  # strip off comments
+                    line = sloc_.strip()            # strip leading & trailing
                     if line != '':
-                        slocSoFar += 1
+                        sloc_so_far += 1
                     count = line.count(TQUOTE)
                     if count % 2:
-                        inTripleQuote = True
+                        in_triple_quote = True
             options.already.add(hash)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
-                    pathToFile, lang, linesSoFar, slocSoFar))
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
-    return (linesSoFar, slocSoFar)
+                    path_to_file, lang, lines_so_far, sloc_so_far))
+    except Exception as exc:
+        print("error reading '%s', skipping: %s" % (path_to_file, exc))
+    return (lines_so_far, sloc_so_far)
 
 # RE2C ==============================================================
 
 
-def countLinesRe2c(path, options, lang):
-    l, s = countLinesJavaStyle(path, options, lang)
-    return l, s
+def count_lines_re2c(path, options, lang):
+    loc_, sloc_ = count_lines_java_style(path, options, lang)
+    return loc_, sloc_
 
 # R MARKDOWN ========================================================
 
 
-def countLinesRMarkdown(pathToFile, options, lang):
+def count_lines_r_markdown(path_to_file, options, lang):
     """
     Count the lines of R in an RMarkdown file.  Count lines in
     (a) the YAML section at the top of the file, (b) chunks of R code
@@ -1473,41 +1486,41 @@ def countLinesRMarkdown(pathToFile, options, lang):
 
     # NOT YET AMENDED
 
-    linesSoFar, slocSoFar = (0, 0)
-    inCodeChunk = False
+    lines_so_far, sloc_so_far = (0, 0)
+    in_code_chunk = False
     try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        lines, hash = check_whether_already_counted(path_to_file, options)
         if (hash is not None) and (lines is not None):
-            inYAML = False
+            in_yaml = False
             for ndx, line in enumerate(lines):
-                linesSoFar += 1
+                lines_so_far += 1
                 line = line.strip()
 
                 # count YAML header if present ----------------------
                 if ndx == 0 and line.startswith('---'):
-                    inYAML = True
-                if inYAML:
+                    in_yaml = True
+                if in_yaml:
                     # DEBUG
                     # print("YAML: '%s'" % line)
                     # END
                     if len(line):
-                        slocSoFar += 1
+                        sloc_so_far += 1
                     if ndx and line.startswith('---'):
-                        inYAML = False
+                        in_yaml = False
                         # already counted
                         # DEBUG
                         # print('total of %d lines of YAML' % slocSoFar)
                         # END
                     continue
 
-                if inCodeChunk:
+                if in_code_chunk:
                     # DEBUG
                     # print("CODE: %s" % line)
                     # END
                     if len(line) > 0 and (line[0] != '#'):
-                        slocSoFar += 1
+                        sloc_so_far += 1
                     if line.startswith('```'):
-                        inCodeChunk = False
+                        in_code_chunk = False
                         # already counted
 
                 else:
@@ -1515,33 +1528,34 @@ def countLinesRMarkdown(pathToFile, options, lang):
                     # print("TEXT: %s" % line)
                     # END
                     if line.startswith('```{r '):
-                        slocSoFar += 1
-                        inCodeChunk = True
+                        sloc_so_far += 1
+                        in_code_chunk = True
                         continue
                     if line.find('`r ') != -1:
-                        slocSoFar += 1
+                        sloc_so_far += 1
 
             options.already.add(hash)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
-                    pathToFile, lang, linesSoFar, slocSoFar))
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
-    return linesSoFar, slocSoFar
+                    path_to_file, lang, lines_so_far, sloc_so_far))
+    except Exception as exc:
+        print("error reading '%s', skipping: %s" % (path_to_file, exc))
+    return lines_so_far, sloc_so_far
 
 # RUBY ==============================================================
 
 
-def countLinesRuby(pathToFile, options, lang):
-    linesSoFar, slocSoFar = (0, 0)
-    if not pathToFile.endswith('.pb.rb'):
-        linesSoFar, slocSoFar = countLinesNotSharp(pathToFile, options, lang)
-    return linesSoFar, slocSoFar
+def count_lines_ruby(path_to_file, options, lang):
+    lines_so_far, sloc_so_far = (0, 0)
+    if not path_to_file.endswith('.pb.rb'):
+        lines_so_far, sloc_so_far = count_lines_not_sharp(
+            path_to_file, options, lang)
+    return lines_so_far, sloc_so_far
 
 # RUST ==============================================================
 
 
-def countLinesRust(pathToFile, options, lang):
+def count_lines_rust(path_to_file, options, lang):
     """
     Count lines in a file where doubled forward slashes ('//') are the comment
     marker.  That is, we ignore blank lines, lines consisting solely of
@@ -1550,61 +1564,61 @@ def countLinesRust(pathToFile, options, lang):
     comments.
     """
 
-    linesSoFar, slocSoFar = (0, 0)
+    lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        lines, hash = check_whether_already_counted(path_to_file, options)
         if (hash is not None) and (lines is not None):
             for line in lines:
-                linesSoFar += 1         # this counts every line
+                lines_so_far += 1         # this counts every line
                 # This could be made more efficient.
                 line = line.strip()
                 if len(line) > 0 and not line.startswith('//'):
-                    slocSoFar += 1      # this counts source lines
+                    sloc_so_far += 1      # this counts source lines
             options.already.add(hash)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
-                    pathToFile, lang, linesSoFar, slocSoFar))
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
-    return linesSoFar, slocSoFar
+                    path_to_file, lang, lines_so_far, sloc_so_far))
+    except Exception as exc:
+        print("error reading '%s', skipping: %s" % (path_to_file, exc))
+    return lines_so_far, sloc_so_far
 
 # SHELL =============================================================
 
 
-def countLinesShell(path, options, lang):
-    return countLinesNotSharp(path, options, lang)
+def count_lines_shell(path, options, lang):
+    return count_lines_not_sharp(path, options, lang)
 
 # SCALA =============================================================
 
 
-def countLinesScala(pathToFile, options, lang):
-    linesSoFar, slocSoFar = (0, 0)
-    commentDepth = 0
+def count_lines_scala(path_to_file, options, lang):
+    lines_so_far, sloc_so_far = (0, 0)
+    comment_depth = 0
     try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        lines, hash = check_whether_already_counted(path_to_file, options)
         if (hash is not None) and (lines is not None):
             for line in lines:
-                linesSoFar += 1
+                lines_so_far += 1
 
-                code, commentDepth = uncommentScala(line, commentDepth)
+                code, comment_depth = uncomment_scala(line, comment_depth)
                 if code:
                     code = code.strip()
                     if code:
-                        slocSoFar += 1
+                        sloc_so_far += 1
 
             options.already.add(hash)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
-                    pathToFile, lang, linesSoFar, slocSoFar))
-            if commentDepth > 0:
-                print("unclosed comment at end of %s" % pathToFile)
+                    path_to_file, lang, lines_so_far, sloc_so_far))
+            if comment_depth > 0:
+                print("unclosed comment at end of %s" % path_to_file)
 
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
-    return (linesSoFar, slocSoFar)
+    except Exception as exc:
+        print("error reading '%s', skipping: %s" % (path_to_file, exc))
+    return (lines_so_far, sloc_so_far)
 
 
-def _findScalaCode(text, commentDepth):
+def _find_scala_code(text, comment_depth):
     """
     We are in a comment.  Return a ref to the beginning of the text
     outside the comment block (which may be '') and the value of commentDepth.
@@ -1614,41 +1628,41 @@ def _findScalaCode(text, commentDepth):
     #    commentDepth, text))
     # END
 
-    startMulti = text.find('/*')
-    endMulti = text.find('*/')
-    textBack = ''
+    start_multi = text.find('/*')
+    end_multi = text.find('*/')
+    text_back = ''
 
-    if startMulti == -1 and endMulti == -1:
+    if start_multi == -1 and end_multi == -1:
         # DEBUG
         #print("  no */, returning depth=%d, unchanged" % commentDepth)
         # END
-        return textBack, commentDepth
+        return text_back, comment_depth
 
-    elif endMulti == -1 or (startMulti != -1 and startMulti < endMulti):
+    elif end_multi == -1 or (start_multi != -1 and start_multi < end_multi):
         # DEBUG
         #print("  found /* at %d" % startMulti)
         # END
-        commentDepth = commentDepth + 1
-        if startMulti + 2 < len(text):
-            textBack = text[startMulti + 2:]
+        comment_depth = comment_depth + 1
+        if start_multi + 2 < len(text):
+            text_back = text[start_multi + 2:]
 
     else:
         # DEBUG
         #print("  found */ at %d" % endMulti)
         # END
 
-        commentDepth = commentDepth - 1
-        if endMulti + 2 < len(text):
-            textBack = text[endMulti + 2:]
+        comment_depth = comment_depth - 1
+        if end_multi + 2 < len(text):
+            text_back = text[end_multi + 2:]
 
     # DEBUG
     #print("  returning depth=%d, textBack\n  '%s'" % (commentDepth, textBack))
     # END
 
-    return textBack, commentDepth
+    return text_back, comment_depth
 
 
-def _findScalaComment(text, commentDepth):
+def _find_scala_comment(text, comment_depth):
     """
     We are NOT at comment depth > 0.  Return a ref to any code found, a
     ref to the rest of the text, and the value of commentDepth
@@ -1658,34 +1672,34 @@ def _findScalaComment(text, commentDepth):
     #    print("warning: entering _findScalaComment, non-zero depth %d" %
     #            commentDepth)
     # END
-    multiLine = False
-    posnOld = text.find('/*')       # multi-line comment
-    posnNew = text.find('//')       # one-line comment
+    multi_line = False
+    posn_old = text.find('/*')       # multi-line comment
+    posn_new = text.find('//')       # one-line comment
 
-    if posnOld == -1 and posnNew == -1:
+    if posn_old == -1 and posn_new == -1:
         return text, '', 0
 
-    if posnNew == -1:
-        posn = posnOld
-        commentDepth = True
-        multiLine = True
+    if posn_new == -1:
+        posn = posn_old
+        comment_depth = True
+        multi_line = True
     else:
         # posnNew is non-negative
-        if posnOld == -1 or posnOld > posnNew:
-            posn = posnNew
-            commentDepth = 0
+        if posn_old == -1 or posn_old > posn_new:
+            posn = posn_new
+            comment_depth = 0
         else:
-            posn = posnOld
-            commentDepth = 1
-            multiLine = True
+            posn = posn_old
+            comment_depth = 1
+            multi_line = True
 
-    if multiLine and (posn + 2 < len(text)):
-        return text[:posn], text[posn + 2:], commentDepth
+    if multi_line and (posn + 2 < len(text)):
+        return text[:posn], text[posn + 2:], comment_depth
     else:
-        return text[:posn], '', commentDepth
+        return text[:posn], '', comment_depth
 
 
-def uncommentScala(text, commentDepth):
+def uncomment_scala(text, comment_depth):
     """
     Given a line of text, return a ref to any code found and the value of
     commentDepth, which may have changed.
@@ -1693,21 +1707,21 @@ def uncommentScala(text, commentDepth):
     code = ''
     text = text.strip()
     while text:
-        if commentDepth > 0:
-            text, commentDepth = _findScalaCode(text, commentDepth)
-        elif commentDepth == 0:
-            chunk, text, commentDepth = _findScalaComment(
-                text.strip(), commentDepth)
+        if comment_depth > 0:
+            text, comment_depth = _find_scala_code(text, comment_depth)
+        elif comment_depth == 0:
+            chunk, text, comment_depth = _find_scala_comment(
+                text.strip(), comment_depth)
             code += chunk   # XXX INEFFICIENT
         else:
-            print("INTERNAL ERROR: negative comment depth %d" % commentDepth)
+            print("INTERNAL ERROR: negative comment depth %d" % comment_depth)
 
-    return code, commentDepth
+    return code, comment_depth
 
 # SEMICOLON =========================================================
 
 
-def countLinesNotSemicolon(pathToFile, options, lang):
+def count_lines_not_semicolon(path_to_file, options, lang):
     """
     Count lines in a file where the semicolon (';') is the comment
     marker.  That is, we ignore blank lines, lines consisting solely of
@@ -1715,101 +1729,101 @@ def countLinesNotSemicolon(pathToFile, options, lang):
     a semicolon.
     """
 
-    linesSoFar, slocSoFar = (0, 0)
+    lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        lines, hash = check_whether_already_counted(path_to_file, options)
         if (hash is not None) and (lines is not None):
             for line in lines:
-                linesSoFar += 1
+                lines_so_far += 1
                 # This could be made more efficient.
                 line = line.strip()
                 if (len(line) > 0) and (line[0] != ';'):
-                    slocSoFar += 1
+                    sloc_so_far += 1
             options.already.add(hash)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
-                    pathToFile, lang, linesSoFar, slocSoFar))
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
-    return linesSoFar, slocSoFar
+                    path_to_file, lang, lines_so_far, sloc_so_far))
+    except Exception as exc:
+        print("error reading '%s', skipping: %s" % (path_to_file, exc))
+    return lines_so_far, sloc_so_far
 
 # SNOBOL ============================================================
 
 
-def countLinesSnobol(pathToFile, options, lang):
+def count_lines_snobol(path_to_file, options, lang):
     """
     already is a set containing hashes of files already counted
     """
 
-    linesSoFar, slocSoFar = (0, 0)
+    lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        lines, hash = check_whether_already_counted(path_to_file, options)
         if (hash is not None) and (lines is not None):
             for line in lines:
-                linesSoFar += 1
+                lines_so_far += 1
                 line = line.rstrip()
                 if len(line) > 0 and (line[0] != '*'):
-                    slocSoFar += 1
+                    sloc_so_far += 1
             options.already.add(hash)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
-                    pathToFile, lang, linesSoFar, slocSoFar))
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
-    return linesSoFar, slocSoFar
+                    path_to_file, lang, lines_so_far, sloc_so_far))
+    except Exception as exc:
+        print("error reading '%s', skipping: %s" % (path_to_file, exc))
+    return lines_so_far, sloc_so_far
 
 # TeX ===============================================================
 
 
-def countLinesTeX(pathToFile, options, lang):
-    return countLinesNotPercent(pathToFile, options, lang)
+def count_lines_tex(path_to_file, options, lang):
+    return count_lines_not_percent(path_to_file, options, lang)
 
 # TXT ===============================================================
 
 
-def countLinesTxt(pathToFile, options, lang):
+def count_lines_txt(path_to_file, options, lang):
     """
     Count the lines in a text file.  We ignore empty lines and lines
     consisting solely of spaces.
     """
 
-    linesSoFar, slocSoFar = (0, 0)
+    lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
+        lines, hash = check_whether_already_counted(path_to_file, options)
         if (hash is not None) and (lines is not None):
             for line in lines:
-                linesSoFar += 1
+                lines_so_far += 1
                 # This could be made more efficient.
                 line = line.strip()
                 if len(line) > 0:
-                    slocSoFar += 1
+                    sloc_so_far += 1
             options.already.add(hash)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
-                    pathToFile, lang, linesSoFar, slocSoFar))
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
-    return linesSoFar, slocSoFar
+                    path_to_file, lang, lines_so_far, sloc_so_far))
+    except Exception as exc:
+        print("error reading '%s', skipping: %s" % (path_to_file, exc))
+    return lines_so_far, sloc_so_far
 
 # XML ===============================================================
 
 
-def countLinesXml(pathToFile, options, lang):
+def count_lines_xml(path_to_file, options, lang):
     """
     Count the lines in an xml file.  We ignore empty lines and lines
     consisting solely of spaces, and of course we ignore xml comments.
     """
 
     try:
-        lines, hash = checkWhetherAlreadyCounted(pathToFile, options)
-    except Exception as e:
-        print("error reading '%s', skipping: %s" % (pathToFile, e))
+        lines, hash = check_whether_already_counted(path_to_file, options)
+    except Exception as exc:
+        print("error reading '%s', skipping: %s" % (path_to_file, exc))
         return 0, 0
 
     try:
-        lineCount, slocSoFar = (0, 0)
+        line_count, sloc_so_far = (0, 0)
         if (hash is not None) and (lines is not None):
-            lineCount = len(lines)
+            line_count = len(lines)
             raw = '\n'.join(lines)
             soup = BeautifulSoup(raw, 'lxml')
             comments = soup.findAll(
@@ -1852,14 +1866,14 @@ def countLinesXml(pathToFile, options, lang):
                 # This could be made more efficient.
                 line = line.strip()
                 if len(line) > 0:
-                    slocSoFar += 1
+                    sloc_so_far += 1
                 # DEBUG
                 # print(line)
                 # END
             options.already.add(hash)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
-                    pathToFile, lang, lineCount, slocSoFar))
-    except Exception as e:
-        print("error parsing '%s', skipping: %s" % (pathToFile, e))
-    return lineCount, slocSoFar
+                    path_to_file, lang, line_count, sloc_so_far))
+    except Exception as exc:
+        print("error parsing '%s', skipping: %s" % (path_to_file, exc))
+    return line_count, sloc_so_far

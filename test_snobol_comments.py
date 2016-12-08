@@ -8,7 +8,7 @@ import unittest
 
 from argparse import ArgumentParser, Namespace
 from pysloc import __version__, __version_date__
-from pysloc import countLinesInDir, countLinesSnobol
+from pysloc import count_lines_in_dir, count_lines_snobol
 
 
 class TestSnoComments (unittest.TestCase):
@@ -25,9 +25,9 @@ class TestSnoComments (unittest.TestCase):
 
     # actual unit tests #############################################
 
-    def testNameToFuncMap(self):
-        testFile = './commentsForSno'
-        lines, sloc = countLinesSnobol(testFile, self.options, 'sno')
+    def test_name_to_func_map(self):
+        test_file = './commentsForSno'
+        lines, sloc = count_lines_snobol(test_file, self.options, 'sno')
         self.assertEqual(lines, 19)
         self.assertEqual(sloc, 8)
 

@@ -1,28 +1,29 @@
 #!/usr/bin/python3
-
 # pySloc, part of pysloc
 
-import fnmatch
+""" Count the number of lines of source code in a file or directory. """
+
 import os
-import re
 import sys
 import time
 from argparse import ArgumentParser
+
+from optionz import dump_options
 from xlattice.util import makeExRE
-from stat import *
 
-from pysloc import *
+from pysloc import(__version__, __version_date__,
+                   count_lines_in_dir, count_lines_not_sharp, CountHolder, MapHolder)
 
 
-def readFileMap(pathToFile, namedFiles):
+def read_file_map(path_to_file, named_files):
     """
     Read a file, stripping off comments beginning with sharp signs ('#')
     and dropping blank lines.  What remains should look like
     LANG:VISIBILITY:REL_PATH.  For the moment we ignore pseudo-languages
     'file' and 'dir' and the visibility column.
     """
-    with open(pathToFile, 'rb') as f:
-        data = f.read().decode('utf-8')
+    with open(path_to_file, 'rb') as flattened:
+        data = flattened.read().decode('utf-8')
     if data:
         lines = data.split('\n')
         if lines[-1] == '':
@@ -35,36 +36,37 @@ def readFileMap(pathToFile, namedFiles):
                 parts = line.split(':')
                 if len(parts) == 3:
                     # line is well-formed, by a crude standard
-                    eLang, viz, relPath = parts
+                    e_lang, viz, rel_path = parts
 
-                    item = eLang + ':' + relPath
+                    item = e_lang + ':' + rel_path
                     # DEBUG
                     # print("adding '%s' to named file list" % item)
                     # END
-                    namedFiles.append(item)
+                    named_files.append(item)
                 else:
-                    print("%s: can't interpret '%s'" % (pathToFile, line))
+                    print("%s: can't interpret '%s'" % (path_to_file, line))
 
 
-def doCount(options):
-
-    # get and check options; XXX should throw exceptions if problems
-    # are encountered
+def do_count(options):
+    """
+    Get and check options; XXX should throw exceptions if problems
+    are encountered
+    """
 
     exclusions = options.exclusions
-    exRE = options.exRE
-    justShow = options.justShow
-    k = options.k
-    projCfg = options.projCfg           # this is projCfg.local
-    langsCounted = options.langsCounted
-    mainLang = options.mainLang
+    ex_re = options.ex_re
+    just_show = options.just_show
+    k__ = options.k__
+    proj_cfg = options.proj_cfg           # this is projCfg.local
+    langs_counted = options.langs_counted
+    main_lang = options.main_lang
     matches = options.matches
-    namedFiles = options.namedFiles
-    onlyNamedFiles = options.onlyNamedFiles
-    q = options.q
-    showTimestamp = options.showTimestamp
-    showVersion = options.showVersion
-    sumSLOC = options.sumSLOC
+    named_files = options.named_files
+    only_named_files = options.only_named_files
+    map_holder = options.map_holder
+    show_timestmp = options.show_timestmp
+    show_version = options.show_version
+    sum_sloc = options.sum_sloc
     timestamp = options.timestamp
     verbose = options.verbose
 
@@ -82,37 +84,37 @@ def doCount(options):
 
     # source 2: .dvcz/projCfg.local -----------------------
 
-    if projCfg and os.path.exists(projCfg):
-        readFileMap(options.projCfg, namedFiles)
+    if proj_cfg and os.path.exists(proj_cfg):
+        read_file_map(options.proj_cfg, named_files)
 
     # source 3: /var/app/sharedev/config/projCfg ----------
 
-    configDir = os.path.join(os.environ['DVCZ_DIR'], 'config')
-    stdFiles = os.path.join(configDir, 'projCfg')
-    if stdFiles and os.path.exists(stdFiles):
-        readFileMap(stdFiles, namedFiles)
+    config_dir = os.path.join(os.environ['DVCZ_DIR'], 'config')
+    std_files = os.path.join(config_dir, 'proj_cfg')
+    if std_files and os.path.exists(std_files):
+        read_file_map(std_files, named_files)
     # DEBUG
     else:
-        print("%s does not exist" % stdFiles)
+        print("%s does not exist" % std_files)
     # END
 
     # source 4: /var/app/sharedev/config/projCfg.LANG -----
 
-    if mainLang:
-        stdFilesForLang = os.path.join(configDir, 'projCfg.' + mainLang)
-        if stdFilesForLang and os.path.exists(stdFilesForLang):
-            readFileMap(stdFilesForLang, namedFiles)
+    if main_lang:
+        std_files_for_lang = os.path.join(config_dir, 'projCfg.' + main_lang)
+        if std_files_for_lang and os.path.exists(std_files_for_lang):
+            read_file_map(std_files_for_lang, named_files)
         else:
-            print("WARNING: %s does not exist" % stdFilesForLang)
+            print("WARNING: %s does not exist" % std_files_for_lang)
     else:
         if verbose:
             print("WARNING: no main language (-L) has been defined")
 
     # END NAMED FILES -----------------------------------------------
 
-    for name in namedFiles:
-        lang, isTest = None, False
-        if (exRE is not None) and (exRE.search(name) is not None):
+    for name in named_files:
+        lang, is_test = None, False
+        if (ex_re is not None) and (ex_re.search(name) is not None):
             if verbose > 1:
                 print("skipping %s: excluded" % name)
             continue
@@ -122,50 +124,50 @@ def doCount(options):
         # END
 
         # a file name may be prefixed with the short name of a language
-        a, b, c = name.partition(':')
-        if b == ':':
-            lang, name = a, c
+        lang_, delim, file_name_ = name.partition(':')
+        if delim == ':':
+            lang, name = lang_, file_name_
 
         if os.path.exists(name):
-            l, s = 0, 0
+            loc_, sloc_ = 0, 0
             if os.path.isfile(name):
                 counter = None
                 if lang is None:
-                    lang, isTest = q.guessLang('./', name,
-                                               isCLIArg=True, verbose=options.verbose)
-                if (lang is not None) and (lang in langsCounted):
-                    counter = q.getCounter(lang, isCLIArg=True)
+                    lang, is_test = map_holder.guess_lang('./', name,
+                                                          is_cli_arg=True, verbose=options.verbose)
+                if (lang is not None) and (lang in langs_counted):
+                    counter = map_holder.get_counter(lang, is_cli_arg=True)
                 if counter is None:
-                    counter = countLinesNotSharp
-                l, s = counter(name, options, lang)
+                    counter = count_lines_not_sharp
+                loc_, sloc_ = counter(name, options, lang)
                 if lang == 'Rmd':
-                    if isTest:
-                        k.addTestCounts('R', l, s)
+                    if is_test:
+                        k__.add_test_counts('R', loc_, sloc_)
                     else:
-                        k.addCounts('R', l, s)
+                        k__.add_counts('R', loc_, sloc_)
                 else:
-                    if isTest:
-                        k.addTestCounts(lang, l, s)
+                    if is_test:
+                        k__.add_test_counts(lang, loc_, sloc_)
                     else:
-                        k.addCounts(lang, l, s)
+                        k__.add_counts(lang, loc_, sloc_)
 
             elif os.path.isdir(name):
                 # XXX EXCLUDE SOME DIRS
-                l, s = countLinesInDir(name, options)
+                loc_, sloc_ = count_lines_in_dir(name, options)
             else:
                 print("? don't know how to count %s" % name)
-            lines += l
-            sloc += s
+            lines += loc_
+            sloc += sloc_
         # else:
         #   print("file does not exist: %s" % name)
 
     # handle the current directory
-    if not onlyNamedFiles:
-        l, s = countLinesInDir('.', options)
-        lines = lines + l
-        sloc = sloc + s
+    if not only_named_files:
+        loc_, sloc_ = count_lines_in_dir('.', options)
+        lines = lines + loc_
+        sloc = sloc + sloc_
 
-    k.prettyBreakDown()
+    k__.pretty_break_down()
     print("total of %5d lines of code, of which %5d source" % (lines, sloc))
 
 
@@ -201,80 +203,61 @@ if __name__ == '__main__':
     parser.add_argument('-z', '--onlyNamedFiles', action='store_true',
                         help='only count files named on the command line')
 
-    parser.add_argument('namedFiles', nargs='*',
+    parser.add_argument('named_files', nargs='*',
                         help='any number of namedFiles and/or directories to scan')
     args = parser.parse_args()
 
-    args.k = K()   # a map, lang => (lines, sloc, tlines, tsloc)
-    if args.mainLang:
-        args.q = Q(args.mainLang)
+    args.k__ = CountHolder()   # a map, lang => (lines, sloc, tlines, tsloc)
+    if args.main_lang:
+        args.map_holder = MapHolder(args.main_lang)
     else:
-        args.q = Q('')
+        args.map_holder = MapHolder('')
     args.timestamp = "%04d%02d%02d-%02d%02d%02d" % time.gmtime()[:6]
 
     # fixups --------------------------------------------------------
     # assume that the exclusions are a list of globs ...
-    args.exRE = makeExRE(args.exclusions)
+    args.ex_re = makeExRE(args.exclusions)
 
     if args.quiet:
         args.verbose = 0
 
-    if not args.mainLang:
-        args.mainLang = ''
+    if not args.main_lang:
+        args.main_lang = ''
 
-    if args.mainLang != '':
-        if args.mainLang == 'octave':
-            args.mainLang = 'matlab'
-        h = args.q.getCounter(args.mainLang)
-        if h is None:
+    if args.main_lang != '':
+        if args.main_lang == 'octave':
+            args.main_lang = 'matlab'
+        counter_ = args.map_holder.get_counter(args.main_lang)
+        if counter_ is None:
             print("'%s' is not the short name of a supported language" %
-                  args.mainLang)
+                  args.main_lang)
             parser.print_help()
             sys.exit(1)
 
-    langSet = args.q.getLangSet()    # names of all languages (abbrev)
-    if not args.langsCounted or args.langsCounted == 'all':
-        args.langsCounted = langSet
+    lang_set = args.map_holder.get_lang_set()    # names of all languages (abbrev)
+    if not args.langs_counted or args.langs_counted == 'all':
+        args.langs_counted = lang_set
     else:
-        langList = []
-        selected = args.langsCounted.split(':')
-        for x in selected:
-            if x in langSet:
-                langList.append(x)
+        lang_list = []
+        selected = args.langs_counted.split(':')
+        for x__ in selected:
+            if x__ in lang_set:
+                lang_list.append(x__)
             else:
-                print("%s is not recognized as a language abbreviation", x)
+                print("%s is not recognized as a language abbreviation", x__)
                 parser.print_usage()
                 sys.exit(1)
-        args.langsCounted = frozenset(langList)    # in place
+        args.langs_counted = frozenset(lang_list)    # in place
 
     # sanity checks -------------------------------------------------
 
     # chatter -------------------------------------------------------
-    if args.showVersion:
+    if args.show_version:
         print('pySloc v%s %s' % (__version__, __version_date__))
         sys.exit()
-    if args.justShow or (args.verbose > 1):
-
-        print("exclusions:      %s" % args.exclusions)
-        print("mainLang:        %s (%s)" % (args.mainLang,
-                                            args.q.getLongName(args.mainLang)))
-        print("projCfg:         %s" % args.projCfg)
-        print("langsCounted:    %s" % args.langsCounted)
-        print("matches:         %s" % args.matches)
-        print("onlyNamedFiles:  %s" % args.onlyNamedFiles)
-        print("quiet:           %s" % args.quiet)
-        print("showTimestamp:   %s" % args.showTimestamp)
-        print("sumSLOC:         %s" % args.sumSLOC)
-        print("timestamp:       %s" % args.timestamp)
-        print("verbose:         %s" % args.verbose)
-        print("version:         %s %s" % (__version__, __version_date__))
-
-        if args.namedFiles:
-            print("\nnamedFiles:")
-            for file in args.namedFiles:
-                print("    %s" % file)
-            print()
+    if args.just_show or (args.verbose > 1):
+        print(dump_options(args))
 
     # do it ---------------------------------------------------------
-    if not args.justShow:
-        doCount(args)
+    if not args.just_show:
+        do_count(args)

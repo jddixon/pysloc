@@ -1,2 +1,2 @@
-This is a test file:
-    do not delete!
+"""This is a test file:
+    do not delete!"""
