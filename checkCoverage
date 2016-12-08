@@ -9,4 +9,5 @@ nosetests \
     --cover-erase \
     --cover-branches \
     --cover-inclusive  \
-    test*.py 
+    --cover-package pysloc  \
+    test*.py

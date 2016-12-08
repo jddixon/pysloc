@@ -8,7 +8,7 @@ import unittest
 from argparse import Namespace
 
 from pysloc import __version__, __version_date__
-from pysloc import countLinesInDir, countLinesPython, Q
+from pysloc import count_lines_in_dir, count_lines_python, MapHolder
 
 
 class TestPyComments (unittest.TestCase):
@@ -23,27 +23,27 @@ class TestPyComments (unittest.TestCase):
 
     # actual unit tests #############################################
 
-    def testPxd(self):
-        testFile = './commentsForCython.pxd'
+    def test_pxd(self):
+        test_file = './commentsForCython.pxd'
         options = Namespace()
         options.already = set()
-        options.exRE = None
-        options.q = Q()
+        options.ex_re = None
+        options.map_holder = MapHolder()
         options.verbose = False
 
-        lines, sloc = countLinesPython(testFile, options, 'pxd')
+        lines, sloc = count_lines_python(test_file, options, 'pxd')
         self.assertEqual(lines, 53)
         self.assertEqual(sloc, 23)
 
-    def testPyx(self):
-        testFile = './commentsForCython.pyx'
+    def test_pyx(self):
+        test_file = './commentsForCython.pyx'
         options = Namespace()
         options.already = set()
-        options.exRE = None
-        options.q = Q()
+        options.ex_re = None
+        options.map_holder = MapHolder()
         options.verbose = False
 
-        lines, sloc = countLinesPython(testFile, options, 'pyx')
+        lines, sloc = count_lines_python(test_file, options, 'pyx')
         self.assertEqual(lines, 86)
         self.assertEqual(sloc, 48)
 

@@ -8,7 +8,7 @@ import unittest
 
 from argparse import ArgumentParser, Namespace
 from pysloc import __version__, __version_date__
-from pysloc import uncommentHtml
+from pysloc import uncomment_html
 
 
 class TestUncommentHtml (unittest.TestCase):
@@ -23,39 +23,39 @@ class TestUncommentHtml (unittest.TestCase):
 
     # actual unit tests #############################################
 
-    def testUncommentHtml(self):
+    def test_uncomment_html(self):
         line = ''
-        code, inComment = uncommentHtml(line, True)
+        code, in_comment = uncomment_html(line, True)
         self.assertEqual(code, '')
-        self.assertEqual(inComment, True)
+        self.assertEqual(in_comment, True)
 
-        code, inComment = uncommentHtml(line, False)
+        code, in_comment = uncomment_html(line, False)
         self.assertEqual(code, '')
-        self.assertEqual(inComment, False)
+        self.assertEqual(in_comment, False)
 
         line = '<!---->'
 
-        code, inComment = uncommentHtml(line, False)
+        code, in_comment = uncomment_html(line, False)
         self.assertEqual(code, '')
-        self.assertEqual(inComment, False)
+        self.assertEqual(in_comment, False)
 
         line = '<!--'
 
-        code, inComment = uncommentHtml(line, False)
+        code, in_comment = uncomment_html(line, False)
         self.assertEqual(code, '')
-        self.assertEqual(inComment, True)
+        self.assertEqual(in_comment, True)
 
         line = '-->'
 
-        code, inComment = uncommentHtml(line, True)
+        code, in_comment = uncomment_html(line, True)
         self.assertEqual(code, '')
-        self.assertEqual(inComment, False)
+        self.assertEqual(in_comment, False)
 
         line = 'a<!-- -->b<!---->c'
 
-        code, inComment = uncommentHtml(line, False)
+        code, in_comment = uncomment_html(line, False)
         self.assertEqual(code, 'abc')
-        self.assertEqual(inComment, False)
+        self.assertEqual(in_comment, False)
 
 if __name__ == '__main__':
     unittest.main()

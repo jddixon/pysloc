@@ -8,7 +8,7 @@ import unittest
 
 from argparse import ArgumentParser, Namespace
 from pysloc import __version__, __version_date__
-from pysloc import countLinesInDir, countLinesJava
+from pysloc import count_lines_in_dir, count_lines_java
 
 
 class TestCssComments (unittest.TestCase):
@@ -25,9 +25,9 @@ class TestCssComments (unittest.TestCase):
 
     # actual unit tests #############################################
 
-    def testNameToFuncMap(self):
-        testFile = './commentsForCss'
-        lines, sloc = countLinesJava(testFile, self.options, 'css')
+    def test_name_to_func_map(self):
+        test_file = './commentsForCss'
+        lines, sloc = count_lines_java(test_file, self.options, 'css')
         self.assertEqual(lines, 304)
         self.assertEqual(sloc, 154)
 

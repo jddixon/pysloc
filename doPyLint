@@ -1,4 +1,4 @@
-pylint setup.py merkletree      \
-    runpysloc                 \
+pylint setup.py pysloc      \
+    pySloc                 \
     test*.py
 

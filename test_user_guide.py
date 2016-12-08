@@ -8,7 +8,7 @@ import unittest
 from argparse import Namespace
 
 from pysloc import __version__, __version_date__
-from pysloc import countLinesInDir, countLinesXml, Q
+from pysloc import count_lines_in_dir, count_lines_xml, MapHolder
 
 
 class TestUserGuide (unittest.TestCase):
@@ -23,17 +23,17 @@ class TestUserGuide (unittest.TestCase):
 
     # actual unit tests #############################################
 
-    def testUserGuide(self):
-        testFile = './userguide.xml'
+    def test_user_guide(self):
+        test_file = './userguide.xml'
         options = Namespace()
         options.already = set()
-        options.exRE = None
-        options.q = Q()
+        options.ex_re = None
+        options.map_holder = MapHolder()
         options.verbose = False
 
         # XXX possible error reading file, possible errors parsing data
 
-        lines, sloc = countLinesXml(testFile, options, 'xml')
+        lines, sloc = count_lines_xml(test_file, options, 'xml')
         self.assertEqual(lines, 182)
         # 4 header lines, 13 other blank lines
         self.assertEqual(sloc, 165)

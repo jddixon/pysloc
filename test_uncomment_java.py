@@ -8,7 +8,7 @@ import unittest
 
 from argparse import ArgumentParser, Namespace
 from pysloc import __version__, __version_date__
-from pysloc import uncommentJava
+from pysloc import uncomment_java
 
 
 class TestUncommentJava (unittest.TestCase):
@@ -23,57 +23,57 @@ class TestUncommentJava (unittest.TestCase):
 
     # actual unit tests #############################################
 
-    def testUncommentJava(self):
+    def test_uncomment_java(self):
         line = ''
-        code, inComment = uncommentJava(line, True)
+        code, in_comment = uncomment_java(line, True)
         self.assertEqual(code, '')
-        self.assertEqual(inComment, True)
+        self.assertEqual(in_comment, True)
 
-        code, inComment = uncommentJava(line, False)
+        code, in_comment = uncomment_java(line, False)
         self.assertEqual(code, '')
-        self.assertEqual(inComment, False)
+        self.assertEqual(in_comment, False)
 
         line = '/**/'
 
-        code, inComment = uncommentJava(line, False)
+        code, in_comment = uncomment_java(line, False)
         self.assertEqual(code, '')
-        self.assertEqual(inComment, False)
+        self.assertEqual(in_comment, False)
 
         line = '/*'
 
-        code, inComment = uncommentJava(line, False)
+        code, in_comment = uncomment_java(line, False)
         self.assertEqual(code, '')
-        self.assertEqual(inComment, True)
+        self.assertEqual(in_comment, True)
 
         line = '*/'
 
-        code, inComment = uncommentJava(line, True)
+        code, in_comment = uncomment_java(line, True)
         self.assertEqual(code, '')
-        self.assertEqual(inComment, False)
+        self.assertEqual(in_comment, False)
 
         line = 'a/* */b/**/c'
 
-        code, inComment = uncommentJava(line, False)
+        code, in_comment = uncomment_java(line, False)
         self.assertEqual(code, 'abc')
-        self.assertEqual(inComment, False)
+        self.assertEqual(in_comment, False)
 
         line = '//'
 
-        code, inComment = uncommentJava(line, False)
+        code, in_comment = uncomment_java(line, False)
         self.assertEqual(code, '')
-        self.assertEqual(inComment, False)
+        self.assertEqual(in_comment, False)
 
         line = '/* abc //'
 
-        code, inComment = uncommentJava(line, False)
+        code, in_comment = uncomment_java(line, False)
         self.assertEqual(code, '')
-        self.assertEqual(inComment, True)
+        self.assertEqual(in_comment, True)
 
         line = 'abc // def '
 
-        code, inComment = uncommentJava(line, False)
+        code, in_comment = uncomment_java(line, False)
         self.assertEqual(code, 'abc ')
-        self.assertEqual(inComment, False)
+        self.assertEqual(in_comment, False)
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.8.17
+    2016-12-08
+        * PEP 8 renaming of files and variables                     SLOC 4945
 v0.8.16
     2016-11-16
         * add support for cython; fix some bugs                     SLOC 4862
@@ -276,6 +279,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 

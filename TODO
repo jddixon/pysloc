@@ -1,5 +1,11 @@
 # ~/dev/py/pysloc/TODO
 
+2016-12-08
+    * bug: test_fortran_comments.py
+    * bug: test_fortran_comments90.py
+    * bug: test_q.py
+    * rename test_q.py, test_k.py
+
 2016-10-22
     * rename executable pySloc runpysloc                                * SKIP!
     * add support for rust and the .rs extension                        * DONE
@@ -11,13 +17,13 @@
     * pySloc for xlattice_java needs to exclude xdocs/
 
 2016-06-15
-    * files matched by patterns in .gitignore (such as waf*) are 
+    * files matched by patterns in .gitignore (such as waf*) are
         counted but are not counted if the pattern follows -X
         in the command line
 
 2016-06-09
     * pySloc needs -P and -G options
-    * need to handle 'top' eLang (just don't set -L !)                  * DONE 
+    * need to handle 'top' eLang (just don't set -L !)                  * DONE
     * need to handle 'ghp' eLang (just use 'html' instead !)            * DONE
 
 2016-05-31
@@ -54,7 +60,7 @@
 
 2016-03-09 (edited from -02)
     PREPROCESSED FORTRAN
-    * upper case extensions need to be be preprocessed by 
+    * upper case extensions need to be be preprocessed by
         C preprocessor (.F, .F90, perhaps others)
 
 2016-03-04
@@ -67,9 +73,9 @@
 
 2016-03-03
     * add cobol;  cob (cbl, COB) extensions
-        - if column 1 (begins sequence area) is asterisk or 
+        - if column 1 (begins sequence area) is asterisk or
             non-printing char < SPACE, treat as comment
-        - if column 7 (indicator area) is asterisk or '/', treat as 
+        - if column 7 (indicator area) is asterisk or '/', treat as
             comment
         - a dash in the indicator continues the line                    * SKIP
         - pre-Cobol 2002, ignore all but positions 7-72
@@ -88,7 +94,7 @@
         sign and precding token, if any
 
 2016-02-05
-    * add support for YAML 
+    * add support for YAML
         - # MUST be preceded by whitespace
         - # inside string is ignored
         - *.Rmd of course contain YAML ...
@@ -119,7 +125,7 @@
         (backslash at EOL)
         - C
         - python
-    
+
     * for a list of such tools [code generators] see
         https://en.wikipedia. rg/wiki/Comparison_of_parser_generators
 
