@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-
 # testRustComments.py
 
-import os
-import sys
+""" Test line counters for Rust. """
+
 import unittest
 from argparse import Namespace
 
-from pysloc import __version__, __version_date__
-from pysloc import count_lines_in_dir, count_lines_rust, MapHolder
+from pysloc import count_lines_rust, MapHolder
 
 
-class TestRustComments (unittest.TestCase):
+class TestRustComments(unittest.TestCase):
+    """ Test line counters for Rust. """
 
     def setUp(self):
         pass
@@ -24,6 +23,7 @@ class TestRustComments (unittest.TestCase):
     # actual unit tests #############################################
 
     def test_name_to_func_map(self):
+        """ Verify line counts are as expcted for know file. """
         test_file = './commentsForRust'
         options = Namespace()
         options.already = set()

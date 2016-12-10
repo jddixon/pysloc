@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-
 # testPerlComments.py
-#
-import os
-import sys
+
+""" Test functioning of line counters for Perl. """
+
 import unittest
 from argparse import Namespace
 
-from pysloc import __version__, __version_date__
-from pysloc import count_lines_in_dir, count_lines_perl, MapHolder
+from pysloc import count_lines_perl, MapHolder
 
 
-class TestPerlComments (unittest.TestCase):
+class TestPerlComments(unittest.TestCase):
+    """ Test functioning of line counters for Perl. """
 
     def setUp(self):
         pass
@@ -19,11 +18,9 @@ class TestPerlComments (unittest.TestCase):
     def tearDown(self):
         pass
 
-    # utility functions #############################################
-
-    # actual unit tests #############################################
-
     def test_perl_comments(self):
+        """ Verify that line counts for a known Perl file are correct. """
+
         test_file = './commentsForPerl'
         options = Namespace()
         options.already = set()

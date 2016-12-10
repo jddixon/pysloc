@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-
 # testMatlabComments.py
 
-import os
-import sys
+""" Test line counters for Matlab. """
+
 import unittest
 
-from argparse import ArgumentParser, Namespace
-from pysloc import __version__, __version_date__
-from pysloc import count_lines_in_dir, count_lines_matlab
+from argparse import Namespace
+from pysloc import count_lines_matlab
 
 
-class TestMatlabComments (unittest.TestCase):
+class TestMatlabComments(unittest.TestCase):
+    """ Test line counters for Matlab. """
 
     def setUp(self):
         self.options = Namespace()
@@ -21,11 +20,9 @@ class TestMatlabComments (unittest.TestCase):
     def tearDown(self):
         pass
 
-    # utility functions #############################################
-
-    # actual unit tests #############################################
-
     def test_name_to_func_map(self):
+        """ Verify that line counts for a known Matlab file are correct. """
+
         test_file = './commentsForMatlab'
         lines, sloc = count_lines_matlab(test_file, self.options, 'matlab')
         self.assertEqual(lines, 49)

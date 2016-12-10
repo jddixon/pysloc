@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-
 # testSnoComments.py
 
-import os
-import sys
+""" Test functioning of Snobol line counters. """
+
 import unittest
 
-from argparse import ArgumentParser, Namespace
-from pysloc import __version__, __version_date__
-from pysloc import count_lines_in_dir, count_lines_snobol
+from argparse import Namespace
+from pysloc import count_lines_snobol
 
 
-class TestSnoComments (unittest.TestCase):
+class TestSnoComments(unittest.TestCase):
+    """ Test functioning of Snobol line counters. """
 
     def setUp(self):
         self.options = Namespace()
@@ -21,11 +20,9 @@ class TestSnoComments (unittest.TestCase):
     def tearDown(self):
         pass
 
-    # utility functions #############################################
-
-    # actual unit tests #############################################
-
     def test_name_to_func_map(self):
+        """ Verify line counts for known file are as expected. """
+
         test_file = './commentsForSno'
         lines, sloc = count_lines_snobol(test_file, self.options, 'sno')
         self.assertEqual(lines, 19)

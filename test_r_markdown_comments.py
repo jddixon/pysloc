@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-
 # testRMarkdownComments.py
 
-import os
-import sys
+""" Test line couters for R's version of Markdown. """
+
 import unittest
 from argparse import Namespace
 
-from pysloc import __version__, __version_date__
-from pysloc import count_lines_in_dir, count_lines_r_markdown, MapHolder
+from pysloc import count_lines_r_markdown, MapHolder
 
 
-class TestRMarkdownComments (unittest.TestCase):
+class TestRMarkdownComments(unittest.TestCase):
+    """ Test line couters for R's version of Markdown. """
 
     def setUp(self):
         pass
@@ -19,11 +18,9 @@ class TestRMarkdownComments (unittest.TestCase):
     def tearDown(self):
         pass
 
-    # utility functions #############################################
-
-    # actual unit tests #############################################
-
     def test_name_to_func_map(self):
+        """ Verify line counts for known file are as expected. """
+
         test_file = './commentsForRMarkdown'
         options = Namespace()
         options.already = set()

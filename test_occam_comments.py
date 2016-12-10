@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-
 # testOccamComments.py
 
-import os
-import sys
+""" Test Occam line counters. """
+
 import unittest
 from argparse import Namespace
 
-from pysloc import __version__, __version_date__
-from pysloc import count_lines_in_dir, count_lines_double_dash, MapHolder
+from pysloc import count_lines_double_dash, MapHolder
 
 
-class TestOccamComments (unittest.TestCase):
+class TestOccamComments(unittest.TestCase):
+    """ Test Occam line counters. """
 
     def setUp(self):
         pass
@@ -19,11 +18,8 @@ class TestOccamComments (unittest.TestCase):
     def tearDown(self):
         pass
 
-    # utility functions #############################################
-
-    # actual unit tests #############################################
-
     def test_name_to_func_map(self):
+        """ Verify that line counts from a known occam file are correct. """
         test_file = './commentsForOccam'
         options = Namespace()
         options.already = set()

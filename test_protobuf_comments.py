@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-
 # testProtobufComments.py
 
-import os
-import sys
+""" Verify that line counters for protobuf work correctly. """
+
 import unittest
 from argparse import Namespace
 
-from pysloc import __version__, __version_date__
-from pysloc import count_lines_in_dir, count_lines_protobuf, MapHolder
+from pysloc import count_lines_protobuf, MapHolder
 
 
-class TestProtobufComments (unittest.TestCase):
+class TestProtobufComments(unittest.TestCase):
+    """ Verify that line counters for protobuf work correctly. """
 
     def setUp(self):
         pass
@@ -24,6 +23,7 @@ class TestProtobufComments (unittest.TestCase):
     # actual unit tests #############################################
 
     def test_name_to_func_map(self):
+        """ Verify that line counts are correct for a known protobuf file. """
         test_file = './commentsForProtobuf'
         options = Namespace()
         options.already = set()

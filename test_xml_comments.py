@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-
 # testXmlComments.py
-#
-import os
-import sys
+
+""" Test line counters for XML documents. """
+
 import unittest
 from argparse import Namespace
 
-from pysloc import __version__, __version_date__
-from pysloc import count_lines_in_dir, count_lines_xml, MapHolder
+from pysloc import count_lines_xml, MapHolder
 
 
-class TestXmlComments (unittest.TestCase):
+class TestXmlComments(unittest.TestCase):
+    """ Test line counters for XML documents. """
 
     def setUp(self):
         pass
@@ -19,11 +18,8 @@ class TestXmlComments (unittest.TestCase):
     def tearDown(self):
         pass
 
-    # utility functions #############################################
-
-    # actual unit tests #############################################
-
     def test_xml_comments(self):
+        """ Verify that line counts from a known XML file are correct. """
         test_file = './commentsForXml'
         options = Namespace()
         options.already = set()

@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-
 # testUncommentHtml.py
 
-import os
-import sys
+""" Test function for uncommenting HTML. """
+
 import unittest
 
-from argparse import ArgumentParser, Namespace
-from pysloc import __version__, __version_date__
+from argparse import Namespace
 from pysloc import uncomment_html
 
 
-class TestUncommentHtml (unittest.TestCase):
+class TestUncommentHtml(unittest.TestCase):
+    """ Test function for uncommenting HTML. """
 
     def setUp(self):
         pass
@@ -19,11 +18,9 @@ class TestUncommentHtml (unittest.TestCase):
     def tearDown(self):
         pass
 
-    # utility functions #############################################
-
-    # actual unit tests #############################################
-
     def test_uncomment_html(self):
+        """ Run uncomment logic on snippets of code, verify results. """
+
         line = ''
         code, in_comment = uncomment_html(line, True)
         self.assertEqual(code, '')

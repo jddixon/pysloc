@@ -6,7 +6,7 @@ then
   
   rm -rf build/* 
   
-  runpysloc -L py pySloc  -X cover -X htmlcov -X dist -v $@
+  ./pySloc -L py pySloc  -X cover -X htmlcov -X dist -v $@
 else
   echo "DEV_BASE is not defined"
 fi

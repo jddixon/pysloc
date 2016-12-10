@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
-
 # testCouldBeGenerated.py
 
+""" Test line counter for 'could be generated' files. """
+
 import os
-import sys
 import unittest
 
-from argparse import ArgumentParser, Namespace
-from pysloc import (__version__, __version_date__,
-                    MapHolder)
+from argparse import Namespace
+from pysloc import MapHolder
 
 
-class TestCouldBeGenerated (unittest.TestCase):
+class TestCouldBeGenerated(unittest.TestCase):
+    """ Test line counter for 'could be generated' files. """
 
     def setUp(self):
         self.options = Namespace()
@@ -22,9 +22,8 @@ class TestCouldBeGenerated (unittest.TestCase):
     def tearDown(self):
         pass
 
-    # utility functions #############################################
-
     def expect_zero_counts(self, file_name, lang):
+        """ Verify test file returns zero counts. """
 
         self.assertTrue(os.path.exists(file_name))
         counter = self.map_holder.get_counter(lang, True)
@@ -34,9 +33,8 @@ class TestCouldBeGenerated (unittest.TestCase):
         self.assertEqual(loc_, 0)
         self.assertEqual(sloc_, 0)
 
-    # actual unit tests #############################################
-
     def test_zero_if_generated(self):
+        """ Verify test files return zero counts. """
         self.expect_zero_counts('couldBeGenerated.pb-c.c', 'file_name_')
         self.expect_zero_counts('couldBeGenerated.pb-c.h', 'file_name_')
         self.expect_zero_counts('couldBeGenerated.pb.cpp', 'cpp')

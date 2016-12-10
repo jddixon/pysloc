@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
-
 # testAugeasComments.py
 
-import os
-import sys
+""" Test counting lines in augeas files. """
+
 import unittest
-
-from argparse import ArgumentParser, Namespace
-from pysloc import __version__, __version_date__
-from pysloc import count_lines_in_dir, count_lines_augeas
+from argparse import Namespace
+from pysloc import count_lines_augeas
 
 
-class TestAugeasComments (unittest.TestCase):
+class TestAugeasComments(unittest.TestCase):
+    """ Test counting lines in augeas files. """
 
     def setUp(self):
         self.options = Namespace()
@@ -21,11 +19,9 @@ class TestAugeasComments (unittest.TestCase):
     def tearDown(self):
         pass
 
-    # utility functions #############################################
-
-    # actual unit tests #############################################
-
     def test_name_to_func_map(self):
+        """ Test counting lines in known test Augeas file. """
+
         test_file = './commentsForAugeas'
         lines, sloc = count_lines_augeas(test_file, self.options, 'ml')
         self.assertEqual(lines, 107)

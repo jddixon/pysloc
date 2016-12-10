@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
+# testCythonComments.py
 
-# testPyComments.py
+""" Test counting lines in Cython files. """
 
-import os
-import sys
 import unittest
 from argparse import Namespace
-
-from pysloc import __version__, __version_date__
-from pysloc import count_lines_in_dir, count_lines_python, MapHolder
+from pysloc import count_lines_python, MapHolder
 
 
-class TestPyComments (unittest.TestCase):
+class TestPyComments(unittest.TestCase):
+    """ Test counting lines in Cython files. """
 
     def setUp(self):
         pass
@@ -19,11 +17,8 @@ class TestPyComments (unittest.TestCase):
     def tearDown(self):
         pass
 
-    # utility functions #############################################
-
-    # actual unit tests #############################################
-
     def test_pxd(self):
+        """ Verify line counts returned by known .pxd file are correct. """
         test_file = './commentsForCython.pxd'
         options = Namespace()
         options.already = set()
@@ -36,6 +31,7 @@ class TestPyComments (unittest.TestCase):
         self.assertEqual(sloc, 23)
 
     def test_pyx(self):
+        """ Verify line counts returned by known .pyx file are correct. """
         test_file = './commentsForCython.pyx'
         options = Namespace()
         options.already = set()

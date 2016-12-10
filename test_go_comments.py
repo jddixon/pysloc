@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
-
 # testGoComments.py
 
-import os
-import sys
+""" Test counters for the Go programming language. """
+
 import unittest
-
-from argparse import ArgumentParser, Namespace
-from pysloc import __version__, __version_date__
-from pysloc import count_lines_in_dir, count_lines_go
+from argparse import Namespace
+from pysloc import count_lines_go
 
 
-class TestGoComments (unittest.TestCase):
+class TestGoComments(unittest.TestCase):
+    """ Test counters for the Go programming language. """
 
     def setUp(self):
         self.options = Namespace()
@@ -21,11 +19,8 @@ class TestGoComments (unittest.TestCase):
     def tearDown(self):
         pass
 
-    # utility functions #############################################
-
-    # actual unit tests #############################################
-
     def test_name_to_func_map(self):
+        """ Verify line counts returned from known go file are correct. """
         test_file = './commentsForGo'
         lines, sloc = count_lines_go(test_file, self.options, 'go')
         self.assertEqual(lines, 21)
