@@ -12,6 +12,10 @@ from pysloc import CountHolder
 
 
 class TestK(unittest.TestCase):
+    """
+    Test the operation of the K class, which returns a counter for
+    a language.
+    """
 
     def setUp(self):
         self.k__ = CountHolder()
@@ -29,6 +33,8 @@ class TestK(unittest.TestCase):
 
     def check_counts(self, lang, exp_loc, exp_sloc,
                      exp_test_loc, exp_test_sloc):
+        """ Verify that actual match expected counts for a language. """
+
         self.assertEqual(self.k__ is not None, True)
         loc_, sloc_, test_loc, test_sloc = self.k__.get_counts(lang)
         self.assertEqual(loc_, exp_loc)
@@ -37,7 +43,11 @@ class TestK(unittest.TestCase):
         self.assertEqual(test_sloc, exp_test_sloc)
 
     def test_k(self):
-        # we have a new K.  It should have nothing in it.
+        """
+        Verify that the counters work as expected.
+        """
+
+        # We have a new K.  It should have nothing in it.
         loc_, sloc_, test_loc, test_sloc = self.k__.get_totals()
         self.assertEqual(loc_, 0)
         self.assertEqual(sloc_, 0)
@@ -64,6 +74,8 @@ class TestK(unittest.TestCase):
         self.assertEqual(self.k__.pretty_counts('py'), expected)
 
     def test_k_again(self):
+        """ More tests that line counters are working correctly. """
+
         loc_, sloc_, test_loc, test_sloc = self.k__.get_totals()
         self.assertEqual(loc_, 0)
         self.assertEqual(sloc_, 0)

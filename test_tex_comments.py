@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-
 # testTexComments.py
-#
-import os
-import sys
+
+""" Test line counts for TeX files. """
+
 import unittest
 from argparse import Namespace
 
-from pysloc import __version__, __version_date__
-from pysloc import count_lines_in_dir, count_lines_tex, MapHolder
+from pysloc import count_lines_tex, MapHolder
 
 
-class TestTexComments (unittest.TestCase):
+class TestTexComments(unittest.TestCase):
+    """ Test line counts for TeX files. """
 
     def setUp(self):
         pass
@@ -19,11 +18,9 @@ class TestTexComments (unittest.TestCase):
     def tearDown(self):
         pass
 
-    # utility functions #############################################
-
-    # actual unit tests #############################################
-
     def test_tex_comments(self):
+        """ Verify that line counts for a known TeX file are as expected. """
+
         test_file = './commentsForTeX'
         options = Namespace()
         options.already = set()

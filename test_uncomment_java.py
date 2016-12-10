@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
-
 # testUncommentJava.py
 
-import os
-import sys
+""" Test uncomment function Java-like languages. """
+
 import unittest
 
-from argparse import ArgumentParser, Namespace
-from pysloc import __version__, __version_date__
 from pysloc import uncomment_java
 
 
-class TestUncommentJava (unittest.TestCase):
+class TestUncommentJava(unittest.TestCase):
+    """ Test uncomment function Java-like languages. """
 
     def setUp(self):
         pass
@@ -19,11 +17,9 @@ class TestUncommentJava (unittest.TestCase):
     def tearDown(self):
         pass
 
-    # utility functions #############################################
-
-    # actual unit tests #############################################
-
     def test_uncomment_java(self):
+        """ Verify that uncommenting snippets of Java works correctly. """
+
         line = ''
         code, in_comment = uncomment_java(line, True)
         self.assertEqual(code, '')

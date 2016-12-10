@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
-
 # testHaskellComments.py
 
-import os
-import sys
+""" Test line counter for the Haskell programmig language. """
+
 import unittest
 from argparse import Namespace
-
-from pysloc import __version__, __version_date__
-from pysloc import count_lines_in_dir, count_lines_double_dash, MapHolder
+from pysloc import count_lines_double_dash, MapHolder
 
 
-class TestHaskellComments (unittest.TestCase):
+class TestHaskellComments(unittest.TestCase):
+    """ Test line counter for the Haskell programmig language. """
 
     def setUp(self):
         pass
@@ -24,6 +22,7 @@ class TestHaskellComments (unittest.TestCase):
     # actual unit tests #############################################
 
     def test_name_to_func_map(self):
+        """ Verify line counts returned from known Haskell file are correct. """
         test_file = './commentsForHaskell'
         options = Namespace()
         options.already = set()

@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-
 # testLispComments.py
-#
-import os
-import sys
+
+""" Test line counters for LISP. """
+
 import unittest
+
 from argparse import Namespace
-
-from pysloc import __version__, __version_date__
-from pysloc import count_lines_in_dir, count_lines_lisp, MapHolder
+from pysloc import count_lines_lisp, MapHolder
 
 
-class TestLispComments (unittest.TestCase):
+class TestLispComments(unittest.TestCase):
+    """ Test line counters for LISP. """
 
     def setUp(self):
         pass
@@ -19,11 +18,9 @@ class TestLispComments (unittest.TestCase):
     def tearDown(self):
         pass
 
-    # utility functions #############################################
-
-    # actual unit tests #############################################
-
     def test_lisp_comments(self):
+        """ Verify that line counts for a known LISP file are correct. """
+
         test_file = './commentsForLisp'
         options = Namespace()
         options.already = set()

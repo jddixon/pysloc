@@ -17,7 +17,7 @@ from pysloc import(MapHolder,
                    count_lines_txt)
 
 
-class TestQ (unittest.TestCase):
+class TestQ(unittest.TestCase):
 
     def setUp(self):
         self.map_holder = MapHolder()

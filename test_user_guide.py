@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-
 # testUserGuide.py
-#
-import os
-import sys
+
+""" Test XML counters on a user guide formatted in XML. """
+
 import unittest
 from argparse import Namespace
 
-from pysloc import __version__, __version_date__
-from pysloc import count_lines_in_dir, count_lines_xml, MapHolder
+from pysloc import count_lines_xml, MapHolder
 
 
-class TestUserGuide (unittest.TestCase):
+class TestUserGuide(unittest.TestCase):
+    """ Test XML counters on a user guide formatted in XML. """
 
     def setUp(self):
         pass
@@ -19,11 +18,11 @@ class TestUserGuide (unittest.TestCase):
     def tearDown(self):
         pass
 
-    # utility functions #############################################
-
-    # actual unit tests #############################################
-
     def test_user_guide(self):
+        """
+        Verify that line counts returned for a manually counted
+        XML User Guide are as expected.
+        """
         test_file = './userguide.xml'
         options = Namespace()
         options.already = set()

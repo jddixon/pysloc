@@ -4,7 +4,7 @@
     * bug: test_fortran_comments.py
     * bug: test_fortran_comments90.py
     * bug: test_q.py
-    * rename test_q.py, test_k.py
+    * rename test_q.py AND test_k.py
 
 2016-10-22
     * rename executable pySloc runpysloc                                * SKIP!

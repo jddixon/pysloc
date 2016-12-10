@@ -17,6 +17,8 @@ from pysloc import(__version__, __version_date__,
 
 def read_file_map(path_to_file, named_files):
     """
+    Read and interpret project configuration file.
+
     Read a file, stripping off comments beginning with sharp signs ('#')
     and dropping blank lines.  What remains should look like
     LANG:VISIBILITY:REL_PATH.  For the moment we ignore pseudo-languages
@@ -30,13 +32,13 @@ def read_file_map(path_to_file, named_files):
             lines = lines[:-1]
         for line in lines:
             # get rid of comments
-            line, junk, trash = line.partition('#')
+            line, _, _ = line.partition('#')
             line = line.strip()
             if line:
                 parts = line.split(':')
                 if len(parts) == 3:
                     # line is well-formed, by a crude standard
-                    e_lang, viz, rel_path = parts
+                    e_lang, _, rel_path = parts
 
                     item = e_lang + ':' + rel_path
                     # DEBUG
@@ -53,21 +55,20 @@ def do_count(options):
     are encountered
     """
 
-    exclusions = options.exclusions
+    # exclusions = options.exclusions
     ex_re = options.ex_re
     just_show = options.just_show
     k__ = options.k__
     proj_cfg = options.proj_cfg           # this is projCfg.local
     langs_counted = options.langs_counted
     main_lang = options.main_lang
-    matches = options.matches
+    # matches = options.matches
     named_files = options.named_files
     only_named_files = options.only_named_files
     map_holder = options.map_holder
-    show_timestmp = options.show_timestmp
-    show_version = options.show_version
-    sum_sloc = options.sum_sloc
-    timestamp = options.timestamp
+    # show_version = options.show_version
+    # sum_sloc = options.sum_sloc
+    # timestamp = options.timestamp
     verbose = options.verbose
 
     lines = 0
@@ -172,35 +173,36 @@ def do_count(options):
 
 
 # MAIN ##############################################################
-if __name__ == '__main__':
 
-    # INTERPRET COMMAND LINE ----------------------------------------
-    DESC = 'count lines of source code'
-    parser = ArgumentParser(description=DESC)
+def main():
+    """ Collect options then process files. """
 
-    parser.add_argument('-C', '--langsCounted', nargs='?', const='all',
+    desc = 'count lines of source code'
+    parser = ArgumentParser(description=desc)
+
+    parser.add_argument('-C', '--langs_counted', nargs='?', const='all',
                         help='colon-separated list of langugages to be counted (abbrev)')
-    parser.add_argument('-c', '--projCfg', default='.dvcz/projCfg.local',
+    parser.add_argument('-c', '--proj_cfg', default='.dvcz/projCfg.local',
                         help='file containing language/filename pairs')
-    parser.add_argument('-j', '--justShow', action='store_true',
+    parser.add_argument('-j', '--just_show', action='store_true',
                         help='list options and exit')
-    parser.add_argument('-L', '--mainLang', type=str,
+    parser.add_argument('-L', '--main_lang', type=str,
                         help='main language expected (short name, optional)')
     parser.add_argument('-M', '--matches', type=str,
                         help='count ONLY files with matching names')
     parser.add_argument('-q', '--quiet', action='count', default=0,
                         help='be quiet (overrides -v if later')
-    parser.add_argument('-S', '--sumSLOC', action='store_true',
+    parser.add_argument('-S', '--sum_sloc', action='store_true',
                         help='total up SLOC counts')
     parser.add_argument('-t', '--showTimestamp', action='store_true',
                         help='output UTC timestamp to command line')
     parser.add_argument('-v', '--verbose', action='count', default=0,
                         help='make me more chatty')
-    parser.add_argument('-V', '--showVersion', action='store_true',
+    parser.add_argument('-V', '--show_version', action='store_true',
                         help='show version information')
     parser.add_argument('-X', '--exclusions', action='append',
                         help='do not count files/directories with matching names')
-    parser.add_argument('-z', '--onlyNamedFiles', action='store_true',
+    parser.add_argument('-z', '--only_named_files', action='store_true',
                         help='only count files named on the command line')
 
     parser.add_argument('named_files', nargs='*',
@@ -261,3 +263,6 @@ if __name__ == '__main__':
     # do it ---------------------------------------------------------
     if not args.just_show:
         do_count(args)
+
+if __name__ == '__main__':
+    main()

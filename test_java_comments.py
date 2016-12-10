@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-
 # testJavaComments.py
 
-import os
-import sys
+""" Test line counter for Java-like languages. """
+
 import unittest
 
-from argparse import ArgumentParser, Namespace
-from pysloc import __version__, __version_date__
-from pysloc import count_lines_in_dir, count_lines_java
+from argparse import Namespace
+from pysloc import count_lines_java
 
 
-class TestJavaComments (unittest.TestCase):
+class TestJavaComments(unittest.TestCase):
+    """ Test line counter for Java-like languages. """
 
     def setUp(self):
         self.options = Namespace()
@@ -21,11 +20,8 @@ class TestJavaComments (unittest.TestCase):
     def tearDown(self):
         pass
 
-    # utility functions #############################################
-
-    # actual unit tests #############################################
-
     def test_name_to_func_map(self):
+        """ Verify line counts returned from known Java file are correct. """
         test_file = './commentsForJava'
         lines, sloc = count_lines_java(test_file, self.options, 'java')
         self.assertEqual(lines, 21)

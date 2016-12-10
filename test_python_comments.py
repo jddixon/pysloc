@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-
 # testPyComments.py
 
-import os
-import sys
+""" Test functioning of Python line counters. """
+
 import unittest
 from argparse import Namespace
 
-from pysloc import __version__, __version_date__
-from pysloc import count_lines_in_dir, count_lines_python, MapHolder
+from pysloc import count_lines_python, MapHolder
 
 
-class TestPyComments (unittest.TestCase):
+class TestPyComments(unittest.TestCase):
+    """ Test functioning of Python line counters. """
 
     def setUp(self):
         pass
@@ -19,11 +18,9 @@ class TestPyComments (unittest.TestCase):
     def tearDown(self):
         pass
 
-    # utility functions #############################################
-
-    # actual unit tests #############################################
-
     def test_name_to_func_map(self):
+        """ Verify that line counts for known python file are correct. """
+
         test_file = './commentsForPy'
         options = Namespace()
         options.already = set()
