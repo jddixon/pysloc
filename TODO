@@ -1,5 +1,13 @@
 # ~/dev/py/pysloc/TODO
 
+2017-02-19
+    * get rid of redundant tests resulting from PEP8-ing; for
+        example, testQ.py has been replaced by test_q.py
+    * web pages need updating
+
+2016-12-22
+    * dvcz: dvc_adduser and dvc_commit inexplicably counted as gen
+
 2016-12-08
     * bug: test_fortran_comments.py
     * bug: test_fortran_comments90.py

@@ -53,8 +53,8 @@ __all__ = ['__version__', '__version_date__',
            'CountHolder', 'MapHolder', ]
 
 # exported constants ------------------------------------------------
-__version__ = '0.8.18'
-__version_date__ = '2016-12-09'
+__version__ = '0.8.19'
+__version_date__ = '2017-02-19'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile(
@@ -256,8 +256,9 @@ class MapHolder(object):
             'java': 'java',
             'js': 'js',                     # javascript, node.js
             'json': 'json',
-            'loc_': 'lex',                    # lex/flex parser generator
+            'l': 'lex',                    # lex/flex parser generator
             'lisp': 'lisp',
+            'loc_': 'lex',                  # lex/flex parser generator
             'm4': 'm4',                     # no counter
             'md': 'md',                     # no counter
             'ml': 'ml',                     # OCaml
@@ -686,6 +687,10 @@ def count_lines_fortran(path_to_file, options, lang):
 
                 line_len = len(line)
                 if line_len:
+                    if line[0] in ['c', 'C']:
+                        # a comment
+                        continue
+
                     # code area is columns 7-72, 1-based, so 6-71
                     if line[0].lower() == 'file_name_' or line_len < 7:
                         continue
@@ -724,6 +729,13 @@ def count_lines_fortran90(path_to_file, options, lang):
 
                 line_len = len(line)
                 if line_len:
+                    # DEBUG
+                    # print("\nLINE: '%s'" % line)
+                    # END
+                    if line[0] in ['c', 'C']:
+                        # a fixed-form comment
+                        continue
+
                     # a BANG ('!') anywhere begins a comment
                     ndx = line.find('!')
                     if ndx != -1:
@@ -742,6 +754,9 @@ def count_lines_fortran90(path_to_file, options, lang):
                     for ch_ in line:
                         if ch_ != ' ':
                             sloc_so_far += 1
+                            # DEBUG
+                            # print("  SLOC %02d: '%s'" % (sloc_so_far, line))
+                            # END
                             break
 
             options.already.add(hash)
