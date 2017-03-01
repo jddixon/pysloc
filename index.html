@@ -9,137 +9,81 @@
 </head>
 <body>
 <div class="content">
-<h1>
-<a id="user-content-pysloc" class="anchor" href="#pysloc" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pysloc</h1>
+<h1 class="libTop">pysloc</h1>
 
-<p>pySloc is a Python 3 utility for counting lines of source code in a file,
-directory,
-or project.  It provides a count by language of source lines of code found
+<p>pySloc is a Python 3 utility for counting lines of source code in a file,<br />
+directory,<br />
+or project.  It provides a count by language of source lines of code found<br />
 and a total for all languages.</p>
-
-<h2>
-<a id="user-content-sloc" class="anchor" href="#sloc" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SLOC</h2>
-
-<p>Counting lines of source code is a crude measure of the size of a program
-or project.  For most programming languages there is a conventional way
-to distinguish
-comments; in C, for example, anything /* enclosed like this */ is considered
-a comment and such comments can span more than one line.  In counting lines
+<h2>SLOC</h2>
+<p>Counting lines of source code is a crude measure of the size of a program<br />
+or project.  For most programming languages there is a conventional way<br />
+to distinguish<br />
+comments; in C, for example, anything /<em> enclosed like this </em>/ is considered<br />
+a comment and such comments can span more than one line.  In counting lines<br />
 of source code,</p>
-
 <ul>
 <li>comments are first removed</li>
 <li>then spaces at the beginning of the line are stripped off</li>
-<li>if there is anything left, it is considered a <em>Source Line Of Code</em>
+<li>if there is anything left, it is considered a <em>Source Line Of Code</em><br />
 and included in the SLOC count.</li>
 </ul>
-
-<p>SLOC counts are useful for guesstimating how much effort will be required
-to understand, fix, or replace code.  SLOC counts can also be used to coarsely
+<p>SLOC counts are useful for guesstimating how much effort will be required<br />
+to understand, fix, or replace code.  SLOC counts can also be used to coarsely<br />
 gauge progress on a project.</p>
-
-<p>Users should bear in mind, of course, that often cleaning up code will
-reduce the SLOC count but improve performance and otherwise improve code
+<p>Users should bear in mind, of course, that often cleaning up code will<br />
+reduce the SLOC count but improve performance and otherwise improve code<br />
 quality.</p>
-
-<h2>
-<a id="user-content-languages-handled" class="anchor" href="#languages-handled" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Languages Handled</h2>
-
-<p>Languages are primarily distinguished by the extension on the file name.
-Thus for example <code>example.py</code> would be counted according to the rules for
-Python files whereas <code>example.java</code> would be treated as a Java file and
+<h2>Languages Handled</h2>
+<p>Languages are primarily distinguished by the extension on the file name.<br />
+Thus for example <code>example.py</code> would be counted according to the rules for<br />
+Python files whereas <code>example.java</code> would be treated as a Java file and<br />
 Java-style comments would be ignored in counting lines of source code.</p>
-
 <p>Languages currently covered include, by short name,</p>
-
 <ul>
-<li>
-<strong>ada</strong>,    Ada, the Pentagon's favorite programming language</li>
-<li>
-<strong>asm</strong>,    assembly language</li>
-<li>
-<strong>aug</strong>,    Augeas configuration editor</li>
-<li>
-<strong>awk</strong>,    awk</li>
-<li>
-<strong>c</strong>,      the venerable C programming language; ANSI C</li>
-<li>
-<strong>code</strong>,   'code', a pseudo-language; counts any line whose first non-space character is not the sharp sign ('#')</li>
-<li>
-<strong>csh</strong>,    csh, another shell; tcsh is a variant</li>
-<li>
-<strong>css</strong>,    css, used for writing style sheets</li>
-<li>
-<strong>cython</strong>, cython, python-to-c compiler</li>
-<li>
-<strong>for</strong>,    fixed-format FORTRAN</li>
-<li>
-<strong>f90+</strong>,   FORTRAN 90, other free format FORTRAN</li>
-<li>
-<strong>go</strong>,     Google's Go programming language</li>
-<li>
-<strong>gperf</strong>,  hash function generator</li>
-<li>
-<strong>hs</strong>,     Haskell</li>
-<li>
-<strong>html</strong>,   the Web's markup language</li>
-<li>
-<strong>java</strong>,   the Sun programming language</li>
-<li>
-<strong>js</strong>,     javascript, the Web's programming language</li>
-<li>
-<strong>json</strong>,   JSON serializer</li>
-<li>
-<strong>lex</strong>,    lex/flex scanner</li>
-<li>
-<strong>lisp</strong>,   Lisp (Common)</li>
-<li>
-<strong>ml</strong>,     Ocaml, a functional language</li>
-<li>
-<strong>objc</strong>,   Objective C</li>
-<li>
-<strong>occ</strong>,    Occam, the concurrent programming language</li>
-<li>
-<strong>perl</strong>,   Perl, the sysadmin's language</li>
-<li>
-<strong>proto</strong>,  Google Protobuf</li>
-<li>
-<strong>py</strong>,     Python</li>
-<li>
-<strong>R</strong>,      R, the statistics programming language</li>
-<li>
-<strong>Rmd</strong>,    R Markdown, which combines Markdown and R code</li>
-<li>
-<strong>rb</strong>,     Ruby</li>
-<li>
-<strong>re2c</strong>,   tool for writing fast lexers</li>
-<li>
-<strong>rs</strong>,     the Rust system programming language</li>
-<li>
-<strong>scala</strong>,  Scala</li>
-<li>
-<strong>sed</strong>,    the language for <code>sed</code> scripts used to edit files from the command line</li>
-<li>
-<strong>sh</strong>,     bash or the shell, <code>sh</code>
-</li>
-<li>
-<strong>sno</strong>,    Snobol, the string-oriented programming language</li>
+<li><strong>ada</strong>,    Ada, the Pentagon's favorite programming language</li>
+<li><strong>asm</strong>,    assembly language</li>
+<li><strong>aug</strong>,    Augeas configuration editor</li>
+<li><strong>awk</strong>,    awk</li>
+<li><strong>c</strong>,      the venerable C programming language; ANSI C</li>
+<li><strong>code</strong>,   'code', a pseudo-language; counts any line whose first non-space character is not the sharp sign ('#')</li>
+<li><strong>csh</strong>,    csh, another shell; tcsh is a variant</li>
+<li><strong>css</strong>,    css, used for writing style sheets</li>
+<li><strong>cython</strong>, cython, python-to-c compiler</li>
+<li><strong>for</strong>,    fixed-format FORTRAN</li>
+<li><strong>f90+</strong>,   FORTRAN 90, other free format FORTRAN</li>
+<li><strong>go</strong>,     Google's Go programming language</li>
+<li><strong>gperf</strong>,  hash function generator</li>
+<li><strong>hs</strong>,     Haskell</li>
+<li><strong>html</strong>,   the Web's markup language</li>
+<li><strong>java</strong>,   the Sun programming language</li>
+<li><strong>js</strong>,     javascript, the Web's programming language</li>
+<li><strong>json</strong>,   JSON serializer</li>
+<li><strong>lex</strong>,    lex/flex scanner</li>
+<li><strong>lisp</strong>,   Lisp (Common)</li>
+<li><strong>ml</strong>,     Ocaml, a functional language</li>
+<li><strong>objc</strong>,   Objective C</li>
+<li><strong>occ</strong>,    Occam, the concurrent programming language</li>
+<li><strong>perl</strong>,   Perl, the sysadmin's language</li>
+<li><strong>proto</strong>,  Google Protobuf</li>
+<li><strong>py</strong>,     Python</li>
+<li><strong>R</strong>,      R, the statistics programming language</li>
+<li><strong>Rmd</strong>,    R Markdown, which combines Markdown and R code</li>
+<li><strong>rb</strong>,     Ruby</li>
+<li><strong>re2c</strong>,   tool for writing fast lexers</li>
+<li><strong>rs</strong>,     the Rust system programming language</li>
+<li><strong>scala</strong>,  Scala</li>
+<li><strong>sed</strong>,    the language for <code>sed</code> scripts used to edit files from the command line</li>
+<li><strong>sh</strong>,     bash or the shell, <code>sh</code></li>
+<li><strong>sno</strong>,    Snobol, the string-oriented programming language</li>
 <li>*<em>tex</em>,     TeX/LaTeX</li>
-<li>
-<strong>tcl</strong>,    the Tool Command Language, a dynamic scripting language</li>
-<li>
-<strong>txt</strong>,    plain text; counts all non-blank lines</li>
-<li>
-<strong>xml</strong>,    XML</li>
-<li>
-<strong>yacc</strong>,   yacc parser generator</li>
-<li>
-<strong>yaml</strong>,   YAML serializer</li>
+<li><strong>tcl</strong>,    the Tool Command Language, a dynamic scripting language</li>
+<li><strong>txt</strong>,    plain text; counts all non-blank lines</li>
+<li><strong>xml</strong>,    XML</li>
+<li><strong>yacc</strong>,   yacc parser generator</li>
+<li><strong>yaml</strong>,   YAML serializer</li>
 </ul>
-
-<h2>
-<a id="user-content-command-line" class="anchor" href="#command-line" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Command Line</h2>
-
+<h2>Command Line</h2>
 <pre><code>usage: count lines of source code [-h] [-C [LANGSCOUNTED]] [-j] [-L MAINLANG]
 
                                   [-M MATCHES] [-S] [-t] [-v] [-V]
@@ -167,21 +111,13 @@ optional arguments:
                         do not count files/directories with matching names
   -z, --onlyNamedFiles  only count files named on the command line
 </code></pre>
-
-<p>Files named in the command line are always counted, even if their language
+<p>Files named in the command line are always counted, even if their language<br />
 is not</p>
-
-<h2>
-<a id="user-content-deduping" class="anchor" href="#deduping" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Deduping</h2>
-
-<p>Files are only counted once.  Differently put, if two files have identical
+<h2>Deduping</h2>
+<p>Files are only counted once.  Differently put, if two files have identical<br />
 content, only the first encountered will be counted.</p>
-
-<h2>
-<a id="user-content-project-status" class="anchor" href="#project-status" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Project Status</h2>
-
+<h2>Project Status</h2>
 <p>A good beta: usable for practical purposes.</p>
-
 <h2>Licensing</h2>
 <p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />The material on this github.io website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
 <p>Project software is licensed under an MIT license.
