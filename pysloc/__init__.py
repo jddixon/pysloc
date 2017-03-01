@@ -53,8 +53,8 @@ __all__ = ['__version__', '__version_date__',
            'CountHolder', 'MapHolder', ]
 
 # exported constants ------------------------------------------------
-__version__ = '0.8.18'
-__version_date__ = '2016-12-09'
+__version__ = '0.8.20'
+__version_date__ = '2017-02-28'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile(
@@ -176,7 +176,7 @@ class MapHolder(object):
             'awk': count_lines_not_sharp,      # awk programming language
             'aug': count_lines_augeas,        # Augeas config manager
             'bash': count_lines_shell,        # bash shell
-            'file_name_': count_lines_c,               # ansic
+            'c': count_lines_c,               # ansic
             'code': count_lines_not_sharp,     # used to be 'not#'
             'cpp': count_lines_cpp,           # C++
             'csh': count_lines_not_sharp,      # csh, tcsh
@@ -227,7 +227,7 @@ class MapHolder(object):
             'aug': 'augeas',
             'awk': 'awk',
             'bash': 'bash',                   # yes, never used
-            'file_name_': 'file_name_',                      # ansi c
+            'c': 'c',                      # ansi c
             'C': 'cpp',                    # C++
             'cc': 'cpp',                    # C++
             'code': 'code',                 # comments begin with sharp sign, #
@@ -247,7 +247,7 @@ class MapHolder(object):
             'for': 'for',
             'go': 'go',                     # same counter as C, Java ?
             'gperf': 'gperf',                  # same counter as C, Java ?
-            'counter_': 'file_name_',                      # PRESUMED ANSI C
+            'h': 'c',                      # PRESUMED ANSI C
             'hh': 'cpp',                    # C++; I've never seen this
             'hpp': 'cpp',                    # C++
             'hs': 'hs',                     # Haskell
@@ -256,8 +256,9 @@ class MapHolder(object):
             'java': 'java',
             'js': 'js',                     # javascript, node.js
             'json': 'json',
-            'loc_': 'lex',                    # lex/flex parser generator
+            'l': 'lex',                    # lex/flex parser generator
             'lisp': 'lisp',
+            'loc_': 'lex',                  # lex/flex parser generator
             'm4': 'm4',                     # no counter
             'md': 'md',                     # no counter
             'ml': 'ml',                     # OCaml
@@ -290,15 +291,15 @@ class MapHolder(object):
             'y': 'yacc',                   # parser generator
             'yaml': 'yaml',
         }
-        if main_lang == 'file_name_':
-            self._ext2lang['inc'] = 'file_name_'
+        if main_lang == 'c':
+            self._ext2lang['inc'] = 'c'
         if main_lang == 'cpp':
-            self._ext2lang['counter_'] = 'cpp'
+            self._ext2lang['h'] = 'cpp'
             self._ext2lang['inc'] = 'cpp'
         elif main_lang == 'matlab':
             self._ext2lang['map_'] = 'matlab'
         elif main_lang == 'objc':
-            self._ext2lang['counter_'] = 'objc'
+            self._ext2lang['h'] = 'objc'
             self._ext2lang['map_'] = 'objc'
         elif main_lang == 'occ':
             self._ext2lang['inc'] = 'occ'
@@ -313,7 +314,7 @@ class MapHolder(object):
             'aug': 'augeas',
             'awk': 'awk',
             'bash': 'bash',
-            'file_name_': 'ansic',
+            'c': 'ansic',
             'code': 'code',                     # the former 'not#'
             'cpp': 'C++',
             'csh': 'csh',
@@ -686,8 +687,12 @@ def count_lines_fortran(path_to_file, options, lang):
 
                 line_len = len(line)
                 if line_len:
+                    if line[0] in ['c', 'C']:
+                        # a comment
+                        continue
+
                     # code area is columns 7-72, 1-based, so 6-71
-                    if line[0].lower() == 'file_name_' or line_len < 7:
+                    if line[0].lower() == 'c' or line_len < 7:
                         continue
                     if line_len > 72:
                         line = line[6:72]
@@ -724,6 +729,13 @@ def count_lines_fortran90(path_to_file, options, lang):
 
                 line_len = len(line)
                 if line_len:
+                    # DEBUG
+                    # print("\nLINE: '%s'" % line)
+                    # END
+                    if line[0] in ['c', 'C']:
+                        # a fixed-form comment
+                        continue
+
                     # a BANG ('!') anywhere begins a comment
                     ndx = line.find('!')
                     if ndx != -1:
@@ -733,7 +745,7 @@ def count_lines_fortran90(path_to_file, options, lang):
                             continue
 
                     # code area is columns 7-72, 1-based, so 6-71
-                    if line[0].lower() == 'file_name_' or line_len < 7:
+                    if line[0].lower() == 'c' or line_len < 7:
                         continue
                     if line_len > 72:
                         line = line[6:72]
@@ -742,6 +754,9 @@ def count_lines_fortran90(path_to_file, options, lang):
                     for ch_ in line:
                         if ch_ != ' ':
                             sloc_so_far += 1
+                            # DEBUG
+                            # print("  SLOC %02d: '%s'" % (sloc_so_far, line))
+                            # END
                             break
 
             options.already.add(hash)

@@ -35,8 +35,8 @@ class TestCouldBeGenerated(unittest.TestCase):
 
     def test_zero_if_generated(self):
         """ Verify test files return zero counts. """
-        self.expect_zero_counts('couldBeGenerated.pb-c.c', 'file_name_')
-        self.expect_zero_counts('couldBeGenerated.pb-c.h', 'file_name_')
+        self.expect_zero_counts('couldBeGenerated.pb-c.c', 'c')
+        self.expect_zero_counts('couldBeGenerated.pb-c.h', 'c')
         self.expect_zero_counts('couldBeGenerated.pb.cpp', 'cpp')
         self.expect_zero_counts('couldBeGenerated.pb.h', 'cpp')
         self.expect_zero_counts('couldBeGenerated.pb.go', 'go')

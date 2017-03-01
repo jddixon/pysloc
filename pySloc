@@ -9,7 +9,7 @@ import time
 from argparse import ArgumentParser
 
 from optionz import dump_options
-from xlattice.util import makeExRE
+from xlattice.util import make_ex_re
 
 from pysloc import(__version__, __version_date__,
                    count_lines_in_dir, count_lines_not_sharp, CountHolder, MapHolder)
@@ -91,7 +91,7 @@ def do_count(options):
     # source 3: /var/app/sharedev/config/projCfg ----------
 
     config_dir = os.path.join(os.environ['DVCZ_DIR'], 'config')
-    std_files = os.path.join(config_dir, 'proj_cfg')
+    std_files = os.path.join(config_dir, 'projCfg')
     if std_files and os.path.exists(std_files):
         read_file_map(std_files, named_files)
     # DEBUG
@@ -218,7 +218,7 @@ def main():
 
     # fixups --------------------------------------------------------
     # assume that the exclusions are a list of globs ...
-    args.ex_re = makeExRE(args.exclusions)
+    args.ex_re = make_ex_re(args.exclusions)
 
     if args.quiet:
         args.verbose = 0

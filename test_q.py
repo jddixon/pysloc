@@ -48,7 +48,7 @@ class TestQ(unittest.TestCase):
         self.assertEqual(self.map_holder.ext2lang('cpp'), 'cpp')
         self.assertEqual(self.map_holder.ext2lang('c++'), 'cpp')
         self.assertEqual(self.map_holder.ext2lang('cxx'), 'cpp')
-        self.assertEqual(self.map_holder.ext2lang('counter_'), 'file_name_')
+        self.assertEqual(self.map_holder.ext2lang('h'), 'c')
         self.assertEqual(self.map_holder.ext2lang('hh'), 'cpp')
         self.assertEqual(self.map_holder.ext2lang('hpp'), 'cpp')
 
@@ -93,7 +93,7 @@ class TestQ(unittest.TestCase):
 
     def test_irregular_ext2lang(self):
         cpp_holder = MapHolder('cpp')
-        self.assertEqual(cpp_holder.ext2lang('counter_'), 'cpp')
+        self.assertEqual(cpp_holder.ext2lang('h'), 'cpp')
 
         occ_holder = MapHolder('occ')
         self.assertEqual(occ_holder.ext2lang('inc'), 'occ')

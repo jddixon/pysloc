@@ -9,7 +9,6 @@ then
   ./test_cpp_comments.py
   ./test_css_comments.py
   ./test_cython_comments.py
-  ./test_foo.py
   ./test_fortran90_comments.py
   ./test_fortran_comments.py
   ./test_go_comments.py
