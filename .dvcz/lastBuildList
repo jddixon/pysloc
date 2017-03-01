@@ -7,25 +7,25 @@ Giaje1YAJPNVBt3dlOA5lhBp4GpSYBskJ9UR2Zyt3lgAGK3dEwxYETLMh9VWEV8i
 k2lyCIE/V/CDb9eVDYQgYSJYrnQ/JAPST7NbcY8aI+/0l7QVBhLBpmOCvmS6ofvz
 /QIDAQAB
 -----END RSA PUBLIC KEY-----
-pysloc v0.8.19
-2017-02-20 04:32:50
+pysloc v0.8.20
+2017-03-01 02:49:46
 # BEGIN CONTENT #
 pysloc
  .dvcz
-  builds cfd0f7d125fd490861213484b0786ec3713ee209
+  builds 94f21bdce75929cec7c08d7a0076e17efb843eb4
   copyright 40a152c0598a7da436fc48b2286fb14b4f2e9101
-  lastBuildList 316cb230401b2f344e8eeeb68569e0157df48e9e
+  lastBuildList bc922ed2f45380ed836cf79be9d796589cccdf94
   license 5977a55c75bb4612004451a56b0b4c22d9d3311d
   projCfg 39990297ddb605987209bcfd7c13c8a49c0b4d96
   projCfg.local a7908cabcaa4488641fb36f59909312a21c17242
-  version f91e215aa2339c8d206969776b11df4918be97b6
+  version 3193d57e52550a333d9197d22a4ea3f0c0f8e80d
  .gitignore b2cc5fa149056ba0a01449dcdb19409728483a5c
- CHANGES 3957d33bab199fbecb06c6873983caa8d7968fd6
+ CHANGES 371b03dae6fc8eb76ab36d59ba1088543acdf2d7
  LICENSE-MIT.md 7ff8ae89c5e4489f22b3a360a03225241877bc8d
  MANIFEST.in 8ee6732d59f78c1aa02e2f1ddb3412fbcbe48936
  OpenCOBOLProgrammersGuide.pdf b9d01f7a62de2c61b2d3469eb83c73c698987817
  README.md 6c21200b03cfbac519fc664fe46ff7e867862c14
- TODO b35d656c4582dd872c783cfe5f7ed0ad4c0647b3
+ TODO fe4e867f0ccf8883beccd8bf084ab1cc40a19675
  auto8it 115cca2965b700b0ab4b20ae8bb26aa78b6ed053
  bkp2U 5961ddc3ce44158bdb3ddee6febae84b3d597605
  checkCoverage 36c6c8340b2acdff675107585cc11ddc497acd77
@@ -151,6 +151,7 @@ pysloc
   pysloc-0.8.18.tar.gz b1c4c674ff867e25352162bb81651a8e1bdcd191
   pysloc-0.8.19.tar.gz 2af2c64a206023e3906e27a0241cdd50b52f270f
   pysloc-0.8.2.tar.gz d917688e5d746132a074669d17dac7c62fd2c408
+  pysloc-0.8.20.tar.gz 89f433c4c87e56371d702359f337eee13f337e11
   pysloc-0.8.3.tar.gz 5257b32a41f6f1e0726ac88a42e255ba282fcd8a
   pysloc-0.8.4.tar.gz 4739ba9bfcc989349d808f79a862512d1765b1ee
   pysloc-0.8.5.tar.gz 19fda4682a1fe394b6fa975375621238747a835c
@@ -181,7 +182,7 @@ pysloc
  pySloc 8073f9ad0444de5f429db882baaebd52fb4429ef
  pylintrc dd234fda24a547a9071f1e4608a3c1f3b7de9aa0
  pysloc
-  __init__.py 2cc26327a422a4733c1840918f070a0dd2a96984
+  __init__.py aac91c3468c11c50d3eef6375cf990a7b069e3bf
  renameLocal ec00b0275c0570d67680259d43f86e56a0984370
  runpysloc 78b9428cdd89acd7d402cbd53c03f26afbba524c
  setup.py 12eb0c502f848a95703d83e4073847b665bb9814
@@ -234,7 +235,7 @@ pysloc
  testUserGuide.py ad11c02b38e22fa1674101f6dea3e8649d51b72a
  testXmlComments.py 6fd6a9bfb79eeeba177e8a3cc46b3baa8ffc8cbb
  test_augeas_comments.py 32da29d9f99706137ee66b8197524f0a97076be8
- test_could_be_generated.py 92d788f7f14af1bc01bdda65eda444986d5a2073
+ test_could_be_generated.py 351589056b4d50ca4f6fbc7eb0154b5edc6b8b61
  test_cpp_comments.py f4af1312f39bf0bac2e063f602fd6dc8703fe48a
  test_css_comments.py 883225e76cfd4f7d0a0abf7d07abde81a01b8189
  test_cython_comments.py 0e0d0a655aa4bb00853c39b78e288d01ae149501
@@ -257,7 +258,7 @@ pysloc
  test_perl_comments.py b5471609f97138f6d3884833e0710a0d228bf639
  test_protobuf_comments.py 276f5a9ca188d4cdec25c5b67cc4666ed4537660
  test_python_comments.py 369445025b3c47b9b825ab95bd3b55f72556f655
- test_q.py ee6efe27175d2b5667039e915f64e82bb665afea
+ test_q.py 36ba91208f7ccd496bad35853feecd87675b1e66
  test_r_markdown_comments.py 2fefbc3f7b40365a902bdf247ad7c311f6a43099
  test_re2c_comments.py 195c4908529feff5ab658fc420f0004e7427d011
  test_rust_comments.py 33f367b562dcf2e2013cccbdad65271dba199203
@@ -290,4 +291,4 @@ pysloc
  yy_foo_test.go 883520283ff24ba8df4240504d6de148c9272a0d
 # END CONTENT #
 
-lfysupurFCCIgqpmUbqK+Dj7UeVSdrL9w9DFi8pTOKuMXoTYwWH2g9xDTfm5RzZwVsQ8TmIIrEjOYBe+Ye6tMBkw7ADqHz0wZQGj4Ac3aB/fxa63y1b02sPAB5prArMy54u3wZO0WIWlGVUemnmkJSuVJHAp0rGs+azZ80lu9m+HoVdxhq46x+34LQd2cODa/Di8cbWv4GNEE1JVJR36VreRTnN9Y3qfFCwrpHW7UJqmELfp4D0tkZwV/aEiPhA6H8pJVzN7wpWrrJtypsk04rMaPBWTOj4smYotygbzv6aMzTOGlMM3fASPE5TwNdY1xSXcCVOeR/VW4K67pJfBRw==
+iaeaK2zI1mgurEqC2diR30cp9SSi70hHtiOR6JYnrneAgy1UY17OL9xKNBbdbUnlGdIe1TfWFk//DNgJ/mBzIrqNHIOMGz/Y7XmXzyVNMncvJH+6+q6qi4U2q4/BHXHd1cmrjHyuoyM7KNCmYv2qiVyevaPUeONomfT6/xPJfg6zUkCAnSAz4LpKvXsKsDm28lU6fwYTiCmSKvFnjmoc80bUyd/2aJNOptr6yrTbsmqrWDu8gZJXNzdg3TJc3ptdYr9UmeRoS3gNR1alK6EaW6P1w2WAwA+P2DpSU1rcUxs4lq5w7a6h74BCHmTAjs+Z4CiZ5SpNJFvMl/PpUX1SBQ==

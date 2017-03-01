@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.8.20
+    2017-02-28
+        * fixed incorrect handling of *.c, *.h                      SLOC 6335
 v0.8.19
     2017-02-19
         * fix fortran, fortran90 counters                           SLOC 
@@ -285,6 +288,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 
