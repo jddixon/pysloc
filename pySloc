@@ -9,7 +9,7 @@ import time
 from argparse import ArgumentParser
 
 from optionz import dump_options
-from xlattice.util import make_ex_re
+from xlattice.util import make_ex_re, get_exclusions
 
 from pysloc import(__version__, __version_date__,
                    count_lines_in_dir, count_lines_not_sharp, CountHolder, MapHolder)
@@ -217,8 +217,14 @@ def main():
     args.timestamp = "%04d%02d%02d-%02d%02d%02d" % time.gmtime()[:6]
 
     # fixups --------------------------------------------------------
-    # assume that the exclusions are a list of globs ...
-    args.ex_re = make_ex_re(args.exclusions)
+    if os.path.exists('.gitignore'):
+        args.globs = get_exclusions('./', '.gitignore')
+    else:
+        args.globs = []
+
+    if args.exclusions:
+        args.globs += args.exclusions
+    args.ex_re = make_ex_re(args.globs)
 
     if args.quiet:
         args.verbose = 0

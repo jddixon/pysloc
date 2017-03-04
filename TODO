@@ -1,5 +1,10 @@
 # ~/dev/py/pysloc/TODO
 
+2017-03-02
+    * why doesn't ./countem -X "*.go" work ?
+        - can't get globs from command line
+    * .gitignore file seems to be ignored!                              * FIXED
+
 2017-02-28
     * "pySloc -L c" fails, doesn't recognize 'c' as an abbreviation     * FIXED
         for a language                                                  * FIXED
