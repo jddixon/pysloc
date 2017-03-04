@@ -11,33 +11,33 @@
 <div class="content">
 <h1 class="libTop">pysloc</h1>
 
-<p>pySloc is a Python 3 utility for counting lines of source code in a file,<br />
-directory,<br />
-or project.  It provides a count by language of source lines of code found<br />
+<p>pySloc is a Python 3 utility for counting lines of source code in a file,
+directory,
+or project.  It provides a count by language of source lines of code found
 and a total for all languages.</p>
 <h2>SLOC</h2>
-<p>Counting lines of source code is a crude measure of the size of a program<br />
-or project.  For most programming languages there is a conventional way<br />
-to distinguish<br />
-comments; in C, for example, anything /<em> enclosed like this </em>/ is considered<br />
-a comment and such comments can span more than one line.  In counting lines<br />
+<p>Counting lines of source code is a crude measure of the size of a program
+or project.  For most programming languages there is a conventional way
+to distinguish
+comments; in C, for example, anything /<em> enclosed like this </em>/ is considered
+a comment and such comments can span more than one line.  In counting lines
 of source code,</p>
 <ul>
 <li>comments are first removed</li>
 <li>then spaces at the beginning of the line are stripped off</li>
-<li>if there is anything left, it is considered a <em>Source Line Of Code</em><br />
+<li>if there is anything left, it is considered a <em>Source Line Of Code</em>
 and included in the SLOC count.</li>
 </ul>
-<p>SLOC counts are useful for guesstimating how much effort will be required<br />
-to understand, fix, or replace code.  SLOC counts can also be used to coarsely<br />
+<p>SLOC counts are useful for guesstimating how much effort will be required
+to understand, fix, or replace code.  SLOC counts can also be used to coarsely
 gauge progress on a project.</p>
-<p>Users should bear in mind, of course, that often cleaning up code will<br />
-reduce the SLOC count but improve performance and otherwise improve code<br />
+<p>Users should bear in mind, of course, that often cleaning up code will
+reduce the SLOC count but improve performance and otherwise improve code
 quality.</p>
 <h2>Languages Handled</h2>
-<p>Languages are primarily distinguished by the extension on the file name.<br />
-Thus for example <code>example.py</code> would be counted according to the rules for<br />
-Python files whereas <code>example.java</code> would be treated as a Java file and<br />
+<p>Languages are primarily distinguished by the extension on the file name.
+Thus for example <code>example.py</code> would be counted according to the rules for
+Python files whereas <code>example.java</code> would be treated as a Java file and
 Java-style comments would be ignored in counting lines of source code.</p>
 <p>Languages currently covered include, by short name,</p>
 <ul>
@@ -111,10 +111,10 @@ optional arguments:
                         do not count files/directories with matching names
   -z, --onlyNamedFiles  only count files named on the command line
 </code></pre>
-<p>Files named in the command line are always counted, even if their language<br />
+<p>Files named in the command line are always counted, even if their language
 is not</p>
 <h2>Deduping</h2>
-<p>Files are only counted once.  Differently put, if two files have identical<br />
+<p>Files are only counted once.  Differently put, if two files have identical
 content, only the first encountered will be counted.</p>
 <h2>Project Status</h2>
 <p>A good beta: usable for practical purposes.</p>
