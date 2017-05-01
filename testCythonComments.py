@@ -47,5 +47,6 @@ class TestPyComments (unittest.TestCase):
         self.assertEqual(lines, 86)
         self.assertEqual(sloc, 48)
 
+
 if __name__ == '__main__':
     unittest.main()

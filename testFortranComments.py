@@ -31,5 +31,6 @@ class TestFortranComments (unittest.TestCase):
         self.assertEqual(lines, 32)
         self.assertEqual(sloc, 8)
 
+
 if __name__ == '__main__':
     unittest.main()

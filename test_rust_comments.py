@@ -35,5 +35,6 @@ class TestRustComments(unittest.TestCase):
         self.assertEqual(lines, 129)
         self.assertEqual(sloc, 93)
 
+
 if __name__ == '__main__':
     unittest.main()

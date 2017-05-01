@@ -34,5 +34,6 @@ class TestTexComments(unittest.TestCase):
         self.assertEqual(lines, 32)
         self.assertEqual(sloc, 6)
 
+
 if __name__ == '__main__':
     unittest.main()

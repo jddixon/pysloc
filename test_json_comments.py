@@ -27,5 +27,6 @@ class TestJsonComments(unittest.TestCase):
         self.assertEqual(lines, 9)
         self.assertEqual(sloc, 9)
 
+
 if __name__ == '__main__':
     unittest.main()

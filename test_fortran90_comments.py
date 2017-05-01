@@ -29,5 +29,6 @@ class TestFortran90Comments(unittest.TestCase):
         self.assertEqual(lines, 42)
         self.assertEqual(sloc, 9)
 
+
 if __name__ == '__main__':
     unittest.main()

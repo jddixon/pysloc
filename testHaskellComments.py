@@ -35,5 +35,6 @@ class TestHaskellComments (unittest.TestCase):
         self.assertEqual(lines, 27)
         self.assertEqual(sloc, 10)
 
+
 if __name__ == '__main__':
     unittest.main()

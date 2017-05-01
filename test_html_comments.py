@@ -27,5 +27,6 @@ class TestHtmlComments(unittest.TestCase):
         self.assertEqual(lines, 19)
         self.assertEqual(sloc, 5)
 
+
 if __name__ == '__main__':
     unittest.main()

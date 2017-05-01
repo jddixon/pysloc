@@ -31,5 +31,6 @@ class TestCppComments (unittest.TestCase):
         self.assertEqual(lines, 152)
         self.assertEqual(sloc, 33)
 
+
 if __name__ == '__main__':
     unittest.main()

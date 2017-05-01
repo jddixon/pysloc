@@ -43,5 +43,6 @@ class TestCouldBeGenerated(unittest.TestCase):
         self.expect_zero_counts('couldBeGenerated_pb2.py', 'py')
         self.expect_zero_counts('couldBeGeneratedProtos.java', 'java')
 
+
 if __name__ == '__main__':
     unittest.main()

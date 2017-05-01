@@ -27,5 +27,6 @@ class TestJavaComments(unittest.TestCase):
         self.assertEqual(lines, 21)
         self.assertEqual(sloc, 7)
 
+
 if __name__ == '__main__':
     unittest.main()
