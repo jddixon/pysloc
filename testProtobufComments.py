@@ -35,5 +35,6 @@ class TestProtobufComments (unittest.TestCase):
         self.assertEqual(lines, 71)
         self.assertEqual(sloc, 46)
 
+
 if __name__ == '__main__':
     unittest.main()

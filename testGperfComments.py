@@ -49,5 +49,6 @@ class TestGperfComments (unittest.TestCase):
         self.assertEqual(lines, 5)
         self.assertEqual(sloc, 2)
 
+
 if __name__ == '__main__':
     unittest.main()

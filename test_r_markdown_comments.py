@@ -32,5 +32,6 @@ class TestRMarkdownComments(unittest.TestCase):
         self.assertEqual(lines, 114)
         self.assertEqual(sloc, 53)
 
+
 if __name__ == '__main__':
     unittest.main()

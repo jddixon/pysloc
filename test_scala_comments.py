@@ -31,5 +31,6 @@ class TestScalaComments(unittest.TestCase):
         self.assertEqual(lines, 48)
         self.assertEqual(sloc, 9)
 
+
 if __name__ == '__main__':
     unittest.main()

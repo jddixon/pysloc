@@ -28,5 +28,6 @@ class TestSnoComments(unittest.TestCase):
         self.assertEqual(lines, 19)
         self.assertEqual(sloc, 8)
 
+
 if __name__ == '__main__':
     unittest.main()

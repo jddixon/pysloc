@@ -37,5 +37,6 @@ class TestLispComments (unittest.TestCase):
         self.assertEqual(lines, 65)
         self.assertEqual(sloc, 38)
 
+
 if __name__ == '__main__':
     unittest.main()

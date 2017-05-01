@@ -31,5 +31,6 @@ class TestAugeasComments (unittest.TestCase):
         self.assertEqual(lines, 107)
         self.assertEqual(sloc, 45)
 
+
 if __name__ == '__main__':
     unittest.main()

@@ -38,5 +38,6 @@ class TestUserGuide (unittest.TestCase):
         # 4 header lines, 13 other blank lines
         self.assertEqual(sloc, 165)
 
+
 if __name__ == '__main__':
     unittest.main()

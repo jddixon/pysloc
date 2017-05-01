@@ -31,5 +31,6 @@ class TestOctaveComments (unittest.TestCase):
         self.assertEqual(lines, 79)
         self.assertEqual(sloc, 25)
 
+
 if __name__ == '__main__':
     unittest.main()

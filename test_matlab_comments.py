@@ -28,5 +28,6 @@ class TestMatlabComments(unittest.TestCase):
         self.assertEqual(lines, 49)
         self.assertEqual(sloc, 17)
 
+
 if __name__ == '__main__':
     unittest.main()

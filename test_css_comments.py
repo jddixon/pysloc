@@ -31,5 +31,6 @@ class TestCssComments(unittest.TestCase):
         self.assertEqual(lines, 304)
         self.assertEqual(sloc, 154)
 
+
 if __name__ == '__main__':
     unittest.main()

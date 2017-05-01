@@ -57,5 +57,6 @@ class TestUncommentHtml (unittest.TestCase):
         self.assertEqual(code, 'abc')
         self.assertEqual(inComment, False)
 
+
 if __name__ == '__main__':
     unittest.main()

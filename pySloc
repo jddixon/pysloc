@@ -270,5 +270,6 @@ def main():
     if not args.just_show:
         do_count(args)
 
+
 if __name__ == '__main__':
     main()

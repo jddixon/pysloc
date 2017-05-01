@@ -28,5 +28,6 @@ class TestPascalComments(unittest.TestCase):
         self.assertEqual(lines, 58)
         self.assertEqual(sloc, 18)
 
+
 if __name__ == '__main__':
     unittest.main()

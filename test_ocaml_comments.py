@@ -27,5 +27,6 @@ class TestOCamlComments(unittest.TestCase):
         self.assertEqual(lines, 39)
         self.assertEqual(sloc, 15)
 
+
 if __name__ == '__main__':
     unittest.main()

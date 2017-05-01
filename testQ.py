@@ -278,5 +278,6 @@ class TestQ (unittest.TestCase):
         self.assertEqual(self.q.notCodeFile('README'), True)
         self.assertEqual(self.q.notCodeFile('TODO'), True)
 
+
 if __name__ == '__main__':
     unittest.main()

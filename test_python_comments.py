@@ -32,5 +32,6 @@ class TestPyComments(unittest.TestCase):
         self.assertEqual(lines, 29)
         self.assertEqual(sloc, 13)
 
+
 if __name__ == '__main__':
     unittest.main()
