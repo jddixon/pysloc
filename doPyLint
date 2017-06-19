@@ -1,4 +1,4 @@
-pylint setup.py pysloc      \
-    pySloc                 \
-    test*.py
+pylint setup.py src/pysloc      \
+    src/pySloc                 \
+    tests/test*.py
 

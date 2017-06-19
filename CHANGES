@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.8.23
+    2017-06-19
+        * restructure for pytest                                    SLOC 6221
 v0.8.22
     2017-05-01
         * drop dist/* from repos; plus minor edits                  SLOC 6120
@@ -294,6 +297,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 
