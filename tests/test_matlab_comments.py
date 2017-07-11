@@ -23,7 +23,7 @@ class TestMatlabComments(unittest.TestCase):
     def test_name_to_func_map(self):
         """ Verify that line counts for a known Matlab file are correct. """
 
-        test_file = './commentsForMatlab'
+        test_file = 'tests/commentsForMatlab'
         lines, sloc = count_lines_matlab(test_file, self.options, 'matlab')
         self.assertEqual(lines, 49)
         self.assertEqual(sloc, 17)

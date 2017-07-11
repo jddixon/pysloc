@@ -18,6 +18,7 @@ __all__ = ['__version__', '__version_date__',
            # constants
            'GPERF_RE', 'RE2C_RE',
            # functions
+           'count_lines_toml',                      # XXX TESTING IMPORT
            'count_lines_augeas',
            'count_lines_bash',
            'count_lines_c',
@@ -44,8 +45,7 @@ __all__ = ['__version__', '__version_date__',
            'count_lines_rust',
            'count_lines_re2c',
            'count_lines_ruby',
-           'count_lines_scala', 'count_lines_shell',
-           'count_lines_snobol',
+           'count_lines_scala', 'count_lines_shell', 'count_lines_snobol',
            'count_lines_tex',
            'count_lines_txt',
            'uncomment_html', 'uncomment_java',
@@ -53,8 +53,8 @@ __all__ = ['__version__', '__version_date__',
            'CountHolder', 'MapHolder', ]
 
 # exported constants ------------------------------------------------
-__version__ = '0.8.23'
-__version_date__ = '2017-06-19'
+__version__ = '0.9.0'
+__version_date__ = '2017-07-11'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile(
@@ -158,11 +158,6 @@ class CountHolder(object):
 
 class MapHolder(object):
 
-    __all__ = ['ext2lang',
-               'get_counter', 'get_long_nme',
-               'langMap',
-               'non_code_ext', 'non_code_file', ]
-
     def __init__(self, main_lang=''):
 
         # Note OCaml comments are (* ... *) but allow nesting.  File
@@ -171,51 +166,52 @@ class MapHolder(object):
 
         # Maps short name to counter function; limit these to 4 characters.
         self._lang2counter = {
-            'ada': count_lines_double_dash,    # Pentagon language
-            'asm': count_lines_not_sharp,      # s, S, asm
-            'awk': count_lines_not_sharp,      # awk programming language
-            'aug': count_lines_augeas,        # Augeas config manager
-            'bash': count_lines_shell,        # bash shell
-            'c': count_lines_c,               # ansic
-            'code': count_lines_not_sharp,     # used to be 'not#'
-            'cpp': count_lines_cpp,           # C++
-            'csh': count_lines_not_sharp,      # csh, tcsh
-            'css': count_lines_java_style,     # css, as in stylesheets
+            'ada': count_lines_double_dash,     # Pentagon language
+            'asm': count_lines_not_sharp,       # s, S, asm
+            'awk': count_lines_not_sharp,       # awk programming language
+            'aug': count_lines_augeas,          # Augeas config manager
+            'bash': count_lines_shell,          # bash shell
+            'c': count_lines_c,                 # ansic
+            'code': count_lines_not_sharp,      # used to be 'not#'
+            'cpp': count_lines_cpp,             # C++
+            'csh': count_lines_not_sharp,       # csh, tcsh
+            'css': count_lines_java_style,      # css, as in stylesheets
             'cython': count_lines_python,
-            'f90+': count_lines_fortran90,    # FORTRAN90 plus
-            'for': count_lines_fortran,       # fixed-format FORTRAN
-            'gen': count_lines_not_sharp,      # treat # as comment
-            'go': count_lines_go,             # golang
-            'gperf': count_lines_gperf,       #
-            'hs': count_lines_double_dash,     # Haskell
-            'html': count_lines_html,         # html
-            'java': count_lines_java,         # plain old Java
-            'js': count_lines_java_style,      # Javascript
-            'json': count_lines_txt,          # json
-            'lex': count_lines_java_style,     # lex/flex
-            'lisp': count_lines_lisp,         # Common Lisp
-            'm4': count_lines_not_sharp,       # m4 macro processor
-            'ml': count_lines_ocaml,          # ocaml, tentative abbrev
-            'objc': count_lines_java_style,    # Objective C
-            'occ': count_lines_double_dash,    # concurrent programming
+            'f90+': count_lines_fortran90,      # FORTRAN90 plus
+            'for': count_lines_fortran,         # fixed-format FORTRAN
+            'gen': count_lines_not_sharp,       # treat # as comment
+            'go': count_lines_go,               # golang
+            'gperf': count_lines_gperf,         #
+            'hs': count_lines_double_dash,      # Haskell
+            'html': count_lines_html,           # html
+            'java': count_lines_java,           # plain old Java
+            'js': count_lines_java_style,       # Javascript
+            'json': count_lines_txt,            # json
+            'lex': count_lines_java_style,      # lex/flex
+            'lisp': count_lines_lisp,           # Common Lisp
+            'm4': count_lines_not_sharp,        # m4 macro processor
+            'ml': count_lines_ocaml,            # ocaml, tentative abbrev
+            'objc': count_lines_java_style,     # Objective C
+            'occ': count_lines_double_dash,     # concurrent programming
             'perl': count_lines_perl,
-            'proto': count_lines_protobuf,    # Google Protocol Buffers
-            'py': count_lines_python,         # yes, Python
-            'R': count_lines_not_sharp,        # R
+            'proto': count_lines_protobuf,      # Google Protocol Buffers
+            'py': count_lines_python,           # yes, Python
+            'R': count_lines_not_sharp,         # R
             'Rmd': count_lines_r_markdown,
-            're2c': count_lines_re2c,         # re2c
-            'rb': count_lines_ruby,           # ruby
-            'rs': count_lines_rust,           # rust
+            're2c': count_lines_re2c,           # re2c
+            'rb': count_lines_ruby,             # ruby
+            'rs': count_lines_rust,             # rust
             'scala': count_lines_scala,
-            'sed': count_lines_not_sharp,      # stream editor
-            'sh': count_lines_shell,          # shell script
-            'sno': count_lines_snobol,        # snobol4
-            'tcl': count_lines_not_sharp,      # tcl, tk, itk
-            'tex': count_lines_tex,           # TeX, LaTeX
-            'txt': count_lines_txt,           # plain text
+            'sed': count_lines_not_sharp,       # stream editor
+            'sh': count_lines_shell,            # shell script
+            'sno': count_lines_snobol,          # snobol4
+            'tcl': count_lines_not_sharp,       # tcl, tk, itk
+            'tex': count_lines_tex,             # TeX, LaTeX
+            'toml': count_lines_not_sharp,      # Tom's Obvious Markup Language
+            'txt': count_lines_txt,             # plain text
             'xml': count_lines_xml,
-            'yacc': count_lines_java_style,    # yacc, bison
-            'yaml': count_lines_not_sharp,     # yaml
+            'yacc': count_lines_java_style,     # yacc, bison
+            'yaml': count_lines_not_sharp,      # yaml
         }
         # Guesses language short name (abbrev) from file extension.
         # See sloccount's break_filelist for hints.
@@ -226,43 +222,43 @@ class MapHolder(object):
             'asm': 'asm',
             'aug': 'augeas',
             'awk': 'awk',
-            'bash': 'bash',                   # yes, never used
-            'c': 'c',                      # ansi c
-            'C': 'cpp',                    # C++
+            'bash': 'bash',                 # yes, never used
+            'c': 'c',                       # ansi c
+            'C': 'cpp',                     # C++
             'cc': 'cpp',                    # C++
             'code': 'code',                 # comments begin with sharp sign, #
             'cp': 'cpp',                    # C++
-            'cpp': 'cpp',                    # C++
-            'CPP': 'cpp',                    # C++
-            'c++': 'cpp',                    # C++
-            'cxx': 'cpp',                    # C++
+            'cpp': 'cpp',                   # C++
+            'CPP': 'cpp',                   # C++
+            'c++': 'cpp',                   # C++
+            'cxx': 'cpp',                   # C++
             'csh': 'csh',
             'css': 'css',
-            'flattened': 'for',                    # fixed-format FORTRAN
-            'f90': 'f90+',                   # free-format FORTRAN
-            'f95': 'f90+',                   # free-format FORTRAN
-            'f03': 'f90+',                   # free-format FORTRAN
-            'f08': 'f90+',                   # free-format FORTRAN
-            'f15': 'f90+',                   # free-format FORTRAN
+            'flattened': 'for',             # fixed-format FORTRAN
+            'f90': 'f90+',                  # free-format FORTRAN
+            'f95': 'f90+',                  # free-format FORTRAN
+            'f03': 'f90+',                  # free-format FORTRAN
+            'f08': 'f90+',                  # free-format FORTRAN
+            'f15': 'f90+',                  # free-format FORTRAN
             'for': 'for',
             'go': 'go',                     # same counter as C, Java ?
-            'gperf': 'gperf',                  # same counter as C, Java ?
-            'h': 'c',                      # PRESUMED ANSI C
+            'gperf': 'gperf',               # same counter as C, Java ?
+            'h': 'c',                       # PRESUMED ANSI C
             'hh': 'cpp',                    # C++; I've never seen this
-            'hpp': 'cpp',                    # C++
+            'hpp': 'cpp',                   # C++
             'hs': 'hs',                     # Haskell
-            'html': 'html',                   # no counter
+            'html': 'html',                 # no counter
             'itk': 'tcl',
             'java': 'java',
             'js': 'js',                     # javascript, node.js
             'json': 'json',
-            'l': 'lex',                    # lex/flex parser generator
+            'l': 'lex',                     # lex/flex parser generator
             'lisp': 'lisp',
             'loc_': 'lex',                  # lex/flex parser generator
             'm4': 'm4',                     # no counter
             'md': 'md',                     # no counter
             'ml': 'ml',                     # OCaml
-            'mli': 'ml',                     # OCaml extension
+            'mli': 'ml',                    # OCaml extension
             'occ': 'occ',
             'pl': 'perl',
             'pm': 'perl',
@@ -286,11 +282,15 @@ class MapHolder(object):
             'tcl': 'tcl',
             'tex': 'tex',
             'tk': 'tcl',
+            'toml': 'toml',                 # XXX SHOULD BE IN ORDER
             'txt': 'txt',
             'xml': 'xml',
             'y': 'yacc',                   # parser generator
             'yaml': 'yaml',
         }
+        # DEBUG
+        assert self._ext2lang['toml'] == 'toml'
+        # END
         if main_lang == 'c':
             self._ext2lang['inc'] = 'c'
         if main_lang == 'cpp':
@@ -351,6 +351,7 @@ class MapHolder(object):
             'sno': 'snobol4',
             'tcl': 'tcl',
             'tex': 'TeX/LaTeX',
+            'toml': 'toml',
             'txt': 'text',
             'xml': 'XML',
             'yacc': 'yacc',
@@ -373,15 +374,15 @@ class MapHolder(object):
             'zip',
         }
         # A set of file and directory names known NOT to contain source code
-        self._not_code_dirs = {
+        self._non_code_dirs = {
             '.git',
+            '__pycache__',
             '.svn',
         }
         # files which definitely do not contain source code
         self._non_code_files = {
             '.gitignore',
             '.wrapped',
-            '__pycache__',
             'AUTHORS',
             'CHANGES', 'ChangeLog',
             'CONTRIBUTORS',
@@ -397,9 +398,9 @@ class MapHolder(object):
 
     # public interface ==============================================
 
-    def ext2lang(self, sloc_):
-        if sloc_ in self._ext2lang:
-            return self._ext2lang[sloc_]
+    def ext2lang(self, ext):
+        if ext in self._ext2lang:
+            return self._ext2lang[ext]
         else:
             return None
 
@@ -420,7 +421,7 @@ class MapHolder(object):
         else:
             return None
 
-    def get_long_nme(self, sloc_):
+    def get_long_name(self, sloc_):
         """ Given a short file name, return the longer language name """
         if sloc_ in self._lang_map:
             return self._lang_map[sloc_]
@@ -434,8 +435,8 @@ class MapHolder(object):
     def non_code_ext(self, sloc_):
         return sloc_ in self._non_code_exts
 
-    def not_code_dir(self, sloc_):
-        return sloc_ in self._not_code_dirs
+    def non_code_dir(self, sloc_):
+        return sloc_ in self._non_code_dirs
 
     def non_code_file(self, sloc_):
         return sloc_ in self._non_code_files
@@ -630,6 +631,13 @@ def check_whether_already_counted(path_to_file, options):
                     lines = lines[:-1]
     return lines, counter_
 
+# TOML ==============================================================
+# XXX SHOULD BE IN ALPHABETICAL ORDER, up here for debugging
+
+
+def count_lines_toml(path_to_file, options, lang):
+    """ Count lines in a file with extension '.toml'. """
+
 # AUGEAS ============================================================
 
 
@@ -661,6 +669,9 @@ def count_lines_c(path, options, lang):
 
 
 def count_lines_cpp(path, options, lang):
+    # DEBUG
+    print("count_lines_cpp() checking path '%s', lang '%s'" % (path, lang))
+    # END
     loc_, sloc_ = 0, 0
     if path.endswith('.h'):
         if not path.endswith('.pb.h'):
@@ -680,8 +691,8 @@ def count_lines_fortran(path_to_file, options, lang):
 
     lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = check_whether_already_counted(path_to_file, options)
-        if (hash is not None) and (lines is not None):
+        lines, hash_val = check_whether_already_counted(path_to_file, options)
+        if (hash_val is not None) and (lines is not None):
             for line in lines:
                 lines_so_far += 1
 
@@ -703,7 +714,7 @@ def count_lines_fortran(path_to_file, options, lang):
                             sloc_so_far += 1
                             break
 
-            options.already.add(hash)
+            options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
                     path_to_file, lang, lines_so_far, sloc_so_far))
@@ -722,8 +733,8 @@ def count_lines_fortran90(path_to_file, options, lang):
 
     lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = check_whether_already_counted(path_to_file, options)
-        if (hash is not None) and (lines is not None):
+        lines, hash_val = check_whether_already_counted(path_to_file, options)
+        if (hash_val is not None) and (lines is not None):
             for line in lines:
                 lines_so_far += 1
 
@@ -759,7 +770,7 @@ def count_lines_fortran90(path_to_file, options, lang):
                             # END
                             break
 
-            options.already.add(hash)
+            options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
                     path_to_file, lang, lines_so_far, sloc_so_far))
@@ -843,8 +854,8 @@ def count_lines_html(path_to_file, options, lang):
     lines_so_far, sloc_so_far = (0, 0)
     in_comment = False
     try:
-        lines, hash = check_whether_already_counted(path_to_file, options)
-        if (hash is not None) and (lines is not None):
+        lines, hash_val = check_whether_already_counted(path_to_file, options)
+        if (hash_val is not None) and (lines is not None):
             for line in lines:
                 lines_so_far += 1
 
@@ -854,7 +865,7 @@ def count_lines_html(path_to_file, options, lang):
                     if code:
                         sloc_so_far += 1
 
-            options.already.add(hash)
+            options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
                     path_to_file, lang, lines_so_far, sloc_so_far))
@@ -942,8 +953,8 @@ def count_lines_java_style(path_to_file, options, lang):
     lines_so_far, sloc_so_far = (0, 0)
     in_comment = False
     try:
-        lines, hash = check_whether_already_counted(path_to_file, options)
-        if (hash is not None) and (lines is not None):
+        lines, hash_val = check_whether_already_counted(path_to_file, options)
+        if (hash_val is not None) and (lines is not None):
             for line in lines:
                 lines_so_far += 1
 
@@ -953,7 +964,7 @@ def count_lines_java_style(path_to_file, options, lang):
                     if code:
                         sloc_so_far += 1
 
-            options.already.add(hash)
+            options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
                     path_to_file, lang, lines_so_far, sloc_so_far))
@@ -981,8 +992,8 @@ def count_lines_matlab(path_to_file, options, lang):
 
     lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = check_whether_already_counted(path_to_file, options)
-        if (hash is not None) and (lines is not None):
+        lines, hash_val = check_whether_already_counted(path_to_file, options)
+        if (hash_val is not None) and (lines is not None):
             depth = 0                           # comment depth
             for l_ndx, line in enumerate(lines):
                 lines_so_far += 1
@@ -1028,7 +1039,7 @@ def count_lines_matlab(path_to_file, options, lang):
                 if non_space_sen:
                     sloc_so_far += 1
 
-            options.already.add(hash)
+            options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
                     path_to_file, lang, lines_so_far, sloc_so_far))
@@ -1049,15 +1060,15 @@ def count_lines_not_sharp(path_to_file, options, lang):
 
     lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = check_whether_already_counted(path_to_file, options)
-        if (hash is not None) and (lines is not None):
+        lines, hash_val = check_whether_already_counted(path_to_file, options)
+        if (hash_val is not None) and (lines is not None):
             for line in lines:
                 lines_so_far += 1
                 # This could be made more efficient.
                 line = line.strip()
                 if len(line) > 0 and (line[0] != '#'):
                     sloc_so_far += 1
-            options.already.add(hash)
+            options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
                     path_to_file, lang, lines_so_far, sloc_so_far))
@@ -1077,8 +1088,8 @@ def count_lines_ocaml(path_to_file, options, lang):
 
     lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = check_whether_already_counted(path_to_file, options)
-        if (hash is not None) and (lines is not None):
+        lines, hash_val = check_whether_already_counted(path_to_file, options)
+        if (hash_val is not None) and (lines is not None):
             depth = 0                           # comment depth
             for line in lines:
                 lines_so_far += 1
@@ -1132,7 +1143,7 @@ def count_lines_ocaml(path_to_file, options, lang):
                 if non_space_sen:
                     sloc_so_far += 1
 
-            options.already.add(hash)
+            options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
                     path_to_file, lang, lines_so_far, sloc_so_far))
@@ -1153,15 +1164,15 @@ def count_lines_double_dash(path_to_file, options, lang):
 
     lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = check_whether_already_counted(path_to_file, options)
-        if (hash is not None) and (lines is not None):
+        lines, hash_val = check_whether_already_counted(path_to_file, options)
+        if (hash_val is not None) and (lines is not None):
             for line in lines:
                 lines_so_far += 1
                 # This could be made more efficient.
                 line = line.strip()
                 if len(line) > 0 and not line.startswith('--'):
                     sloc_so_far += 1
-            options.already.add(hash)
+            options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
                     path_to_file, lang, lines_so_far, sloc_so_far))
@@ -1169,7 +1180,7 @@ def count_lines_double_dash(path_to_file, options, lang):
         print("error reading '%s', skipping: %s" % (path_to_file, exc))
     return lines_so_far, sloc_so_far
 
-# OCTAVE ============================================================
+# OCCAM =============================================================
 
 
 def count_lines_occam(path_to_file, options, lang):
@@ -1185,8 +1196,8 @@ def count_lines_occam(path_to_file, options, lang):
 
     lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = check_whether_already_counted(path_to_file, options)
-        if (hash is not None) and (lines is not None):
+        lines, hash_val = check_whether_already_counted(path_to_file, options)
+        if (hash_val is not None) and (lines is not None):
             depth = 0                           # comment depth
             for l_ndx, line in enumerate(lines):
                 lines_so_far += 1
@@ -1232,7 +1243,7 @@ def count_lines_occam(path_to_file, options, lang):
                 if non_space_sen:
                     sloc_so_far += 1
 
-            options.already.add(hash)
+            options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
                     path_to_file, lang, lines_so_far, sloc_so_far))
@@ -1252,8 +1263,8 @@ def count_lines_pascal(path_to_file, options, lang):
 
     lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = check_whether_already_counted(path_to_file, options)
-        if (hash is not None) and (lines is not None):
+        lines, hash_val = check_whether_already_counted(path_to_file, options)
+        if (hash_val is not None) and (lines is not None):
             depth = 0                           # comment depth
             for ndx, line in enumerate(lines):
                 lines_so_far += 1
@@ -1328,7 +1339,7 @@ def count_lines_pascal(path_to_file, options, lang):
                 #    ndx, depth, slocSoFar, line))
                 # END
 
-            options.already.add(hash)
+            options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
                     path_to_file, lang, lines_so_far, sloc_so_far))
@@ -1349,15 +1360,15 @@ def count_lines_not_percent(path_to_file, options, lang):
 
     lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = check_whether_already_counted(path_to_file, options)
-        if (hash is not None) and (lines is not None):
+        lines, hash_val = check_whether_already_counted(path_to_file, options)
+        if (hash_val is not None) and (lines is not None):
             for line in lines:
                 lines_so_far += 1
                 # This could be made more efficient.
                 line = line.strip()
                 if (len(line) > 0) and (line[0] != '%'):
                     sloc_so_far += 1
-            options.already.add(hash)
+            options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
                     path_to_file, lang, lines_so_far, sloc_so_far))
@@ -1385,8 +1396,8 @@ def count_lines_perl(path_to_file, options, lang):
     in_pod = False
     in_for = False
     try:
-        lines, hash = check_whether_already_counted(path_to_file, options)
-        if (hash is not None) and (lines is not None):
+        lines, hash_val = check_whether_already_counted(path_to_file, options)
+        if (hash_val is not None) and (lines is not None):
             for line in lines:
                 lines_so_far += 1
 
@@ -1409,7 +1420,7 @@ def count_lines_perl(path_to_file, options, lang):
                 line = line.strip()
                 if len(line) > 0 and (line[0] != '#'):
                     sloc_so_far += 1
-            options.already.add(hash)
+            options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
                     path_to_file, lang, lines_so_far, sloc_so_far))
@@ -1439,8 +1450,8 @@ def _count_lines_python(path_to_file, options, lang):
     in_triple_quote = False
     lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = check_whether_already_counted(path_to_file, options)
-        if (lines is not None) and (hash is not None):
+        lines, hash_val = check_whether_already_counted(path_to_file, options)
+        if (lines is not None) and (hash_val is not None):
             for line in lines:
                 if in_triple_quote:
                     # we always count this line
@@ -1458,7 +1469,7 @@ def _count_lines_python(path_to_file, options, lang):
                     count = line.count(TQUOTE)
                     if count % 2:
                         in_triple_quote = True
-            options.already.add(hash)
+            options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
                     path_to_file, lang, lines_so_far, sloc_so_far))
@@ -1498,8 +1509,8 @@ def count_lines_r_markdown(path_to_file, options, lang):
     lines_so_far, sloc_so_far = (0, 0)
     in_code_chunk = False
     try:
-        lines, hash = check_whether_already_counted(path_to_file, options)
-        if (hash is not None) and (lines is not None):
+        lines, hash_val = check_whether_already_counted(path_to_file, options)
+        if (hash_val is not None) and (lines is not None):
             in_yaml = False
             for ndx, line in enumerate(lines):
                 lines_so_far += 1
@@ -1543,7 +1554,7 @@ def count_lines_r_markdown(path_to_file, options, lang):
                     if line.find('`r ') != -1:
                         sloc_so_far += 1
 
-            options.already.add(hash)
+            options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
                     path_to_file, lang, lines_so_far, sloc_so_far))
@@ -1575,15 +1586,15 @@ def count_lines_rust(path_to_file, options, lang):
 
     lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = check_whether_already_counted(path_to_file, options)
-        if (hash is not None) and (lines is not None):
+        lines, hash_val = check_whether_already_counted(path_to_file, options)
+        if (hash_val is not None) and (lines is not None):
             for line in lines:
                 lines_so_far += 1         # this counts every line
                 # This could be made more efficient.
                 line = line.strip()
                 if len(line) > 0 and not line.startswith('//'):
                     sloc_so_far += 1      # this counts source lines
-            options.already.add(hash)
+            options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
                     path_to_file, lang, lines_so_far, sloc_so_far))
@@ -1604,8 +1615,8 @@ def count_lines_scala(path_to_file, options, lang):
     lines_so_far, sloc_so_far = (0, 0)
     comment_depth = 0
     try:
-        lines, hash = check_whether_already_counted(path_to_file, options)
-        if (hash is not None) and (lines is not None):
+        lines, hash_val = check_whether_already_counted(path_to_file, options)
+        if (hash_val is not None) and (lines is not None):
             for line in lines:
                 lines_so_far += 1
 
@@ -1615,7 +1626,7 @@ def count_lines_scala(path_to_file, options, lang):
                     if code:
                         sloc_so_far += 1
 
-            options.already.add(hash)
+            options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
                     path_to_file, lang, lines_so_far, sloc_so_far))
@@ -1740,15 +1751,15 @@ def count_lines_not_semicolon(path_to_file, options, lang):
 
     lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = check_whether_already_counted(path_to_file, options)
-        if (hash is not None) and (lines is not None):
+        lines, hash_val = check_whether_already_counted(path_to_file, options)
+        if (hash_val is not None) and (lines is not None):
             for line in lines:
                 lines_so_far += 1
                 # This could be made more efficient.
                 line = line.strip()
                 if (len(line) > 0) and (line[0] != ';'):
                     sloc_so_far += 1
-            options.already.add(hash)
+            options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
                     path_to_file, lang, lines_so_far, sloc_so_far))
@@ -1766,14 +1777,14 @@ def count_lines_snobol(path_to_file, options, lang):
 
     lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = check_whether_already_counted(path_to_file, options)
-        if (hash is not None) and (lines is not None):
+        lines, hash_val = check_whether_already_counted(path_to_file, options)
+        if (hash_val is not None) and (lines is not None):
             for line in lines:
                 lines_so_far += 1
                 line = line.rstrip()
                 if len(line) > 0 and (line[0] != '*'):
                     sloc_so_far += 1
-            options.already.add(hash)
+            options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
                     path_to_file, lang, lines_so_far, sloc_so_far))
@@ -1787,6 +1798,8 @@ def count_lines_snobol(path_to_file, options, lang):
 def count_lines_tex(path_to_file, options, lang):
     return count_lines_not_percent(path_to_file, options, lang)
 
+    return count_lines_not_sharp(path_to_file, options, lang)
+
 # TXT ===============================================================
 
 
@@ -1798,15 +1811,15 @@ def count_lines_txt(path_to_file, options, lang):
 
     lines_so_far, sloc_so_far = (0, 0)
     try:
-        lines, hash = check_whether_already_counted(path_to_file, options)
-        if (hash is not None) and (lines is not None):
+        lines, hash_val = check_whether_already_counted(path_to_file, options)
+        if (hash_val is not None) and (lines is not None):
             for line in lines:
                 lines_so_far += 1
                 # This could be made more efficient.
                 line = line.strip()
                 if len(line) > 0:
                     sloc_so_far += 1
-            options.already.add(hash)
+            options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
                     path_to_file, lang, lines_so_far, sloc_so_far))
@@ -1824,14 +1837,14 @@ def count_lines_xml(path_to_file, options, lang):
     """
 
     try:
-        lines, hash = check_whether_already_counted(path_to_file, options)
+        lines, hash_val = check_whether_already_counted(path_to_file, options)
     except Exception as exc:
         print("error reading '%s', skipping: %s" % (path_to_file, exc))
         return 0, 0
 
     try:
         line_count, sloc_so_far = (0, 0)
-        if (hash is not None) and (lines is not None):
+        if (hash_val is not None) and (lines is not None):
             line_count = len(lines)
             raw = '\n'.join(lines)
             soup = BeautifulSoup(raw, 'lxml')
@@ -1879,7 +1892,7 @@ def count_lines_xml(path_to_file, options, lang):
                 # DEBUG
                 # print(line)
                 # END
-            options.already.add(hash)
+            options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
                     path_to_file, lang, line_count, sloc_so_far))

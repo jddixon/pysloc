@@ -14,7 +14,7 @@ from argparse import Namespace
 from pysloc import count_lines_txt, MapHolder
 
 
-class TestTextComments(unittest.TestCase):
+class TestTxtComments(unittest.TestCase):
     """ Test line counters for simple text files. """
 
     def setUp(self):
@@ -26,7 +26,7 @@ class TestTextComments(unittest.TestCase):
     def test_name_to_func_map(self):
         """ Verify the line counts return for a known text file are correct. """
 
-        test_file = './commentsForTxt'
+        test_file = 'tests/commentsForTxt'
         options = Namespace()
         options.already = set()
         options.ex_re = None

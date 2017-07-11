@@ -22,7 +22,7 @@ class TestHtmlComments(unittest.TestCase):
 
     def test_name_to_func_map(self):
         """ Verify line counts returned from known HTML files are correct. """
-        test_file = './commentsForHtml'
+        test_file = 'tests/commentsForHtml'
         lines, sloc = count_lines_html(test_file, self.options, 'html')
         self.assertEqual(lines, 19)
         self.assertEqual(sloc, 5)

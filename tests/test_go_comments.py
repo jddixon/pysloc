@@ -21,7 +21,7 @@ class TestGoComments(unittest.TestCase):
 
     def test_name_to_func_map(self):
         """ Verify line counts returned from known go file are correct. """
-        test_file = './commentsForGo'
+        test_file = 'tests/commentsForGo'
         lines, sloc = count_lines_go(test_file, self.options, 'go')
         self.assertEqual(lines, 21)
         self.assertEqual(sloc, 7)

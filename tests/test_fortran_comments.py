@@ -22,7 +22,7 @@ class TestFortranComments(unittest.TestCase):
 
     def test_name_to_func_map(self):
         """ Verify line counts returned from known *.for file are correct. """
-        test_file = './commentsForFortran'
+        test_file = 'tests/commentsForFortran'
         lines, sloc = count_lines_fortran(test_file, self.options, 'for')
         self.assertEqual(lines, 32)
         self.assertEqual(sloc, 8)

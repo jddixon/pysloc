@@ -21,7 +21,7 @@ class TestPerlComments(unittest.TestCase):
     def test_perl_comments(self):
         """ Verify that line counts for a known Perl file are correct. """
 
-        test_file = './commentsForPerl'
+        test_file = 'tests/commentsForPerl'
         options = Namespace()
         options.already = set()
         options.ex_re = None

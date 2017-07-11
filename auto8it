@@ -1,5 +1,0 @@
-#!/bin/bash
-
-cd /home/jdd/dev/py/pysloc
-
-autopep8 -air pysloc *.py  pySloc

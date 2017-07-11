@@ -26,7 +26,7 @@ class TestScalaComments(unittest.TestCase):
 
     def test_name_to_func_map(self):
         """ Verify line counters return correct line counts for nown file."""
-        test_file = './commentsForScala'
+        test_file = 'tests/commentsForScala'
         lines, sloc = count_lines_scala(test_file, self.options, 'scala')
         self.assertEqual(lines, 48)
         self.assertEqual(sloc, 9)

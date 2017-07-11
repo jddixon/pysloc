@@ -26,7 +26,7 @@ class TestOctaveComments(unittest.TestCase):
 
     def test_name_to_func_map(self):
         """ Verify that line counts for a known Octave file are correct. """
-        test_file = './commentsForOctave'
+        test_file = 'tests/commentsForOctave'
         lines, sloc = count_lines_occam(test_file, self.options, 'octave')
         self.assertEqual(lines, 79)
         self.assertEqual(sloc, 25)

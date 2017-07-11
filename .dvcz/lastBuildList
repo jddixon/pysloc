@@ -7,33 +7,32 @@ Giaje1YAJPNVBt3dlOA5lhBp4GpSYBskJ9UR2Zyt3lgAGK3dEwxYETLMh9VWEV8i
 k2lyCIE/V/CDb9eVDYQgYSJYrnQ/JAPST7NbcY8aI+/0l7QVBhLBpmOCvmS6ofvz
 /QIDAQAB
 -----END PUBLIC KEY-----
-pysloc v0.8.23
-2017-06-19 18:53:40
+pysloc v0.9.0
+2017-07-11 22:05:34
 # BEGIN CONTENT #
 pysloc
  .cache
   v
    cache
-    lastfailed 91f6d8c5db171dfae6992cc81d0067f0bbcd3b03
+    lastfailed bf21a9e8fbc5a3846fb05b4fa0859e0917b2202f
  .dvcz
-  builds 668680d1a87c53516f7f477b2ce795913a9e7834
+  builds b777c2cf12d46260c12f773986b4cc6a461208b2
   copyright 081f1eacc7bee6ce9cf06ffc957c1472faf9c994
-  lastBuildList 52cedeed18855fb9fb58d2e600115c62bd00ef78
+  lastBuildList f26644245ddd568916c15802a226bef1f95d9c2f
   license 5977a55c75bb4612004451a56b0b4c22d9d3311d
-  projCfg 39990297ddb605987209bcfd7c13c8a49c0b4d96
-  projCfg.local a7908cabcaa4488641fb36f59909312a21c17242
-  version a62359e19c44bd6769085bcabfdb11c47b4411eb
+  projCfg f7eacb1b0758b0f20a4cf12c4689dcd595fcd199
+  projCfg.local 765cd23b1200190f9921d39df9cc8853abaee7fd
+  version 854918473f1403117f019b2c59f23add9e5b7ae2
  .gitignore 5185a3cb0539828e50edfc25d60c80ae291197fa
- CHANGES 725d1cf301d683cbf54ba904554796ed5b20c273
- LICENSE-MIT.md 7ff8ae89c5e4489f22b3a360a03225241877bc8d
- MANIFEST.in 8ee6732d59f78c1aa02e2f1ddb3412fbcbe48936
+ CHANGES f816586ee3d69e0999c86664ab0745de7ac0999a
+ LICENSE-MIT.md ce4053c54849d1033bd67b6cab7bdedc03de2b97
+ MANIFEST.in ab66c4ba9f7b7352eb828e32839a387bf990125b
  README.md 6c21200b03cfbac519fc664fe46ff7e867862c14
- TODO d0e3fe2f2ccbcb36237f8f876abd45292f73c604
- auto8it 115cca2965b700b0ab4b20ae8bb26aa78b6ed053
+ TODO 8fdb33c258fd244dc2022fca888ac0f652f39fe4
  bkp2U 5961ddc3ce44158bdb3ddee6febae84b3d597605
- checkCoverage a1f5baeefd0501e89d79585a7c398de0d83b2126
- countem e02a3e70bfaa4b7e4fe5c82074902f86a9a19cd9
- doPyLint 676894a746c4023b87699332b39dfc421ffd62b6
+ checkCoverage 828938f374fd2832e00a35d397e94bfaff21268b
+ countem 3a262ccf9cf184de858eb8e115f9cbce22198c76
+ doPyLint 31321ad99eb3b9ac0928a68c29a8b5b88c9472fb
  ghpDoc
   css
    LICENSE.html5-boilerplate.md ded771b3245b190da0e81c76de5a80d41392c0a6
@@ -50,17 +49,13 @@ pysloc
    xlattice-2014.jpg f185aaad06db71acd9454f31054c62c56d36f37f
   index.md 7d3e6f2cf99523d4a4565c387cf2388575cb2a04
  installit efaa7c546ff779b9615d1171ced81f84af299685
- lrintr.htm 72cdcc4880767afe4ab827a30465d98c24b36a1c
- name-pairs-local 60abe51296c8e804b92130262af99cbd4991c8a7
- name-pairs-local-first b7df2de11b78ea317fa952b230bd11b4570a515b
  pylintrc dd234fda24a547a9071f1e4608a3c1f3b7de9aa0
- renameLocal ec00b0275c0570d67680259d43f86e56a0984370
- setup.py 788be07a96950375d6329984bd0307affa789455
+ setup.py c48bbb6c115482927449df1304d647d3c1eca95b
  src
-  pySloc 90c7575bf8dcd5808e69c3b18aff8b8f727f53d7
+  pySloc d188aded769741c541ad90fb4d262d3bc7575f21
   pysloc
-   __init__.py 486e47e967c8f6a48f9b57f8cad2a90e615c1410
- styleit e798641beb1e74df2eef5e79cf5118846668cf37
+   __init__.py 9511544bc53d11c2bd2cea63c874e49966c9d8f0
+ styleit 38f93db5fd80738f215ab52efeab5c38ebe79422
  test
   8bit2.sno d071f3c133db505ad07d8472e4482f8fc97ce61d
   build.xml f69dc1f55802516344ff29c00ac4865d32944be0
@@ -72,7 +67,7 @@ pysloc
    oneLiner.sno 77bdfd17b15c862b6b9483452199e18dc7c57476
    subsubdir
     twoLiner.sno 74b24c5bb8b430883ed92ebff0f3ed091fe14450
- test.all 287f65d3c4590ae95b15d3bed0c329c447d73a64
+ test.all ed525a9fe2e8f5c5241e5ea79d5c58bf5c276822
  tests
   OpenCOBOLProgrammersGuide.pdf b9d01f7a62de2c61b2d3469eb83c73c698987817
   commentsForAugeas c7667859a9f87163f727addc197c64022cc27523
@@ -107,6 +102,7 @@ pysloc
   commentsForScala 4af372d41e40835a6db9d6c0df5d63b98a3b0b85
   commentsForSno da43b7afe9f0a573a57c9e576e2e56c74b1212e6
   commentsForTeX abc2e72dbc374798000fb33c9cba09f80ed1500c
+  commentsForToml 163ce4fb3b164ef942ee30548a28aa32a293a395
   commentsForTxt cd19db0488e46180020d10069880de661b784fd7
   commentsForXml da3a9759c6fb1673c2d8230e9f598547cba1ec21
   couldBeGenerated.pb-c.c b290f506894e0609a4c1309dca86c504d4caa8a7
@@ -116,77 +112,46 @@ pysloc
   couldBeGenerated.pb.h bb4c20740de8e1bdd94505c76afc6704f54c9e37
   couldBeGeneratedProtos.java 4407b976c41cc0caa33ae85881b192d1145bf94b
   couldBeGenerated_pb2.py cd15d4466c6f4bc6817bb63b72915e3fed75f906
-  testAugeasComments.py 29559e0c1f89072414bbb20ef6768a6f1cc78f3e
-  testCouldBeGenerated.py fd5e9a199d10adee14d34f653b578c8dd703f2fa
-  testCppComments.py 2f25507c0669c1fc18cfc000a7c204c5f60d4e3f
-  testCssComments.py 0e3b4520d557e3ac047d70c54af80597d94557ed
-  testCythonComments.py d8604bb83a5b1ce876a7f6b04940533398746240
-  testFoo.py 916f387f197f9798a279ec17ad8a713c852ec58d
-  testFortran90Comments.py 91bd59217270cdb8e9c13253a3f405fc00e987b5
-  testFortranComments.py d980f523b7776cee5bdf833cd7806532bdf1edb3
-  testGoComments.py 7a7cad9e651b31cfa4767a5b75a641dcf4848b54
-  testGperfComments.py 6e4453ee74910567eb0196aca67a2caaa93e7198
-  testHaskellComments.py 03aa04105c5cf2cf0adcea4a1f3fd4f45f1d1f07
-  testHtmlComments.py 48eeba3a9fa634404974d10e0ccfc17c5e3b8072
-  testJavaComments.py 9db089a4d609b80b1b719216129a2273add2716f
-  testJsonComments.py 10c54b2688e2bd5e5c3a40aa2a3e82830c244256
-  testK.py e10b5e5236c63651f906c1936254ef488056c8ff
-  testLispComments.py 4704c53d385a63b90555ae9d549637998190ca3e
-  testMatlabComments.py 9efdd35d388d5f9d010945d62efd4680c078e494
-  testOCamlComments.py abe4ed0f822c7c6808429d0f275e4734267d6dc3
-  testOccamComments.py 0af7a39662085127e0ddba48ae0adef5debb030f
-  testOctaveComments.py babe55127d8e7d479542c37751657fe27b965632
-  testPascalComments.py 56f78aaa97747adb7f114fbe47bd5bb992f185d8
-  testPerlComments.py 7a68a299dddf2dc37f6aff0e16e0c71a565c3be2
-  testProtobufComments.py 646d516d5574e67991878b2cc372f22671864f57
-  testPyComments.py a0fdb6afd3fa33572710f5f51b2ce9d9e8dceb2f
-  testQ.py 227c7839f5c929bd400a669373bf3dfeea5209ff
-  testRMarkdownComments.py c3337181332908bf3550071719923b1a6cfc96fe
-  testRe2CComments.py 9f7e3c59f055c277c7624af399449055ef78641e
-  testScalaComments.py d1f0d125e2daf4c0359df6d9700cd2771491d8bb
-  testSnoComments.py a795891e76be4b74e59a4c08604d59869234de59
-  testTeXComments.py 6706794bb10f0d8274b91a4e5294bca674a39f50
-  testTxtComments.py 6ddb1afe95a403b12e13c71036b276ebdea02675
-  testUncommentHtml.py fde30b9a2e1eed698a845129d07e837cc0ce9eee
-  testUncommentJava.py 7348ac7f94cecb83af2ca81cfce51c5e969996f1
-  testUserGuide.py e5e5ecaf7da08b2006fa769e598094c5885f558c
-  testXmlComments.py b7f36223c1d7a9aa80e97b0af33254aed09054fb
-  test_augeas_comments.py 0c95044a17bc14fe9370a9d0ee608ee62c86304b
-  test_could_be_generated.py 869616e401a6343934681725bded034f38fe5401
-  test_cpp_comments.py 768611dacfda7fd1bf0d43ed35b92205b7227fb3
-  test_css_comments.py b5aa8800b26381d0c58849e83dc1e3705fa89d80
-  test_cython_comments.py a0ea3b4db5c7f14b1ad1c74861dc4988af2fe8fd
+  lrintr.htm 72cdcc4880767afe4ab827a30465d98c24b36a1c
+  test_aaa_comments.py 26a5430924c6622ca97a348ec9f4bcc75175ccbc
+  test_augeas_comments.py 9e50627954fa540dcbf24e96ad8a5e42ebeae261
+  test_could_be_generated.py 84ffd27b8f40a7dd0ebf77eee2c1ec03d54912b8
+  test_cpp_comments.py a5bd26429a3c566c139035ea5376a66ebad5c082
+  test_css_comments.py fb9877408e32024060ae4663ae9cc8ac779a9d03
+  test_cython_comments.py 33d8fa300f5decac5fee9597f5be676c8b8a77d9
   test_foo.py 143f184337401bcf0e0b92c15c92d9cf800c5e9d
-  test_fortran90_comments.py aebcbb6dda872a00e8c1b64ea41fa2c1356295b2
-  test_fortran_comments.py 8e1ab10f6f18250b40bca44b8dd937cdd6fd5273
-  test_go_comments.py 16b4512cb7d1d865d2d5456153150ad6823fa335
-  test_gperf_comments.py e59ccf63312fefb030dc4e08a8a1b6f9082efac2
-  test_haskell_comments.py a407810de92ff163b7bf8f04f62c05984daff66b
-  test_html_comments.py 7087f2cd9d1fe6795d1a67e9b67823dfdfed77b8
-  test_java_comments.py c7654bf7119d8f8515a8489da80cf054a683e957
-  test_json_comments.py fbe5758d39928a3d08f389fd6aaf69e3c7834552
+  test_fortran90_comments.py 60e6c71542e7ef5ef0931762c0754268c92cab15
+  test_fortran_comments.py ecdedbe05f2f551ad420863c0ab09b1122ecf25b
+  test_go_comments.py adb0bec15ef3dd7a14915aa34f646ddc2a9931d2
+  test_gperf_comments.py 6492b8bd53fbdce98a320f91ba5fad51f161dcab
+  test_haskell_comments.py 8a4d8d4c3c5a0103d1805ce44af9b6e5f0f33708
+  test_html_comments.py db0807cb0825dec43ab59831e387bb9c0263bfe6
+  test_java_comments.py d7973aaebe1d19b1ae1128276b74adbaf3677ac7
+  test_json_comments.py eb96be83a694fae9e176888ddd06e6e8b3635c0b
   test_k.py 1fd794de8059df2358a34c53a540fc83de22f2b9
-  test_lisp_comments.py a21bf93f17860451192980058f8ef11925308788
-  test_matlab_comments.py 7dd952d07da4821134e82028317f3f02745fb719
-  test_ocaml_comments.py 6240dac7ca879adf94dd72018896c612006ab603
-  test_occam_comments.py b432ea6d7ccc63d7a27b262cf283eab142a7555a
-  test_octave_comments.py 36e96071054c8beb26fb5bec57398f890a06f5c3
-  test_pascal_comments.py c34ee75cb1c8e9e14a46f7866fc60ffd73724019
-  test_perl_comments.py aec8e4f8d83d2cdc5691580d001cf5a72fcf567d
-  test_protobuf_comments.py 6f5912def751ee232e22db842ca282259ace16e0
-  test_python_comments.py 198be68272292bd2be4732d55a269b697dda843b
-  test_q.py dd032a041dafeccfc9fac53b9e7452d9116724b8
-  test_r_markdown_comments.py ac20029efdf9ae1fa91162b4b03a194ff7e95aa6
-  test_re2c_comments.py fc300de3a099f673e39585431bd02ea6c28c432a
-  test_rust_comments.py 963f57fb283e4df10dacaaa20e504dba0df6543c
-  test_scala_comments.py ced6adf3ac230bc6982c0dc0c47257eec75ecb0a
-  test_snobol_comments.py 7ea722705371517c8a155c13016460d4dc126791
-  test_tex_comments.py c32964ae746a41a558c81329307213ee4f700c24
-  test_txt_comments.py b503dc5cd98029316c804d0e57fa1c8d06b0c05b
+  test_lisp_comments.py d658b2a61723d5d2980b986bd63aa995809d0be0
+  test_matlab_comments.py e069651f2650c6e436d4624e38046ea0c732afb9
+  test_ocaml_comments.py cb64ad698b03df0147ffede4d65c5bdf1f19c011
+  test_occam_comments.py d92fe74ccc272da6fe254365c58da3ca1782c5e8
+  test_octave_comments.py dcf1ba3691e2dd89fa32180007b3c968ca592517
+  test_pascal_comments.py 060319f2ea0856cb78f7a4f71207ca10b5a4f2e8
+  test_perl_comments.py caba14094d7108d7a89d0ddaf8a41cba5248d07b
+  test_protobuf_comments.py db1d68e93850c66f627c8d14f0f58376f8cf2bcd
+  test_python_comments.py a6a5f0b65170ecf611efaed9039372cf26304fb3
+  test_q.py 8f3c0c18247eee9da45c1950f856db96e09fda60
+  test_r_markdown_comments.py 747d0a813426af4b603551770f4f32d97f50a5ea
+  test_re2c_comments.py 1c625aeb177448c64f0ddb89825a683e196283e3
+  test_rust_comments.py 8aece360175128390ba4dbabb93b3a7c5c73bb39
+  test_scala_comments.py 320115cc99888f51fb00ca6e936e93cccaa606d8
+  test_snobol_comments.py dba26e00f18cb6906e334cf47230374159e42346
+  test_tex_comments.py acbea7c7cfbf25c581529c5e999e66a58947329a
+  test_toml_comments.py e10a3569f792e2b3b0548a9a7b5b16819eeba334
+  test_txt_comments.py 205d91cdcde19765668b24fe13a4f52fd43c5cfe
   test_uncomment_html.py 2010cd3d059709eac4e34f38e3d5ace111014ccf
   test_uncomment_java.py 27a1b4dbe00666a060baa1c14364904fc1357819
-  test_user_guide.py 556a447688d49309a6e05bec5f35abf658eefbeb
-  test_xml_comments.py f94c7ff1186c486f9fc8de7bd4451f0f23c1487b
+  test_user_guide.py d800a37caaf6439fe3ee254b2635d2917005dd70
+  test_xml_comments.py c5438ae8dc064f79cb479fd737755f2454d6322b
+  userguide.xml 4f15f8eb91f0bcaa83ad1b0dcb9a2686bdea1285
   yyFoo 883520283ff24ba8df4240504d6de148c9272a0d
   yyFoo.go 883520283ff24ba8df4240504d6de148c9272a0d
   yyFoo.l 883520283ff24ba8df4240504d6de148c9272a0d
@@ -205,7 +170,6 @@ pysloc
   yy_foo.txt afc063fd3868effc0b70a9a18fb45555e8e01a45
   yy_foo.y 883520283ff24ba8df4240504d6de148c9272a0d
   yy_foo_test.go 883520283ff24ba8df4240504d6de148c9272a0d
- userguide.xml 4f15f8eb91f0bcaa83ad1b0dcb9a2686bdea1285
 # END CONTENT #
 
-L3DH/UktNMWzc6iKsiiV1nfRyTjoM/asvklFv0LMox9w46hWwcLA+H+0yl27zG/135QgVkEzlHeOEjJs/0+uGSmzlBE0hVeSy7LQAVccmmkLE3Np1Fz9+xnSEoPujh1rCs+ijpJoPmBuvY5Jgnz1HHz7pKJYiwIgICoJhGuAJ7lXi3gApeoKdPmLObPX7X713FxFs2+wm92UPN9uHgfWM3Uu6NSd+G6CDjlvxW88hCBkbkf1kDzVGAupkBcov8GgqBUmB4MTnEhCVBRtZNoT+5j5LkaXuW4587fCU78rCS5Hjkj/xmPS9aTdiIiu/SAG2RsVQ5GhlhMPKtzelrIO/Q==
+O14TA7ZIRlEeXhJTA5g7LRpudFuUQWcNN7kZr9NMh+kW6oCX+MIbn//WSww1Dd44Cjj0jiiMXwlAkVwdEYnvh6hu+GkbGCYXJWudSo1yAICM3H+MUjw+q0eZGJKc/G/NkiSuhNJpiRzXtzAJqSWwjCFWyV8cHweO8B362oDtjyH5ZvtCxGwUtsmbleQOow3rIa/qxd4OLLQkL4ZHzEbAIBM4CNAV6h+PSnvf+Ll4/f158nOXTFvbiRvGL3zxBBduUJt9+Vb6E85Osc9gl5M1M0nbWMbyVe6yMCiYVfCFCJKMk+wJBpEFKphwX9IO6sPysSsuqVqB+FD3m5bwchtX1A==

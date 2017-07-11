@@ -20,7 +20,7 @@ class TestOccamComments(unittest.TestCase):
 
     def test_name_to_func_map(self):
         """ Verify that line counts from a known occam file are correct. """
-        test_file = './commentsForOccam'
+        test_file = 'tests/commentsForOccam'
         options = Namespace()
         options.already = set()
         options.ex_re = None

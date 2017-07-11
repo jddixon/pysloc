@@ -59,7 +59,7 @@ def do_count(options):
     ex_re = options.ex_re
     just_show = options.just_show
     k__ = options.k__
-    proj_cfg = options.proj_cfg           # this is projCfg.local
+    proj_cfg = options.proj_cfg           # this defaults to projCfg.local
     langs_counted = options.langs_counted
     main_lang = options.main_lang
     # matches = options.matches

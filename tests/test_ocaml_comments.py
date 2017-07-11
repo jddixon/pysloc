@@ -22,7 +22,7 @@ class TestOCamlComments(unittest.TestCase):
 
     def test_name_to_func_map(self):
         """ Verify that line counts for a known OCaml file are correct. """
-        test_file = './commentsForOCaml'
+        test_file = 'tests/commentsForOCaml'
         lines, sloc = count_lines_ocaml(test_file, self.options, 'ml')
         self.assertEqual(lines, 39)
         self.assertEqual(sloc, 15)

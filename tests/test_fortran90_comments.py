@@ -23,7 +23,7 @@ class TestFortran90Comments(unittest.TestCase):
     def test_fortran90_comments(self):
         """ Verify that line counts for a known FORTRA90 file are correct. """
 
-        test_file = './commentsForFortran90'
+        test_file = 'tests/commentsForFortran90'
         lang = 'f90+'
         lines, sloc = count_lines_fortran90(test_file, self.options, lang)
         self.assertEqual(lines, 42)

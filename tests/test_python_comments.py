@@ -21,7 +21,7 @@ class TestPyComments(unittest.TestCase):
     def test_name_to_func_map(self):
         """ Verify that line counts for known python file are correct. """
 
-        test_file = './commentsForPy'
+        test_file = 'tests/commentsForPy'
         options = Namespace()
         options.already = set()
         options.ex_re = None

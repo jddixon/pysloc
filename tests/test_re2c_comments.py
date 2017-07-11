@@ -34,7 +34,7 @@ class TestRe2cComments(unittest.TestCase):
     def test_name_to_func_map(self):
         """ Verify that line counts for a known re2c document are correct. """
 
-        test_file = './commentsForRe2c'
+        test_file = 'tests/commentsForRe2c'
         options = Namespace()
         options.already = set()
         options.ex_re = None

@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-# test_snobol_comments.py
+# testTomlComments.py
 
-""" Test functioning of Snobol line counters. """
+""" Test functioning of toml line counters. """
 
 import unittest
 
 from argparse import Namespace
-from pysloc import count_lines_snobol
+from pysloc import count_lines_not_sharp
 
 
-class TestSnoComments(unittest.TestCase):
-    """ Test functioning of Snobol line counters. """
+class TestTomlComments(unittest.TestCase):
+    """ Test functioning of toml line counters. """
 
     def setUp(self):
         self.options = Namespace()
@@ -23,10 +23,10 @@ class TestSnoComments(unittest.TestCase):
     def test_name_to_func_map(self):
         """ Verify line counts for known file are as expected. """
 
-        test_file = 'tests/commentsForSno'
-        lines, sloc = count_lines_snobol(test_file, self.options, 'sno')
-        self.assertEqual(lines, 19)
-        self.assertEqual(sloc, 8)
+        test_file = 'tests/commentsForToml'
+        lines, sloc = count_lines_not_sharp(test_file, self.options, 'toml')
+        self.assertEqual(lines, 39)
+        self.assertEqual(sloc, 12)
 
 
 if __name__ == '__main__':

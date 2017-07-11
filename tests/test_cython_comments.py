@@ -19,7 +19,7 @@ class TestPyComments(unittest.TestCase):
 
     def test_pxd(self):
         """ Verify line counts returned by known .pxd file are correct. """
-        test_file = './commentsForCython.pxd'
+        test_file = 'tests/commentsForCython.pxd'
         options = Namespace()
         options.already = set()
         options.ex_re = None
@@ -32,7 +32,7 @@ class TestPyComments(unittest.TestCase):
 
     def test_pyx(self):
         """ Verify line counts returned by known .pyx file are correct. """
-        test_file = './commentsForCython.pyx'
+        test_file = 'tests/commentsForCython.pyx'
         options = Namespace()
         options.already = set()
         options.ex_re = None

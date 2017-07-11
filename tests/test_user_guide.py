@@ -23,7 +23,7 @@ class TestUserGuide(unittest.TestCase):
         Verify that line counts returned for a manually counted
         XML User Guide are as expected.
         """
-        test_file = './userguide.xml'
+        test_file = 'tests/userguide.xml'
         options = Namespace()
         options.already = set()
         options.ex_re = None

@@ -34,7 +34,7 @@ class TestGperfComments(unittest.TestCase):
     def test_name_to_func_map(self):
         """ Verify that the Gperf counters work correctly on known file. """
 
-        test_file = './commentsForGperf'
+        test_file = 'tests/commentsForGperf'
         options = Namespace()
         options.already = set()
         options.ex_re = None

@@ -20,7 +20,7 @@ class TestXmlComments(unittest.TestCase):
 
     def test_xml_comments(self):
         """ Verify that line counts from a known XML file are correct. """
-        test_file = './commentsForXml'
+        test_file = 'tests/commentsForXml'
         options = Namespace()
         options.already = set()
         options.ex_re = None

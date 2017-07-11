@@ -22,7 +22,7 @@ class TestAugeasComments(unittest.TestCase):
     def test_name_to_func_map(self):
         """ Test counting lines in known test Augeas file. """
 
-        test_file = './commentsForAugeas'
+        test_file = 'tests/commentsForAugeas'
         lines, sloc = count_lines_augeas(test_file, self.options, 'ml')
         self.assertEqual(lines, 107)
         self.assertEqual(sloc, 45)

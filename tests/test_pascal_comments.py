@@ -23,7 +23,7 @@ class TestPascalComments(unittest.TestCase):
     def test_name_to_func_map(self):
         """ Verify that the line counts are as expected for a known file. """
 
-        test_file = './commentsForPascal'
+        test_file = 'tests/commentsForPascal'
         lines, sloc = count_lines_pascal(test_file, self.options, 'ml')
         self.assertEqual(lines, 58)
         self.assertEqual(sloc, 18)

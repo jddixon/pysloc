@@ -21,7 +21,7 @@ class TestLispComments(unittest.TestCase):
     def test_lisp_comments(self):
         """ Verify that line counts for a known LISP file are correct. """
 
-        test_file = './commentsForLisp'
+        test_file = 'tests/commentsForLisp'
         options = Namespace()
         options.already = set()
         options.ex_re = None

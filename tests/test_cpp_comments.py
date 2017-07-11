@@ -24,7 +24,7 @@ class TestCppComments(unittest.TestCase):
 
     def test_name_to_func_map(self):
         """ Verify line counts returned from known cpp file are correct. """
-        test_file = './commentsForCpp'
+        test_file = 'tests/commentsForCpp'
         lines, sloc = count_lines_cpp(test_file, self.options, 'cpp')
         self.assertEqual(lines, 152)
         self.assertEqual(sloc, 33)

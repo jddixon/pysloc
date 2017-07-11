@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.9.0
+    2017-07-11
+        * corrected placement of test files                         SLOC 4972
 v0.8.23
     2017-06-19
         * restructure for pytest                                    SLOC 6221
@@ -297,6 +300,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 

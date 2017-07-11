@@ -24,7 +24,7 @@ class TestRustComments(unittest.TestCase):
 
     def test_name_to_func_map(self):
         """ Verify line counts are as expcted for know file. """
-        test_file = './commentsForRust'
+        test_file = 'tests/commentsForRust'
         options = Namespace()
         options.already = set()
         options.ex_re = None

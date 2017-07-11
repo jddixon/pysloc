@@ -35,13 +35,13 @@ class TestCouldBeGenerated(unittest.TestCase):
 
     def test_zero_if_generated(self):
         """ Verify test files return zero counts. """
-        self.expect_zero_counts('couldBeGenerated.pb-c.c', 'c')
-        self.expect_zero_counts('couldBeGenerated.pb-c.h', 'c')
-        self.expect_zero_counts('couldBeGenerated.pb.cpp', 'cpp')
-        self.expect_zero_counts('couldBeGenerated.pb.h', 'cpp')
-        self.expect_zero_counts('couldBeGenerated.pb.go', 'go')
-        self.expect_zero_counts('couldBeGenerated_pb2.py', 'py')
-        self.expect_zero_counts('couldBeGeneratedProtos.java', 'java')
+        self.expect_zero_counts('tests/couldBeGenerated.pb-c.h', 'c')
+        self.expect_zero_counts('tests/couldBeGenerated.pb-c.c', 'c')
+        self.expect_zero_counts('tests/couldBeGenerated.pb.cpp', 'cpp')
+        self.expect_zero_counts('tests/couldBeGenerated.pb.h', 'cpp')
+        self.expect_zero_counts('tests/couldBeGenerated.pb.go', 'go')
+        self.expect_zero_counts('tests/couldBeGenerated_pb2.py', 'py')
+        self.expect_zero_counts('tests/couldBeGeneratedProtos.java', 'java')
 
 
 if __name__ == '__main__':

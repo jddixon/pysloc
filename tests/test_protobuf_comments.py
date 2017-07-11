@@ -24,7 +24,7 @@ class TestProtobufComments(unittest.TestCase):
 
     def test_name_to_func_map(self):
         """ Verify that line counts are correct for a known protobuf file. """
-        test_file = './commentsForProtobuf'
+        test_file = 'tests/commentsForProtobuf'
         options = Namespace()
         options.already = set()
         options.ex_re = None

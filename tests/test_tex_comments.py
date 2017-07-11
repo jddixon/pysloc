@@ -21,7 +21,7 @@ class TestTexComments(unittest.TestCase):
     def test_tex_comments(self):
         """ Verify that line counts for a known TeX file are as expected. """
 
-        test_file = './commentsForTeX'
+        test_file = 'tests/commentsForTeX'
         options = Namespace()
         options.already = set()
         options.ex_re = None

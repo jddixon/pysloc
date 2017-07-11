@@ -22,7 +22,7 @@ class TestJsonComments(unittest.TestCase):
 
     def test_name_to_func_map(self):
         """ Verify that line counts for known Json file are correct. """
-        test_file = './commentsForJson'
+        test_file = 'tests/commentsForJson'
         lines, sloc = count_lines_txt(test_file, self.options, 'txt')
         self.assertEqual(lines, 9)
         self.assertEqual(sloc, 9)

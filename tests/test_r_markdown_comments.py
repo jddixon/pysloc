@@ -21,7 +21,7 @@ class TestRMarkdownComments(unittest.TestCase):
     def test_name_to_func_map(self):
         """ Verify line counts for known file are as expected. """
 
-        test_file = './commentsForRMarkdown'
+        test_file = 'tests/commentsForRMarkdown'
         options = Namespace()
         options.already = set()
         options.ex_re = None

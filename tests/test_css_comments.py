@@ -26,7 +26,7 @@ class TestCssComments(unittest.TestCase):
     def test_name_to_func_map(self):
         """ Verify correct line counts returned from known CSS file. """
 
-        test_file = './commentsForCss'
+        test_file = 'tests/commentsForCss'
         lines, sloc = count_lines_java(test_file, self.options, 'css')
         self.assertEqual(lines, 304)
         self.assertEqual(sloc, 154)

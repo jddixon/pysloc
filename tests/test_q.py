@@ -11,9 +11,10 @@ import unittest
 from argparse import Namespace
 
 from pysloc import(MapHolder,
-                   count_lines_double_dash, count_lines_fortran, count_lines_java_style,
-                   count_lines_not_sharp, count_lines_perl, count_lines_protobuf,
-                   count_lines_python, count_lines_snobol, count_lines_tex,
+                   count_lines_double_dash, count_lines_fortran,
+                   count_lines_java_style, count_lines_not_sharp,
+                   count_lines_perl, count_lines_protobuf, count_lines_python,
+                   count_lines_snobol, count_lines_tex,
                    count_lines_txt)
 
 
@@ -88,6 +89,7 @@ class TestQ(unittest.TestCase):
         self.assertEqual(self.map_holder.ext2lang('sh'), 'sh')
         self.assertEqual(self.map_holder.ext2lang('sno'), 'sno')
         self.assertEqual(self.map_holder.ext2lang('tex'), 'tex')
+        self.assertEqual(self.map_holder.ext2lang('toml'), 'toml')
         self.assertEqual(self.map_holder.ext2lang('y'), 'yacc')
         self.assertEqual(self.map_holder.ext2lang('yaml'), 'yaml')
 
@@ -182,33 +184,34 @@ class TestQ(unittest.TestCase):
         """ sh is omitted """
 
         # expect failure
-        self.assertEqual(self.map_holder.get_long_nme(None), None)
-        self.assertEqual(self.map_holder.get_long_nme(''), None)
-        self.assertEqual(self.map_holder.get_long_nme('foo'), None)
+        self.assertEqual(self.map_holder.get_long_name(None), None)
+        self.assertEqual(self.map_holder.get_long_name(''), None)
+        self.assertEqual(self.map_holder.get_long_name('foo'), None)
 
         # expect success
-        self.assertEqual(self.map_holder.get_long_nme('ada'), 'Ada')
-        self.assertEqual(self.map_holder.get_long_nme('aug'), 'augeas')
-        self.assertEqual(self.map_holder.get_long_nme('awk'), 'awk')
-        self.assertEqual(self.map_holder.get_long_nme('cython'), 'cython')
-        self.assertEqual(self.map_holder.get_long_nme('for'), 'FORTRAN')
-        self.assertEqual(self.map_holder.get_long_nme('gen'), 'generic')
-        self.assertEqual(self.map_holder.get_long_nme('go'), 'golang')
-        self.assertEqual(self.map_holder.get_long_nme('hs'), 'haskell')
-        self.assertEqual(self.map_holder.get_long_nme('html'), 'html')
-        self.assertEqual(self.map_holder.get_long_nme('java'), 'java')
-        self.assertEqual(self.map_holder.get_long_nme('json'), 'json')
-        self.assertEqual(self.map_holder.get_long_nme('m4'), 'm4')
-        self.assertEqual(self.map_holder.get_long_nme('md'), 'markdown')
-        self.assertEqual(self.map_holder.get_long_nme('objc'), 'Objective C')
-        self.assertEqual(self.map_holder.get_long_nme('occ'), 'Occam')
-        self.assertEqual(self.map_holder.get_long_nme('perl'), 'Perl')
-        self.assertEqual(self.map_holder.get_long_nme('proto'), 'proto')
-        self.assertEqual(self.map_holder.get_long_nme('re2c'), 're2c')
-        self.assertEqual(self.map_holder.get_long_nme('scala'), 'scala')
-        self.assertEqual(self.map_holder.get_long_nme('sno'), 'snobol4')
-        self.assertEqual(self.map_holder.get_long_nme('tex'), 'TeX/LaTeX')
-        self.assertEqual(self.map_holder.get_long_nme('yaml'), 'yaml')
+        self.assertEqual(self.map_holder.get_long_name('ada'), 'Ada')
+        self.assertEqual(self.map_holder.get_long_name('aug'), 'augeas')
+        self.assertEqual(self.map_holder.get_long_name('awk'), 'awk')
+        self.assertEqual(self.map_holder.get_long_name('cython'), 'cython')
+        self.assertEqual(self.map_holder.get_long_name('for'), 'FORTRAN')
+        self.assertEqual(self.map_holder.get_long_name('gen'), 'generic')
+        self.assertEqual(self.map_holder.get_long_name('go'), 'golang')
+        self.assertEqual(self.map_holder.get_long_name('hs'), 'haskell')
+        self.assertEqual(self.map_holder.get_long_name('html'), 'html')
+        self.assertEqual(self.map_holder.get_long_name('java'), 'java')
+        self.assertEqual(self.map_holder.get_long_name('json'), 'json')
+        self.assertEqual(self.map_holder.get_long_name('m4'), 'm4')
+        self.assertEqual(self.map_holder.get_long_name('md'), 'markdown')
+        self.assertEqual(self.map_holder.get_long_name('objc'), 'Objective C')
+        self.assertEqual(self.map_holder.get_long_name('occ'), 'Occam')
+        self.assertEqual(self.map_holder.get_long_name('perl'), 'Perl')
+        self.assertEqual(self.map_holder.get_long_name('proto'), 'proto')
+        self.assertEqual(self.map_holder.get_long_name('re2c'), 're2c')
+        self.assertEqual(self.map_holder.get_long_name('scala'), 'scala')
+        self.assertEqual(self.map_holder.get_long_name('sno'), 'snobol4')
+        self.assertEqual(self.map_holder.get_long_name('tex'), 'TeX/LaTeX')
+        self.assertEqual(self.map_holder.get_long_name('toml'), 'toml')
+        self.assertEqual(self.map_holder.get_long_name('yaml'), 'yaml')
 
     def test_guess_lang_from_filename(self):
         # expect failure --------------------------------------------
@@ -222,13 +225,13 @@ class TestQ(unittest.TestCase):
 
         # not recognized but on command line, so use generic counter
         lang, is_test = self.map_holder.guess_lang(
-            './', 'yy_foo', is_cli_arg=True)
+            'tests', 'yy_foo', is_cli_arg=True)
         self.assertEqual(lang, 'gen')
         self.assertEqual(is_test, False)
 
         # if not recognized and not on command line, fail -----------
         lang, is_test = self.map_holder.guess_lang(
-            './', 'yy_foo', is_cli_arg=False)
+            'tests', 'yy_foo', is_cli_arg=False)
         self.assertEqual(lang, None)
         self.assertEqual(is_test, False)
 
@@ -255,79 +258,79 @@ class TestQ(unittest.TestCase):
 
         # if known language should always get language --------------
         lang, is_test = self.map_holder.guess_lang(
-            './', 'yy_foo.go', is_cli_arg=True)
+            'tests', 'yy_foo.go', is_cli_arg=True)
         self.assertEqual(lang, 'go')
         self.assertEqual(is_test, False)
         lang, is_test = self.map_holder.guess_lang(
-            './', 'yy_foo.go', is_cli_arg=False)
+            'tests', 'yy_foo.go', is_cli_arg=False)
         self.assertEqual(lang, 'go')
         self.assertEqual(is_test, False)
 
         lang, is_test = self.map_holder.guess_lang(
-            './', 'yy_foo_test.go', is_cli_arg=True)
+            'tests', 'yy_foo_test.go', is_cli_arg=True)
         self.assertEqual(lang, 'go')
         self.assertEqual(is_test, True)
         lang, is_test = self.map_holder.guess_lang(
-            './', 'yy_foo_test.go', is_cli_arg=False)
+            'tests', 'yy_foo_test.go', is_cli_arg=False)
         self.assertEqual(lang, 'go')
         self.assertEqual(is_test, True)
 
         lang, is_test = self.map_holder.guess_lang(
-            './', 'yy_foo.l', is_cli_arg=True)
+            'tests', 'yy_foo.l', is_cli_arg=True)
         self.assertEqual(lang, 'lex')
         self.assertEqual(is_test, False)
         lang, is_test = self.map_holder.guess_lang(
-            './', 'yy_foo.l', is_cli_arg=False)
+            'tests', 'yy_foo.l', is_cli_arg=False)
         self.assertEqual(lang, 'lex')
         self.assertEqual(is_test, False)
 
         lang, is_test = self.map_holder.guess_lang(
-            './', 'yy_foo.occ', is_cli_arg=True)
+            'tests', 'yy_foo.occ', is_cli_arg=True)
         self.assertEqual(lang, 'occ')
         self.assertEqual(is_test, False)
         lang, is_test = self.map_holder.guess_lang(
-            './', 'yy_foo.occ', is_cli_arg=False)
+            'tests', 'yy_foo.occ', is_cli_arg=False)
         self.assertEqual(lang, 'occ')
         self.assertEqual(is_test, False)
 
         lang, is_test = self.map_holder.guess_lang(
-            './', 'yy_foo.py', is_cli_arg=True)
+            'tests', 'yy_foo.py', is_cli_arg=True)
         self.assertEqual(lang, 'py')
         self.assertEqual(is_test, False)
         lang, is_test = self.map_holder.guess_lang(
-            './', 'yy_foo.py', is_cli_arg=False)
+            'tests', 'yy_foo.py', is_cli_arg=False)
         self.assertEqual(lang, 'py')
         self.assertEqual(is_test, False)
 
         lang, is_test = self.map_holder.guess_lang(
-            './', 'test_foo.py', is_cli_arg=True)
+            'tests', 'test_foo.py', is_cli_arg=True)
         self.assertEqual(lang, 'py')
         self.assertEqual(is_test, True)
         lang, is_test = self.map_holder.guess_lang(
-            './', 'test_foo.py', is_cli_arg=False)
+            'tests', 'test_foo.py', is_cli_arg=False)
         self.assertEqual(lang, 'py')
         self.assertEqual(is_test, True)
 
         lang, is_test = self.map_holder.guess_lang(
-            './', 'yy_foo.sno', is_cli_arg=True)
+            'tests', 'yy_foo.sno', is_cli_arg=True)
         self.assertEqual(lang, 'sno')
         self.assertEqual(is_test, False)
         lang, is_test = self.map_holder.guess_lang(
-            './', 'yy_foo.sno', is_cli_arg=False)
+            'tests', 'yy_foo.sno', is_cli_arg=False)
         self.assertEqual(lang, 'sno')
         self.assertEqual(is_test, False)
 
         lang, is_test = self.map_holder.guess_lang(
-            './', 'yy_foo.y', is_cli_arg=True)
+            'tests', 'yy_foo.y', is_cli_arg=True)
         self.assertEqual(lang, 'yacc')
         self.assertEqual(is_test, False)
         lang, is_test = self.map_holder.guess_lang(
-            './', 'yy_foo.y', is_cli_arg=False)
+            'tests', 'yy_foo.y', is_cli_arg=False)
         self.assertEqual(lang, 'yacc')
         self.assertEqual(is_test, False)
 
         # DON'T KNOW TEST PATTERN FOR SNOB
-    def tets_non_code_ext(self):
+    def test_non_code_ext(self):
         # expect failure
         self.assertEqual(self.map_holder.non_code_ext(None), False)
         self.assertEqual(self.map_holder.non_code_ext(''), False)
@@ -337,13 +340,21 @@ class TestQ(unittest.TestCase):
         self.assertEqual(self.map_holder.non_code_ext('md'), True)
         self.assertEqual(self.map_holder.non_code_ext('pyc'), True)
 
-    def test_not_code_file(self):
+    def test_non_code_dir(self):
+        # expect failure
+        self.assertEqual(self.map_holder.non_code_dir('src'), False)
+        self.assertEqual(self.map_holder.non_code_dir('tests'), False)
+        # expect success
+        self.assertEqual(self.map_holder.non_code_dir('.git'), True)
+        self.assertEqual(self.map_holder.non_code_dir('__pycache__'), True)
+
+    def test_non_code_file(self):
         # expect failure
         self.assertEqual(self.map_holder.non_code_file(None), False)
         self.assertEqual(self.map_holder.non_code_file(''), False)
         self.assertEqual(self.map_holder.non_code_file('yy_foo'), False)
+        self.assertEqual(self.map_holder.non_code_file('__pycache__'), False)
         # expect success
-        self.assertEqual(self.map_holder.non_code_file('__pycache__'), True)
         self.assertEqual(self.map_holder.non_code_file('AUTHORS'), True)
         self.assertEqual(self.map_holder.non_code_file('CONTRIBUTORS'), True)
         self.assertEqual(self.map_holder.non_code_file('COPYING'), True)

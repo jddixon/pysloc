@@ -22,7 +22,7 @@ class TestJavaComments(unittest.TestCase):
 
     def test_name_to_func_map(self):
         """ Verify line counts returned from known Java file are correct. """
-        test_file = './commentsForJava'
+        test_file = 'tests/commentsForJava'
         lines, sloc = count_lines_java(test_file, self.options, 'java')
         self.assertEqual(lines, 21)
         self.assertEqual(sloc, 7)
