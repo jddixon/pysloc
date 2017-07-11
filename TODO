@@ -1,5 +1,13 @@
 # ~/dev/py/pysloc/TODO
 
+2017-07-11
+    * verify that all 'commentsForLANG* are in projCfg.local
+        - and counted
+2017-07-10
+    * test_q.py, about line 227, failure detecting 'gen'		        * FIXED
+    * test_q.py, about line 263, failures detecting 'go'		        * FIXED
+    * test_could_be_generated: last test (*.pb-c.c) fails	        	* FIXED
+
 2017-03-02
     * why doesn't ./countem -X "*.go" work ?
         - can't get globs from command line

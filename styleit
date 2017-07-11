@@ -4,9 +4,8 @@ if [ ! -z "${DEV_BASE// }" ]
 then
   cd $DEV_BASE/py/pysloc
   
-  autopep8 -ai -r pysloc 
-  autopep8 -ai commentsForPy pySloc *.py
-  echo "not styling test/ subdir"
+  autopep8 -air src tests
+  autopep8 -ai  setup.py
   
 else
   echo "DEV_BASE is not defined"

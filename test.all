@@ -4,41 +4,7 @@ if [ ! -z "${DEV_BASE// }" ]
 then
   cd $DEV_BASE/py/pysloc
   
-  ./test_augeas_comments.py
-  ./test_could_be_generated.py
-  ./test_cpp_comments.py
-  ./test_css_comments.py
-  ./test_cython_comments.py
-  ./test_fortran90_comments.py
-  ./test_fortran_comments.py
-  ./test_go_comments.py
-  ./test_gperf_comments.py
-  ./test_haskell_comments.py
-  ./test_html_comments.py
-  ./test_java_comments.py
-  ./test_json_comments.py
-  ./test_k.py
-  ./test_lisp_comments.py
-  ./test_matlab_comments.py
-  ./test_ocaml_comments.py
-  ./test_occam_comments.py
-  ./test_octave_comments.py
-  ./test_pascal_comments.py
-  ./test_perl_comments.py
-  ./test_protobuf_comments.py
-  ./test_python_comments.py
-  ./test_q.py
-  ./test_r_markdown_comments.py
-  ./test_re2c_comments.py
-  ./test_rust_comments.py
-  ./test_scala_comments.py
-  ./test_snobol_comments.py
-  ./test_tex_comments.py
-  ./test_txt_comments.py
-  ./test_uncomment_html.py
-  ./test_uncomment_java.py
-  ./test_user_guide.py
-  ./test_xml_comments.py
+  PYTHONPATH=".:src:test" pytest
   
 else
   echo "DEV_BASE is not defined"

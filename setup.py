@@ -6,7 +6,7 @@
 import re
 from distutils.core import setup
 __version__ = re.search(r"__version__\s*=\s*'(.*)'",
-                        open('pysloc/__init__.py').read()).group(1)
+                        open('src/pysloc/__init__.py').read()).group(1)
 
 # see http://docs.python.org/distutils/setupscript.html
 
@@ -15,15 +15,12 @@ setup(name='pysloc',
       author='Jim Dixon',
       author_email='jddixon@gmail.com',
       py_modules=[],
-      packages=['pysloc'],
+      packages=['src/pysloc'],
       # following could be in scripts/ subdir
-      scripts=['pySloc', ],          # front end module(s)
+      scripts=['src/pySloc', ],          # front end module(s)
       description='counts source lines of code for various languages',
       url='https://jddixon.github.io/pysloc',
       classifiers=[
-          'Development Status :: 1 - Planning',
-          'Development Status :: 2 - Pre-Alpha',
-          'Development Status :: 3 - Alpha',
           'Development Status :: 4 - Beta',
           'Intended Audience :: Developers',
           'License :: OSI Approved :: MIT License',
