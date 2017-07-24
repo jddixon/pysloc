@@ -1,6 +1,5 @@
 # see http://docs.python.org/distutils/sourcedist.html
 
-include netDistrib.conf
 include CHANGES LICENSE* MANIFEST.in README* TODO
 include bkp2U checkCoverage countem doPyLint installit pylintrc styleit test.all
 include setup.py

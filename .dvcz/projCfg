@@ -12,7 +12,6 @@ dir:std:tests
 dir:std:.dvcz
 dir:pkg:pysloc
 dir:local:test
-dir:local:.cache
 dir:clr:build
 :?files?:
 code:std:.dvcz/projCfg
