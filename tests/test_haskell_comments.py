@@ -22,7 +22,9 @@ class TestHaskellComments(unittest.TestCase):
     # actual unit tests #############################################
 
     def test_name_to_func_map(self):
-        """ Verify line counts returned from known Haskell file are correct. """
+        """
+        Verify line counts returned from known Haskell file are correct.
+        """
         test_file = 'tests/commentsForHaskell'
         options = Namespace()
         options.already = set()
