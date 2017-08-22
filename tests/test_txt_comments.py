@@ -24,7 +24,9 @@ class TestTxtComments(unittest.TestCase):
         pass
 
     def test_name_to_func_map(self):
-        """ Verify the line counts return for a known text file are correct. """
+        """
+        Verify the line counts return for a known text file are correct.
+        """
 
         test_file = 'tests/commentsForTxt'
         options = Namespace()

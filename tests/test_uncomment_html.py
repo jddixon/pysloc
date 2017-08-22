@@ -5,7 +5,6 @@
 
 import unittest
 
-from argparse import Namespace
 from pysloc import uncomment_html
 
 

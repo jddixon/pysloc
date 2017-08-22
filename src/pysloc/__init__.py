@@ -53,8 +53,8 @@ __all__ = ['__version__', '__version_date__',
            'CountHolder', 'MapHolder', ]
 
 # exported constants ------------------------------------------------
-__version__ = '0.9.1'
-__version_date__ = '2017-07-24'
+__version__ = '0.9.2'
+__version_date__ = '2017-08-22'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile(
@@ -75,7 +75,7 @@ class CountHolder(object):
     TSLOC = 3   # of which source lines
 
     def __init__(self):
-        # we maintain a map from lang to a list of 4: lines, sloc, tlines, tsloc,
+        # we maintain map from lang to a list of 4: lines, sloc, tlines, tsloc,
         # where t means test
         self.map_ = {}
 
@@ -84,7 +84,7 @@ class CountHolder(object):
 
         # XXX we want l and s to be non-negative integers
 
-        if not lang in self.map_:
+        if lang not in self.map_:
             self.map_[lang] = [0, 0, 0, 0]
         self.map_[lang][CountHolder.LOC] += loc_
         self.map_[lang][CountHolder.SLOC] += sloc_
@@ -94,13 +94,13 @@ class CountHolder(object):
 
         # XXX we want l and s to be non-negative integers
 
-        if not lang in self.map_:
+        if lang not in self.map_:
             self.map_[lang] = [0, 0, 0, 0]
         self.map_[lang][CountHolder.TLOC] += loc_
         self.map_[lang][CountHolder.TSLOC] += sloc_
 
     def get_counts(self, lang):
-        if (not lang) or (not lang in self.map_):
+        if (not lang) or (lang not in self.map_):
             return (0, 0, 0, 0)
         else:
             return self.map_[lang]
@@ -115,7 +115,7 @@ class CountHolder(object):
         would produce the string 'py:17/12 T%75.0'
 
         """
-        if (not lang) or (not lang in self.map_):
+        if (not lang) or (lang not in self.map_):
             return '%s: 0' % lang
         else:
             loc_, sloc_, test_loc, test_sloc = self.map_[lang]
@@ -282,13 +282,14 @@ class MapHolder(object):
             'tcl': 'tcl',
             'tex': 'tex',
             'tk': 'tcl',
-            'toml': 'toml',                 # XXX SHOULD BE IN ORDER
+            'toml': 'toml',
             'txt': 'txt',
             'xml': 'xml',
             'y': 'yacc',                   # parser generator
             'yaml': 'yaml',
         }
         # DEBUG
+        assert self._ext2lang['yaml'] == 'yaml'
         assert self._ext2lang['toml'] == 'toml'
         # END
         if main_lang == 'c':
@@ -360,14 +361,14 @@ class MapHolder(object):
 
         # A set of extensions known NOT to be source code.
         self._non_code_exts = {
-            'lang_',                                    # library, linked object
+            'lang_',                                # library, linked object
             'cma', 'cmi', 'cmo', 'cmx', 'cmxa',     # OCaml compiled
             # 'dat',                                # arguable
             'gz',
             'jar',
             'md',                                   # markdown
             'o',                                    # object
-            'pyc',
+            'pyc', 'pyo',
             'so',
             'svn-base',
             'swp',                                  # vi/vim temporary file
@@ -421,10 +422,10 @@ class MapHolder(object):
         else:
             return None
 
-    def get_long_name(self, sloc_):
+    def get_long_name(self, name):
         """ Given a short file name, return the longer language name """
-        if sloc_ in self._lang_map:
-            return self._lang_map[sloc_]
+        if name in self._lang_map:
+            return self._lang_map[name]
         else:
             return None
 
@@ -432,14 +433,14 @@ class MapHolder(object):
         "Return a set containing all recognized language abbreviations"""
         return frozenset(self._lang_map.keys())
 
-    def non_code_ext(self, sloc_):
-        return sloc_ in self._non_code_exts
+    def non_code_ext(self, name):
+        return name in self._non_code_exts
 
-    def non_code_dir(self, sloc_):
-        return sloc_ in self._non_code_dirs
+    def non_code_dir(self, name):
+        return name in self._non_code_dirs
 
-    def non_code_file(self, sloc_):
-        return sloc_ in self._non_code_files
+    def non_code_file(self, name):
+        return name in self._non_code_files
 
     def guess_lang(self, path_to_dir, file_name, is_cli_arg, verbose=0):
         """
@@ -492,7 +493,8 @@ class MapHolder(object):
                             (file_name, lang))
 
         # DEBUG
-        # print("guessLang: fileName %s, isCLIArg %s;\treturning lang %s, isTest %s" % (
+        # print("guessLang: fileName %s, isCLIArg %s;\treturning lang %s, " +
+        #       "isTest %s" % (
         #    fileName, isCLIArg, lang, isTest))
         # END
 
@@ -520,7 +522,7 @@ class MapHolder(object):
 
 def count_lines_in_dir(path_to_dir, options):
     # DEBUG
-    #print("DIRECTORY %s" % pathToDir)
+    # print("DIRECTORY %s" % pathToDir)
     # if not options:
     #    print("  NIL OPTIONS")
     # else:
@@ -552,7 +554,7 @@ def count_lines_in_dir(path_to_dir, options):
                 # END
                 continue
             # DEBUG
-            #print("FILE IN DIRECTORY: %s" % name)
+            # print("FILE IN DIRECTORY: %s" % name)
             # END
             is_test = False  # default
             path_to_file = os.path.join(path_to_dir, name)
@@ -1001,7 +1003,8 @@ def count_lines_matlab(path_to_file, options, lang):
                 percent_sen = False             # might start %{ or %}
                 for c_ndx, ch_ in enumerate(list(line)):
                     # DEBUG
-                    # print("line %2d char %2d '%c' depth %2d percent? %s nonSpace? %s" % (
+                    # print("line %2d char %2d '%c' depth %2d percent? " +
+                    #       "%s nonSpace? %s" % (
                     #        lNdx, cNdx, ch, depth, percentSeen, nonSpaceSeen))
                     # END
                     if percent_sen:
@@ -1205,7 +1208,8 @@ def count_lines_occam(path_to_file, options, lang):
                 delim_seen = False             # might start %{ or %}
                 for c_ndx, ch_ in enumerate(list(line)):
                     # DEBUG
-                    # print("line %2d char %2d '%c' depth %2d percent? %s nonSpace? %s" % (
+                    # print("line %2d char %2d '%c' depth %2d percent? " +
+                    #       "%s nonSpace? %s" % (
                     #        lNdx, cNdx, ch, depth, delimSeen, nonSpaceSeen))
                     # END
                     if delim_seen:
@@ -1654,13 +1658,13 @@ def _find_scala_code(text, comment_depth):
 
     if start_multi == -1 and end_multi == -1:
         # DEBUG
-        #print("  no */, returning depth=%d, unchanged" % commentDepth)
+        # print("  no */, returning depth=%d, unchanged" % commentDepth)
         # END
         return text_back, comment_depth
 
     elif end_multi == -1 or (start_multi != -1 and start_multi < end_multi):
         # DEBUG
-        #print("  found /* at %d" % startMulti)
+        # print("  found /* at %d" % startMulti)
         # END
         comment_depth = comment_depth + 1
         if start_multi + 2 < len(text):
@@ -1668,7 +1672,7 @@ def _find_scala_code(text, comment_depth):
 
     else:
         # DEBUG
-        #print("  found */ at %d" % endMulti)
+        # print("  found */ at %d" % endMulti)
         # END
 
         comment_depth = comment_depth - 1
@@ -1676,7 +1680,8 @@ def _find_scala_code(text, comment_depth):
             text_back = text[end_multi + 2:]
 
     # DEBUG
-    #print("  returning depth=%d, textBack\n  '%s'" % (commentDepth, textBack))
+    # print("  returning depth=%d, textBack\n  '%s'" %
+    #       (commentDepth, textBack))
     # END
 
     return text_back, comment_depth
@@ -1864,7 +1869,7 @@ def count_lines_xml(path_to_file, options, lang):
             #
             # and ends with
             #   <p>
-            #   The CryptoServer will continue to serve pages until you kill it.
+            #   CryptoServer will continue to serve pages until you kill it.
             #   </p>
             #   </section>
             #   </document>

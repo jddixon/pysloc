@@ -5,10 +5,7 @@
 Tests the operation of the Q class, which knows about counters.
 """
 
-import os
-import sys
 import unittest
-from argparse import Namespace
 
 from pysloc import(MapHolder,
                    count_lines_double_dash, count_lines_fortran,
@@ -37,6 +34,11 @@ class TestQ(unittest.TestCase):
 
     def test_ext2lang(self):
         """ exhaustive test of mapping extension to short lang name """
+
+        # DEBUG
+        print("DIR(MAP_HOLDER)")
+        print(dir(self.map_holder))
+        # END
 
         # expect failure
         self.assertEqual(self.map_holder.ext2lang(None), None)

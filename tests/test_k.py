@@ -69,7 +69,7 @@ class TestK(unittest.TestCase):
 
         expected = "py:%d/%d T%.1f%%" % (12 + 17, 5 + 7, 700.0 / 12)
         # DEBUG
-        #print("Expected: %s" % expected)
+        #  print("Expected: %s" % expected)
         # END
         self.assertEqual(self.k__.pretty_counts('py'), expected)
 
@@ -95,7 +95,7 @@ class TestK(unittest.TestCase):
         # no test source lines, so no test percentage
         expected = "py:%d/%d" % (12 + 17, 5)
         # DEBUG
-        #print("Expected: %s" % expected)
+        #  print("Expected: %s" % expected)
         # END
         self.assertEqual(self.k__.pretty_counts('py'), expected)
 

@@ -1,23 +1,27 @@
 #!/usr/bin/python3
 # pysloc/setup.py
 
-""" Set up distutils for pysloc. """
+""" Setuptools project configuration for pysloc. """
 
-import re
-from distutils.core import setup
-__version__ = re.search(r"__version__\s*=\s*'(.*)'",
-                        open('src/pysloc/__init__.py').read()).group(1)
+from os.path import exists
+from setuptools import setup
 
-# see http://docs.python.org/distutils/setupscript.html
+long_desc = None
+if exists('README.md'):
+    with open('README.md', 'r') as file:
+        long_desc = file.read()
 
 setup(name='pysloc',
-      version=__version__,
+      version='0.9.2',
       author='Jim Dixon',
       author_email='jddixon@gmail.com',
+      long_description=long_desc,
+      packages=['pysloc'],
+      package_dir={'': 'src'},
       py_modules=[],
-      packages=['src/pysloc'],
-      # following could be in scripts/ subdir
-      scripts=['src/pySloc', ],          # front end module(s)
+      include_package_data=False,
+      zip_safe=False,
+      scripts=['src/pySloc'],
       description='counts source lines of code for various languages',
       url='https://jddixon.github.io/pysloc',
       classifiers=[
@@ -25,6 +29,11 @@ setup(name='pysloc',
           'Intended Audience :: Developers',
           'License :: OSI Approved :: MIT License',
           'Natural Language :: English',
-          'Programming Language :: Python 3',
+          'Programming Language :: Python 2.7',
+          'Programming Language :: Python 3.3',
+          'Programming Language :: Python 3.4',
+          'Programming Language :: Python 3.5',
+          'Programming Language :: Python 3.6',
+          'Programming Language :: Python 3.7',
           'Topic :: Software Development :: Libraries :: Python Modules',
       ],)

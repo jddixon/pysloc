@@ -2,8 +2,8 @@
 project:pysloc
 package:pysloc
 mainlang:py
-version:0.9.0
-versionDate:2017-07-11
+version:0.9.2
+versionDate:2017-08-22
 :?dirs?:
 dir:std:ghpDoc
 dir:std:dist
@@ -12,6 +12,7 @@ dir:std:tests
 dir:std:.dvcz
 dir:pkg:pysloc
 dir:local:test
+dir:local:.cache
 dir:clr:build
 :?files?:
 code:std:.dvcz/projCfg
@@ -28,6 +29,9 @@ code:std:pylintrc
 code:std:.coveragerc
 code:std:check.summary
 code:std:MANIFEST.in
+code:std:tox.ini
+code:std:requirements.txt
+code:std:test_requirements.txt
 txt:std:LICENSE-MIT.md
 txt:std:CHANGES
 txt:std:README.md
@@ -44,6 +48,7 @@ bash:std:styleit
 bash:std:test.all
 bash:std:doPyLint
 bash:std:checkCoverage
+py:std:setup.cfg
 py:std:setup.py
 py:local:tests/commentsForPy
 py:local:couldBeGenerated_pb2.py
