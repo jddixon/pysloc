@@ -12,7 +12,7 @@ if exists('README.md'):
         long_desc = file.read()
 
 setup(name='pysloc',
-      version='0.9.2',
+      version='0.9.3',
       author='Jim Dixon',
       author_email='jddixon@gmail.com',
       long_description=long_desc,
@@ -22,6 +22,7 @@ setup(name='pysloc',
       include_package_data=False,
       zip_safe=False,
       scripts=['src/pySloc'],
+      ext_modules=[],
       description='counts source lines of code for various languages',
       url='https://jddixon.github.io/pysloc',
       classifiers=[

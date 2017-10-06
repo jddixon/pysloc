@@ -1,5 +1,13 @@
 # ~/dev/py/pysloc/TODO
 
+2017-08-22
+    * in tox.ini, pytest params are {posargs: ignore=PATH ignore=PATH}
+        the PATHs can be relative but the files must exist (and be 
+        correctly spelled)
+    * in test.all, pytest takes the same arguments, as just
+        --ignore=PATH --ignore=PATH
+        with the same caveats
+
 2017-07-11
     * verify that all 'commentsForLANG* are in projCfg.local
         - and counted

@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.9.3
+    2017-10-06
+        * add .dvcz/projConfig.toml                                 SLOC 5000
 v0.9.2
     2017-08-22
         * add tox.ini, *requirements.txt; minor edits cfg files     SLOC 4956
@@ -306,6 +309,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 

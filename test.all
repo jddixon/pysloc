@@ -4,7 +4,8 @@ if [ ! -z "${DEV_BASE// }" ]
 then
   cd $DEV_BASE/py/pysloc
   
-  PYTHONPATH=".:src:test" pytest
+  PYTHONPATH=".:src:test" pytest --ignore=tests/couldBeGenerated_pb2.py \
+      --ignore=tests/yy_foo.py
   
 else
   echo "DEV_BASE is not defined"
