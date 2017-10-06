@@ -7,8 +7,8 @@ Giaje1YAJPNVBt3dlOA5lhBp4GpSYBskJ9UR2Zyt3lgAGK3dEwxYETLMh9VWEV8i
 k2lyCIE/V/CDb9eVDYQgYSJYrnQ/JAPST7NbcY8aI+/0l7QVBhLBpmOCvmS6ofvz
 /QIDAQAB
 -----END PUBLIC KEY-----
-pysloc v0.9.2
-2017-08-22 21:38:14
+pysloc v0.9.3
+2017-10-06 22:31:59
 # BEGIN CONTENT #
 pysloc
  .cache
@@ -16,19 +16,20 @@ pysloc
    cache
     lastfailed b956b36a361b64454e680197a159a744587be53f
  .dvcz
-  builds 13a9dc2ae673d0056cff0e4008b30daedcd8c567
+  builds aa795c249e10c33d19c1046e9554c51b156d14a3
   copyright 081f1eacc7bee6ce9cf06ffc957c1472faf9c994
-  lastBuildList 480f7256512b190d8d53d5fb45667f4b4a0d9d65
+  lastBuildList bb7b5ecee4124cd89d56a1f56ce54c82bebceb52
   license 5977a55c75bb4612004451a56b0b4c22d9d3311d
   projCfg cf8520f9288fae4c35abe64446067b53c4af4ed7
   projCfg.local 765cd23b1200190f9921d39df9cc8853abaee7fd
-  version 38753c1daf1c1770c9d01d5f08ef54d17aacc975
- .gitignore fa249afe19714b701dd828a80bd855e2ce1b05e4
- CHANGES aaa877eadff9ef09b637f950ee8fffdcb950caf5
+  projConfig.toml 857e01093803bcb5644ddc1dba2eca5123fb8a87
+  version 7140d17902ba0e89927ee3077517d6e533237238
+ .gitignore c8129c7133b7a7755cefd3dfc62a9af7bc306aa0
+ CHANGES 778bdaae55d7f0dbd38349438390fc1cf7b0fef4
  LICENSE-MIT.md ce4053c54849d1033bd67b6cab7bdedc03de2b97
  MANIFEST.in ee87ecf6928c0c4c69376734eba9cf532ce748b1
  README.md 6c21200b03cfbac519fc664fe46ff7e867862c14
- TODO 8fdb33c258fd244dc2022fca888ac0f652f39fe4
+ TODO 4d43bb2b8c91892d858b2f661ec7338262e3cafb
  bkp2U 5961ddc3ce44158bdb3ddee6febae84b3d597605
  checkCoverage 828938f374fd2832e00a35d397e94bfaff21268b
  countem 3e862021f12e40005fe702edf5563a1401a8cb06
@@ -50,12 +51,12 @@ pysloc
   index.md 7d3e6f2cf99523d4a4565c387cf2388575cb2a04
  installit efaa7c546ff779b9615d1171ced81f84af299685
  pylintrc dd234fda24a547a9071f1e4608a3c1f3b7de9aa0
- requirements.txt c0e3d0b11d080a12879ef3e1b44f60859677b3fd
- setup.py 8d1fb4830bb0c5bd5d2873523769057c4a652172
+ requirements.txt 3a2f11c6e808f78203bf2fb88ef14a87044c5efa
+ setup.py 86fac996fb16ece6665daca801520e2ec7987644
  src
   pySloc d188aded769741c541ad90fb4d262d3bc7575f21
   pysloc
-   __init__.py 5e5ad6c2de73e50fcb3001a4948f8b60a3c34a9b
+   __init__.py 317fccb5cfb186756b4bdbc73785ef555dcdd44e
  styleit 38f93db5fd80738f215ab52efeab5c38ebe79422
  test
   8bit2.sno d071f3c133db505ad07d8472e4482f8fc97ce61d
@@ -68,7 +69,7 @@ pysloc
    oneLiner.sno 77bdfd17b15c862b6b9483452199e18dc7c57476
    subsubdir
     twoLiner.sno 74b24c5bb8b430883ed92ebff0f3ed091fe14450
- test.all ed525a9fe2e8f5c5241e5ea79d5c58bf5c276822
+ test.all 0fb7819617f9213525fd4160fca1a67100d1e167
  test_requirements.txt 8506429173e87de2214de00aacdb57e255545f75
  tests
   OpenCOBOLProgrammersGuide.pdf b9d01f7a62de2c61b2d3469eb83c73c698987817
@@ -153,15 +154,6 @@ pysloc
   test_user_guide.py d800a37caaf6439fe3ee254b2635d2917005dd70
   test_xml_comments.py c5438ae8dc064f79cb479fd737755f2454d6322b
   userguide.xml 4f15f8eb91f0bcaa83ad1b0dcb9a2686bdea1285
-  yyFoo 883520283ff24ba8df4240504d6de148c9272a0d
-  yyFoo.go 883520283ff24ba8df4240504d6de148c9272a0d
-  yyFoo.l 883520283ff24ba8df4240504d6de148c9272a0d
-  yyFoo.occ 883520283ff24ba8df4240504d6de148c9272a0d
-  yyFoo.py 916f387f197f9798a279ec17ad8a713c852ec58d
-  yyFoo.sno 883520283ff24ba8df4240504d6de148c9272a0d
-  yyFoo.txt afc063fd3868effc0b70a9a18fb45555e8e01a45
-  yyFoo.y 883520283ff24ba8df4240504d6de148c9272a0d
-  yyFoo_test.go 883520283ff24ba8df4240504d6de148c9272a0d
   yy_foo 883520283ff24ba8df4240504d6de148c9272a0d
   yy_foo.go 883520283ff24ba8df4240504d6de148c9272a0d
   yy_foo.l 883520283ff24ba8df4240504d6de148c9272a0d
@@ -171,7 +163,7 @@ pysloc
   yy_foo.txt afc063fd3868effc0b70a9a18fb45555e8e01a45
   yy_foo.y 883520283ff24ba8df4240504d6de148c9272a0d
   yy_foo_test.go 883520283ff24ba8df4240504d6de148c9272a0d
- tox.ini 6c9d9b47e9a7a4bc4596d103d8a4224106d36a8d
+ tox.ini 1c7e3b6cb1651f78bfd5434b8c9aa294b0c827bc
 # END CONTENT #
 
-jkf3KNrDlKGGXtaq5QmOMHD5EOTxvMvAaBnOyMMSWgcWgdadtK9NrjVD/5XgGe004vihAI+cblEyPrTLguramLzjH8rNRqwPKJkQzVYwKcvnlF7NRL+0lKKDLRuXLDQ+DlkiIMlpmeUoSufDUViVrxWks8t6O1O9TkBK+uLzYfLGKOQI8aCZEdvZ9LKEipk+OqzhW9NkaunAYTA3BHbI6zl7TmpE5j0xbhikn2RN68oXoJfe8Q7cwZXKqB8pmjiX0hw3Sl0wJ4IvlNEa8LbIDzuMJ4nvos6OfPf6/hhfMdbKwDlFwC8eMZBb56K6hTA2U6+EEN9LwtkppQOoeIrqqQ==
+bkb9zVL0xPo42mEVp/fmBXZERLQTS1CS5PWc5A/a3xlvNrFuNSD+lYh8v/mUG0B5WIx06OhBpoQD+4sZbhayFbTjcQpkhoWiF+nVRbPj/rIL/4AgQ/tHfE/Y6OmZX6sqqYkAwPwJHmKsZlK9xiWUOl/R7MjJrSgWRe4oXiT7z6qL7tFgbiVcpoT9AkavECEmLx0JUwifMiwNwXho/KjLXGfxRbnZ940eyd9a8inKtLcsCeDfl7DwJ7xTPxw8vA9VnszzvYkwDDXRQFgCu7YyUthMFA5QoLKzC0A5NCy929+k3juTadujuuhLZwdEFWdJQXt59gChuPo3NkdPe40N8Q==

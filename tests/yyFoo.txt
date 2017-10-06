@@ -1,4 +1,0 @@
-This is a test file: do not delete!
-
-This particular file (yyFoo.txt) should never be counted unless it is
-on the pySloc command line.
