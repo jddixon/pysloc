@@ -22,6 +22,8 @@ __all__ = ['__version__', '__version_date__',
            'count_lines_augeas',
            'count_lines_bash',
            'count_lines_c',
+           'count_lines_clojure',
+           'count_lines_clojurescript',
            'count_lines_cpp',
            'count_lines_double_dash',
            'count_lines_fortran',
@@ -53,8 +55,8 @@ __all__ = ['__version__', '__version_date__',
            'CountHolder', 'MapHolder', ]
 
 # exported constants ------------------------------------------------
-__version__ = '0.9.3'
-__version_date__ = '2017-10-06'
+__version__ = '0.9.4'
+__version_date__ = '2017-11-17'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile(
@@ -172,6 +174,8 @@ class MapHolder(object):
             'aug': count_lines_augeas,          # Augeas config manager
             'bash': count_lines_shell,          # bash shell
             'c': count_lines_c,                 # ansic
+            'clj': count_lines_clojure,         # Clojure
+            'cljs': count_lines_clojurescript,  # ClojureScript
             'code': count_lines_not_sharp,      # used to be 'not#'
             'cpp': count_lines_cpp,             # C++
             'csh': count_lines_not_sharp,       # csh, tcsh
@@ -226,6 +230,8 @@ class MapHolder(object):
             'c': 'c',                       # ansi c
             'C': 'cpp',                     # C++
             'cc': 'cpp',                    # C++
+            'clj': 'clj',                   # Clojure
+            'cljs': 'cljs',                 # ClojsureScript
             'code': 'code',                 # comments begin with sharp sign, #
             'cp': 'cpp',                    # C++
             'cpp': 'cpp',                   # C++
@@ -316,6 +322,8 @@ class MapHolder(object):
             'awk': 'awk',
             'bash': 'bash',
             'c': 'ansic',
+            'clj': 'Clojure',
+            'cljs': 'ClojureScript',
             'code': 'code',                     # the former 'not#'
             'cpp': 'C++',
             'csh': 'csh',
@@ -666,6 +674,16 @@ def count_lines_c(path, options, lang):
             loc_, sloc_ = count_lines_java_style(path, options, lang)
 
     return loc_, sloc_
+
+# CLOJURE, CLOJURE_SCRIPT ===========================================
+
+
+def count_lines_clojure(path_to_file, options, lang):
+    return count_lines_not_semicolon(path_to_file, options, lang)
+
+
+def count_lines_clojurescript(path_to_file, options, lang):
+    return count_lines_not_semicolon(path_to_file, options, lang)
 
 # C++ ===============================================================
 
