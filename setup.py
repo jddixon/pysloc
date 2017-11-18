@@ -12,7 +12,7 @@ if exists('README.md'):
         long_desc = file.read()
 
 setup(name='pysloc',
-      version='0.9.3',
+      version='0.9.4',
       author='Jim Dixon',
       author_email='jddixon@gmail.com',
       long_description=long_desc,
