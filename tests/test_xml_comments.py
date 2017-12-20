@@ -27,7 +27,7 @@ class TestXmlComments(unittest.TestCase):
         options.map_holder = MapHolder()
         options.verbose = False
 
-        # XXX possible error reading file, possible errors parsing data
+        # possible error reading file, possible errors parsing data
 
         lines, sloc = count_lines_xml(test_file, options, 'xml')
         self.assertEqual(lines, 29)

@@ -2,7 +2,7 @@
 
 if [ ! -z "${DEV_BASE// }" ]
 then
-  pylint setup.py src/* tests/*
+  pylint setup.py src/* tests/*.py
 else
   echo "DEV_BASE is not defined"
 fi

@@ -16,6 +16,9 @@ from pysloc import(MapHolder,
 
 
 class TestQ(unittest.TestCase):
+    """
+    Tests the operation of the Q class, which knows about counters.
+    """
 
     def setUp(self):
         self.map_holder = MapHolder()
@@ -96,6 +99,7 @@ class TestQ(unittest.TestCase):
         self.assertEqual(self.map_holder.ext2lang('yaml'), 'yaml')
 
     def test_irregular_ext2lang(self):
+        """ Exercise the extention-to-language function. """
         cpp_holder = MapHolder('cpp')
         self.assertEqual(cpp_holder.ext2lang('h'), 'cpp')
 
@@ -103,6 +107,7 @@ class TestQ(unittest.TestCase):
         self.assertEqual(occ_holder.ext2lang('inc'), 'occ')
 
     def test_get_counter(self):
+        """ Exercise the get_counter() function. """
         # expect failure if unknown lang and not a command line argument
         self.assertEqual(self.map_holder.get_counter(None, False), None)
         self.assertEqual(self.map_holder.get_counter('', False), None)
@@ -216,6 +221,8 @@ class TestQ(unittest.TestCase):
         self.assertEqual(self.map_holder.get_long_name('yaml'), 'yaml')
 
     def test_guess_lang_from_filename(self):
+        """ Exercise guess_lang() function on various names. """
+
         # expect failure --------------------------------------------
         lang, is_test = self.map_holder.guess_lang('./', None, is_cli_arg=True)
         self.assertEqual(lang, None)
@@ -332,7 +339,9 @@ class TestQ(unittest.TestCase):
         self.assertEqual(is_test, False)
 
         # DON'T KNOW TEST PATTERN FOR SNOB
+
     def test_non_code_ext(self):
+        """ Exercise non_code_ext() function on various extensions."""
         # expect failure
         self.assertEqual(self.map_holder.non_code_ext(None), False)
         self.assertEqual(self.map_holder.non_code_ext(''), False)
@@ -343,6 +352,8 @@ class TestQ(unittest.TestCase):
         self.assertEqual(self.map_holder.non_code_ext('pyc'), True)
 
     def test_non_code_dir(self):
+        """ Exercise non_code_dir() function on various names."""
+
         # expect failure
         self.assertEqual(self.map_holder.non_code_dir('src'), False)
         self.assertEqual(self.map_holder.non_code_dir('tests'), False)
@@ -351,6 +362,8 @@ class TestQ(unittest.TestCase):
         self.assertEqual(self.map_holder.non_code_dir('__pycache__'), True)
 
     def test_non_code_file(self):
+        """ Exercise non_code_file() function on various names."""
+
         # expect failure
         self.assertEqual(self.map_holder.non_code_file(None), False)
         self.assertEqual(self.map_holder.non_code_file(''), False)

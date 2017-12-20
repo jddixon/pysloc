@@ -28,7 +28,7 @@ class TestTexComments(unittest.TestCase):
         options.map_holder = MapHolder()
         options.verbose = False
 
-        # XXX possible error reading file, possible errors parsing data
+        # possible error reading file, possible errors parsing data
 
         lines, sloc = count_lines_tex(test_file, options, 'tex')
         self.assertEqual(lines, 32)
