@@ -55,8 +55,8 @@ __all__ = ['__version__', '__version_date__',
            'CountHolder', 'MapHolder', ]
 
 # exported constants ------------------------------------------------
-__version__ = '0.9.4'
-__version_date__ = '2017-11-17'
+__version__ = '0.9.5'
+__version_date__ = '2017-12-19'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile(
@@ -104,8 +104,7 @@ class CountHolder(object):
     def get_counts(self, lang):
         if (not lang) or (lang not in self.map_):
             return (0, 0, 0, 0)
-        else:
-            return self.map_[lang]
+        return self.map_[lang]
 
     def pretty_counts(self, lang):
         """
@@ -119,16 +118,14 @@ class CountHolder(object):
         """
         if (not lang) or (lang not in self.map_):
             return '%s: 0' % lang
-        else:
-            loc_, sloc_, test_loc, test_sloc = self.map_[lang]
-            if test_sloc > 0:
-                return "%s:%d/%d T%.1f%%" % (
-                    lang, loc_ + test_loc, sloc_ + test_sloc,
-                    100.0 * test_sloc / (sloc_ + test_sloc))
-            elif loc_ > 0:
-                return "%s:%d/%d" % (lang, loc_ + test_loc, sloc_)
-            else:
-                return ''
+        loc_, sloc_, test_loc, test_sloc = self.map_[lang]
+        if test_sloc > 0:
+            return "%s:%d/%d T%.1f%%" % (
+                lang, loc_ + test_loc, sloc_ + test_sloc,
+                100.0 * test_sloc / (sloc_ + test_sloc))
+        elif loc_ > 0:
+            return "%s:%d/%d" % (lang, loc_ + test_loc, sloc_)
+        return ''
 
     def pretty_break_down(self):
         """
@@ -410,8 +407,7 @@ class MapHolder(object):
     def ext2lang(self, ext):
         if ext in self._ext2lang:
             return self._ext2lang[ext]
-        else:
-            return None
+        return None
 
     def get_counter(self, lang, is_cli_arg=False):
         """
@@ -423,19 +419,17 @@ class MapHolder(object):
         XXX If the name on the command line is a directory name, should
         be handled differently.
         """
-        if lang and (len(lang) > 0) and (lang in self._lang2counter):
+        if lang and (lang in self._lang2counter):
             return self._lang2counter[lang]
         elif is_cli_arg:
             return count_lines_not_sharp
-        else:
-            return None
+        return None
 
     def get_long_name(self, name):
         """ Given a short file name, return the longer language name """
         if name in self._lang_map:
             return self._lang_map[name]
-        else:
-            return None
+        return None
 
     def get_lang_set(self):
         "Return a set containing all recognized language abbreviations"""
@@ -619,7 +613,7 @@ def check_whether_already_counted(path_to_file, options):
     lines, counter_ = None, None
     with open(path_to_file, 'rb') as flattened:
         data = flattened.read()
-    if data and (len(data) > 0):
+    if data:
         sha_ = hashlib.sha1()
         sha_.update(data)
         counter_ = sha_.hexdigest()   # a string
@@ -830,8 +824,7 @@ def _find_html_code(text):
 
     if posn + 3 < len(text):
         return text[posn + 3:], False
-    else:
-        return '', False
+    return '', False
 
 
 def _find_html_comment(text):
@@ -846,8 +839,7 @@ def _find_html_comment(text):
 
     if posn + 4 < len(text):
         return text[:posn], text[posn + 4:], True
-    else:
-        return text[:posn], '', True
+    return text[:posn], '', True
 
 
 def uncomment_html(text, in_comment):
@@ -916,8 +908,7 @@ def _find_java_code(text):
 
     if posn + 2 < len(text):
         return text[posn + 2:], False
-    else:
-        return '', False
+    return '', False
 
 
 def _find_java_comment(text):
@@ -948,8 +939,7 @@ def _find_java_comment(text):
 
     if multi_line and (posn + 2 < len(text)):
         return text[:posn], text[posn + 2:], in_comment
-    else:
-        return text[:posn], '', in_comment
+    return text[:posn], '', in_comment
 
 
 def uncomment_java(text, in_comment):
@@ -1015,11 +1005,13 @@ def count_lines_matlab(path_to_file, options, lang):
         lines, hash_val = check_whether_already_counted(path_to_file, options)
         if (hash_val is not None) and (lines is not None):
             depth = 0                           # comment depth
-            for l_ndx, line in enumerate(lines):
+            # for l_ndx, line in enumerate(lines):
+            for line in lines:
                 lines_so_far += 1
                 non_space_sen = False
                 percent_sen = False             # might start %{ or %}
-                for c_ndx, ch_ in enumerate(list(line)):
+                # for c_ndx, ch_ in enumerate(list(line)):
+                for ch_ in list(line):
                     # DEBUG
                     # print("line %2d char %2d '%c' depth %2d percent? " +
                     #       "%s nonSpace? %s" % (
@@ -1087,7 +1079,7 @@ def count_lines_not_sharp(path_to_file, options, lang):
                 lines_so_far += 1
                 # This could be made more efficient.
                 line = line.strip()
-                if len(line) > 0 and (line[0] != '#'):
+                if line and (line[0] != '#'):
                     sloc_so_far += 1
             options.already.add(hash_val)
             if options.verbose:
@@ -1191,7 +1183,7 @@ def count_lines_double_dash(path_to_file, options, lang):
                 lines_so_far += 1
                 # This could be made more efficient.
                 line = line.strip()
-                if len(line) > 0 and not line.startswith('--'):
+                if line and not line.startswith('--'):
                     sloc_so_far += 1
             options.already.add(hash_val)
             if options.verbose:
@@ -1220,11 +1212,13 @@ def count_lines_occam(path_to_file, options, lang):
         lines, hash_val = check_whether_already_counted(path_to_file, options)
         if (hash_val is not None) and (lines is not None):
             depth = 0                           # comment depth
-            for l_ndx, line in enumerate(lines):
+            # for l_ndx, line in enumerate(lines):
+            for line in lines:
                 lines_so_far += 1
                 non_space_sen = False
                 delim_seen = False             # might start %{ or %}
-                for c_ndx, ch_ in enumerate(list(line)):
+                # for c_ndx, ch_ in enumerate(list(line)):
+                for ch_ in list(line):
                     # DEBUG
                     # print("line %2d char %2d '%c' depth %2d percent? " +
                     #       "%s nonSpace? %s" % (
@@ -1288,7 +1282,8 @@ def count_lines_pascal(path_to_file, options, lang):
         lines, hash_val = check_whether_already_counted(path_to_file, options)
         if (hash_val is not None) and (lines is not None):
             depth = 0                           # comment depth
-            for ndx, line in enumerate(lines):
+            # for ndx, line in enumerate(lines):
+            for line in lines:
                 lines_so_far += 1
                 non_space_sen = False
                 l_paren_sen = False            # might start (*
@@ -1388,7 +1383,7 @@ def count_lines_not_percent(path_to_file, options, lang):
                 lines_so_far += 1
                 # This could be made more efficient.
                 line = line.strip()
-                if (len(line) > 0) and (line[0] != '%'):
+                if line and (line[0] != '%'):
                     sloc_so_far += 1
             options.already.add(hash_val)
             if options.verbose:
@@ -1440,7 +1435,7 @@ def count_lines_perl(path_to_file, options, lang):
 
                 # This could be made more efficient.
                 line = line.strip()
-                if len(line) > 0 and (line[0] != '#'):
+                if line and (line[0] != '#'):
                     sloc_so_far += 1
             options.already.add(hash_val)
             if options.verbose:
@@ -1545,7 +1540,7 @@ def count_lines_r_markdown(path_to_file, options, lang):
                     # DEBUG
                     # print("YAML: '%s'" % line)
                     # END
-                    if len(line):
+                    if line:
                         sloc_so_far += 1
                     if ndx and line.startswith('---'):
                         in_yaml = False
@@ -1559,7 +1554,7 @@ def count_lines_r_markdown(path_to_file, options, lang):
                     # DEBUG
                     # print("CODE: %s" % line)
                     # END
-                    if len(line) > 0 and (line[0] != '#'):
+                    if line and (line[0] != '#'):
                         sloc_so_far += 1
                     if line.startswith('```'):
                         in_code_chunk = False
@@ -1614,7 +1609,7 @@ def count_lines_rust(path_to_file, options, lang):
                 lines_so_far += 1         # this counts every line
                 # This could be made more efficient.
                 line = line.strip()
-                if len(line) > 0 and not line.startswith('//'):
+                if line and not line.startswith('//'):
                     sloc_so_far += 1      # this counts source lines
             options.already.add(hash_val)
             if options.verbose:
@@ -1738,8 +1733,7 @@ def _find_scala_comment(text, comment_depth):
 
     if multi_line and (posn + 2 < len(text)):
         return text[:posn], text[posn + 2:], comment_depth
-    else:
-        return text[:posn], '', comment_depth
+    return text[:posn], '', comment_depth
 
 
 def uncomment_scala(text, comment_depth):
@@ -1780,7 +1774,7 @@ def count_lines_not_semicolon(path_to_file, options, lang):
                 lines_so_far += 1
                 # This could be made more efficient.
                 line = line.strip()
-                if (len(line) > 0) and (line[0] != ';'):
+                if line and (line[0] != ';'):
                     sloc_so_far += 1
             options.already.add(hash_val)
             if options.verbose:
@@ -1805,7 +1799,7 @@ def count_lines_snobol(path_to_file, options, lang):
             for line in lines:
                 lines_so_far += 1
                 line = line.rstrip()
-                if len(line) > 0 and (line[0] != '*'):
+                if line and (line[0] != '*'):
                     sloc_so_far += 1
             options.already.add(hash_val)
             if options.verbose:
@@ -1820,8 +1814,6 @@ def count_lines_snobol(path_to_file, options, lang):
 
 def count_lines_tex(path_to_file, options, lang):
     return count_lines_not_percent(path_to_file, options, lang)
-
-    return count_lines_not_sharp(path_to_file, options, lang)
 
 # TXT ===============================================================
 
@@ -1840,7 +1832,7 @@ def count_lines_txt(path_to_file, options, lang):
                 lines_so_far += 1
                 # This could be made more efficient.
                 line = line.strip()
-                if len(line) > 0:
+                if line:
                     sloc_so_far += 1
             options.already.add(hash_val)
             if options.verbose:
@@ -1874,6 +1866,8 @@ def count_lines_xml(path_to_file, options, lang):
             comments = soup.findAll(
                 text=lambda text: isinstance(
                     text, Comment))
+
+            # XXX THE NEXT LINE HAS NO EFFECT ?
             [comment.extract() for comment in comments]
 
             # -------------------------------------------------------
@@ -1910,7 +1904,7 @@ def count_lines_xml(path_to_file, options, lang):
             for line in lines:
                 # This could be made more efficient.
                 line = line.strip()
-                if len(line) > 0:
+                if line:
                     sloc_so_far += 1
                 # DEBUG
                 # print(line)

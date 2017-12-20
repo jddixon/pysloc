@@ -28,7 +28,7 @@ class TestLispComments(unittest.TestCase):
         options.map_holder = MapHolder()
         options.verbose = False
 
-        # XXX possible error reading file, possible errors parsing data
+        # possible error reading file, possible errors parsing data
 
         lines, sloc = count_lines_lisp(test_file, options, 'lisp')
         self.assertEqual(lines, 65)

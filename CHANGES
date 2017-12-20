@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.9.5
+    2017-12-19
+        * pylinting and minor bug fixes                             SLOC 4998
 v0.9.4
     2017-11-17
         * add counters for Clojure, ClojureScript                   SLOC 5004
@@ -312,6 +315,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 

@@ -7,25 +7,18 @@ Giaje1YAJPNVBt3dlOA5lhBp4GpSYBskJ9UR2Zyt3lgAGK3dEwxYETLMh9VWEV8i
 k2lyCIE/V/CDb9eVDYQgYSJYrnQ/JAPST7NbcY8aI+/0l7QVBhLBpmOCvmS6ofvz
 /QIDAQAB
 -----END PUBLIC KEY-----
-pysloc v0.9.3
-2017-10-06 22:31:59
+pysloc
+2017-12-20 01:04:05
 # BEGIN CONTENT #
 pysloc
- .cache
-  v
-   cache
-    lastfailed b956b36a361b64454e680197a159a744587be53f
  .dvcz
-  builds aa795c249e10c33d19c1046e9554c51b156d14a3
-  copyright 081f1eacc7bee6ce9cf06ffc957c1472faf9c994
-  lastBuildList bb7b5ecee4124cd89d56a1f56ce54c82bebceb52
-  license 5977a55c75bb4612004451a56b0b4c22d9d3311d
+  builds d25ed8d872c64656a8929c2449eafd3a2264782d
+  lastBuildList c5cc4b27b8cb19405832ca514d48129b6ea4057d
   projCfg cf8520f9288fae4c35abe64446067b53c4af4ed7
   projCfg.local 765cd23b1200190f9921d39df9cc8853abaee7fd
-  projConfig.toml 857e01093803bcb5644ddc1dba2eca5123fb8a87
-  version 7140d17902ba0e89927ee3077517d6e533237238
+  projConfig.toml 578923c71044792a62989aded12febf51db66d58
  .gitignore c8129c7133b7a7755cefd3dfc62a9af7bc306aa0
- CHANGES 778bdaae55d7f0dbd38349438390fc1cf7b0fef4
+ CHANGES e48eefdf21238021985c43239c914193e67eb1a4
  LICENSE-MIT.md ce4053c54849d1033bd67b6cab7bdedc03de2b97
  MANIFEST.in ee87ecf6928c0c4c69376734eba9cf532ce748b1
  README.md 6c21200b03cfbac519fc664fe46ff7e867862c14
@@ -33,7 +26,7 @@ pysloc
  bkp2U 5961ddc3ce44158bdb3ddee6febae84b3d597605
  checkCoverage 828938f374fd2832e00a35d397e94bfaff21268b
  countem 3e862021f12e40005fe702edf5563a1401a8cb06
- doPyLint 31321ad99eb3b9ac0928a68c29a8b5b88c9472fb
+ doPyLint ec1fce4db2bc43496f37f00dc9720dc0b8f46d6d
  ghpDoc
   css
    LICENSE.html5-boilerplate.md ded771b3245b190da0e81c76de5a80d41392c0a6
@@ -52,11 +45,11 @@ pysloc
  installit efaa7c546ff779b9615d1171ced81f84af299685
  pylintrc dd234fda24a547a9071f1e4608a3c1f3b7de9aa0
  requirements.txt 3a2f11c6e808f78203bf2fb88ef14a87044c5efa
- setup.py 86fac996fb16ece6665daca801520e2ec7987644
+ setup.py 716a9d8abdccf039a2697c8b34b0beba0e4b6fee
  src
-  pySloc d188aded769741c541ad90fb4d262d3bc7575f21
+  pySloc 12a22e636661516ff8d213d239006a5909fb15a4
   pysloc
-   __init__.py 317fccb5cfb186756b4bdbc73785ef555dcdd44e
+   __init__.py 3b366cb31156b8ead44ccd3e672f0428be122f52
  styleit 38f93db5fd80738f215ab52efeab5c38ebe79422
  test
   8bit2.sno d071f3c133db505ad07d8472e4482f8fc97ce61d
@@ -131,28 +124,28 @@ pysloc
   test_java_comments.py d7973aaebe1d19b1ae1128276b74adbaf3677ac7
   test_json_comments.py eb96be83a694fae9e176888ddd06e6e8b3635c0b
   test_k.py c613649b252a998d1c287555676835154f35d4d1
-  test_lisp_comments.py d658b2a61723d5d2980b986bd63aa995809d0be0
+  test_lisp_comments.py 8c08fe0b4a47acff803af94e74e38ba84f144651
   test_matlab_comments.py e069651f2650c6e436d4624e38046ea0c732afb9
   test_ocaml_comments.py cb64ad698b03df0147ffede4d65c5bdf1f19c011
   test_occam_comments.py d92fe74ccc272da6fe254365c58da3ca1782c5e8
   test_octave_comments.py dcf1ba3691e2dd89fa32180007b3c968ca592517
   test_pascal_comments.py 060319f2ea0856cb78f7a4f71207ca10b5a4f2e8
-  test_perl_comments.py caba14094d7108d7a89d0ddaf8a41cba5248d07b
+  test_perl_comments.py e5caf230cb5934341f12f08c35db265b5e5e66cc
   test_protobuf_comments.py db1d68e93850c66f627c8d14f0f58376f8cf2bcd
   test_python_comments.py a6a5f0b65170ecf611efaed9039372cf26304fb3
-  test_q.py e98a7dd05587b655b00ba0554bcc328b74e2c207
+  test_q.py f53387516f34664c80b18c2abebafe0015904075
   test_r_markdown_comments.py 747d0a813426af4b603551770f4f32d97f50a5ea
   test_re2c_comments.py 1c625aeb177448c64f0ddb89825a683e196283e3
   test_rust_comments.py 8aece360175128390ba4dbabb93b3a7c5c73bb39
   test_scala_comments.py 320115cc99888f51fb00ca6e936e93cccaa606d8
   test_snobol_comments.py dba26e00f18cb6906e334cf47230374159e42346
-  test_tex_comments.py acbea7c7cfbf25c581529c5e999e66a58947329a
+  test_tex_comments.py 2cb296f4748f2e299ba042769686e244c9f235fe
   test_toml_comments.py e10a3569f792e2b3b0548a9a7b5b16819eeba334
   test_txt_comments.py 3bf8697187d66ba5f293c341e69bc7c373307bbf
   test_uncomment_html.py d159294213486867297a786116ddcdd1be6d6cd3
   test_uncomment_java.py 27a1b4dbe00666a060baa1c14364904fc1357819
-  test_user_guide.py d800a37caaf6439fe3ee254b2635d2917005dd70
-  test_xml_comments.py c5438ae8dc064f79cb479fd737755f2454d6322b
+  test_user_guide.py 47235bc1de99721dc717ab2378ccd9ec65953b1d
+  test_xml_comments.py 884040244778664bdd0ad3fef4132658076efdbf
   userguide.xml 4f15f8eb91f0bcaa83ad1b0dcb9a2686bdea1285
   yy_foo 883520283ff24ba8df4240504d6de148c9272a0d
   yy_foo.go 883520283ff24ba8df4240504d6de148c9272a0d
@@ -166,4 +159,4 @@ pysloc
  tox.ini 1c7e3b6cb1651f78bfd5434b8c9aa294b0c827bc
 # END CONTENT #
 
-bkb9zVL0xPo42mEVp/fmBXZERLQTS1CS5PWc5A/a3xlvNrFuNSD+lYh8v/mUG0B5WIx06OhBpoQD+4sZbhayFbTjcQpkhoWiF+nVRbPj/rIL/4AgQ/tHfE/Y6OmZX6sqqYkAwPwJHmKsZlK9xiWUOl/R7MjJrSgWRe4oXiT7z6qL7tFgbiVcpoT9AkavECEmLx0JUwifMiwNwXho/KjLXGfxRbnZ940eyd9a8inKtLcsCeDfl7DwJ7xTPxw8vA9VnszzvYkwDDXRQFgCu7YyUthMFA5QoLKzC0A5NCy929+k3juTadujuuhLZwdEFWdJQXt59gChuPo3NkdPe40N8Q==
+WJ2B/4XNzxAwsa2jQcrbh+Dn5NfkBE53ZDL1+RAAoUUK/v34l+XdiwMPfbimwf6IoQrqPtD2c0/jkHfDKkdHftJLPGqqUfX5qhouwTxr8oQTWGU/fTtjxMwqdX8hT8p/D5SRBfF7NZrXhVcYvA0cAp4+n1yvqotYn3lzPqVoko8/6Zz0sJCV+aG5qTMNh1AM/j02UL5qOJvBAYHGNBITYxJ9/m0CS+mjXO7ElJsdozrqepzhN94h+7ZEw8NyLUNajy6mpr5fU37BtMRRbqLf1pEoBzcCGVl+MQfKR5NiTBpK09Gl1yn6l3TJepZXJ/N4JVGctw6FokIgG3z6OcDRIQ==

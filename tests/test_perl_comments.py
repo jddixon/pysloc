@@ -28,7 +28,7 @@ class TestPerlComments(unittest.TestCase):
         options.map_holder = MapHolder()
         options.verbose = False
 
-        # XXX possible error reading file, possible errors parsing data
+        # possible error reading file, possible errors parsing data
 
         lines, sloc = count_lines_perl(test_file, options, 'perl')
         self.assertEqual(lines, 39)
