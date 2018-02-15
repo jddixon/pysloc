@@ -9,10 +9,11 @@ import time
 from argparse import ArgumentParser
 
 from optionz import dump_options
-from xlattice.util import make_ex_re, get_exclusions
+from xlutil import make_ex_re, get_exclusions
 
 from pysloc import(__version__, __version_date__,
-                   count_lines_in_dir, count_lines_not_sharp, CountHolder, MapHolder)
+                   count_lines_in_dir, count_lines_not_sharp,
+                   CountHolder, MapHolder)
 
 
 def read_file_map(path_to_file, named_files):

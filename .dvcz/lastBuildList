@@ -8,17 +8,17 @@ k2lyCIE/V/CDb9eVDYQgYSJYrnQ/JAPST7NbcY8aI+/0l7QVBhLBpmOCvmS6ofvz
 /QIDAQAB
 -----END PUBLIC KEY-----
 pysloc
-2017-12-20 01:04:05
+2018-02-15 22:05:36
 # BEGIN CONTENT #
 pysloc
  .dvcz
-  builds d25ed8d872c64656a8929c2449eafd3a2264782d
-  lastBuildList c5cc4b27b8cb19405832ca514d48129b6ea4057d
+  builds 5029ecf96cfeb542cbbc2b53a940da8b087eb8e1
+  lastBuildList d07a1528d404555c508094f2acc68de4c6e815bf
   projCfg cf8520f9288fae4c35abe64446067b53c4af4ed7
   projCfg.local 765cd23b1200190f9921d39df9cc8853abaee7fd
-  projConfig.toml 578923c71044792a62989aded12febf51db66d58
+  projConfig.toml aaf4d7ee9eec40502876fd0e9ab0a8e88855b4dd
  .gitignore c8129c7133b7a7755cefd3dfc62a9af7bc306aa0
- CHANGES e48eefdf21238021985c43239c914193e67eb1a4
+ CHANGES 6423fe61089b6f9561ba2ee7092c38366af5419e
  LICENSE-MIT.md ce4053c54849d1033bd67b6cab7bdedc03de2b97
  MANIFEST.in ee87ecf6928c0c4c69376734eba9cf532ce748b1
  README.md 6c21200b03cfbac519fc664fe46ff7e867862c14
@@ -45,11 +45,11 @@ pysloc
  installit efaa7c546ff779b9615d1171ced81f84af299685
  pylintrc dd234fda24a547a9071f1e4608a3c1f3b7de9aa0
  requirements.txt 3a2f11c6e808f78203bf2fb88ef14a87044c5efa
- setup.py 716a9d8abdccf039a2697c8b34b0beba0e4b6fee
+ setup.py f3f411c0198bdaf9f377633562166346f7184a68
  src
-  pySloc 12a22e636661516ff8d213d239006a5909fb15a4
+  pySloc b6b89bc62dec021953424fb2922a6f9ee542108a
   pysloc
-   __init__.py 3b366cb31156b8ead44ccd3e672f0428be122f52
+   __init__.py b4df2745e2a6a79005e46ba580bb1db0ec7655f1
  styleit 38f93db5fd80738f215ab52efeab5c38ebe79422
  test
   8bit2.sno d071f3c133db505ad07d8472e4482f8fc97ce61d
@@ -159,4 +159,4 @@ pysloc
  tox.ini 1c7e3b6cb1651f78bfd5434b8c9aa294b0c827bc
 # END CONTENT #
 
-WJ2B/4XNzxAwsa2jQcrbh+Dn5NfkBE53ZDL1+RAAoUUK/v34l+XdiwMPfbimwf6IoQrqPtD2c0/jkHfDKkdHftJLPGqqUfX5qhouwTxr8oQTWGU/fTtjxMwqdX8hT8p/D5SRBfF7NZrXhVcYvA0cAp4+n1yvqotYn3lzPqVoko8/6Zz0sJCV+aG5qTMNh1AM/j02UL5qOJvBAYHGNBITYxJ9/m0CS+mjXO7ElJsdozrqepzhN94h+7ZEw8NyLUNajy6mpr5fU37BtMRRbqLf1pEoBzcCGVl+MQfKR5NiTBpK09Gl1yn6l3TJepZXJ/N4JVGctw6FokIgG3z6OcDRIQ==
+hq9mq933HGlproivIhXQyH/HAlExMMoxcjWtVIBn/Rr3OsVfZgSCA8Vvw6KAp+uE4xzsrL0PcSRZdnjOOk1+6ZUdb3xefEmgYi3PCccvSATXJQcsMol3r6l60SVtSl1NNniIABnlxDAoRldOAKILhNNVTVxcE8mE/rUyjEoMT13VmPBxnesb+kjja3rV9b5t48ImyvYWtvEOm2qYuMvZbhtBuLQqqAQO32zunmnA+gJG6lZSjgiBHIeEg1bb3I+8rXiFgUpw1q0NNP7N1lYjUqk035bfWEECD2f22SPGksfMr2fFhOb5F0n3ZswdLvcwPgqyQvpSVjZJV+WrsFNk4g==
