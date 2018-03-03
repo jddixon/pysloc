@@ -8,17 +8,17 @@ k2lyCIE/V/CDb9eVDYQgYSJYrnQ/JAPST7NbcY8aI+/0l7QVBhLBpmOCvmS6ofvz
 /QIDAQAB
 -----END PUBLIC KEY-----
 pysloc
-2018-02-15 22:05:36
+2018-03-03 21:01:06
 # BEGIN CONTENT #
 pysloc
  .dvcz
-  builds 5029ecf96cfeb542cbbc2b53a940da8b087eb8e1
-  lastBuildList d07a1528d404555c508094f2acc68de4c6e815bf
+  builds fb977b8a05bd18ae483a3f5b69754f019d89793c
+  lastBuildList 4a8f820cc5b6c81a459a664cf536717dba7fe746
   projCfg cf8520f9288fae4c35abe64446067b53c4af4ed7
   projCfg.local 765cd23b1200190f9921d39df9cc8853abaee7fd
-  projConfig.toml aaf4d7ee9eec40502876fd0e9ab0a8e88855b4dd
+  projConfig.toml a3c8af36fab5f0c46f5e045a5854bcea7f6b3398
  .gitignore c8129c7133b7a7755cefd3dfc62a9af7bc306aa0
- CHANGES 6423fe61089b6f9561ba2ee7092c38366af5419e
+ CHANGES cd7b2b69d029ed5d581ac94b19574496bb6cf4f1
  LICENSE-MIT.md ce4053c54849d1033bd67b6cab7bdedc03de2b97
  MANIFEST.in ee87ecf6928c0c4c69376734eba9cf532ce748b1
  README.md 6c21200b03cfbac519fc664fe46ff7e867862c14
@@ -44,12 +44,12 @@ pysloc
   index.md 7d3e6f2cf99523d4a4565c387cf2388575cb2a04
  installit efaa7c546ff779b9615d1171ced81f84af299685
  pylintrc dd234fda24a547a9071f1e4608a3c1f3b7de9aa0
- requirements.txt 3a2f11c6e808f78203bf2fb88ef14a87044c5efa
- setup.py f3f411c0198bdaf9f377633562166346f7184a68
+ requirements.txt dc9075b4684d965cd3dbea5c9c2257b0826aa398
+ setup.py 8dc53684cfd45ac84888697fc8fe71ffe9b386a3
  src
   pySloc b6b89bc62dec021953424fb2922a6f9ee542108a
   pysloc
-   __init__.py b4df2745e2a6a79005e46ba580bb1db0ec7655f1
+   __init__.py ea63fcb321f74277cc25480f9941098b54cee9f2
  styleit 38f93db5fd80738f215ab52efeab5c38ebe79422
  test
   8bit2.sno d071f3c133db505ad07d8472e4482f8fc97ce61d
@@ -63,7 +63,7 @@ pysloc
    subsubdir
     twoLiner.sno 74b24c5bb8b430883ed92ebff0f3ed091fe14450
  test.all 0fb7819617f9213525fd4160fca1a67100d1e167
- test_requirements.txt 8506429173e87de2214de00aacdb57e255545f75
+ test_requirements.txt 02b98bc0d5cf0647c842b13b4beedc1a2694ca2d
  tests
   OpenCOBOLProgrammersGuide.pdf b9d01f7a62de2c61b2d3469eb83c73c698987817
   commentsForAugeas c7667859a9f87163f727addc197c64022cc27523
@@ -156,7 +156,7 @@ pysloc
   yy_foo.txt afc063fd3868effc0b70a9a18fb45555e8e01a45
   yy_foo.y 883520283ff24ba8df4240504d6de148c9272a0d
   yy_foo_test.go 883520283ff24ba8df4240504d6de148c9272a0d
- tox.ini 1c7e3b6cb1651f78bfd5434b8c9aa294b0c827bc
+ tox.ini 406dafe97d11548a45c77d68fea046f39e281aed
 # END CONTENT #
 
-hq9mq933HGlproivIhXQyH/HAlExMMoxcjWtVIBn/Rr3OsVfZgSCA8Vvw6KAp+uE4xzsrL0PcSRZdnjOOk1+6ZUdb3xefEmgYi3PCccvSATXJQcsMol3r6l60SVtSl1NNniIABnlxDAoRldOAKILhNNVTVxcE8mE/rUyjEoMT13VmPBxnesb+kjja3rV9b5t48ImyvYWtvEOm2qYuMvZbhtBuLQqqAQO32zunmnA+gJG6lZSjgiBHIeEg1bb3I+8rXiFgUpw1q0NNP7N1lYjUqk035bfWEECD2f22SPGksfMr2fFhOb5F0n3ZswdLvcwPgqyQvpSVjZJV+WrsFNk4g==
+F+96NpbCS82RKm4ebsDVXYT33mv04Fbt7wxh4V6fP1m9ASP1vL6636gHRzH73XFM1ep3LZINpj6ye2RBMp5PWMSx9S9iKBPrk6e4BOUjql2eqKTpPSkVVVCSpvYTsyqF0ZUUATBsJLlo8s5yWaTSEZSdTXs/lKzuDeEm8wF6ZmMQAIi+7TbTtuCo35qTVIDHgxieUUnYi9GTxae/AFoIMn/VnekmNEiALbCgXjeuDb3kAq7GQJo5WDOth+ddNyRI7Ho8SFtc8vD/DYV27YK721rlJyv3ageHe9XdgMxiEqd8STvzMlI+c19jK5j6uirfgf0lYyPDur6vv3HkBGfTug==
