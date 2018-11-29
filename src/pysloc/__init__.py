@@ -55,8 +55,8 @@ __all__ = ['__version__', '__version_date__',
            'CountHolder', 'MapHolder', ]
 
 # exported constants ------------------------------------------------
-__version__ = '0.9.7'
-__version_date__ = '2018-03-03'
+__version__ = '0.9.8'
+__version_date__ = '2018-11-26'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile(
@@ -191,6 +191,7 @@ class MapHolder(object):
             'lex': count_lines_java_style,      # lex/flex
             'lisp': count_lines_lisp,           # Common Lisp
             'm4': count_lines_not_sharp,        # m4 macro processor
+            'mjs': count_lines_java_style,      # Javascript module
             'ml': count_lines_ocaml,            # ocaml, tentative abbrev
             'objc': count_lines_java_style,     # Objective C
             'occ': count_lines_double_dash,     # concurrent programming
@@ -260,6 +261,7 @@ class MapHolder(object):
             'loc_': 'lex',                  # lex/flex parser generator
             'm4': 'm4',                     # no counter
             'md': 'md',                     # no counter
+            'mjs': 'mjs',                   # Javascript modules
             'ml': 'ml',                     # OCaml
             'mli': 'ml',                    # OCaml extension
             'occ': 'occ',
@@ -340,6 +342,7 @@ class MapHolder(object):
             'lisp': 'lisp',
             'm4': 'm4',
             'md': 'markdown',
+            'mjs': 'Javascript module',
             'ml': 'OCaml',
             'objc': 'Objective C',
             'occ': 'Occam',

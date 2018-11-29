@@ -1,5 +1,8 @@
 # ~/dev/py/pysloc/CHANGES
 
+v0.9.8
+    2018-11-26
+        *
 v0.9.7
     2018-03-03
         * edit setup.py, tox config files                           SLOC 4988
@@ -321,6 +324,7 @@ v0.4.15
     2012-10-24
         * first working version (count agrees exactly with 
             sloccount)                                              SLOC  202
+
 
 
 
