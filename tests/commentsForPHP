@@ -1,21 +1,29 @@
-/* phpTester */
+/* commentsForPHP */
 
-this is the third line                          SLOC 1
-this is the fourth // ending with a comment     SLOC 2
-// this is the fifth 
-and this is my very generous 6th line           SLOC 3
+*/                                          //  SLOC 1
 
-/**/ A degenerate comment or two /* */          SLOC 4
+this is the fifth line                          SLOC 2
+this is the sixth // ending with a comment      SLOC 3
+// this is the seventh
+and this is my very generous 6th line           SLOC 4
+
+/**/ A degenerate comment or two /* */          SLOC 5
 
 /*
 */
 
-/* This is a multiline comment 
+/* This is a multiline comment
  * runing over several lines
  * with occasional correct spellings
  */
-I see five source lines in this 21-line file    SLOC 5
+I see nine source lines in this 26-line file    SLOC 6
 
-# This is the only comment starting with a sharp sign
-  # Well, it was until this one showed up
-and this one    # ...                           SLOC 6
+*/                                       //     SLOC 7
+
+# // /* this is a test */
+# /* this is another test line */
+hello # // /* this is a test */                 SLOC 8
+there # /* this is another test line */         SLOC 9
+/* junk */ # foo /* trash */
+/* junk */ # foo /* trash */ foo
+/* junk */   foo /* trash */ foo                SLOC 10

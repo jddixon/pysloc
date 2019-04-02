@@ -7,25 +7,31 @@ Giaje1YAJPNVBt3dlOA5lhBp4GpSYBskJ9UR2Zyt3lgAGK3dEwxYETLMh9VWEV8i
 k2lyCIE/V/CDb9eVDYQgYSJYrnQ/JAPST7NbcY8aI+/0l7QVBhLBpmOCvmS6ofvz
 /QIDAQAB
 -----END PUBLIC KEY-----
-pysloc
-2018-03-03 21:01:06
+pysloc v0.9.10
+2019-04-02 19:33:31
 # BEGIN CONTENT #
 pysloc
  .dvcz
-  builds fb977b8a05bd18ae483a3f5b69754f019d89793c
-  lastBuildList 4a8f820cc5b6c81a459a664cf536717dba7fe746
+  builds 8716b26a542b4b998650bc159ca70308c5525c17
+  lastBuildList 6ea74326cc76ca75ba5412aec0fe09a3dbc2bf38
   projCfg cf8520f9288fae4c35abe64446067b53c4af4ed7
   projCfg.local 765cd23b1200190f9921d39df9cc8853abaee7fd
-  projConfig.toml a3c8af36fab5f0c46f5e045a5854bcea7f6b3398
+  projConfig.toml 38ef743ee5fcac55582982c82aaa8342fc20dc9f
  .gitignore c8129c7133b7a7755cefd3dfc62a9af7bc306aa0
- CHANGES cd7b2b69d029ed5d581ac94b19574496bb6cf4f1
+ .pytest_cache
+  v
+   cache
+    lastfailed bf21a9e8fbc5a3846fb05b4fa0859e0917b2202f
+    nodeids bbc886941e398d59ead803ad06d186edfe8bec3b
+    stepwise 97d170e1550eee4afc0af065b78cda302a97674c
+ CHANGES 76365b060a9728ddbe9abb8a79029e83df1bcddb
  LICENSE-MIT.md ce4053c54849d1033bd67b6cab7bdedc03de2b97
  MANIFEST.in ee87ecf6928c0c4c69376734eba9cf532ce748b1
  README.md 6c21200b03cfbac519fc664fe46ff7e867862c14
  TODO 4d43bb2b8c91892d858b2f661ec7338262e3cafb
  bkp2U 5961ddc3ce44158bdb3ddee6febae84b3d597605
  checkCoverage 828938f374fd2832e00a35d397e94bfaff21268b
- countem 3e862021f12e40005fe702edf5563a1401a8cb06
+ countem a41982f24a32c98580cd452fa0eab5bd848fc7a0
  doPyLint ec1fce4db2bc43496f37f00dc9720dc0b8f46d6d
  ghpDoc
   css
@@ -45,11 +51,11 @@ pysloc
  installit efaa7c546ff779b9615d1171ced81f84af299685
  pylintrc dd234fda24a547a9071f1e4608a3c1f3b7de9aa0
  requirements.txt dc9075b4684d965cd3dbea5c9c2257b0826aa398
- setup.py 8dc53684cfd45ac84888697fc8fe71ffe9b386a3
+ setup.py 7d3fa29f93a50a45429525e05a27bacd837942f9
  src
   pySloc b6b89bc62dec021953424fb2922a6f9ee542108a
   pysloc
-   __init__.py ea63fcb321f74277cc25480f9941098b54cee9f2
+   __init__.py 2b08883b4311556a6a70c5c84cb37a0fcd5b8778
  styleit 38f93db5fd80738f215ab52efeab5c38ebe79422
  test
   8bit2.sno d071f3c133db505ad07d8472e4482f8fc97ce61d
@@ -69,6 +75,7 @@ pysloc
   commentsForAugeas c7667859a9f87163f727addc197c64022cc27523
   commentsForCobol 4f3810cc322c1bd4b6bb04c99053d84f13d83944
   commentsForCpp 521280339e1ab1ec6381c3a05083fa2bc9b2830a
+  commentsForCrack 99f8ee6cce6d9f0c991466e3360a446e19078ecc
   commentsForCss 018ed80b8a6e6607bc7c08595fa5a7fa56853885
   commentsForCython.pxd 7680b3b6077f0a2ccde20ed5949075e5056993f7
   commentsForCython.pyx d74f86bf40c222c7c9d22960bf039a344e17afb8
@@ -87,7 +94,7 @@ pysloc
   commentsForOCaml bea44d72530cbced3b66298b74b3296617d7c359
   commentsForOccam b4d21f08e0b469b9e8a04b9e457faebeb737b2af
   commentsForOctave c3081b9a753f79919bd27e87ee8127074baf3531
-  commentsForPHP 64bdd53b2aa74c5f695ed545fc3ac45f755a3448
+  commentsForPHP 0591da267e7b9b2b76a4eb01d70d5b81a6389dc3
   commentsForPascal 8c850f381436498fac451b7f3e6e7c4a6b35027c
   commentsForPerl 8eb051242e95796edbb33000cbd44b801d97be3c
   commentsForProtobuf 6c50df9c67a7adf8af8ff8435d5eeab311962867
@@ -112,6 +119,7 @@ pysloc
   test_augeas_comments.py 9e50627954fa540dcbf24e96ad8a5e42ebeae261
   test_could_be_generated.py 84ffd27b8f40a7dd0ebf77eee2c1ec03d54912b8
   test_cpp_comments.py a5bd26429a3c566c139035ea5376a66ebad5c082
+  test_crack_comments.py f3589969120ea4b91c833f973618429e4be3e10d
   test_css_comments.py fb9877408e32024060ae4663ae9cc8ac779a9d03
   test_cython_comments.py 33d8fa300f5decac5fee9597f5be676c8b8a77d9
   test_foo.py 143f184337401bcf0e0b92c15c92d9cf800c5e9d
@@ -131,6 +139,7 @@ pysloc
   test_octave_comments.py dcf1ba3691e2dd89fa32180007b3c968ca592517
   test_pascal_comments.py 060319f2ea0856cb78f7a4f71207ca10b5a4f2e8
   test_perl_comments.py e5caf230cb5934341f12f08c35db265b5e5e66cc
+  test_php_comments.py dc6d8a28c12d7403f00fa65887fad9dc0e9287f5
   test_protobuf_comments.py db1d68e93850c66f627c8d14f0f58376f8cf2bcd
   test_python_comments.py a6a5f0b65170ecf611efaed9039372cf26304fb3
   test_q.py f53387516f34664c80b18c2abebafe0015904075
@@ -159,4 +168,4 @@ pysloc
  tox.ini 406dafe97d11548a45c77d68fea046f39e281aed
 # END CONTENT #
 
-F+96NpbCS82RKm4ebsDVXYT33mv04Fbt7wxh4V6fP1m9ASP1vL6636gHRzH73XFM1ep3LZINpj6ye2RBMp5PWMSx9S9iKBPrk6e4BOUjql2eqKTpPSkVVVCSpvYTsyqF0ZUUATBsJLlo8s5yWaTSEZSdTXs/lKzuDeEm8wF6ZmMQAIi+7TbTtuCo35qTVIDHgxieUUnYi9GTxae/AFoIMn/VnekmNEiALbCgXjeuDb3kAq7GQJo5WDOth+ddNyRI7Ho8SFtc8vD/DYV27YK721rlJyv3ageHe9XdgMxiEqd8STvzMlI+c19jK5j6uirfgf0lYyPDur6vv3HkBGfTug==
+GyK6ISDEtyVRozSv66hu3+TUJ+p2DLUXRYscfbhsHiXD4ICyfBeAZ87GC/UU7B6DzeKi9BSdYqkmLOa3MKMDlnki3ALrdLFR4YMCm5TKawwHrnl0QQ9oAT3IiUQD6eE9jN+HhOniUv8A7/kDiDV+5uJBIX87SRsXn45HcVnfju+Olhh+KcTxbrYyj1fCQJDhrxhMvwWS23Lhjbjls5b+F7yzsvlaVsNPmb39iUvUCrV2/e0yCKEt67UseBiYQg8njtJYFu03LQUYV/QPuj5VRe1hurNEqU2UIT60XqTf/oqlDX6IuY2g1MJyIBMA9UdGXfUdrW2qbLpR2EkIjXDeww==

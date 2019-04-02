@@ -18,13 +18,13 @@ __all__ = ['__version__', '__version_date__',
            # constants
            'GPERF_RE', 'RE2C_RE',
            # functions
-           'count_lines_toml',                      # XXX TESTING IMPORT
            'count_lines_augeas',
            'count_lines_bash',
            'count_lines_c',
            'count_lines_clojure',
            'count_lines_clojurescript',
            'count_lines_cpp',
+           'count-lines_crack',
            'count_lines_double_dash',
            'count_lines_fortran',
            'count_lines_fortran90',
@@ -41,6 +41,7 @@ __all__ = ['__version__', '__version_date__',
            'count_lines_occam',
            'count_lines_pascal',
            'count_lines_perl',
+           'count_lines_php',
            'count_lines_protobuf',
            'count_lines_python',
            'count_lines_r_markdown',
@@ -49,14 +50,15 @@ __all__ = ['__version__', '__version_date__',
            'count_lines_ruby',
            'count_lines_scala', 'count_lines_shell', 'count_lines_snobol',
            'count_lines_tex',
+           'count_lines_toml',
            'count_lines_txt',
            'uncomment_html', 'uncomment_java',
            # classes
            'CountHolder', 'MapHolder', ]
 
 # exported constants ------------------------------------------------
-__version__ = '0.9.7'
-__version_date__ = '2018-03-03'
+__version__ = '0.9.10'
+__version_date__ = '2019-04-02'
 
 # private constants -------------------------------------------------
 GPERF_RE = re.compile(
@@ -175,6 +177,7 @@ class MapHolder(object):
             'cljs': count_lines_clojurescript,  # ClojureScript
             'code': count_lines_not_sharp,      # used to be 'not#'
             'cpp': count_lines_cpp,             # C++
+            'crk': count_lines_crack,           # crack programming language
             'csh': count_lines_not_sharp,       # csh, tcsh
             'css': count_lines_java_style,      # css, as in stylesheets
             'cython': count_lines_python,
@@ -191,10 +194,12 @@ class MapHolder(object):
             'lex': count_lines_java_style,      # lex/flex
             'lisp': count_lines_lisp,           # Common Lisp
             'm4': count_lines_not_sharp,        # m4 macro processor
+            'mjs': count_lines_java_style,      # Javascript module
             'ml': count_lines_ocaml,            # ocaml, tentative abbrev
             'objc': count_lines_java_style,     # Objective C
             'occ': count_lines_double_dash,     # concurrent programming
             'perl': count_lines_perl,
+            'php': count_lines_php,
             'proto': count_lines_protobuf,      # Google Protocol Buffers
             'py': count_lines_python,           # yes, Python
             'R': count_lines_not_sharp,         # R
@@ -235,6 +240,7 @@ class MapHolder(object):
             'CPP': 'cpp',                   # C++
             'c++': 'cpp',                   # C++
             'cxx': 'cpp',                   # C++
+            'crk': 'crack',                 # crack programming language
             'csh': 'csh',
             'css': 'css',
             'flattened': 'for',             # fixed-format FORTRAN
@@ -260,9 +266,15 @@ class MapHolder(object):
             'loc_': 'lex',                  # lex/flex parser generator
             'm4': 'm4',                     # no counter
             'md': 'md',                     # no counter
+            'mjs': 'mjs',                   # Javascript modules
             'ml': 'ml',                     # OCaml
             'mli': 'ml',                    # OCaml extension
             'occ': 'occ',
+            'php': 'php',
+            'php3': 'php',
+            'php4': 'php',
+            'php5': 'php',
+            'phtml': 'php',
             'pl': 'perl',
             'pm': 'perl',
             'proto': 'proto',                  # Google protobuf
@@ -323,6 +335,7 @@ class MapHolder(object):
             'cljs': 'ClojureScript',
             'code': 'code',                     # the former 'not#'
             'cpp': 'C++',
+            'crack': 'crack',
             'csh': 'csh',
             'css': 'css',
             'cython': 'cython',
@@ -340,10 +353,12 @@ class MapHolder(object):
             'lisp': 'lisp',
             'm4': 'm4',
             'md': 'markdown',
+            'mjs': 'Javascript module',
             'ml': 'OCaml',
             'objc': 'Objective C',
             'occ': 'Occam',
             'perl': 'Perl',
+            'php': 'php',
             'proto': 'proto',                  # Google protobuf
             'py': 'python',
             'R': 'R',
@@ -494,12 +509,6 @@ class MapHolder(object):
                             "  %s: NO ext, GUESS lang %s" %
                             (file_name, lang))
 
-        # DEBUG
-        # print("guessLang: fileName %s, isCLIArg %s;\treturning lang %s, " +
-        #       "isTest %s" % (
-        #    fileName, isCLIArg, lang, isTest))
-        # END
-
         return lang, is_test
 
     def is_generated(self, path_to_file, verbose=0):
@@ -523,21 +532,8 @@ class MapHolder(object):
 
 
 def count_lines_in_dir(path_to_dir, options):
-    # DEBUG
-    # print("DIRECTORY %s" % pathToDir)
-    # if not options:
-    #    print("  NIL OPTIONS")
-    # else:
-    #    for pair in options._get_kwargs():
-    #        ls = pair[0]
-    #        rs = pair[1]
-    #        print("%s => %s" % (ls, rs))
-    # END
     k__ = options.k__
     langs_counted = options.langs_counted
-    # DEBUG
-    # print("LANGS COUNTED: %s" % langsCounted)
-    # END
     map_holder = options.map_holder
     verbose = options.verbose
     lines, sloc = (0, 0)
@@ -551,13 +547,7 @@ def count_lines_in_dir(path_to_dir, options):
             # consider exclusions ...
             if options.ex_re is not None and options.ex_re.search(
                     name) is not None:
-                # DEBUG
-                # print("EXCLUDED: %s" % name)
-                # END
                 continue
-            # DEBUG
-            # print("FILE IN DIRECTORY: %s" % name)
-            # END
             is_test = False  # default
             path_to_file = os.path.join(path_to_dir, name)
             sloc_ = os.lstat(path_to_file)        # ignores symlinks
@@ -683,9 +673,6 @@ def count_lines_clojurescript(path_to_file, options, lang):
 
 
 def count_lines_cpp(path, options, lang):
-    # DEBUG
-    print("count_lines_cpp() checking path '%s', lang '%s'" % (path, lang))
-    # END
     loc_, sloc_ = 0, 0
     if path.endswith('.h'):
         if not path.endswith('.pb.h'):
@@ -697,6 +684,108 @@ def count_lines_cpp(path, options, lang):
         loc_, sloc_ = count_lines_java_style(path, options, lang)
 
     return loc_, sloc_
+
+# CRACK ==================================================================
+
+# YYY
+
+
+def _find_crack_code(text):
+    """
+    We are in a comment.  Return a ref to the beginning of the text
+    outside the comment block (which may be '') and the value of inComment.
+    """
+    posn = text.find('*/')
+    if posn == -1:
+        return '', True
+
+    if posn + 2 < len(text):
+        return text[posn + 2:], False
+    return '', False
+
+
+def _find_crack_comment(text):
+    """
+    We are NOT in a comment.  Return a ref to any code found, a ref to the
+    rest of the text, and the value of inComment.
+    """
+    posn_old = text.find('/*')       # multi-line comment
+    posn_new = text.find('//')       # one-line comment
+    posn_sharp = text.find('#')      # one-line comment
+
+    if posn_old == -1 and posn_new == -1 and posn_sharp == -1:
+        return text, '', False
+
+    posn = 1024 * 1024
+    if posn_old != -1:
+        posn = posn_old
+    if posn_new != -1 and posn_new < posn:
+        posn = posn_new
+    if posn_sharp != -1 and posn_sharp < posn:
+        posn = posn_sharp
+
+    if posn == posn_old:
+        in_comment = True
+        return text[:posn], text[posn + 2:], in_comment
+    else:
+        in_comment = False
+        return text[:posn], '', in_comment
+
+
+def uncomment_crack(text, in_comment):
+    """
+    Given a line of text, return a ref to any code found and the value of
+    inComment, which may have changed.
+    """
+    code = ''
+    text = text.strip()
+    while text:
+        if in_comment:
+            text, in_comment = _find_crack_code(text)
+        else:
+            chunk, text, in_comment = _find_crack_comment(text.strip())
+            code += chunk
+
+    return code, in_comment
+
+
+def count_lines_php(path_to_file, options, lang):
+    # comments are either single line or multi-line.  Single-line
+    # comments begin with either # or //.  In either case whatever
+    # is to the right of the delimiter is a comment.  Multi-line
+    # comments begin with /* and end with */
+
+    return count_lines_crack(path_to_file, options, lang)
+
+
+def count_lines_crack(path_to_file, options, lang):
+    # comments are either single line or multi-line.  Single-line
+    # comments begin with either # or //.  In either case whatever
+    # is to the right of the delimiter is a comment.  Multi-line
+    # comments begin with /* and end with */
+
+    lines_so_far, sloc_so_far = (0, 0)
+    in_comment = False
+    try:
+        lines, hash_val = check_whether_already_counted(path_to_file, options)
+        if (hash_val is not None) and (lines is not None):
+            for line in lines:
+                lines_so_far += 1
+
+                code, in_comment = uncomment_crack(line, in_comment)
+                if code:
+                    code = code.strip()
+                    if code:
+                        sloc_so_far += 1
+
+            options.already.add(hash_val)
+            if options.verbose:
+                print("%-47s: %-6s %5d lines, %5d sloc" % (
+                    path_to_file, lang, lines_so_far, sloc_so_far))
+
+    except Exception as exc:
+        print("error reading '%s', skipping: %s" % (path_to_file, exc))
+    return (lines_so_far, sloc_so_far)
 
 # FORTRAN ===========================================================
 
@@ -754,9 +843,6 @@ def count_lines_fortran90(path_to_file, options, lang):
 
                 line_len = len(line)
                 if line_len:
-                    # DEBUG
-                    # print("\nLINE: '%s'" % line)
-                    # END
                     if line[0] in ['c', 'C']:
                         # a fixed-form comment
                         continue
@@ -779,9 +865,6 @@ def count_lines_fortran90(path_to_file, options, lang):
                     for ch_ in line:
                         if ch_ != ' ':
                             sloc_so_far += 1
-                            # DEBUG
-                            # print("  SLOC %02d: '%s'" % (sloc_so_far, line))
-                            # END
                             break
 
             options.already.add(hash_val)
@@ -1012,11 +1095,6 @@ def count_lines_matlab(path_to_file, options, lang):
                 percent_sen = False             # might start %{ or %}
                 # for c_ndx, ch_ in enumerate(list(line)):
                 for ch_ in list(line):
-                    # DEBUG
-                    # print("line %2d char %2d '%c' depth %2d percent? " +
-                    #       "%s nonSpace? %s" % (
-                    #        lNdx, cNdx, ch, depth, percentSeen, nonSpaceSeen))
-                    # END
                     if percent_sen:
                         if ch_ == '{':
                             depth += 1
@@ -1219,11 +1297,6 @@ def count_lines_occam(path_to_file, options, lang):
                 delim_seen = False             # might start %{ or %}
                 # for c_ndx, ch_ in enumerate(list(line)):
                 for ch_ in list(line):
-                    # DEBUG
-                    # print("line %2d char %2d '%c' depth %2d percent? " +
-                    #       "%s nonSpace? %s" % (
-                    #        lNdx, cNdx, ch, depth, delimSeen, nonSpaceSeen))
-                    # END
                     if delim_seen:
                         if ch_ == '{':
                             depth += 1
@@ -1351,11 +1424,6 @@ def count_lines_pascal(path_to_file, options, lang):
                 if non_space_sen:
                     sloc_so_far += 1
 
-                # DEBUG
-                # print("line %3d depth %2d slocSeen %3d: '%s'" % (
-                #    ndx, depth, slocSoFar, line))
-                # END
-
             options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
@@ -1445,6 +1513,7 @@ def count_lines_perl(path_to_file, options, lang):
         print("error reading '%s', skipping: %s" % (path_to_file, exc))
     return lines_so_far, sloc_so_far
 
+# PHP ===============================================================
 # PROTOBUF ==========================================================
 
 
@@ -1537,23 +1606,14 @@ def count_lines_r_markdown(path_to_file, options, lang):
                 if ndx == 0 and line.startswith('---'):
                     in_yaml = True
                 if in_yaml:
-                    # DEBUG
-                    # print("YAML: '%s'" % line)
-                    # END
                     if line:
                         sloc_so_far += 1
                     if ndx and line.startswith('---'):
                         in_yaml = False
                         # already counted
-                        # DEBUG
-                        # print('total of %d lines of YAML' % slocSoFar)
-                        # END
                     continue
 
                 if in_code_chunk:
-                    # DEBUG
-                    # print("CODE: %s" % line)
-                    # END
                     if line and (line[0] != '#'):
                         sloc_so_far += 1
                     if line.startswith('```'):
@@ -1561,9 +1621,6 @@ def count_lines_r_markdown(path_to_file, options, lang):
                         # already counted
 
                 else:
-                    # DEBUG
-                    # print("TEXT: %s" % line)
-                    # END
                     if line.startswith('```{r '):
                         sloc_so_far += 1
                         in_code_chunk = True
@@ -1660,42 +1717,23 @@ def _find_scala_code(text, comment_depth):
     We are in a comment.  Return a ref to the beginning of the text
     outside the comment block (which may be '') and the value of commentDepth.
     """
-    # #DEBUG
-    # print("entering _findScalaCode at depth=%d; text is\n  '%s" % (
-    #    commentDepth, text))
-    # END
 
     start_multi = text.find('/*')
     end_multi = text.find('*/')
     text_back = ''
 
     if start_multi == -1 and end_multi == -1:
-        # DEBUG
-        # print("  no */, returning depth=%d, unchanged" % commentDepth)
-        # END
         return text_back, comment_depth
 
     elif end_multi == -1 or (start_multi != -1 and start_multi < end_multi):
-        # DEBUG
-        # print("  found /* at %d" % startMulti)
-        # END
         comment_depth = comment_depth + 1
         if start_multi + 2 < len(text):
             text_back = text[start_multi + 2:]
 
     else:
-        # DEBUG
-        # print("  found */ at %d" % endMulti)
-        # END
-
         comment_depth = comment_depth - 1
         if end_multi + 2 < len(text):
             text_back = text[end_multi + 2:]
-
-    # DEBUG
-    # print("  returning depth=%d, textBack\n  '%s'" %
-    #       (commentDepth, textBack))
-    # END
 
     return text_back, comment_depth
 
@@ -1705,11 +1743,6 @@ def _find_scala_comment(text, comment_depth):
     We are NOT at comment depth > 0.  Return a ref to any code found, a
     ref to the rest of the text, and the value of commentDepth
     """
-    # DEBUG
-    # if commentDepth:
-    #    print("warning: entering _findScalaComment, non-zero depth %d" %
-    #            commentDepth)
-    # END
     multi_line = False
     posn_old = text.find('/*')       # multi-line comment
     posn_new = text.find('//')       # one-line comment
@@ -1906,9 +1939,6 @@ def count_lines_xml(path_to_file, options, lang):
                 line = line.strip()
                 if line:
                     sloc_so_far += 1
-                # DEBUG
-                # print(line)
-                # END
             options.already.add(hash_val)
             if options.verbose:
                 print("%-47s: %-6s %5d lines, %5d sloc" % (
